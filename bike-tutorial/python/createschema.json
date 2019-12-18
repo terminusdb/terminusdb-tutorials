@@ -1,0 +1,361 @@
+{
+    "@context": {
+            "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
+            "xsd":"http://www.w3.org/2001/XMLSchema#",
+            "owl":"http://www.w3.org/2002/07/owl#",
+            "tcs":"http://terminusdb.com/schema/tcs#",
+            "tbs":"http://terminusdb.com/schema/tbs#",
+            "xdd":"http://terminusdb.com/schema/xdd#",
+            "v":"http://terminusdb.com/woql/variable/",
+            "terminus":"http://terminusdb.com/schema/terminus#",
+            "vio":"http://terminusdb.com/schema/vio#"
+    },
+    "when": [
+      {
+        "true": []
+      },
+      {
+        "and": [
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:Station",
+                  "rdf:type",
+                  "owl:Class",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Station",
+                  "rdfs:label",
+                  {
+                    "@value": "Bike Station",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Station",
+                  "rdfs:comment",
+                  {
+                    "@value": "A station where municipal bicycles are deposited",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Station",
+                  "rdfs:subClassOf",
+                  "tcs:Entity",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:Journey",
+                  "rdf:type",
+                  "owl:Class",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Journey",
+                  "rdfs:label",
+                  {
+                    "@value": "Journey",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Journey",
+                  "rdfs:subClassOf",
+                  "tcs:Entity",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:Bicycle",
+                  "rdf:type",
+                  "owl:Class",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Bicycle",
+                  "rdfs:label",
+                  {
+                    "@value": "Bicycle",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Bicycle",
+                  "rdfs:subClassOf",
+                  "tcs:Entity",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:start_station",
+                  "rdf:type",
+                  "owl:ObjectProperty",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:start_station",
+                  "rdfs:range",
+                  "scm:Station",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:start_station",
+                  "rdfs:label",
+                  {
+                    "@value": "Start Station",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:start_station",
+                  "rdfs:domain",
+                  "scm:Journey",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:end_station",
+                  "rdf:type",
+                  "owl:ObjectProperty",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:end_station",
+                  "rdfs:range",
+                  "scm:Station",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:end_station",
+                  "rdfs:label",
+                  {
+                    "@value": "End Station",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:end_station",
+                  "rdfs:domain",
+                  "scm:Journey",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:duration",
+                  "rdf:type",
+                  "owl:DatatypeProperty",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:duration",
+                  "rdfs:range",
+                  "xsd:integer",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:duration",
+                  "rdfs:label",
+                  {
+                    "@value": "Journey Duration",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:duration",
+                  "rdfs:domain",
+                  "scm:Journey",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:start_time",
+                  "rdf:type",
+                  "owl:DatatypeProperty",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:start_time",
+                  "rdfs:range",
+                  "xsd:dateTime",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:start_time",
+                  "rdfs:label",
+                  {
+                    "@value": "Time Started",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:start_time",
+                  "rdfs:domain",
+                  "scm:Journey",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:end_time",
+                  "rdf:type",
+                  "owl:DatatypeProperty",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:end_time",
+                  "rdfs:range",
+                  "xsd:dateTime",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:end_time",
+                  "rdfs:label",
+                  {
+                    "@value": "Time Ended",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:end_time",
+                  "rdfs:domain",
+                  "scm:Journey",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:journey_bicycle",
+                  "rdf:type",
+                  "owl:ObjectProperty",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:journey_bicycle",
+                  "rdfs:range",
+                  "scm:Bicycle",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:journey_bicycle",
+                  "rdfs:label",
+                  {
+                    "@value": "Bicycle Used",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:journey_bicycle",
+                  "rdfs:domain",
+                  "scm:Journey",
+                  "db:schema"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
