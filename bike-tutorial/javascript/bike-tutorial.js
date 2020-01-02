@@ -78,22 +78,47 @@ var WOQL = TerminusClient.WOQL;
 
 /**
  * The query which creates the schema
- * @param client WOQLClient
+ * @param {WOQLClient} client - 848 chars
  */
 function createSchema(client){
     var schema = WOQL.when(true).and(
-        WOQL.addClass("Station").label("Bike Station").description("A station where municipal bicycles are deposited").entity(),
-        WOQL.addClass("Journey").label("Journey").entity(),
-        WOQL.addClass("Bicycle").label("Bicycle").entity(),
-        WOQL.addProperty("start_station", "Station").label("Start Station").domain("Journey"),
-        WOQL.addProperty("end_station", "Station").label("End Station").domain("Journey"),
-        WOQL.addProperty("duration", "integer").label("Journey Duration").domain("Journey"),
-        WOQL.addProperty("start_time", "dateTime").label("Time Started").domain("Journey"),
-        WOQL.addProperty("end_time", "dateTime").label("Time Ended").domain("Journey"),
-        WOQL.addProperty("journey_bicycle", "Bicycle").label("Bicycle Used").domain("Journey")
+        WOQL.add_class("Station").label("Bike Station").description("A station where municipal bicycles are deposited").entity(),
+        WOQL.add_class("Journey").label("Journey").entity(),
+        WOQL.add_class("Bicycle").label("Bicycle").entity(),
+        WOQL.add_property("start_station", "Station").label("Start Station").domain("Journey"),
+        WOQL.add_property("end_station", "Station").label("End Station").domain("Journey"),
+        WOQL.add_property("duration", "integer").label("Journey Duration").domain("Journey"),
+        WOQL.add_property("start_time", "dateTime").label("Time Started").domain("Journey"),
+        WOQL.add_property("end_time", "dateTime").label("Time Ended").domain("Journey"),
+        WOQL.add_property("journey_bicycle", "Bicycle").label("Bicycle Used").domain("Journey")
    );
    return schema.execute(client);
 }        
+
+
+/**
+ * The query which creates the schema - alternative syntax - 733 chars
+ * @param {WOQLClient} client
+ */
+function alt_createSchema(client){
+    var schema = WOQL.when(true).and(
+        WOQL.doctype("Station")
+            .label("Bike Station")
+            .description("A station where municipal bicycles are deposited"),
+        WOQL.doctype("Bicycle")
+            .label("Bicycle"),
+        WOQL.doctype("Journey")
+            .label("Journey")
+            .property("start_station", "Station").label("Start Station")
+            .property("end_station", "Station").label("End Station")
+            .property("duration", "integer").label("Journey Duration")
+            .property("start_time", "dateTime").label("Time Started")
+            .property("end_time", "dateTime").label("Time Ended")
+            .property("journey_bicycle", "Bicycle").label("Bicycle Used")
+   );
+   return schema.execute(client);
+}       
+
 
 /**
  * 
@@ -140,15 +165,17 @@ const wrangles = [
     WOQL.idgen("doc:Journey",["v:Start_ID","v:Start_Time","v:Bike"],"v:Journey_ID"),
     WOQL.idgen("doc:Station",["v:Start_ID"],"v:Start_Station_URL"),
     WOQL.idgen("doc:Bicycle",["v:Bike"],"v:Bike_URL"),
-    WOQL.typecast("v:Duration", "xsd:integer", "v:Duration_Cast"),
-    WOQL.typecast("v:Start_Time", "xsd:dateTime", "v:Start_Time_Cast"),
-    WOQL.typecast("v:End_Time", "xsd:dateTime", "v:End_Time_Cast"),
+    WOQL.cast("v:Duration", "xsd:integer", "v:Duration_Cast"),
+    WOQL.cast("v:Start_Time", "xsd:dateTime", "v:Start_Time_Cast"),
+    WOQL.cast("v:End_Time", "xsd:dateTime", "v:End_Time_Cast"),
+    WOQL.cast("v:Start_Station", "xsd:string", "v:Start_Station_Label"),
+    WOQL.cast("v:End_Station", "xsd:string", "v:End_Station_Label"),
     WOQL.idgen("doc:Station",["v:End_ID"],"v:End_Station_URL"),
     WOQL.concat("Bike v:Bike start at v:Start_Station at v:Start_Time","v:Journey_Label")
 ];
 
 /**
- * The data to be inserted
+ * The data to be inserted 956 characters
  */
 const inserts = WOQL.and(
     WOQL.add_triple("v:Journey_ID", "type", "scm:Journey"),
@@ -159,13 +186,36 @@ const inserts = WOQL.and(
     WOQL.add_triple("v:Journey_ID", "end_station", "v:End_Station_URL"),
     WOQL.add_triple("v:Journey_ID", "label", "v:Journey_Label"),
     WOQL.add_triple("v:Journey_ID", "journey_bicycle", "v:Bike_URL"),
-    WOQL.add_triple("v:Start_Station_URL", "label", "v:Start_Station"),
+    WOQL.add_triple("v:Start_Station_URL", "label", "v:Start_Station_Label"),
     WOQL.add_triple("v:Start_Station_URL", "type", "scm:Station"),
     WOQL.add_triple("v:End_Station_URL", "type", "scm:Station"),
-    WOQL.add_triple("v:End_Station_URL", "label", "v:End_Station"),
+    WOQL.add_triple("v:End_Station_URL", "label", "v:End_Station_Label"),
     WOQL.add_triple("v:Bike_URL", "type", "scm:Bicycle"),
     WOQL.add_triple("v:Bike_URL", "label", "v:Bike")
 );
+
+
+/**
+ * An alternative syntax...678 chars
+ */
+const alt_inserts = WOQL.and(
+    WOQL.insert("v:Journey_ID", "Journey")
+        .label("v:Journey_Label")
+        .property("start_time", "v:Start_Time_Cast")
+        .property("end_time", "v:End_Time_Cast")
+        .property("duration", "v:Duration_Cast")
+        .property("start_station", "v:Start_Station_URL")
+        .property("end_station", "v:End_Station_URL")
+        .property("journey_bicycle", "v:Bike_URL"),
+    WOQL.insert("v:Start_Station_URL", "Station")
+        .label("v:Start_Station_Label"),
+    WOQL.insert("v:End_Station_URL")
+        .type("Station")
+        .label("v:End_Station_Label"),
+    WOQL.insert("v:Bike_URL", "Bicycle")
+        .label("v:Bike")
+);
+
 
 /**
  * Runs the tutorial from start to finish
