@@ -75,32 +75,11 @@ function createDatabase(client, id, title, description){
 //shorthand so we don't have to type TerminusClient every time
 var WOQL = TerminusClient.WOQL;
 
-
 /**
  * The query which creates the schema
- * @param {WOQLClient} client - 848 chars
- */
-function createSchema(client){
-    var schema = WOQL.when(true).and(
-        WOQL.add_class("Station").label("Bike Station").description("A station where municipal bicycles are deposited").entity(),
-        WOQL.add_class("Journey").label("Journey").entity(),
-        WOQL.add_class("Bicycle").label("Bicycle").entity(),
-        WOQL.add_property("start_station", "Station").label("Start Station").domain("Journey"),
-        WOQL.add_property("end_station", "Station").label("End Station").domain("Journey"),
-        WOQL.add_property("duration", "integer").label("Journey Duration").domain("Journey"),
-        WOQL.add_property("start_time", "dateTime").label("Time Started").domain("Journey"),
-        WOQL.add_property("end_time", "dateTime").label("Time Ended").domain("Journey"),
-        WOQL.add_property("journey_bicycle", "Bicycle").label("Bicycle Used").domain("Journey")
-   );
-   return schema.execute(client);
-}        
-
-
-/**
- * The query which creates the schema - alternative syntax - 733 chars
  * @param {WOQLClient} client
  */
-function alt_createSchema(client){
+function createSchema(client){
     var schema = WOQL.when(true).and(
         WOQL.doctype("Station")
             .label("Bike Station")
@@ -128,12 +107,16 @@ function alt_createSchema(client){
 function loadCSVs(client, arr){
     if(typeof resp == "undefined") resp = false;
     if(next = arr.pop()){
+        console.log("Loading csv", next, arr.length + " remaining");
         const csv = getCSVVariables(next);
         const inputs = WOQL.and(csv, ...wrangles); 
-        var answer = WOQL.when(inputs, inserts);
+        var answer = WOQL.when(inputs, alt_inserts);
         resp = answer.execute(client)
         .then(() => loadCSVs(client, arr))
-        .catch(() => console.log("failed with " + url));
+        .catch(() => {
+            console.log("failed to import csv " + next)
+            loadCSVs(client, arr)
+        });
     }
     if(resp) return resp;
 }
@@ -164,43 +147,22 @@ function getCSVVariables(url){
 const wrangles = [
     WOQL.idgen("doc:Journey",["v:Start_ID","v:Start_Time","v:Bike"],"v:Journey_ID"),
     WOQL.idgen("doc:Station",["v:Start_ID"],"v:Start_Station_URL"),
-    WOQL.idgen("doc:Bicycle",["v:Bike"],"v:Bike_URL"),
     WOQL.cast("v:Duration", "xsd:integer", "v:Duration_Cast"),
+    WOQL.cast("v:Bike", "xsd:string", "v:Bike_Label"),
     WOQL.cast("v:Start_Time", "xsd:dateTime", "v:Start_Time_Cast"),
     WOQL.cast("v:End_Time", "xsd:dateTime", "v:End_Time_Cast"),
     WOQL.cast("v:Start_Station", "xsd:string", "v:Start_Station_Label"),
     WOQL.cast("v:End_Station", "xsd:string", "v:End_Station_Label"),
     WOQL.idgen("doc:Station",["v:End_ID"],"v:End_Station_URL"),
-    WOQL.concat("Bike v:Bike start at v:Start_Station at v:Start_Time","v:Journey_Label")
+    WOQL.idgen("doc:Bicycle",["v:Bike_Label"],"v:Bike_URL"),
+    WOQL.concat("v:Start_ID to v:End_ID at v:Start_Time","v:Journey_Label"),
+    WOQL.concat("Bike v:Bike from v:Start_Station to v:End_Station at v:Start_Time until v:End_Time","v:Journey_Description")
 ];
 
-/**
- * The data to be inserted 956 characters
- */
 const inserts = WOQL.and(
-    WOQL.add_triple("v:Journey_ID", "type", "scm:Journey"),
-    WOQL.add_triple("v:Journey_ID", "start_time", "v:Start_Time_Cast"),
-    WOQL.add_triple("v:Journey_ID", "end_time", "v:End_Time_Cast"),
-    WOQL.add_triple("v:Journey_ID", "duration", "v:Duration_Cast"),
-    WOQL.add_triple("v:Journey_ID", "start_station", "v:Start_Station_URL"),
-    WOQL.add_triple("v:Journey_ID", "end_station", "v:End_Station_URL"),
-    WOQL.add_triple("v:Journey_ID", "label", "v:Journey_Label"),
-    WOQL.add_triple("v:Journey_ID", "journey_bicycle", "v:Bike_URL"),
-    WOQL.add_triple("v:Start_Station_URL", "label", "v:Start_Station_Label"),
-    WOQL.add_triple("v:Start_Station_URL", "type", "scm:Station"),
-    WOQL.add_triple("v:End_Station_URL", "type", "scm:Station"),
-    WOQL.add_triple("v:End_Station_URL", "label", "v:End_Station_Label"),
-    WOQL.add_triple("v:Bike_URL", "type", "scm:Bicycle"),
-    WOQL.add_triple("v:Bike_URL", "label", "v:Bike")
-);
-
-
-/**
- * An alternative syntax...678 chars
- */
-const alt_inserts = WOQL.and(
     WOQL.insert("v:Journey_ID", "Journey")
         .label("v:Journey_Label")
+        .description("v:Journey_Description")
         .property("start_time", "v:Start_Time_Cast")
         .property("end_time", "v:End_Time_Cast")
         .property("duration", "v:Duration_Cast")
@@ -209,11 +171,10 @@ const alt_inserts = WOQL.and(
         .property("journey_bicycle", "v:Bike_URL"),
     WOQL.insert("v:Start_Station_URL", "Station")
         .label("v:Start_Station_Label"),
-    WOQL.insert("v:End_Station_URL")
-        .type("Station")
+    WOQL.insert("v:End_Station_URL", "Station")
         .label("v:End_Station_Label"),
     WOQL.insert("v:Bike_URL", "Bicycle")
-        .label("v:Bike")
+        .label("v:Bike_Label")
 );
 
 
@@ -229,7 +190,7 @@ function runTutorial(terminus_server_url, terminus_server_key, terminus_db_id){
     .then(() => {
         createDatabase(client, terminus_db_id)
         .then(() => {
-            createSchema(client)
+            alt_createSchema(client)
             .then(() => loadCSVs(client, csvs));            
         })         
     }).catch((error) => console.log(error));

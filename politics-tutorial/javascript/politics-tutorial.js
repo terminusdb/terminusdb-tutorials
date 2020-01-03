@@ -48,7 +48,7 @@ var WOQL = TerminusClient.WOQL;
  * The query which creates the schema - alternative syntax - 733 chars
  * @param {WOQLClient} client
  */
-function alt_createSchema(client){
+function createSchema(client){
     var schema = WOQL.when(true).and(
         WOQL.doctype("Party")
             .label("Party")
@@ -56,11 +56,15 @@ function alt_createSchema(client){
         WOQL.doctype("Representative")
             .label("Representative")
             .description("An elected member of the US congress")
-            .property("member_of", "Party"),
+            .property("member_of", "Party")
+                .label("Member of"),
         WOQL.doctype("Similarity")
             .label("Similarity")
-            .property("similarity", "decimal").label("Similarity")
-            .property("similar_to", "Representative").label("Similar To").card(2),
+            .property("similarity", "decimal")
+                .label("Similarity")
+            .property("similar_to", "Representative")
+                .label("Similar To")
+                .cardinality(2),
         WOQL.add_class("ArmedForcesSimilarity")
             .label("Armed Forces")
             .parent("Similarity"),
@@ -120,13 +124,14 @@ function loadCSVs(client, queue, obj){
     if(relation = queue.pop()){
         const url = obj[relation];
         const csv = getCSVVariables(url);
+        console.log("loading relation", relation, url);
         const wrangles = getWrangles(relation);
         const inputs = WOQL.and(csv, ...wrangles); 
         const inserts = getInserts(relation);
         var answer = WOQL.when(inputs, inserts);
         resp = answer.execute(client)
         .then(() => loadCSVs(client, queue, obj))
-        .catch(() => console.log("failed to load csv relation " + url));
+        .catch(() => {console.log("failed to load csv", relation, url); loadCSVs(client, queue, obj)});
     }
     if(resp) return resp;
 }
