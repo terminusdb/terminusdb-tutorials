@@ -9,13 +9,13 @@
  * The list of CSV files that we want to import
  */
 const csvs = {
-    ArmedForcesSimilarity: "https://terminusdb.com/t/data/congress/armed_forces_weighted_similarity.csv",
-    //CivilRightsSimilarity: "https://terminusdb.com/t/data/congress/civil_rights_weighted_similarity.csv",
-    //HealthSimilarity: "https://terminusdb.com/t/data/congress/health_weighted_similarity.csv",
-    //ImmigrationSimilarity: "https://terminusdb.com/t/data/congress/immigration_weighted_similarity.csv",
-    //InternationalAffairsSimilarity: "https://terminusdb.com/t/data/congress/international_affairs_weighted_similarity.csv",
-    //TaxationSimilarity: "https://terminusdb.com/t/data/congress/taxation_weighted_similarity.csv",
-    //OverallSimilarity: "https://terminusdb.com/t/data/congress/weighted_similarity.csv"    
+//    ArmedForcesSimilarity: "https://terminusdb.com/t/data/congress/armed_forces_weighted_similarity.csv",
+//    CivilRightsSimilarity: "https://terminusdb.com/t/data/congress/civil_rights_weighted_similarity.csv",
+//    HealthSimilarity: "https://terminusdb.com/t/data/congress/health_weighted_similarity.csv",
+//    ImmigrationSimilarity: "https://terminusdb.com/t/data/congress/immigration_weighted_similarity.csv",
+//    InternationalAffairsSimilarity: "https://terminusdb.com/t/data/congress/international_affairs_weighted_similarity.csv",
+//    TaxationSimilarity: "https://terminusdb.com/t/data/congress/taxation_weighted_similarity.csv",
+    OverallSimilarity: "https://terminusdb.com/t/data/council/weighted_similarity (1).csv"    
 };
 
 /**
@@ -26,7 +26,7 @@ const csvs = {
  * @param {String} description 
  */
 function createDatabase(client, id, title, description){
-    title = title || "Congressional Voting Data";
+    title = title || "Council Voting Data";
     description = description || "A Database for the Terminus Politics Tutorial";
     const dbdetails = {
         "@context" : {
@@ -63,28 +63,7 @@ function createSchema(client){
             .property("similarity", "decimal")
                 .label("Similarity")
             .property("similar_to", "Representative")
-                .label("Similar To").cardinality(2),
-        WOQL.add_class("ArmedForcesSimilarity")
-            .label("Armed Forces")
-            .parent("Similarity"),
-        WOQL.add_class("CivilRightsSimilarity")
-            .label("Civil Rights")
-            .parent("Similarity"),
-        WOQL.add_class("HealthSimilarity")
-            .label("Health")
-            .parent("Similarity"),
-        WOQL.add_class("ImmigrationSimilarity")
-            .label("Immigration")
-            .parent("Similarity"),
-        WOQL.add_class("InternationalAffairsSimilarity")
-            .label("International Affairs")
-            .parent("Similarity"),
-        WOQL.add_class("TaxationSimilarity")
-            .label("Taxation")
-            .parent("Similarity"),
-        WOQL.add_class("OverallSimilarity")
-            .label("Overall")
-            .parent("Similarity"),
+                .label("Similar To").cardinality(2)
    );
    return schema.execute(client);
 }       
@@ -101,9 +80,8 @@ function getInserts(relation){
         WOQL.insert("v:Rep_B_ID", "Representative")
             .label("v:Rep_B")
             .property("member_of", "v:Party_B_ID"),
-        WOQL.insert("v:Rel_ID", relation)
+        WOQL.insert("v:Rel_ID", "Similarity")
             .label("v:Rel_Label")
-            .description("v:Rel_Description")
             .property("similar_to", "v:Rep_A_ID")
             .property("similar_to", "v:Rep_B_ID")
             .property("similarity", "v:Similarity")
@@ -140,8 +118,8 @@ function loadCSVs(client, queue, obj){
  */
 function getCSVVariables(url){
     const csv = WOQL.get(
-        WOQL.as("politician_a","v:Rep_A")
-        .as("politician_b", "v:Rep_B")
+        WOQL.as("councillor_a","v:Rep_A")
+        .as("councillor_b", "v:Rep_B")
         .as("party_a", "v:Party_A")
         .as("party_b", "v:Party_B")
         .as("distance", "v:Distance")
@@ -156,9 +134,8 @@ function getWrangles(relation){
          WOQL.idgen("doc:Representative", ["v:Rep_A"], "v:Rep_A_ID"),
          WOQL.idgen("doc:Representative", ["v:Rep_B"], "v:Rep_B_ID"),
          WOQL.typecast("v:Distance", "xsd:decimal", "v:Similarity"),
-         WOQL.idgen("doc:" + relation, ["v:Rep_A", "v:Rep_B"], "v:Rel_ID"),
-         WOQL.concat("v:Distance " + relation, "v:Rel_Label"),
-         WOQL.concat("v:Distance " + relation + " between v:Rep_A and v:Rep_B", "v:Rel_Description")
+         WOQL.idgen("doc:Similarity", ["v:Rep_A", "v:Rep_B"], "v:Rel_ID"),
+         WOQL.concat("v:Distance between v:Rep_A and v:Rep_B", "v:Rel_Label")
      ];
      return wrangles;
 }

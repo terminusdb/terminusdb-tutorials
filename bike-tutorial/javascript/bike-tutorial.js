@@ -110,7 +110,7 @@ function loadCSVs(client, arr){
         console.log("Loading csv", next, arr.length + " remaining");
         const csv = getCSVVariables(next);
         const inputs = WOQL.and(csv, ...wrangles); 
-        var answer = WOQL.when(inputs, alt_inserts);
+        var answer = WOQL.when(inputs, inserts);
         resp = answer.execute(client)
         .then(() => loadCSVs(client, arr))
         .catch(() => {
@@ -190,7 +190,7 @@ function runTutorial(terminus_server_url, terminus_server_key, terminus_db_id){
     .then(() => {
         createDatabase(client, terminus_db_id)
         .then(() => {
-            alt_createSchema(client)
+            createSchema(client)
             .then(() => loadCSVs(client, csvs));            
         })         
     }).catch((error) => console.log(error));
