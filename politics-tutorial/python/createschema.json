@@ -1,0 +1,313 @@
+{
+    "when": [
+      {
+        "true": []
+      },
+      {
+        "and": [
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:Party",
+                  "rdf:type",
+                  "owl:Class",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Party",
+                  "rdfs:subClassOf",
+                  "tcs:Document",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Party",
+                  "rdfs:label",
+                  {
+                    "@value": "Party",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Party",
+                  "rdfs:comment",
+                  {
+                    "@value": "Political Party",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:member_of",
+                  "rdf:type",
+                  "owl:ObjectProperty",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:member_of",
+                  "rdfs:range",
+                  "scm:Party",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:member_of",
+                  "rdfs:domain",
+                  "scm:Representative",
+                  "db:schema"
+                ]
+              },
+              {
+                "and": [
+                  {
+                    "add_quad": [
+                      "scm:Representative",
+                      "rdf:type",
+                      "owl:Class",
+                      "db:schema"
+                    ]
+                  },
+                  {
+                    "add_quad": [
+                      "scm:Representative",
+                      "rdfs:subClassOf",
+                      "tcs:Document",
+                      "db:schema"
+                    ]
+                  },
+                  {
+                    "add_quad": [
+                      "scm:Representative",
+                      "rdfs:label",
+                      {
+                        "@value": "Representative",
+                        "@language": "en"
+                      },
+                      "db:schema"
+                    ]
+                  },
+                  {
+                    "add_quad": [
+                      "scm:Representative",
+                      "rdfs:comment",
+                      {
+                        "@value": "An elected member of the US congress",
+                        "@language": "en"
+                      },
+                      "db:schema"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:member_of",
+                  "rdfs:label",
+                  {
+                    "@value": "Member of",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:member_of_cardinality",
+                  "rdf:type",
+                  "owl:Restriction",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:member_of_cardinality",
+                  "owl:onProperty",
+                  "scm:member_of",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:member_of_cardinality",
+                  "owl:cardinality",
+                  {
+                    "@value": 1,
+                    "@type": "xsd:nonNegativeInteger"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Representative",
+                  "rdfs:subClassOf",
+                  "scm:member_of_cardinality",
+                  "db:schema"
+                ]
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "add_quad": [
+                  "scm:similar_to",
+                  "rdf:type",
+                  "owl:ObjectProperty",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:similar_to",
+                  "rdfs:range",
+                  "scm:Representative",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:similar_to",
+                  "rdfs:domain",
+                  "scm:Similarity",
+                  "db:schema"
+                ]
+              },
+              {
+                "and": [
+                  {
+                    "add_quad": [
+                      "scm:similarity",
+                      "rdf:type",
+                      "owl:DatatypeProperty",
+                      "db:schema"
+                    ]
+                  },
+                  {
+                    "add_quad": [
+                      "scm:similarity",
+                      "rdfs:range",
+                      "xsd:decimal",
+                      "db:schema"
+                    ]
+                  },
+                  {
+                    "add_quad": [
+                      "scm:similarity",
+                      "rdfs:domain",
+                      "scm:Similarity",
+                      "db:schema"
+                    ]
+                  },
+                  {
+                    "and": [
+                      {
+                        "add_quad": [
+                          "scm:Similarity",
+                          "rdf:type",
+                          "owl:Class",
+                          "db:schema"
+                        ]
+                      },
+                      {
+                        "add_quad": [
+                          "scm:Similarity",
+                          "rdfs:subClassOf",
+                          "tcs:Document",
+                          "db:schema"
+                        ]
+                      },
+                      {
+                        "add_quad": [
+                          "scm:Similarity",
+                          "rdfs:label",
+                          {
+                            "@value": "Similarity",
+                            "@language": "en"
+                          },
+                          "db:schema"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "add_quad": [
+                      "scm:similarity",
+                      "rdfs:label",
+                      {
+                        "@value": "Similarity",
+                        "@language": "en"
+                      },
+                      "db:schema"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:similar_to",
+                  "rdfs:label",
+                  {
+                    "@value": "Similar To",
+                    "@language": "en"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:similar_to_cardinality",
+                  "rdf:type",
+                  "owl:Restriction",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:similar_to_cardinality",
+                  "owl:onProperty",
+                  "scm:similar_to",
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:similar_to_cardinality",
+                  "owl:cardinality",
+                  {
+                    "@value": 2,
+                    "@type": "xsd:nonNegativeInteger"
+                  },
+                  "db:schema"
+                ]
+              },
+              {
+                "add_quad": [
+                  "scm:Similarity",
+                  "rdfs:subClassOf",
+                  "scm:similar_to_cardinality",
+                  "db:schema"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
