@@ -17,14 +17,25 @@ def create_schema(client):
         client : a WOQLClient() connection
     """
     schema = WOQLQuery().when(True).woql_and(
-        WOQLQuery().doctype("Party").label("Party").\
-                    description("Political Party"),
-        WOQLQuery().doctype("Representative").label("Representative").\
-                    description("An elected member of the US congress"),
-        WOQLQuery().add_property("member_of", "Party").label("Member of").domain("Representative").cardinality(1),
-        WOQLQuery().doctype("Similarity").label("Similarity"),
-        WOQLQuery().add_property("similarity", "decimal").label("Similarity").domain("Similarity"),
-        WOQLQuery().add_property("similar_to", "Representative").label("Similar To").cardinality(2).domain("Similarity"),
+        WOQLQuery().add_class("scm:Party"),
+        WOQLQuery().add_quad("scm:Party", "rdfs:label", "Party", "db:schema"),
+        WOQLQuery().add_quad("scm:Party", "rdfs:subClassOf", "tcs:Document", "db:schema"),
+        WOQLQuery().add_quad("scm:Party", "rdfs:comment", "Political Party", "db:schema"),
+        WOQLQuery().add_quad("scm:Representative", "rdf:type", "owl:Class", "db:schema"),
+        WOQLQuery().add_quad("scm:Representative", "rdfs:label", {"@value": "Representative", "@language": "en"}, "db:schema"),
+        WOQLQuery().add_quad("scm:Representative", "rdfs:comment", {"@value": "An elected member of the US congress", "@type": "xsd:string"}, "db:schema"),
+        WOQLQuery().add_property("member_of", "Party"),
+        WOQLQuery().add_quad("scm:member_of", "rdfs:label", {"@value": "Member of", "@type": "xsd:string"}, "db:schema"),
+        WOQLQuery().add_quad("scm:member_of","rdfs:domain", "scm:Representative", "db:schema"),
+        WOQLQuery().add_class("Similarity"),
+        WOQLQuery().add_quad("scm:Similarity", "rdfs:label", {"@value": "Similarity", "@type": "xsd:string"}, "db:schema"),
+        WOQLQuery().add_property("similarity", "decimal"),
+        WOQLQuery().add_quad("scm:similarity", "label", {"@value": "Similarity", "@type": "xsd:string"}, "db:schema"),
+        WOQLQuery().add_quad("scm:similarity", "rdfs:domain", "scm:Similarity", "db:schema"),
+        WOQLQuery().add_property("similar_to", "scm:Representative"),
+        WOQLQuery().add_quad("scm:similar_to", "rdfs:domain", "scm:Similarity", "db:schema"),
+        WOQLQuery().add_quad("scm:similarity", "label", {"@value": "Similar To", "@type": "xsd:string"}, "db:schema"),
+        WOQLQuery().add_quad("scm:similarity", "rdfs:domain","scm:Similarity", "db:schema"),
         WOQLQuery().add_class("ArmedForcesSimilarity").label("Armed Forces").parent("Similarity"),
         WOQLQuery().add_class("CivilRightsSimilarity").label("Civil Rights").parent("Similarity"),
         WOQLQuery().add_class("HealthSimilarity").label("Health").parent("Similarity"),
@@ -38,7 +49,7 @@ def create_schema(client):
 
 def get_inserts(relation):
     inserts = WOQLQuery().woql_and(
-        WOQLQuery().add_triple("v:Party_A_ID","type","scm:Party"),
+        WOQLQuery().add_triple("v:Party_A_ID","type","scm:Party"),  
         WOQLQuery().add_triple("v:Party_A_ID","label","v:Party_A"),
         WOQLQuery().add_triple("v:Party_B_ID","type","scm:Party"),
         WOQLQuery().add_triple("v:Party_B_ID","label","v:Party_B"),
@@ -49,12 +60,11 @@ def get_inserts(relation):
         WOQLQuery().add_triple("v:Rep_B_ID","label","v:Rep_B"),
         WOQLQuery().add_triple("v:Rep_B_ID","member_of","v:Party_B_ID"),
         WOQLQuery().add_triple("v:Rel_ID","type","scm:Similarity"),
-        WOQLQuery().add_triple("v:Rel_ID","label","v:Rel_Label"),
+        WOQLQuery().add_triple("v:Rel_ID","label",{"@value": "Similarity", "@type": "xsd:string"}),
         WOQLQuery().add_triple("v:Rel_ID","similar_to","v:Rep_A_ID"),
         WOQLQuery().add_triple("v:Rel_ID","similar_to","v:Rep_B_ID"),
         WOQLQuery().add_triple("v:Rel_ID","similarity","v:Similarity")
     )  
-    print(json.dumps(inserts.json()))  
     '''inserts = WOQLQuery().woql_and(
         WOQLQuery().insert("v:Party_A_ID", "Party").label("v:Party_A"),
         WOQLQuery().insert("v:Party_B_ID", "Party").label("v:Party_B"),
@@ -92,8 +102,7 @@ def get_wrangles(relation):
          WOQLQuery().idgen("doc:Representative", ["v:Rep_A"], "v:Rep_A_ID"),
          WOQLQuery().idgen("doc:Representative", ["v:Rep_B"], "v:Rep_B_ID"),
          WOQLQuery().typecast("v:Distance", "xsd:decimal", "v:Similarity"),
-         WOQLQuery().idgen("doc:Similarity", ["v:Rep_A", "v:Rep_B"], "v:Rel_ID"),
-         WOQLQuery().concat("v:Distance between v:Rep_A and v:Rep_B", "v:Rel_Label")
+         WOQLQuery().idgen("doc:Similarity", ["v:Rep_A", "v:Rep_B"], "v:Rel_ID")
     ]
     return wrangles
 
@@ -110,6 +119,7 @@ def load_csvs(client, csvs):
         inputs = WOQLQuery().woql_and(csv, *wrangles)
         inserts = get_inserts(key)
         answer = WOQLQuery().when(inputs, inserts)
+        #print(json.dumps(answer.json()))
         answer.execute(client)
 
 # run tutorial
