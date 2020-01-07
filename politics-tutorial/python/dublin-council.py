@@ -15,33 +15,24 @@ def create_schema(client):
         client : a WOQLClient() connection
     """
     schema = WOQLQuery().when(True).woql_and(
-        WOQLQuery().doctype("Party").label("Party").description("Political Party"),
+        WOQLQuery().doctype("Party").label("Party").\
+                    description("Political Party"),
         WOQLQuery().doctype("Representative").label("Representative").\
-                     description("An elected member of the US congress").\
-                     property("member_of", "Party").\
-                     label("Member of").cardinality(1),
+                    description("An elected member of the US congress").\
+                    property("member_of", "Party").label("Member of").cardinality(1),
         WOQLQuery().doctype("Similarity").label("Similarity").\
-                     property("similarity", "decimal").\
-                     label("Similarity").\
-                     property("similar_to", "Representative").\
-                     label("Similar To").cardinality(2),
-        WOQLQuery().add_class("ArmedForcesSimilarity").label("Armed Forces").\
-                     parent("Similarity"),
-        WOQLQuery().add_class("CivilRightsSimilarity").\
-                     label("Civil Rights").parent("Similarity"),
-        WOQLQuery().add_class("HealthSimilarity").\
-                     label("Health").parent("Similarity"),
-        WOQLQuery().add_class("ImmigrationSimilarity").label("Immigration").\
-                     parent("Similarity"),
+                    property("similarity", "decimal").label("Similarity").\
+                    property("similar_to", "Representative").label("Similar To").cardinality(2),
+        WOQLQuery().add_class("ArmedForcesSimilarity").label("Armed Forces").parent("Similarity"),
+        WOQLQuery().add_class("CivilRightsSimilarity").label("Civil Rights").parent("Similarity"),
+        WOQLQuery().add_class("HealthSimilarity").label("Health").parent("Similarity"),
+        WOQLQuery().add_class("ImmigrationSimilarity").label("Immigration").parent("Similarity"),
         WOQLQuery().add_class("InternationalAffairsSimilarity").\
-                     label("International Affairs").parent("Similarity"),
-        WOQLQuery().add_class("TaxationSimilarity").\
-                     label("Taxation").\
-                     parent("Similarity"),
-        WOQLQuery().add_class("OverallSimilarity").\
-                     label("Overall").parent("Similarity"),
+                    label("International Affairs").parent("Similarity"),
+        WOQLQuery().add_class("TaxationSimilarity").label("Taxation").parent("Similarity"),
+        WOQLQuery().add_class("OverallSimilarity").label("Overall").parent("Similarity")
         )
-   return schema.execute(client)
+    return schema.execute(client)
 
 def get_inserts(relation):
     inserts = WOQLQuery().woql_and(
@@ -56,7 +47,7 @@ def get_inserts(relation):
                     property("similar_to", "v:Rep_B_ID").\
                     property("similarity", "v:Similarity")
       )
-      return inserts
+    return inserts
 
 def get_csv_variables(url):
     """Extracting the data from a CSV and binding it to variables
