@@ -4,8 +4,10 @@ import json
 
 CSVS = {"OverallSimilarity" : "https://terminusdb.com/t/data/council/weighted_similarity (1).csv"}
 
-server_url = "http://localhost:6363"
-key = "root"
+server_url = "http://195.201.12.87:6365"
+#"http://localhost:6363"
+dbId= "mydb"
+key = "connectors wanna plans compressed"
 dburl = server_url + "/mydb"
 
 def create_schema(client):
@@ -18,11 +20,11 @@ def create_schema(client):
         WOQLQuery().doctype("Party").label("Party").\
                     description("Political Party"),
         WOQLQuery().doctype("Representative").label("Representative").\
-                    description("An elected member of the US congress").\
-                    property("member_of", "Party").label("Member of").cardinality(1),
-        WOQLQuery().doctype("Similarity").label("Similarity").\
-                    property("similarity", "decimal").label("Similarity").\
-                    property("similar_to", "Representative").label("Similar To").cardinality(2),
+                    description("An elected member of the US congress"),
+        WOQLQuery().add_property("member_of", "Party").label("Member of").domain("Representative").cardinality(1),
+        WOQLQuery().doctype("Similarity").label("Similarity"),
+        WOQLQuery().add_property("similarity", "decimal").label("Similarity").domain("Similarity"),
+        WOQLQuery().add_property("similar_to", "Representative").label("Similar To").cardinality(2).domain("Similarity"),
         WOQLQuery().add_class("ArmedForcesSimilarity").label("Armed Forces").parent("Similarity"),
         WOQLQuery().add_class("CivilRightsSimilarity").label("Civil Rights").parent("Similarity"),
         WOQLQuery().add_class("HealthSimilarity").label("Health").parent("Similarity"),
@@ -36,6 +38,24 @@ def create_schema(client):
 
 def get_inserts(relation):
     inserts = WOQLQuery().woql_and(
+        WOQLQuery().add_triple("v:Party_A_ID","type","scm:Party"),
+        WOQLQuery().add_triple("v:Party_A_ID","label","v:Party_A"),
+        WOQLQuery().add_triple("v:Party_B_ID","type","scm:Party"),
+        WOQLQuery().add_triple("v:Party_B_ID","label","v:Party_B"),
+        WOQLQuery().add_triple("v:Rep_A_ID","type","scm:Representative"),
+        WOQLQuery().add_triple("v:Rep_A_ID","label","v:Rep_A"),
+        WOQLQuery().add_triple("v:Rep_A_ID","member_of","v:Party_A_ID"),
+        WOQLQuery().add_triple("v:Rep_B_ID","type","scm:Representative"),
+        WOQLQuery().add_triple("v:Rep_B_ID","label","v:Rep_B"),
+        WOQLQuery().add_triple("v:Rep_B_ID","member_of","v:Party_B_ID"),
+        WOQLQuery().add_triple("v:Rel_ID","type","scm:Similarity"),
+        WOQLQuery().add_triple("v:Rel_ID","label","v:Rel_Label"),
+        WOQLQuery().add_triple("v:Rel_ID","similar_to","v:Rep_A_ID"),
+        WOQLQuery().add_triple("v:Rel_ID","similar_to","v:Rep_B_ID"),
+        WOQLQuery().add_triple("v:Rel_ID","similarity","v:Similarity")
+    )  
+    print(json.dumps(inserts.json()))  
+    '''inserts = WOQLQuery().woql_and(
         WOQLQuery().insert("v:Party_A_ID", "Party").label("v:Party_A"),
         WOQLQuery().insert("v:Party_B_ID", "Party").label("v:Party_B"),
         WOQLQuery().insert("v:Rep_A_ID", "Representative").label("v:Rep_A").\
@@ -46,7 +66,7 @@ def get_inserts(relation):
                     property("similar_to", "v:Rep_A_ID").\
                     property("similar_to", "v:Rep_B_ID").\
                     property("similarity", "v:Similarity")
-      )
+      )'''
     return inserts
 
 def get_csv_variables(url):
@@ -84,17 +104,17 @@ def load_csvs(client, csvs):
        client : a WOQLClient() connection
        csvs : a dict of all csvs to be input
     """
-    for key, url in csvs.items:
+    for key, url in csvs.items():
         csv = get_csv_variables(url)
         wrangles = get_wrangles(key)
         inputs = WOQLQuery().woql_and(csv, *wrangles)
-        inserts = getInserts(key)
+        inserts = get_inserts(key)
         answer = WOQLQuery().when(inputs, inserts)
         answer.execute(client)
 
 # run tutorial
 client = woql.WOQLClient()
 client.connect(server_url, key)
-client.directCreateDatabase(dburl, "Politics Graph", key)
+client.createDatabase(dbId, "Politics Graph")
 create_schema(client)
 load_csvs(client, CSVS)

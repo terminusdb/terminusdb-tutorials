@@ -122,6 +122,13 @@
           },
           {
             "typecast": [
+              "v:Bike",
+              "xsd:string",
+              "v:Bike_Label"
+            ]
+          },
+          {
+            "typecast": [
               "v:Duration",
               "xsd:integer",
               "v:Duration_Cast"
@@ -160,7 +167,7 @@
                     "@value": "Bike ",
                     "@type": "xsd:string"
                   },
-                  "v:Bike",
+                  "v:Bike_Label",
                   {
                     "@value": " start at ",
                     "@type": "xsd:string"
@@ -275,7 +282,7 @@
             "add_triple": [
               "v:Bike_URL",
               "rdfs:label",
-              "v:Bike"
+              "v:Bike_Label"
             ]
           }
         ]
