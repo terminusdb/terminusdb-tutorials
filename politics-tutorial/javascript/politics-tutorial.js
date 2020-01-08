@@ -10,12 +10,12 @@
  */
 const csvs = {
     ArmedForcesSimilarity: "https://terminusdb.com/t/data/congress/armed_forces_weighted_similarity.csv",
-    //CivilRightsSimilarity: "https://terminusdb.com/t/data/congress/civil_rights_weighted_similarity.csv",
-    //HealthSimilarity: "https://terminusdb.com/t/data/congress/health_weighted_similarity.csv",
-    //ImmigrationSimilarity: "https://terminusdb.com/t/data/congress/immigration_weighted_similarity.csv",
-    //InternationalAffairsSimilarity: "https://terminusdb.com/t/data/congress/international_affairs_weighted_similarity.csv",
-    //TaxationSimilarity: "https://terminusdb.com/t/data/congress/taxation_weighted_similarity.csv",
-    //OverallSimilarity: "https://terminusdb.com/t/data/congress/weighted_similarity.csv"    
+    CivilRightsSimilarity: "https://terminusdb.com/t/data/congress/civil_rights_weighted_similarity.csv",
+    HealthSimilarity: "https://terminusdb.com/t/data/congress/health_weighted_similarity.csv",
+    ImmigrationSimilarity: "https://terminusdb.com/t/data/congress/immigration_weighted_similarity.csv",
+    InternationalAffairsSimilarity: "https://terminusdb.com/t/data/congress/international_affairs_weighted_similarity.csv",
+    TaxationSimilarity: "https://terminusdb.com/t/data/congress/taxation_weighted_similarity.csv",
+    OverallSimilarity: "https://terminusdb.com/t/data/congress/weighted_similarity.csv"    
 };
 
 /**
@@ -84,7 +84,7 @@ function createSchema(client){
             .parent("Similarity"),
         WOQL.add_class("OverallSimilarity")
             .label("Overall")
-            .parent("Similarity"),
+            .parent("Similarity")
    );
    return schema.execute(client);
 }       

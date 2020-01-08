@@ -2,9 +2,8 @@ import woqlclient.woqlClient as woql
 import json
 
 client = woql.WOQLClient()
-server_url ="http://195.201.12.87:6365" 
-#"http://localhost:6363"
-key = "connectors wanna plans compressed"
+server_url ="http://localhost:6363"
+key = "root"
 dburl = server_url + "/pybike"
 
 client.connect(server_url, key)

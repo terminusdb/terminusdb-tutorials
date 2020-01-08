@@ -2,12 +2,11 @@ import woqlclient.woqlClient as woql
 from woqlclient import WOQLQuery
 import json
 
-CSVS = {"OverallSimilarity" : "https://terminusdb.com/t/data/council/weighted_similarity (1).csv"}
+CSVS = {"OverallSimilarity" : "https://terminusdb.com/t/data/council/weighted_similarity.csv"}
 
-server_url = "http://195.201.12.87:6365"
-#"http://localhost:6363"
+server_url = "http://localhost:6363"
 dbId= "mydb"
-key = "connectors wanna plans compressed"
+key = "root"
 dburl = server_url + "/mydb"
 
 def create_schema(client):
