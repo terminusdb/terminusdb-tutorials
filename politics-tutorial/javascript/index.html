@@ -3,9 +3,17 @@
 
 <body>
     <script src="../../../terminus-client/dist/terminus-client.min.js"></script>
-    <script src="./politics-tutorial.js"></script>
+    <script src="../../../terminus-dashboard/dist/terminus-dashboard.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <script sc="./politics-tutorial.js"></script>
+    <script>
+    </script>
     <div id="myresults">
-        <a href="#" onClick='runTutorial("http://localhost:6363/", "root", "congress_data")'>Load Data</a>
+        <a href="#" onClick='runTutorial("http://localhost:6363/", "root", "dublin_council")'>Load Data</a>
+        <a href="#" onClick='getView("http://localhost:6363/", "root", "dublin_council")'>Visualise</a>
     </div>
+    <div id="target"></div>
 </body>
 </html>
