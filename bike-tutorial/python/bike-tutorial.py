@@ -2,9 +2,10 @@ import woqlclient.woqlClient as woql
 import json
 
 client = woql.WOQLClient()
-server_url = "http://localhost:6363"
-key = "root"
-dburl = server_url + "/mydb"
+server_url ="http://195.201.12.87:6365" 
+#"http://localhost:6363"
+key = "connectors wanna plans compressed"
+dburl = server_url + "/pybike"
 
 client.connect(server_url, key)
 client.directCreateDatabase(dburl, "Bike Graph", key)
@@ -12,9 +13,9 @@ client.directCreateDatabase(dburl, "Bike Graph", key)
 with open('./createschema.json') as json_file:
 	json_data = json.load(json_file)
 
-json_data["@context"]["doc"] = myurl + "/document/"
-json_data["@context"]["scm"] = myurl + "/schema#"
-json_data["@context"]["db"] = myurl + "/"
+json_data["@context"]["doc"] = dburl + "/document/"
+json_data["@context"]["scm"] = dburl + "/schema#"
+json_data["@context"]["db"] = dburl + "/"
 
 save_context = json_data["@context"]
 
