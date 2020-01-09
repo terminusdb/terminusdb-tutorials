@@ -177,7 +177,6 @@ function showView(client){
     const WOQL = TerminusClient.WOQL;
     const View = TerminusClient.View;
     var woql = WOQL.limit(1000).and(
-        WOQL.triple("v:Subject","type","OverallSimilarity"),
         WOQL.triple("v:Subject","similar_to","v:Value"),
         WOQL.triple("v:Subject","similar_to","v:Value2"),
         WOQL.triple("v:Subject","similarity","v:Similarity"),
