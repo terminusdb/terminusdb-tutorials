@@ -4,10 +4,15 @@ import json
 
 CSVS = {"OverallSimilarity" : "https://terminusdb.com/t/data/council/weighted_similarity (1).csv"}
 
+<<<<<<< HEAD
 server_url = "http://195.201.12.87:6365"
 #"http://localhost:6363"
 dbId= "mydb"
 key = "connectors wanna plans compressed"
+=======
+server_url = "http://localhost:6363"
+key = "root"
+>>>>>>> eb6c20374626cf9a14af7f0554cb55a573d8d6eb
 dburl = server_url + "/mydb"
 
 def create_schema(client):
@@ -17,6 +22,7 @@ def create_schema(client):
         client : a WOQLClient() connection
     """
     schema = WOQLQuery().when(True).woql_and(
+<<<<<<< HEAD
         WOQLQuery().add_class("scm:Party"),
         WOQLQuery().add_quad("scm:Party", "rdfs:label", "Party", "db:schema"),
         WOQLQuery().add_quad("scm:Party", "rdfs:subClassOf", "tcs:Document", "db:schema"),
@@ -36,6 +42,16 @@ def create_schema(client):
         WOQLQuery().add_quad("scm:similar_to", "rdfs:domain", "scm:Similarity", "db:schema"),
         WOQLQuery().add_quad("scm:similarity", "label", {"@value": "Similar To", "@type": "xsd:string"}, "db:schema"),
         WOQLQuery().add_quad("scm:similarity", "rdfs:domain","scm:Similarity", "db:schema"),
+=======
+        WOQLQuery().doctype("Party").label("Party").\
+                    description("Political Party"),
+        WOQLQuery().doctype("Representative").label("Representative").\
+                    description("An elected member of the US congress").\
+                    property("member_of", "Party").label("Member of").cardinality(1),
+        WOQLQuery().doctype("Similarity").label("Similarity").\
+                    property("similarity", "decimal").label("Similarity").\
+                    property("similar_to", "Representative").label("Similar To").cardinality(2),
+>>>>>>> eb6c20374626cf9a14af7f0554cb55a573d8d6eb
         WOQLQuery().add_class("ArmedForcesSimilarity").label("Armed Forces").parent("Similarity"),
         WOQLQuery().add_class("CivilRightsSimilarity").label("Civil Rights").parent("Similarity"),
         WOQLQuery().add_class("HealthSimilarity").label("Health").parent("Similarity"),
@@ -49,6 +65,7 @@ def create_schema(client):
 
 def get_inserts(relation):
     inserts = WOQLQuery().woql_and(
+<<<<<<< HEAD
         WOQLQuery().add_triple("v:Party_A_ID","type","scm:Party"),  
         WOQLQuery().add_triple("v:Party_A_ID","label","v:Party_A"),
         WOQLQuery().add_triple("v:Party_B_ID","type","scm:Party"),
@@ -66,6 +83,8 @@ def get_inserts(relation):
         WOQLQuery().add_triple("v:Rel_ID","similarity","v:Similarity")
     )  
     '''inserts = WOQLQuery().woql_and(
+=======
+>>>>>>> eb6c20374626cf9a14af7f0554cb55a573d8d6eb
         WOQLQuery().insert("v:Party_A_ID", "Party").label("v:Party_A"),
         WOQLQuery().insert("v:Party_B_ID", "Party").label("v:Party_B"),
         WOQLQuery().insert("v:Rep_A_ID", "Representative").label("v:Rep_A").\
@@ -76,7 +95,11 @@ def get_inserts(relation):
                     property("similar_to", "v:Rep_A_ID").\
                     property("similar_to", "v:Rep_B_ID").\
                     property("similarity", "v:Similarity")
+<<<<<<< HEAD
       )'''
+=======
+      )
+>>>>>>> eb6c20374626cf9a14af7f0554cb55a573d8d6eb
     return inserts
 
 def get_csv_variables(url):
@@ -102,7 +125,12 @@ def get_wrangles(relation):
          WOQLQuery().idgen("doc:Representative", ["v:Rep_A"], "v:Rep_A_ID"),
          WOQLQuery().idgen("doc:Representative", ["v:Rep_B"], "v:Rep_B_ID"),
          WOQLQuery().typecast("v:Distance", "xsd:decimal", "v:Similarity"),
+<<<<<<< HEAD
          WOQLQuery().idgen("doc:Similarity", ["v:Rep_A", "v:Rep_B"], "v:Rel_ID")
+=======
+         WOQLQuery().idgen("doc:Similarity", ["v:Rep_A", "v:Rep_B"], "v:Rel_ID"),
+         WOQLQuery().concat("v:Distance between v:Rep_A and v:Rep_B", "v:Rel_Label")
+>>>>>>> eb6c20374626cf9a14af7f0554cb55a573d8d6eb
     ]
     return wrangles
 
@@ -113,6 +141,7 @@ def load_csvs(client, csvs):
        client : a WOQLClient() connection
        csvs : a dict of all csvs to be input
     """
+<<<<<<< HEAD
     for key, url in csvs.items():
         csv = get_csv_variables(url)
         wrangles = get_wrangles(key)
@@ -120,11 +149,23 @@ def load_csvs(client, csvs):
         inserts = get_inserts(key)
         answer = WOQLQuery().when(inputs, inserts)
         #print(json.dumps(answer.json()))
+=======
+    for key, url in csvs.items:
+        csv = get_csv_variables(url)
+        wrangles = get_wrangles(key)
+        inputs = WOQLQuery().woql_and(csv, *wrangles)
+        inserts = getInserts(key)
+        answer = WOQLQuery().when(inputs, inserts)
+>>>>>>> eb6c20374626cf9a14af7f0554cb55a573d8d6eb
         answer.execute(client)
 
 # run tutorial
 client = woql.WOQLClient()
 client.connect(server_url, key)
+<<<<<<< HEAD
 client.createDatabase(dbId, "Politics Graph")
+=======
+client.directCreateDatabase(dburl, "Politics Graph", key)
+>>>>>>> eb6c20374626cf9a14af7f0554cb55a573d8d6eb
 create_schema(client)
 load_csvs(client, CSVS)
