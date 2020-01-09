@@ -4,6 +4,8 @@
  * on an urban program in Washington DC
  */
 
+var x = new TerminusDashboard.TerminusViewer();
+var TerminusClient = x.TerminusClient();
 
 /**
  * The list of CSV files that we want to import
@@ -162,7 +164,46 @@ function getWrangles(relation){
      ];
      return wrangles;
 }
- 
+
+function getView(url, key, dbid){
+    var client = new TerminusClient.WOQLClient();
+    client.connect(url, key).then(() => {
+        client.connectionConfig.dbid = dbid;
+        showView(client);
+    });
+}
+
+function showView(client){
+    const WOQL = TerminusClient.WOQL;
+    const View = TerminusClient.View;
+    var woql = WOQL.limit(1000).and(
+        WOQL.triple("v:Subject","type","OverallSimilarity"),
+        WOQL.triple("v:Subject","similar_to","v:Value"),
+        WOQL.triple("v:Subject","similar_to","v:Value2"),
+        WOQL.triple("v:Subject","similarity","v:Similarity"),
+        WOQL.triple("v:Value","member_of","v:Party"),
+        WOQL.triple("v:Value2","member_of","v:Party2"),
+        WOQL.not().eq("v:Value","v:Value2"),
+        WOQL.opt().triple("v:Value2","label","v:Lab2"),
+        WOQL.opt().triple("v:Value","label","v:Lab1"),
+        WOQL.eval(WOQL.divide(1, WOQL.exp("v:Similarity", 4)), "v:Distance")
+    );
+    const view = View.graph();
+    view.node("v:Subject", "v:Lab2", "v:Lab1", "v:Party2", "v:Party", "v:Similarity", "v:Distance").hidden(true)
+    view.node("v:Similarity").hidden(true)
+    view.edge("v:Value", "v:Value2").distance("v:Distance").text("v:Distance").weight(0.04)
+    view.node("v:Value").text("v:Lab1").icon({ label: true})
+    view.node("v:Value2").text("v:Lab2").icon({ label: true})
+    view.node("v:Value", "v:Value2").charge(-4999).collisionRadius(30)
+    view.node("v:Value").v("v:Party").in("doc:PartyR").color([235, 25, 22])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyR").color([235, 25, 22])
+    view.node("v:Value").v("v:Party").in("doc:PartyD").color([25, 25, 225])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyD").color([25, 25, 225])
+    var tv = new TerminusDashboard.TerminusViewer(client);
+    const res = tv.getResult(woql, view);
+    document.getElementById('target').appendChild(res.getAsDOM());
+    res.load();
+}
 
 
 /**
@@ -178,7 +219,8 @@ function runTutorial(terminus_server_url, terminus_server_key, terminus_db_id){
         createDatabase(client, terminus_db_id)
         .then(() => {
             createSchema(client)
-            .then(() => loadCSVs(client, Object.keys(csvs), csvs));            
+            .then(() => loadCSVs(client, Object.keys(csvs), csvs))
+            .then(() => showView(client));
         })         
     }).catch((error) => console.log(error));
 }

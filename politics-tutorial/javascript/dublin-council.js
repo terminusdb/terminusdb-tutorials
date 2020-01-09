@@ -3,6 +3,7 @@
  * the creation of a database from CSV files representing information about bicycle trips
  * on an urban program in Washington DC
  */
+const TerminusClient = new TerminusDashboard.TerminusViewer().TerminusClient();
 
 
 /**
