@@ -50,9 +50,10 @@ csvs = [
 
 def create_schema(client):
     """The query which creates the schema
-        Parameters
+        Parameters - it uses variables rather than the fluent style as an example
         ==========
         client : a WOQLClient() connection
+
     """
     station = WOQLQuery().doctype("Station").label("Bike Station")
     station.description("A station where bikes are deposited")
