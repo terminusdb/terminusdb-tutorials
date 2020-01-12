@@ -130,7 +130,7 @@ function getWrangles(relation){
          WOQL.idgen("doc:Representative", ["v:Rep_B"], "v:Rep_B_ID"),
          WOQL.typecast("v:Distance", "xsd:decimal", "v:Similarity"),
          WOQL.idgen("doc:Similarity", ["v:Rep_A", "v:Rep_B"], "v:Rel_ID"),
-         WOQL.concat("v:Distance between v:Rep_A and v:Rep_B", "v:Rel_Label")
+         WOQL.concat("v:Rep_A similarity v:Distance to v:Rep_B", "v:Rel_Label")
      ];
      return wrangles;
 }
@@ -155,7 +155,7 @@ function showView(client){
         WOQL.not().eq("v:Value","v:Value2"),
         WOQL.opt().triple("v:Value2","label","v:Lab2"),
         WOQL.opt().triple("v:Value","label","v:Lab1"),
-        WOQL.eval(WOQL.divide(1, WOQL.exp("v:Similarity", 4)), "v:Distance")
+        WOQL.eval(WOQL.divide(1,WOQL.exp("v:Similarity",4)),"v:Distance")
     );
     const view = View.graph();
     view.node("v:Subject", "v:Lab2", "v:Lab1", "v:Party2", "v:Party", "v:Similarity", "v:Distance").hidden(true)
