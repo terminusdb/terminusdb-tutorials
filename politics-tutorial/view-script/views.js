@@ -14,9 +14,29 @@ WOQL.limit(1000).and(
     WOQL.eval(WOQL.divide(1, WOQL.exp("v:Similarity", 4)), "v:Distance")
 )
 
-/*******************
- View Script
-********************/
+/***************************************
+ View Script for US Congress
+****************************************/
+
+view = View.graph();
+view.node("v:Subject", "v:Lab2", "v:Lab1", "v:Party2", "v:Party", "v:Similarity", "v:Distance").hidden(true)
+view.node("v:Similarity").hidden(true)
+view.edge("v:Value", "v:Value2").distance("v:Distance").text("v:Distance").weight(0.04)
+view.node("v:Value").text("v:Lab1").icon({ label: true})
+view.node("v:Value2").text("v:Lab2").icon({ label: true})
+view.node("v:Value", "v:Value2").charge(-4999).collisionRadius(30)
+view.node("v:Value").v("v:Party").in("doc:PartyR").color([235, 25, 22])
+view.node("v:Value2").v("v:Party2").in("doc:PartyR").color([235, 25, 22])
+view.node("v:Value").v("v:Party").in("doc:PartyD").color([25, 25, 225])
+view.node("v:Value2").v("v:Party2").in("doc:PartyD").color([25, 25, 225])
+var tv = new TerminusDashboard.TerminusViewer(client);
+const res = tv.getResult(woql, view);
+document.getElementById('target').appendChild(res.getAsDOM());
+res.load();
+
+/***************************************
+ View Script for Dublin City Council
+****************************************/
 
 view = View.graph();
 view.node("v:Subject", "v:Lab2", "v:Lab1", "v:Party2", "v:Party", "v:Similarity", "v:Distance").hidden(true)
