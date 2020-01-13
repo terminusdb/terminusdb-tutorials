@@ -10,15 +10,15 @@ const TerminusClient = new TerminusDashboard.TerminusViewer().TerminusClient();
  * The list of CSV files that we want to import
  */
 const csvs = {
-    OverallSimilarity: "https://terminusdb.com/t/data/council/weighted_similarity.csv"    
+    OverallSimilarity: "https://terminusdb.com/t/data/council/weighted_similarity.csv"
 };
 
 /**
- * 
- * @param {WOQLClient} client 
- * @param {String} id 
- * @param {String} title 
- * @param {String} description 
+ *
+ * @param {WOQLClient} client
+ * @param {String} id
+ * @param {String} title
+ * @param {String} description
  */
 function createDatabase(client, id, title, description){
     title = title || "Council Voting Data";
@@ -50,7 +50,7 @@ function createSchema(client){
             .description("Political Party"),
         WOQL.doctype("Representative")
             .label("Representative")
-            .description("An elected member of the US congress")
+            .description("An elected member of the Dublin city council")
             .property("member_of", "Party")
                 .label("Member of").cardinality(1),
         WOQL.doctype("Similarity")
@@ -61,7 +61,7 @@ function createSchema(client){
                 .label("Similar To").cardinality(2)
    );
    return schema.execute(client);
-}       
+}
 
 function getInserts(relation){
     const inserts = WOQL.and(
@@ -85,9 +85,9 @@ function getInserts(relation){
 }
 
 /**
- * 
- * @param {WOQLClient} client 
- * @param {[String]} arr - array of URLs to load CSVs from 
+ *
+ * @param {WOQLClient} client
+ * @param {[String]} arr - array of URLs to load CSVs from
  */
 function loadCSVs(client, queue, obj){
     if(typeof resp == "undefined") resp = false;
@@ -96,7 +96,7 @@ function loadCSVs(client, queue, obj){
         const csv = getCSVVariables(url);
         console.log("loading relation", relation, url);
         const wrangles = getWrangles(relation);
-        const inputs = WOQL.and(csv, ...wrangles); 
+        const inputs = WOQL.and(csv, ...wrangles);
         const inserts = getInserts(relation);
         var answer = WOQL.when(inputs, inserts);
         resp = answer.execute(client)
@@ -108,8 +108,8 @@ function loadCSVs(client, queue, obj){
 
 /**
  * Extracting the data from a CSV and binding it to variables
- * @param {WOQLClient} client 
- * @param {String} url - the URL of the CSV 
+ * @param {WOQLClient} client
+ * @param {String} url - the URL of the CSV
  */
 function getCSVVariables(url){
     const csv = WOQL.get(
@@ -134,7 +134,7 @@ function getWrangles(relation){
      ];
      return wrangles;
 }
- 
+
 function getView(url, key, dbid){
     var client = new TerminusClient.WOQLClient();
     client.connect(url, key).then(() => {
@@ -207,7 +207,6 @@ function runTutorial(terminus_server_url, terminus_server_key, terminus_db_id){
             createSchema(client)
             .then(() => loadCSVs(client, Object.keys(csvs), csvs))
             .then(() => showView(client));
-        })         
+        })
     }).catch((error) => console.log(error));
 }
-
