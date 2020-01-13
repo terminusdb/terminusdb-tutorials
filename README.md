@@ -9,7 +9,9 @@ Docker image available at https://github.com/terminusdb/terminus-quickstart
 #### Python Client
 
 Install using pip:
+
 `pip install terminus-client-python`
+
 Install from source following:
 https://github.com/terminusdb/terminus-client-python
 
