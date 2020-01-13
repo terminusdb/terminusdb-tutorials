@@ -3,6 +3,7 @@
  * the creation of a database from CSV files representing information about bicycle trips
  * on an urban program in Washington DC
  */
+const TerminusClient = new TerminusDashboard.TerminusViewer().TerminusClient();
 
 
 /**
@@ -177,6 +178,37 @@ const inserts = WOQL.and(
         .label("v:Bike_Label")
 );
 
+function getView(url, key, dbid){
+    var client = new TerminusClient.WOQLClient();
+    client.connect(url, key).then(() => {
+        client.connectionConfig.dbid = dbid;
+        showView(client);
+    });
+}
+
+function showView(client){
+    const WOQL = TerminusClient.WOQL;
+    const View = TerminusClient.View;
+    var woql = WOQL.select("v:Start", "v:Start_Label", "v:End", "v:End_Label").and(
+        WOQL.triple("v:Journey", "type", "scm:Journey"),
+        WOQL.triple("v:Journey", "start_station", "v:Start"),
+        WOQL.opt().triple("v:Start", "label", "v:Start_Label"),
+        WOQL.triple("v:Journey", "end_station", "v:End"),
+        WOQL.opt().triple("v:End", "label", "v:End_Label"),
+        WOQL.triple("v:Journey", "journey_bicycle", "v:Bike")
+    );
+    view = View.graph();
+    view.node("Start_Label", "End_Label").hidden(true)
+    view.node("End").icon({color: [255,0,0], unicode: "\uf84a"}).text("v:End_Label").size(25).charge(-10)
+    view.node("Start").icon({color: [255,0,0], unicode: "\uf84a"}).text("v:Start_Label").size(25).collisionRadius(10)
+    view.edge("Start", "End").weight(100)
+    var tv = new TerminusDashboard.TerminusViewer(client);
+    const res = tv.getResult(woql, view);
+    document.getElementById('target').appendChild(res.getAsDOM());
+    res.load();
+}
+
+
 
 /**
  * Runs the tutorial from start to finish
@@ -191,7 +223,8 @@ function runTutorial(terminus_server_url, terminus_server_key, terminus_db_id){
         createDatabase(client, terminus_db_id)
         .then(() => {
             createSchema(client)
-            .then(() => loadCSVs(client, csvs));            
+            .then(() => loadCSVs(client, csvs))
+            .then(() => showView(client))
         })         
     }).catch((error) => console.log(error));
 }

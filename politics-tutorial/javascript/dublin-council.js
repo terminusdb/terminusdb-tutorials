@@ -3,19 +3,14 @@
  * the creation of a database from CSV files representing information about bicycle trips
  * on an urban program in Washington DC
  */
+const TerminusClient = new TerminusDashboard.TerminusViewer().TerminusClient();
 
 
 /**
  * The list of CSV files that we want to import
  */
 const csvs = {
-//    ArmedForcesSimilarity: "https://terminusdb.com/t/data/congress/armed_forces_weighted_similarity.csv",
-//    CivilRightsSimilarity: "https://terminusdb.com/t/data/congress/civil_rights_weighted_similarity.csv",
-//    HealthSimilarity: "https://terminusdb.com/t/data/congress/health_weighted_similarity.csv",
-//    ImmigrationSimilarity: "https://terminusdb.com/t/data/congress/immigration_weighted_similarity.csv",
-//    InternationalAffairsSimilarity: "https://terminusdb.com/t/data/congress/international_affairs_weighted_similarity.csv",
-//    TaxationSimilarity: "https://terminusdb.com/t/data/congress/taxation_weighted_similarity.csv",
-    OverallSimilarity: "https://terminusdb.com/t/data/council/weighted_similarity (1).csv"    
+    OverallSimilarity: "https://terminusdb.com/t/data/council/weighted_similarity.csv"    
 };
 
 /**
@@ -135,11 +130,66 @@ function getWrangles(relation){
          WOQL.idgen("doc:Representative", ["v:Rep_B"], "v:Rep_B_ID"),
          WOQL.typecast("v:Distance", "xsd:decimal", "v:Similarity"),
          WOQL.idgen("doc:Similarity", ["v:Rep_A", "v:Rep_B"], "v:Rel_ID"),
-         WOQL.concat("v:Distance between v:Rep_A and v:Rep_B", "v:Rel_Label")
+         WOQL.concat("v:Rep_A similarity v:Distance to v:Rep_B", "v:Rel_Label")
      ];
      return wrangles;
 }
  
+function getView(url, key, dbid){
+    var client = new TerminusClient.WOQLClient();
+    client.connect(url, key).then(() => {
+        client.connectionConfig.dbid = dbid;
+        showView(client);
+    });
+}
+
+function showView(client){
+    const WOQL = TerminusClient.WOQL;
+    const View = TerminusClient.View;
+    var woql = WOQL.limit(1000).and(
+        WOQL.triple("v:Subject","similar_to","v:Value"),
+        WOQL.triple("v:Subject","similar_to","v:Value2"),
+        WOQL.triple("v:Subject","similarity","v:Similarity"),
+        WOQL.triple("v:Value","member_of","v:Party"),
+        WOQL.triple("v:Value2","member_of","v:Party2"),
+        WOQL.not().eq("v:Value","v:Value2"),
+        WOQL.opt().triple("v:Value2","label","v:Lab2"),
+        WOQL.opt().triple("v:Value","label","v:Lab1"),
+        WOQL.eval(WOQL.divide(1,WOQL.exp("v:Similarity",4)),"v:Distance")
+    );
+    const view = View.graph();
+    view.node("v:Subject", "v:Lab2", "v:Lab1", "v:Party2", "v:Party", "v:Similarity", "v:Distance").hidden(true)
+    view.node("v:Similarity").hidden(true)
+    view.edge("v:Value", "v:Value2").distance("v:Distance").text("v:Distance").weight(0.04)
+    view.node("v:Value").text("v:Lab1").icon({ label: true})
+    view.node("v:Value2").text("v:Lab2").icon({ label: true})
+    view.node("v:Value", "v:Value2").charge(-4999).collisionRadius(30)
+    view.node("v:Value").v("v:Party").in("doc:PartySolidarity").color([5, 25, 22])
+    view.node("v:Value2").v("v:Party2").in("doc:PartySolidarity").color([5, 25, 22])
+    view.node("v:Value").v("v:Party").in("doc:PartySocial%20Democrats").color([25, 25, 225])
+    view.node("v:Value2").v("v:Party2").in("doc:PartySocial%20Democrats").color([25, 25, 225])
+    view.node("v:Value").v("v:Party").in("doc:PartySinn%20F%C3%A9in").color([25, 225, 25])
+    view.node("v:Value2").v("v:Party2").in("doc:PartySinn%20F%C3%A9in").color([25, 225, 25])
+    view.node("v:Value").v("v:Party").in("doc:PartyLabour%20Party").color([255, 0, 0])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyLabour%20Party").color([255, 0, 0])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyFine%20Gael").color([0, 0, 255])
+    view.node("v:Value").v("v:Party").in("doc:PartyFine%20Gael").color([0, 0, 255])
+    view.node("v:Value").v("v:Party").in("doc:PartyFianna%20F%C3%A1il").color([100, 200, 100])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyFianna%20F%C3%A1il").color([100, 200, 100])
+    view.node("v:Value").v("v:Party").in("doc:PartyGreen%20Party").color([25, 225, 125])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyGreen%20Party").color([225, 225, 125])
+    view.node("v:Value").v("v:Party").in("doc:PartyIndependent").color([25, 25, 25])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyIndependent").color([25, 25, 25])
+    view.node("v:Value").v("v:Party").in("doc:PartyPeople%20Before%20Profit").color([225, 25, 25])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyPeople%20Before%20Profit").color([225, 25, 25])
+    view.node("v:Value").v("v:Party").in("doc:PartyWorkers'%20Party").color([225, 225, 225])
+    view.node("v:Value2").v("v:Party2").in("doc:PartyWorkers'%20Party").color([225, 225, 225])
+    var tv = new TerminusDashboard.TerminusViewer(client);
+    const res = tv.getResult(woql, view);
+    document.getElementById('target').appendChild(res.getAsDOM());
+    res.load();
+}
+
 
 
 /**
@@ -155,7 +205,8 @@ function runTutorial(terminus_server_url, terminus_server_key, terminus_db_id){
         createDatabase(client, terminus_db_id)
         .then(() => {
             createSchema(client)
-            .then(() => loadCSVs(client, Object.keys(csvs), csvs));            
+            .then(() => loadCSVs(client, Object.keys(csvs), csvs))
+            .then(() => showView(client));
         })         
     }).catch((error) => console.log(error));
 }
