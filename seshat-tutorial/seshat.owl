@@ -36,7 +36,24 @@
 	    rdfs:comment "Freeform area (FA). This is an area enclosed within a boundary, or a dated set of boundaries. Basically, it is our method for treating an arbitrary shape on the map to which a historical expert wishes to tie certain values of coded variables. Examples include a province within an empire, something with a hole in it, or a \"southeast corner\" of a region."@en ;
 	    rdfs:label "Free form area"@en ;
 	    rdfs:subClassOf scm:UnitOfTerritory .
+
+	scm:PoliticalAuthority
+	    a owl:Class ;
+	    rdfs:comment "A human social group with some autonomous political authority."@en ;
+	    rdfs:label "Political Authority"@en ;
+	    rdfs:subClassOf scm:Organisation .
+
+	scm:NaturalGeographicArea
+	    a owl:Class ;
+	    rdfs:comment "Natural Geographic Area (NGA). This type of unit is defined spatially by the area enclosed within a boundary drawn on the world map. It does not change with time. Its rough spatial scale is 100 km x 100 km (+/- 50%). Examples: Latium, Upper Egypt, Middle Yellow River Valley. "@en ;
+	    rdfs:label "NGA, Natural geographic area"@en ;
+	    rdfs:subClassOf scm:FreeFormArea .		
 	
+	scm:Meta-conflict
+	    a owl:Class ;
+	    rdfs:comment "This concept covers groups of conflicts that span a much larger time-frame between the belligerents. For example, the 'First', 'Second' and 'Third Punic' wars are conflicts within the Roman-Carthage meta-conflict. These wars are coded as separate wars, and linked to a 'Roman-Carthage' meta-conflict rather than coding a single centuries-long war."@en ;
+	    rdfs:label "Meta-conflict"@en .
+
 	scm:InterestGroup
 	    a owl:Class ;
 	    rdfs:comment "An Interest Group (IG) is a social group that pursues some common interest, so that its members are united by a common goal or goals. Polities and religious cults are also interest groups, but this category is broader. It also includes ethnic groups, professional associations, warrior bands, solidarity associations, mutual aid societies, firms and banks (including their pre-modern variants), etc. The Interest Group is defined sociologically, not geographically. However, a geographic area, enclosed within a boundary, refering to its area of operation, may be associated with it in the same way as with a polity or a Religious System(RS). "@en ;
@@ -46,70 +63,74 @@
 	scm:Organisation
 	    a owl:Class ;
 	    rdfs:comment "An abstract concept describing any recognisable human social group."@en ;
-	    rdfs:label "Organisation"@en ;
+	    rdfs:label "Organisation"@en .
 
 	scm:BureaucraticSystem
 	    a owl:Class ;
 	    rdfs:comment "Encodes the features of a historical bureaucratic system. "@en ;
-	    rdfs:label "Bureaucratic System"@en ;
+	    rdfs:label "Bureaucratic System"@en .
 
 	scm:AgriculturalDiversity
 	    a owl:Class ;
 	    rdfs:comment "IV-4-2. Agricultural Diversity [AR-SV-3; AR-SV-5]."@en ;
-	    rdfs:label "Agricultural Diversity"@en ;
+	    rdfs:label "Agricultural Diversity"@en .
 	
 	scm:AlternativeFoodSources
 	    a owl:Class ;
 	    rdfs:comment "IV-4-3. Alternative Food Sources. [AR-SV-7] [AR-SV-9] [AR-SV-11] "@en ;
-	    rdfs:label "Alternative Food Sources."@en ;
+	    rdfs:label "Alternative Food Sources."@en .
 	
 	scm:AuthorityEmphasis
 	    a owl:Class ;
 	    rdfs:comment "Where the emphasis of group authority lies"@en ;
-	    rdfs:label "Authority Emphasis"@en ;
+	    rdfs:label "Authority Emphasis"@en .
 	
 	scm:AuthoritySharing
 	    a owl:Class ;
 	    rdfs:comment "How authority is shared between leaders and others"@en ;
-	    rdfs:label "Authority Sharing"@en ;
+	    rdfs:label "Authority Sharing"@en .
 	
 	scm:BurialVariation
 	    a owl:Class ;
 	    rdfs:comment "Variation in burials and burial goods"@en ;
-	    rdfs:label "Burial Variation"@en ;
+	    rdfs:label "Burial Variation"@en .
 	
 	scm:Ceremonials
 	    a owl:Class ;
 	    rdfs:comment "Prominent Community Ceremonials [AR-TL-6] (based on Murdock and Wilson 1972)"@en ;
-	    rdfs:label "Ceremonials"@en ;
+	    rdfs:label "Ceremonials"@en .
 		
 	scm:CommunityIntegration
 	    a owl:Class ;
 	    rdfs:comment "Community integration, sum of scores [AR-TL-5] (based on Murdock and Wilson 1972)"@en ;
-	    rdfs:label "Community Integration "@en ;
+	    rdfs:label "Community Integration "@en .
 
 	scm:HierarchicalComplexity
 	    a owl:Class ;
 	    rdfs:comment "Encodes the number of levels in the most important hierarchies of a social system."@en ;
-	    rdfs:label "Hierarchical Complexity"@en ;
+	    rdfs:label "Hierarchical Complexity"@en .
 	
 	scm:HighGods
 	    a owl:Class ;
 	    rdfs:comment "A high god follows the definition of Guy Swanson (1960: chapter III and appendix 1) as \"a spiritual being who is believed to have created all reality and/or to be its ultimate governor, even though his sole act was to create other spirits who, in turn, created or control the natural world\"... (1) \"Absent or not reported,\" (2) \"Present but not active in human affairs,\" (3) \"Present and active in human affairs but not supportive of human morality\" and (4) \"Present, active, and specifically supportive of human morality\" (Divale 2000).\""@en ;
-	    rdfs:label "High Gods"@en ;
+	    rdfs:label "High Gods"@en .
 	
 	scm:HousingVariation
 	    a owl:Class ;
 	    rdfs:comment "Variation in housing or house compounds. "@en ;
-	    rdfs:label "Housing Variation"@en ;
+	    rdfs:label "Housing Variation"@en .
 	
-
+	scm:MonetarySystem
+	    a owl:Class ;
+	    rdfs:comment "Encodes the historical presence of different kinds of currency or monetary units."@en ;
+	    rdfs:label "Monetary System"@en ;
+	    rdfs:subClassOf scm:FeaturePresenceRecord .
+	
 	scm:Infrastructure
 	    a owl:Class ;
 	    rdfs:comment "Extra Infrastructure Variables For Resilience"@en ;
 	    rdfs:label "Infrastructure"@en ;
 	    rdfs:subClassOf scm:FeaturePresenceRecord .
-	
 	
 	scm:LeaderDifferentiation
 	    a owl:Class ;
@@ -141,19 +162,15 @@
 	    rdfs:label "Measurement System"@en ;
 	    rdfs:subClassOf scm:FeaturePresenceRecord .
 
-
-	
 	scm:FoodStorage
 	    a owl:Class ;
 	    rdfs:comment "IV-4-1. Food Storage."@en ;
-	    rdfs:label "Food Storage"@en ;
-	
+	    rdfs:label "Food Storage"@en .
 		
 	scm:CorporateExclusionary
 	    a owl:Class ;
-	    rdfs:label "Corporate Exclusionary"@en ;
+	    rdfs:label "Corporate Exclusionary"@en .
 	
-
 	scm:ComplexityVariation
 	    a owl:Class ;
 	    rdfs:comment "change in complexity over a period of time"@en ;
@@ -179,9 +196,6 @@
 	        scm:small_increase
 	        scm:big_increase
 	    ) .
-	
-
-
 	
 	scm:DegreeOfCentralization
 	    a owl:Class ;
@@ -245,55 +259,11 @@
 	        scm:unknown_income
 	    ) .
 	
-
-	
-	
-	scm:Meta-conflict
-	    a owl:Class ;
-	    rdfs:comment "This concept covers groups of conflicts that span a much larger time-frame between the belligerents. For example, the 'First', 'Second' and 'Third Punic' wars are conflicts within the Roman-Carthage meta-conflict. These wars are coded as separate wars, and linked to a 'Roman-Carthage' meta-conflict rather than coding a single centuries-long war."@en ;
-	    rdfs:label "Meta-conflict"@en ;
-	    rdfs:subClassOf scm:Event, tcs:Entity, tcs:QualifiedByConfidenceTag .
-	
-	scm:MonetarySystem
-	    a owl:Class ;
-	    rdfs:comment "Encodes the historical presence of different kinds of currency or monetary units."@en ;
-	    rdfs:label "Monetary System"@en ;
-	    rdfs:subClassOf scm:FeaturePresenceRecord .
-	
-	scm:NaturalGeographicArea
-	    a owl:Class ;
-	    rdfs:comment "Natural Geographic Area (NGA). This type of unit is defined spatially by the area enclosed within a boundary drawn on the world map. It does not change with time. Its rough spatial scale is 100 km x 100 km (+/- 50%). Examples: Latium, Upper Egypt, Middle Yellow River Valley. "@en ;
-	    rdfs:label "NGA, Natural geographic area"@en ;
-	    rdfs:subClassOf scm:FreeFormArea .
-	
-	scm:NavalEngagement
-	    a owl:Class ;
-	    rdfs:comment "Historical naval battles."@en ;
-	    rdfs:label "Naval Engagement"@en ;
-	    rdfs:subClassOf scm:Battle .
 		
-	scm:PeriodOfDuration
-	    a owl:Class ;
-	    rdfs:comment "A duration with start date and end date which can both be ranges"@en ;
-	    rdfs:label "Period of Duration"@en ;
-	    rdfs:subClassOf tcs:QualifiedByConfidenceTag .
-	
-	scm:PoliticalAuthority
-	    a owl:Class ;
-	    rdfs:comment "A human social group with some autonomous political authority."@en ;
-	    rdfs:label "Political Authority"@en ;
-	    rdfs:subClassOf scm:Organisation .
-	
 	scm:PoliticalEvolution
 	    a owl:Class ;
 	    rdfs:comment "The ways in which a political authority can evolve into another one"@en ;
 	    rdfs:label "Political Evolution"@en ;
-	    rdfs:subClassOf tcs:QualifiedByConfidenceTag .
-	
-	scm:PoliticalEvolutionChoice
-	    a owl:Class ;
-	    rdfs:comment "The ways in which a political authority can evolve into another one"@en ;
-	    rdfs:label "Political Evolution Choice"@en ;
 	    rdfs:subClassOf tcs:Enumerated ;
 	    owl:oneOf (scm:continuity
 	        scm:assimilation
@@ -307,29 +277,20 @@
 	    rdfs:label "Polity"@en ;
 	    rdfs:subClassOf scm:PoliticalAuthority .
 	
-	scm:PolityReference
-	    a owl:Class ;
-	    rdfs:comment "A reference to a political authority"@en ;
-	    rdfs:label "Polity Reference"@en ;
-	    rdfs:subClassOf tcs:QualifiedByConfidenceTag .
-	
 	scm:PostalSystem
 	    a owl:Class ;
 	    rdfs:comment "Encodes the historical presence of different kinds of postal system capabilities."@en ;
-	    rdfs:label "Postal System"@en ;
-	    rdfs:subClassOf scm:FeaturePresenceRecord .
+	    rdfs:label "Postal System"@en .
 	
 	scm:Professions
 	    a owl:Class ;
 	    rdfs:comment "Encodes the historical presence of various different aspects of a system of professions. "@en ;
-	    rdfs:label "Professions"@en ;
-	    rdfs:subClassOf scm:FeaturePresenceRecord .
+	    rdfs:label "Professions"@en .
 	
 	scm:PubliclyOwnedUtilitarianBuildings
 	    a owl:Class ;
 	    rdfs:comment "Typical examples include aqueducts, sewers, and granaries."@en ;
-	    rdfs:label "Publicly Owned Utilitarian Buildings"@en ;
-	    rdfs:subClassOf scm:FeaturePresenceRecord .
+	    rdfs:label "Publicly Owned Utilitarian Buildings"@en .
 	
 	scm:Quasi-polity
 	    a owl:Class ;
@@ -355,11 +316,7 @@
 	    rdfs:label "Siege"@en ;
 	    rdfs:subClassOf scm:ConflictEvent .
 	
-	scm:SourceOfIncome
-	    a owl:Class ;
-	    rdfs:comment "A source of income"@en ;
 	    rdfs:label "Source of Income"@en ;
-	    rdfs:subClassOf tcs:QualifiedByConfidenceTag .
 	
 	scm:SpecialSites
 	    a owl:Class ;
@@ -374,12 +331,6 @@
 	    rdfs:subClassOf scm:FeaturePresenceRecord .
 	
 	scm:Standardization
-	    a owl:Class ;
-	    rdfs:comment "The standard nature of a feature"@en ;
-	    rdfs:label "Standardization"@en ;
-	    rdfs:subClassOf tcs:QualifiedByConfidenceTag .
-	
-	scm:StandardizationChoice
 	    a owl:Class ;
 	    rdfs:comment "The standard nature of a feature"@en ;
 	    rdfs:label "Standardization"@en ;
@@ -677,62 +628,62 @@
 	scm:Boolean
 	    a owl:Class ;
 	    rdfs:comment "An annotated boolean: true/false value"@en ;
-	    rdfs:label "Boolean"@en ;
+	    rdfs:label "Boolean"@en .
 	
 	scm:Coordinate
 	    a owl:Class ;
 	    rdfs:comment "An annotated coordinate on the earth expressed as longitde / latitude"@en ;
-	    rdfs:label "Geographic Coordinate"@en ;
+	    rdfs:label "Geographic Coordinate"@en .
 	
 	scm:CoordinatePolygon
 	    a owl:Class ;
 	    rdfs:comment "An annotated geographic shape - a coordinate polygon"@en ;
-	    rdfs:label "Geographic Shape"@en ;
+	    rdfs:label "Geographic Shape"@en .
 	
 	scm:CoordinatePolyline
 	    a owl:Class ;
 	    rdfs:comment "An annotated geographic line of lat/long coordinates"@en ;
-	    rdfs:label "Geographic Line"@en ;
+	    rdfs:label "Geographic Line"@en .
 	
 	scm:Date
 	    a owl:Class ;
 	    rdfs:comment "An annotated xsd:date value (YYYY-MM-DD)"@en ;
-	    rdfs:label "Date"@en ;
+	    rdfs:label "Date"@en .
 	
 	scm:DateRange
 	    a owl:Class ;
 	    rdfs:comment "An annotated date or a range of dates YYYY-MM-DD"@en ;
-	    rdfs:label "Date (or date-range)"@en ;
+	    rdfs:label "Date (or date-range)"@en .
 	
 	scm:DateTime
 	    a owl:Class ;
 	    rdfs:comment "An annotated xsd:dateTime value (YYYY-MM-DDTHH:MM:SS)"@en ;
-	    rdfs:label "Date Time"@en ;
+	    rdfs:label "Date Time"@en .
 	
 	scm:DateTimeStamp
 	    a owl:Class ;
 	    rdfs:comment "An annotated xsd:dateTimeStamp - (timezone is required)"@en ;
-	    rdfs:label "Date-Time Stamp"@en ;
+	    rdfs:label "Date-Time Stamp"@en .
 	
 	scm:DayTimeDuration
 	    a owl:Class ;
 	    rdfs:comment "An annotated xsd:dayTimeDuration (Format: PnDTnHnMnS - e.g. P1D2H - 1 day, 2 hours)"@en ;
-	    rdfs:label "Day-Time Duration"@en ;
+	    rdfs:label "Day-Time Duration"@en .
 	
 	scm:Decimal
 	    a owl:Class ;
 	    rdfs:comment "An annotated decimal value"@en ;
-	    rdfs:label "Decimal"@en ;
+	    rdfs:label "Decimal"@en .
 	
 	scm:DecimalRange
 	    a owl:Class ;
 	    rdfs:comment "An annotated xdd:decimalRange value"@en ;
-	    rdfs:label "Decimal Range"@en ;
+	    rdfs:label "Decimal Range"@en .
 	
     scm:HTML
 	    a owl:Class ;
 	    rdfs:comment "An annotated HTML string value"@en ;
-	    rdfs:label "HTML"@en ;
+	    rdfs:label "HTML"@en .
 	
 	scm:Integer
 	    a owl:Class ;
@@ -743,17 +694,17 @@
 	scm:IntegerRange
 	    a owl:Class ;
 	    rdfs:comment "An annotated xdd:integerRange value"@en ;
-	    rdfs:label "Integer Range"@en ;
+	    rdfs:label "Integer Range"@en .
 	
 	scm:JSON
 	    a owl:Class ;
 	    rdfs:comment "An annotated JSON string value"@en ;
-	    rdfs:label "JSON"@en ;
+	    rdfs:label "JSON"@en .
 	
 	scm:NegativeInteger
 	    a owl:Class ;
-	    rdfs:comment "An annotated xsd:negativeInteger value <0"@en ;
-	    rdfs:label "Negative Integer"@en ;
+	    rdfs:comment "An annotated xsd:negativeInteger value < 0 "@en ;
+	    rdfs:label "Negative Integer"@en .
 	
 	scm:NonNegativeInteger
 	    a owl:Class ;
@@ -991,10 +942,10 @@
 	    rdfs:comment "Tags that can be added to annotations to indicate confidence in the value of some piece data"@en ;
 	    rdfs:label "Content Tags"@en ;
 	    rdfs:subClassOf tcs:Enumerated ;
-	    owl:oneOf (tcs:inferred
+	    owl:oneOf (
+			tcs:inferred
 	        tcs:disputed
 	        tcs:uncertain
-	        tcs:dubious
 	    ) .
 	
 	tcs:Document
@@ -1106,6 +1057,7 @@
 	    rdfs:label "URL"@en .
 	
 	
+	
 	scm:Frequency
 	  rdfs:label "Frequency"@en ;
 	  rdfs:comment "The genrational frequencies of events"@en ;
@@ -1122,6 +1074,75 @@
 	   scm:unknown
 	 ) .
 	
+	scm:AuthorityEmphasis
+	  rdfs:label "Authority Emphasis"@en ;
+	  rdfs:comment "Group Authority Emphasis - from leader to collective"@en ;
+	  a owl:Class ;
+	  rdfs:subClassOf tcs:Enumerated ;
+	  owl:oneOf (
+	   scm:egalitarian
+	   scm:group_solidarity
+	   scm:group_priority
+	   scm:leader_priority
+	   scm:leader_emphasis
+	 ) .
+
+	scm:AuthoritySharing
+	  rdfs:label "Authority Sharing"@en ;
+	  rdfs:comment "The sharing of authority"@en ;
+	  a owl:Class ;
+	  rdfs:subClassOf tcs:Enumerated ;
+	  owl:oneOf (
+	   scm:egalitarian
+	   scm:extensive_sharing
+	   scm:cadre_sharing
+	   scm:rare_sharing
+	   scm:exclusive_sharing
+	 ) .
+
+
+	scm:ExternalContact
+	  rdfs:label "External Contact"@en ;
+	  rdfs:comment "Particiption in external contacts"@en ;
+	  a owl:Class ;
+	  rdfs:subClassOf tcs:Enumerated ;
+	  owl:oneOf (
+	   scm:egalitarian
+	   scm:few_contacts
+	   scm:nonexclusive_leader_participation
+	   scm:nonexclusive_leader_control
+	   scm:exclusive_leader_control
+	 ) .
+
+
+	scm:LeaderDifferentiation
+	  rdfs:label "Leader Differentiation"@en ;
+	  rdfs:comment "Differentiation among leaders and followers."@en ;
+	  a owl:Class ;
+	  rdfs:subClassOf tcs:Enumerated ;
+	  owl:oneOf (
+	   scm:egalitarian
+	   scm:no_differentiation
+	   scm:small_privileges
+	   scm:extensive_privileges
+	   scm:exclusive_privileges
+	 ) .
+
+	scm:LeaderIdentification
+	  rdfs:label "Leader Indentification"@en ;
+	  rdfs:comment "Mechanisms by which a leader is identified"@en ;
+	  a owl:Class ;
+	  rdfs:subClassOf tcs:Enumerated ;
+	  owl:oneOf (
+	   scm:no_leader
+	   scm:egalitarian
+	   scm:leader_treatment
+	   scm:leader_symbols
+	   scm:leader_cult
+	 ) .
+	
+
+
 	scm:daily
 	  rdfs:label "Daily"@en ;
 	  rdfs:comment "Occuring every day (or most days)"@en ;
@@ -1157,18 +1178,7 @@
 	  rdfs:comment "Occurring once in an individual's lifetime"@en ;
 	  a scm:FrequencyChoice .
 	
-	scm:AuthorityEmphasis
-	  rdfs:label "Authority Emphasis"@en ;
-	  rdfs:comment "Group Authority Emphasis - from leader to collective"@en ;
-	  a owl:Class ;
-	  rdfs:subClassOf tcs:Enumerated ;
-	  owl:oneOf (
-	   scm:egalitarian
-	   scm:group_solidarity
-	   scm:group_priority
-	   scm:leader_priority
-	   scm:leader_emphasis
-	 ) .
+
 	
 	scm:egalitarian
 	  rdfs:label "Egalitarian"@en ;
@@ -1195,18 +1205,7 @@
 	  rdfs:comment "emphasis placed on leaders as the embodiment of the group"@en ;
 	  a scm:AuthorityEmphasisChoice .
 	
-	scm:AuthoritySharing
-	  rdfs:label "Authority Sharing"@en ;
-	  rdfs:comment "The sharing of authority"@en ;
-	  a owl:Class ;
-	  rdfs:subClassOf tcs:Enumerated ;
-	  owl:oneOf (
-	   scm:egalitarian
-	   scm:extensive_sharing
-	   scm:cadre_sharing
-	   scm:rare_sharing
-	   scm:exclusive_sharing
-	 ) .
+
 	
 	scm:extensive_sharing
 	  rdfs:label "Extensive Sharing"@en ;
@@ -1228,18 +1227,7 @@
 	  rdfs:comment "leaders exercise exclusive power"@en ;
 	  a scm:AuthoritySharingChoice .
 	
-	scm:ExternalContact
-	  rdfs:label "External Contact"@en ;
-	  rdfs:comment "Particiption in external contacts"@en ;
-	  a owl:Class ;
-	  rdfs:subClassOf tcs:Enumerated ;
-	  owl:oneOf (
-	   scm:egalitarian
-	   scm:few_contacts
-	   scm:nonexclusive_leader_participation
-	   scm:nonexclusive_leader_control
-	   scm:exclusive_leader_control
-	 ) .
+
 	
 	scm:few_contacts
 	  rdfs:label "Few contacts"@en ;
@@ -1261,18 +1249,6 @@
 	  rdfs:comment "external contacts are exclusively controlled by leaders"@en ;
 	  a scm:ExternalContactChoice .
 	
-	scm:LeaderDifferentiation
-	  rdfs:label "Leader Differentiation"@en ;
-	  rdfs:comment "Differentiation among leaders and followers."@en ;
-	  a owl:Class ;
-	  rdfs:subClassOf tcs:Enumerated ;
-	  owl:oneOf (
-	   scm:egalitarian
-	   scm:no_differentiation
-	   scm:small_privileges
-	   scm:extensive_privileges
-	   scm:exclusive_privileges
-	 ) .
 	
 	scm:no_differentiation
 	  rdfs:label "No Differentiation"@en ;
@@ -1302,19 +1278,7 @@
 	  a scm:LeaderIdentificationChoice, scm:StandardizationChoice .
 	
 	
-	scm:LeaderIdentification
-	  rdfs:label "Leader Indentification"@en ;
-	  rdfs:comment "Mechanisms by which a leader is identified"@en ;
-	  a owl:Class ;
-	  rdfs:subClassOf tcs:Enumerated ;
-	  owl:oneOf (
-	   scm:no_leader
-	   scm:egalitarian
-	   scm:leader_treatment
-	   scm:leader_symbols
-	   scm:leader_cult
-	 ) .
-	
+
 	
 	scm:leader_treatment
 	  rdfs:label "Identified by treatment"@en ;
@@ -1491,87 +1455,75 @@
 	  rdfs:comment "IV-4-2-7 Animals:  Horse, donkey (Order: Perissodactyla)"@en ;
 	  a owl:ObjectProperty ;
 	
-	scm:animals_sheep_etc_
+	scm:sheeplike_animals
 	  rdfs:label "Animals (Sheep etc)"@en ;
 	  rdfs:comment "IV-4-2-6 Animals: Sheep, cattle, pig, llama, camel (Order: Artiodactyla)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:birds
 	  rdfs:label "Birds"@en ;
 	  rdfs:comment "IV-4-2-9 Animals:  Birds (Orders: Galliformes; Anseriformes)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:cereals
 	  rdfs:label "Cereals"@en ;
 	  rdfs:comment "IV-4-2-1 Crops: Cereals (Order: Poales)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:fertilizers
 	  rdfs:label "Fertilizers"@en ;
 	  rdfs:comment "IV-4-2-12 Fertilizers (Seshat)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:legumes
 	  rdfs:label "Legumes"@en ;
 	  rdfs:comment "IV-4-2-2 Crops: Legumes (Order: Fabales)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:multi-cropping
 	  rdfs:label "Multi-cropping"@en ;
 	  rdfs:comment "IV-4-2-11 Multicropping (Seshat). "@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:polyculture
 	  rdfs:label "Polyculture"@en ;
 	  rdfs:comment "IV-4-2-10 Polyculture (Seshat)."@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:regional_crops
 	  rdfs:label "Regional Crops"@en ;
 	  rdfs:comment "IV-4-2-5 Crops: Regionally important subsistence plants "@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:small_mammals
 	  rdfs:label "Small Mammals"@en ;
 	  rdfs:comment "IV-4-2-8 Animals:  Small mammals (Order: Rodentia; Lagomorpha)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:squashes
 	  rdfs:label "Squashes"@en ;
 	  rdfs:comment "IV-4-2-4 Crops: Squashes (Order: Curcurbitales)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:vegetables
 	  rdfs:label "Vegetables"@en ;
 	  rdfs:comment "IV-4-2-3 Crops: Vegetables (Order: Solanales)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AgriculturalDiversity ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:aquatic_mammals
 	  rdfs:label "Aquatic mammals"@en ;
 	  rdfs:comment "IV-4-3-6 Fish: Aquatic mammals (Orders: Pinnipedia; Cetacea)"@en ;
-	  a owl:ObjectProperty ;
 	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
@@ -1579,180 +1531,104 @@
 	  rdfs:label "Freshwater fish"@en ;
 	  rdfs:comment "IV-4-3-4 Fish: Freshwater fish (Class: Osteichthyes)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:gathered_herbs
 	  rdfs:label "Gathered herbs"@en ;
 	  rdfs:comment "IV-4-3-11 Gathered Foods: Wild herbs, leaves, blossoms"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:hunted_birds
 	  rdfs:label "Hunted Birds"@en ;
 	  rdfs:comment "IV-4-3-9 Animals Hunted: Birds and Waterfowl (e.g. Orders: Galliformes; Anseriformes)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:insects_grubs_honey
 	  rdfs:label "Insects, Grubs, Honey"@en ;
 	  rdfs:comment "IV-4-3-10 Gathered Foods: Insects, grubs, honey"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:large_game
 	  rdfs:label "Large game"@en ;
 	  rdfs:comment "IV-4-3-8 Animals Hunted: Large game (e.g. Orders Proboscidea; Perissodactyla; Artiodactyla)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:marine_reptiles
 	  rdfs:label "Marine reptiles"@en ;
 	  rdfs:comment "IV-4-3-2 Fish: Shellfish (Class: Malacostraca)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:mollusks
 	  rdfs:label "Mollusks"@en ;
 	  rdfs:comment "IV-4-3-1 Fish: Mollusks (Classes: Bivalvia; Gastropodia)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:saltwater_fish
 	  rdfs:label "Saltwater fish"@en ;
 	  rdfs:comment "IV-4-3-5 Fish: Saltwater fish (Classes: Chondrichthyes; Osteichthyes)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:shellfish
 	  rdfs:label "Shellfish"@en ;
 	  rdfs:comment "IV-4-3-1 Fish: Mollusks (Classes: Bivalvia; Gastropodia)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:small_game
 	  rdfs:label "Small game"@en ;
 	  rdfs:comment "IV-4-3-7 Animals Hunted: Small game (e.g. Orders Rodentia, Lagomorpha)"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:tree_pith
 	  rdfs:label "Tree Pith"@en ;
 	  rdfs:comment "IV-4-3-12 Gathered Foods: Tree pith, e.g., sago"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:wild_fruit
 	  rdfs:label "Wild Fruit"@en ;
 	  rdfs:comment "IV-4-3-14 Gathered Foods: Wild fruit, seeds, nuts, berries"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	
 	scm:wild_roots
 	  rdfs:label "Wild Roots"@en ;
 	  rdfs:comment "IV-4-3-13 Gathered Foods: Wild roots or tubers"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AlternativeFoodSources ;
 	  rdfs:range scm:EpistemicState .
 	  
 	 scm:authority_emphasis
 	  rdfs:label "Authority Emphasis"@en ;
 	  rdfs:comment "Where the emphasis of group authority lies"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AuthorityEmphasis ;
-	  rdfs:range scm:AuthorityEmphasisChoiceBoxQualifiedByConfidenceTag .
-	
-	scm:AuthorityEmphasisChoiceBoxQualifiedByConfidenceTag
-	  a owl:Class ;
-	  rdfs:subClassOf scm:AuthorityEmphasisChoiceBox, tcs:QualifiedByConfidenceTag ;
-	  rdfs:label "AuthorityEmphasisChoiceBox"@en ;
-	  rdfs:comment "AuthorityEmphasisChoiceBox QualifiedByConfidenceTag "@en .
-	
-	scm:AuthorityEmphasisChoiceBox
-	  a owl:Class ;
-	  rdfs:subClassOf tbs:Box ;
-	  rdfs:label "Authority Emphasis Choice"@en ;
-	  rdfs:comment "The range of choices of authority emphasis"@en .
-	
-	scm:authorityemphasischoicebox_box
-	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AuthorityEmphasisChoiceBox ;
-	  rdfs:range scm:AuthorityEmphasisChoice ;
-	  rdfs:label "Authority Emphasis Choice"@en ;
-	  rdfs:comment "The range of choices of authority emphasis"@en .
-	
-	scm:authority_sharing
-	  rdfs:label "Authority Sharing"@en ;
-	  rdfs:comment "How authority is shared between leaders and others"@en ;
-	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AuthoritySharing ;
-	  rdfs:range scm:AuthoritySharingChoiceBoxQualifiedByConfidenceTag .
-	
-	scm:AuthoritySharingChoiceBoxQualifiedByConfidenceTag
-	  a owl:Class ;
-	  rdfs:subClassOf scm:AuthoritySharingChoiceBox, tcs:QualifiedByConfidenceTag ;
-	  rdfs:label "AuthoritySharingChoiceBox"@en ;
-	  rdfs:comment "AuthoritySharingChoiceBox QualifiedByConfidenceTag "@en .
-	
-	scm:AuthoritySharingChoiceBox
-	  a owl:Class ;
-	  rdfs:subClassOf tbs:Box ;
-	  rdfs:label "Authority Sharing Choice"@en ;
-	  rdfs:comment "The range of choices of sharing of authority"@en .
-	
-	scm:authoritysharingchoicebox_box
-	  a owl:ObjectProperty ;
-	  rdfs:domain scm:AuthoritySharingChoiceBox ;
-	  rdfs:range scm:AuthoritySharingChoice ;
-	  rdfs:label "Authority Sharing Choice"@en ;
-	  rdfs:comment "The range of choices of sharing of authority"@en .
-	
-	
-	scm:StringQualifiedByConfidenceTag
-	  a owl:Class ;
-	  rdfs:subClassOf tbs:String, tcs:QualifiedByConfidenceTag ;
-	  rdfs:label "String"@en ;
-	  rdfs:comment "String QualifiedByConfidenceTag "@en .
 	
 	scm:alternative_names
 	  rdfs:label "Alternative names"@en ;
 	  rdfs:comment "Names used in the historical literature or common names used by the inhabitants"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:EphemeralEntity ;
-	  rdfs:range scm:QualifiedString.
 	
 	scm:territorial_area
 	  rdfs:label "Territorial Area"@en ;
 	  rdfs:comment "The area in squared kilometers of the entity's territory."@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:EphemeralEntity ;
-	  rdfs:range scm:QualifiedInteger .
 	
 	scm:territory
 	  rdfs:label "Territory"@en ;
 	  rdfs:comment "An area on the world map, defined by a coordinate polygon which is the territory of the entity"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:EphemeralEntity ;
-	  rdfs:range scm:QualifiedPolygon .
-	
 	
 	scm:utm_zone
 	  rdfs:label "UTM zone"@en ;
 	  rdfs:comment "The UTM Zone that corresponds most directly with the entity - e.g. where the polity's capital city is located, or the location of the NGA. For more see: http://www.dmap.co.uk/utmworld.htm"@en ;
 	  a owl:ObjectProperty ;
-	  rdfs:domain scm:EphemeralEntity ;
-	  rdfs:range scm:QualifiedString .
 	
 	scm:SeshatQualification
 	  a owl:Class ;
@@ -2161,24 +2037,6 @@ scm:epistemic_state
   rdfs:domain scm:EpistemicState ;
   rdfs:range scm:EpistemicStateChoiceBoxQualifiedByConfidenceTag .
 
-scm:EpistemicStateChoiceBoxQualifiedByConfidenceTag
-  a owl:Class ;
-  rdfs:subClassOf scm:EpistemicStateChoiceBox, tcs:QualifiedByConfidenceTag ;
-  rdfs:label "EpistemicStateChoiceBox"@en ;
-  rdfs:comment "EpistemicStateChoiceBox QualifiedByConfidenceTag "@en .
-
-scm:EpistemicStateChoiceBox
-  a owl:Class ;
-  rdfs:subClassOf tbs:Box ;
-  rdfs:label "Epistemic State Choice"@en ;
-  rdfs:comment "The possible values of an epistemic state choice"@en .
-
-scm:epistemicstatechoicebox_box
-  a owl:ObjectProperty ;
-  rdfs:domain scm:EpistemicStateChoiceBox ;
-  rdfs:range scm:EpistemicStateChoice ;
-  rdfs:label "Epistemic State Choice"@en ;
-  rdfs:comment "The possible values of an epistemic state choice"@en .
 
 scm:external_contact
   rdfs:label "External Contact"@en ;
