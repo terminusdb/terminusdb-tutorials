@@ -1,3 +1,27 @@
+
+
+
+
+function createPropertyScoping(WOQL){
+    //create confidence //disputed / uncertain / inferred / 
+    //create Note
+    return cls;
+}
+
+WOQL.when(true, WOQL.and(
+
+    WOQL.add_class("PropertyValue")
+         .abstract(true)
+         .property("start", "xdd:integerRange")
+         .property("end", "xdd:integerRange")
+         .property("confidence", "xsd:string")
+         .property("notes", "scm:Note"),
+    WOQL.add_class("EpistemicStateValue")
+    .parent("PropertyValue").label("Epistemic State")
+    .property("epistemicState", "scm:EpistemicState").label("Epistemic State")
+
+ ))
+
 function getcreateSchemaQuery(WOQL){
     var schema = WOQL.when(true).and(
         WOQL.doctype("PoliticalAuthority")
@@ -10,35 +34,20 @@ function getcreateSchemaQuery(WOQL){
    return schema.execute(client);
 }       
 
-function getVariableValueClass(WOQL){
-    //create confidence //disputed / uncertain / inferred / 
-    //create Note
-    var cls = WOQL.add_class("PropertyValue").
-    cls.abstract(true)
-       .property("start", "xdd:integerRange")
-       .property("end", "xdd:integerRange")
-       .property("confidence", "scm:Confidence")
-       .property("notes", "scm:Note");
-    return cls;
+function writeSeshatVariableValue(docid, doctype, doclabel, property, value, vtype, valueid, from, to, confidence){
+    var valw = WOQL.insert(valueid, property + "Value")
+    if(from) valw.property("scm:start", from);
+    if(to) valw.property("scm:end", to);
+    if(confidence) valw.property("scm:confidence", confidence);
+    if(value) valw.property(vtype, value);
+    if(doctype){
+        valw.insert(docid, doctype);        
+    }
+    if(doclabel){
+        valw.add_triple(docid, "label", doclabel);
+    }
+    return valw.add_triple(docid, property, valueid);
 }
-
-WOQL.when(true, WOQL.and(
-    WOQL.doctype("CitedWork").label("Cited Work").property("remote_url", "xsd:anyURI"),
-    WOQL.add_class("Note").label("A Note on a value")
-        .description("Editorial Note on the value")
-        .property("citation", "scm:CitedWork")
-        .property("quotation", "xsd:string"),
-    WOQL.add_class("PropertyValue")
-         .abstract(true)
-         .property("start", "xdd:integerRange")
-         .property("end", "xdd:integerRange")
-         .property("confidence", "xsd:string")
-         .property("notes", "scm:Note"),
-    WOQL.add_class("EpistemicStateValue")
-    .parent("PropertyValue").label("Epistemic State")
-    .property("epistemicState", "scm:EpistemicState").label("Epistemic State")
-
- ))
  
 
 function addPropertyRange(prop, type, parents, domain){
@@ -51,35 +60,9 @@ function addPropertyRange(prop, type, parents, domain){
 
     var nprop = WOQL.add_property(prop, type).parent(parents)}
 
-function createThematicClasses(WOQL){
-    var woqls = [];
-    woqls.push(WOQL.add_class("Legal").label("Legal").description("Dealing with legal matters"));
-    woqls.push(WOQL.add_class("Military").label("Military").description("Dealing with Military matters"));
-    woqls.push(WOQL.add_class("Transport").label("Transport").description("Dealing with Transport matters"));
-    woqls.push(WOQL.add_class("Ideology").label("Ideology").description("Dealing with Ideological matters"));
-    woqls.push(WOQL.add_class("Scale").label("Scale").description("Dealing with Social Scale"));
-    woqls.push(WOQL.add_class("Construction").label("Construction").description("Dealing with Construction matters"));
-    woqls.push(WOQL.add_class("Housing").label("Housing").description("Dealing with housing matters")).parent("Construction");
-    woqls.push(WOQL.add_class("Public").label("Public").description("Dealing with public, collective characteristics, decision making, etc"));
-    woqls.push(WOQL.add_class("Private").label("Private").description("Dealing with private, individual or factional decision making"));
-    return woqls;
-}
 
 
-WOQL.get(
-    WOQL.as("NGA", "v:NGA_Label")
-    .as("Date.From", "v:From")
-    .as("Date.To", "v:To")
-    .as("Iron", "v:Presence")
-  )
-  .remote("http://seshatdatabank.info/wp-content/uploads/2020/01/Iron-Updated.csv")
   
-  const wrangles = [
-       WOQL.idgen("doc:NGA_", ["v:NGA_Label"], "v:NGA_ID"),
-       WOQL.unique("doc:PresenceOfIron_", ["v:NGA_Label", "v:From", "v:To", "v:Presence"], "v:IronValueID"),
-       WOQL.cast("v:To", "xsd:integer", "v:To_Cast"),
-       WOQL.cast("v:From", "xsd:integer", "v:From_Cast")
-  ]
   
   const inserts = WOQL.and(
      WOQL.insert("v:IronValueID", "scm:PresenceOfIronValue")
@@ -117,10 +100,6 @@ const wrangles = [
        WOQL.typecast("v:From", "xsd:integerRange", "v:From_Cast")
   ]
   
-  const inserts = WOQL.and(
-	 WOQL.add_triple("v:IronValueID", "scm:start", "v:From_Cast"),
-	 WOQL.add_triple("v:IronValueID", "scm:end", "v:To_Cast"),
-	)
 
 var inputs =  WOQL.and(csv, ...wrangles);
  
@@ -142,7 +121,7 @@ const wrangles = [
   ]
   
   const inserts = WOQL.and(
-     WOQL.add_triple("v:NGA_ID", "scm:presence_of_iron", "v:IronValueID"),
+   /  WOQL.add_triple("v:NGA_ID", "scm:presence_of_iron", "v:IronValueID"),
 	 WOQL.insert("v:IronValueID", "scm:PresenceOfIronValue")
   )
 
@@ -150,3 +129,35 @@ var inputs =  WOQL.and(csv, ...wrangles);
  
 WOQL.when(inputs, inserts)
 
+
+const csv = WOQL.get(
+    WOQL.as("NGA", "v:NGA_Label")
+    .as("Date.From", "v:From")
+    .as("Date.To", "v:To")
+    .as("Iron", "v:Presence")
+  )
+  .remote("http://seshatdatabank.info/wp-content/uploads/2020/01/Iron-Updated.csv")
+
+
+const wrangles = [
+       WOQL.idgen("doc:NGA_", ["v:NGA_Label"], "v:NGA_ID"),
+       WOQL.unique("doc:PresenceOfIron_", ["v:NGA_Label", "v:From", "v:To", "v:Presence"], "v:IronValueID"),
+       WOQL.or(
+		 WOQL.and(
+		 	WOQL.eq("v:Presence", {"@value": "P", "@type": "xsd:string"}),
+		 	WOQL.eq("v:Presence_Val","scm:present")
+	   	),
+       	WOQL.and(
+			WOQL.eq("v:Presence", {"@value": "A", "@type": "xsd:string"}),
+		 	WOQL.eq("v:Presence_Val","scm:absent")
+	   	)
+      )		 
+]
+
+const inserts = WOQL.and(
+	WOQL.add_triple("v:IronValueID", "scm:epistemicState", "v:Presence_Val")
+)
+ 
+var inputs = WOQL.and(csv, ...wrangles)
+  
+WOQL.when(inputs, inserts)

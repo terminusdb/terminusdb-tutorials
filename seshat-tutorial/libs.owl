@@ -1,0 +1,86 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix terminus: <http://terminusdb.com/schema/terminus#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xdd: <http://terminusdb.com/schema/xdd#> .
+@prefix vio: <http://terminusdb.com/schema/vio#> .
+@prefix tcs: <http://terminusdb.com/schema/tcs#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+tcs:Document
+	tcs:tag tcs:abstract ;
+	a owl:Class ;
+	rdfs:comment "A class used to designate the primary data objects managed by the system - relationships and entities"@en ;
+	rdfs:label "Document Class"@en .
+
+tcs:Enumerated
+	tcs:tag tcs:abstract ;
+	a owl:Class ;
+	rdfs:comment "A class representing enumerated types / choice sets"@en ;
+	rdfs:label "Enumerated Set"@en .
+
+tcs:abstract
+	a tcs:ClassTag ;
+	rdfs:comment "Indicates that the class is abstract - purely a logical construct, no base instantiations exist"@en ;
+	rdfs:label "Abstract"@en .
+
+xdd:coordinate
+	tcs:refines xsd:string ;
+	a rdfs:Datatype ;
+	rdfs:comment "A longitude / latitude pair making up a coordinate."@en ;
+	rdfs:label "Coordinate"@en .
+
+xdd:coordinatePolygon
+	tcs:refines xdd:coordinatePolyline ;
+	a rdfs:Datatype ;
+	rdfs:comment "A JSON list of coordinates forming a closed polygon."@en ;
+	rdfs:label "Coordinate Polygon"@en .
+
+xdd:coordinatePolyline
+	tcs:refines xsd:string ;
+	a rdfs:Datatype ;
+	rdfs:comment "A JSON list of coordinates."@en ;
+	rdfs:label "Coordinate Polyline"@en .
+
+xdd:dateRange
+	tcs:refines xdd:range ;
+	a rdfs:Datatype ;
+	rdfs:comment "A date (YYYY-MM-DD) or an uncertain date range [YYYY-MM-DD1,YYYY-MM-DD2]. Enables uncertainty to be encoded directly in the data"@en ;
+	rdfs:label "Date Range"@en .
+
+xdd:decimalRange
+	tcs:refines xdd:range ;
+	a rdfs:Datatype ;
+	rdfs:comment "Either a decimal value (e.g. 23.34) or an uncertain range of decimal values (e.g.[23.4, 4.143]. Enables uncertainty to be encoded directly in the data"@en ;
+	rdfs:label "Decimal Range"@en .
+
+xdd:email
+	tcs:refines xsd:string ;
+	a rdfs:Datatype ;
+	rdfs:comment "A valid email address"@en ;
+	rdfs:label "Email"@en .
+
+xdd:html
+	tcs:refines xsd:string ;
+	a rdfs:Datatype ;
+	rdfs:comment "A string with embedded HTML"@en ;
+	rdfs:label "HTML"@en .
+
+xdd:integerRange
+	tcs:refines xdd:range ;
+	a rdfs:Datatype ;
+	rdfs:comment "Either an integer (e.g. 30) or an uncertain range of integers [28,30]. Enables uncertainty to be encoded directly in the data"@en ;
+	rdfs:label "Integer Range"@en .
+
+xdd:json
+	tcs:refines xsd:string ;
+	a rdfs:Datatype ;
+	rdfs:comment "A JSON encoded string"@en ;
+	rdfs:label "JSON"@en .
+
+xdd:url
+	tcs:refines xsd:string ;
+	a rdfs:Datatype ;
+	rdfs:comment "A valid http(s) URL"@en ;
+	rdfs:label "URL"@en .
+
