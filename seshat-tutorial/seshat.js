@@ -123,7 +123,9 @@ function normaliseID(raw, type){
             for(var i = 0 ; i<raw.length; i++){
                 var nr = raw[i].split(":");
                 if(nr.length > 1) npars.push(nr);
-                else npars.push("scm:" + nr);
+                else {
+                    npars.push("scm:" + nr);
+                }
             }
         }
         return npars;
@@ -236,7 +238,7 @@ function loadLibraries(client){
 
 function runSegment(terminus_server_url, terminus_server_key){
     var client = new TerminusClient.WOQLClient();
-    client.connect(terminus_server_url, terminus_server_key, "seshat_auto")
+    client.connect(terminus_server_url, terminus_server_key, "seshat")
     .then(() => {
         return createProperties().execute(client);
         //createSchema(client)
@@ -247,7 +249,7 @@ function runTutorial(terminus_server_url, terminus_server_key){
     var client = new TerminusClient.WOQLClient();
     client.connect(terminus_server_url, terminus_server_key)
     .then(() => {
-        createDatabase(client, "seshat_auto")
+        createDatabase(client, "seshat")
         .then(() => {
             createSchema(client)
             .then(() => loadData(client, Object.keys(csvs), csvs))

@@ -22,11 +22,7 @@ function tripleGet(url, a, b, c){
 
 function getImportIDWOQL(url){
     return WOQL.and(
-        WOQL.get(
-            WOQL.as("v:S")
-                .as("v:P")
-                .as("v:O")
-        ).remote(url,{"type":"turtle"}),
+        tripleGet(url),
         getImportDocID(),
         WOQL.eq("http://dacura.scss.tcd.ie/seshat/ontology/seshat#Polity", "v:O")
     );
@@ -34,11 +30,7 @@ function getImportIDWOQL(url){
 
  function getImportLabelWOQL(url){
     return WOQL.and(
-        WOQL.get(
-            WOQL.as("v:S")
-                .as("v:P")
-                .as("v:O")
-        ).remote(url,{"type":"turtle"}),
+        tripleGet(url),
         getImportDocID(),
         WOQL.eq("rdfs:label", "v:P")
     );
@@ -46,11 +38,7 @@ function getImportIDWOQL(url){
 
  function getImportCommentWOQL(url){
     return WOQL.and(
-        WOQL.get(
-            WOQL.as("v:S")
-                .as("v:P")
-                .as("v:O")
-        ).remote(url,{"type":"turtle"}),
+        tripleGet(url),
         getImportDocID(),
         WOQL.eq("rdfs:comment", "v:P")
     );
@@ -60,20 +48,169 @@ function getImportIDWOQL(url){
     inp = inp || "v:S";
     out = out || "v:DocID";
     return WOQL.and(
-        WOQL.re(".*/candidate/(\\w*)",inp,["v:All","v:URL_Extension"]),
-        WOQL.idgen("doc:",["v:URL_Extension"], out),
+        WOQL.re(".*/candidate/(\\w*)",inp,["v:AllDI","v:IDURL_Extension"]),
+        WOQL.idgen("doc:",["v:IDURL_Extension"], out),
     )
+}
+
+function mp(p_one){
+    let parts = [];
+    for(var k in p_one){
+        var pout = ((p_one[k][0]) ? p_one[k][0] : k);
+        var om = onemap(k, pout);
+        parts.push(om);
+    }
+    return WOQL.or(
+        ...parts
+    )
+}
+
+function mv(map){
+    let parts = [];
+    for(var k in p_one){
+        var pout = ((p_one[k][0]) ? p_one[k][0] : k);
+        var om = oneval(k, pout);
+        parts.push(om);
+    }
+    return WOQL.or(
+        ...parts
+    )
+
+}
+
+function onemap(key, val){
+    var pref = "http://dacura.scss.tcd.ie/seshat/ontology/seshat#";
+    var lhs = pref + key;
+    var rhs = val + "_Value";
+    return WOQL.and(
+        WOQL.eq(lhs, "v:P"),
+        WOQL.concat(rhs, "v:TypeX"),
+        WOQL.concat(val, "v:WriteX"),
+        WOQL.idgen("scm:", ["v:TypeX"], "v:VType"),
+        WOQL.idgen("scm:", ["v:WriteX"], "v:WriteProperty")
+    );
+}
+
+
+var property_map = {
+    "alternativeNames": ["alternative_names", "string"],
+    "peak": ["peak_date", "gYearRange"],
+    "height": [false, "decimalRange"], 
+    "extent": [false, "decimalRange"],
+    "cost": [false, "decimalRange"],
+    "predecessor": [false, "PoliticalAuthority"],
+    "utmZone": ["utm_zone", "string"],
+    "centralization": [false, "DegreeOfCentralization"],
+    "supraRelations": ["supra_polity_relations", "SupraPolityRelations"],
+    "predecessorChange": ["predecessor_relationship", "PoliticalEvolution"],
+    "successor": [false, "PoliticalAuthority"],
+    "supraculturalEntity": ["supracultural_entity"],
+    "supraculturalScale": ["supracultural_scale"],
+    "capital": ["capital_city"],
+    "references": [],
+    "language": ["lang"],
+    "linguisticFamily": ["linguistic_family"],
+    "population": [],
+    "territorialArea": ["territorial_area", "decimalRange"],
+    "largestSettlement": ["largest_settlement", "decimalRange"],
+    "longestCommunication": ["longest_communication_distance", "decimalRange"],
+    "professionalSoldiers": ["professional_soldiers"],
+    "priests": [],
+    "bureaucrats": [],
+    "bureaucratsIncome": ["bureaucrat_income_source"],
+    "exams": ["examination_system"],
+    "meritPromotion": ["merit_promotion"],
+    "govBuildings": ["government_buildings"],
+    "legalCode": ["formal_legal_code"],
+    "judges": [],
+    "courts": [],
+    "lawyers": ["professional_lawyers"],
+    "publicBuildings": ["public_buildings"],
+    "specialHouses": ["special_houses"],
+    "symbolicBuilding": ["symbolic_building"],
+    "funHouses": ["fun_houses"],
+    "libraries": [],
+    "utilities": [],
+    "irrigation": [],
+    "potableWater": ["potable_water"],
+    "markets": [],
+    "siloes": [],
+    "roads": [],
+    "bridges": [],
+    "canals": [],
+    "ports": [],
+    "specialSites": ["special_sites"],
+    "ceremonialSites": ["ceremonial_sites"],
+    "burialSites": ["burial_sites"],
+    "emporia": [],
+    "enclosures": [],
+    "mines": [],
+    "altSites": ["other_site"],
+    "lengthUnit": ["length_unit"],
+    "areaUnit": ["area_unit"],
+    "volumeUnit": ["volume_unit"],
+    "weightUnit": ["weight_unit"],
+    "timeUnit": ["time_unit"],
+    "geometricalUnit": ["geometrical_unit"],
+    "advancedUnit": ["advanced_unit"],
+    "writing": [],
+    "mnemonics": [],
+    "nonWritten": ["non_written_records"],
+    "hasScript": ["script"],
+    "writtenRecords": ["written_records"],
+    "nonPhonetic": ["non_phonetic"],
+    "phonetic": [],
+    "hasLists": ["lists"],
+    "hasCalendar": ["calendar"],
+    "sacredTexts": ["sacred_texts"],
+    "religiousLit": ["religious_literature"],   
+    "manuals": [],
+    "history": [],
+    "philosophy": [],
+    "science": [],
+    "fiction": [],
+    "articles": ["monetary_articles"],
+    "tokens": ["monetary_tokens"],
+    "preciousMetals": ["precious_metals"],
+    "foreignCoins": ["foreign_coins"],
+    "localCoins": ["indigenous_coins"],
+    "paperMoney": ["paper_currency"],
+    "debtNotes": ["debt_and_credit"],
+    "wealthStores": ["stores_of_wealth"],
+    "couriers": [],
+    "postOffices": ["post_offices"],
+    "privateMail": ["private_mail"],
+    "fastestTravel": ["fastest_travel"],
+    "settlementLevels": ["settlement_levels", "integerRange"],
+    "adminLevels": ["administrative_levels", "integerRange"],
+    "religiousLevels": ["religious_levels", "integerRange"],
+    "militaryLevels": ["military_levels", "integerRange"]
 }
 
 function getValueProperty(inp, out){
     inp = inp || "v:P";
     out = out || "v:ValueProperty";
     return WOQL.and(
-        WOQL.re(".*#(.*)",inp,["v:All","v:URL_Extension"]),
-        WOQL.concat(["v:URL_Extension", {"@value": "_Value", "@type": "xsd:string"}], "v:Temp"),
+        WOQL.re(".*#(.*)",inp,["v:AllVP","v:VPURL_Extension"]),
+        WOQL.concat(["v:VPURL_Extension", {"@value": "_Value", "@type": "xsd:string"}], "v:Temp"),
         WOQL.idgen("scm:",["v:Temp"], out)
     )
 }
+
+function getPropertyMap(ignore, inp, out){
+    inp = inp || "v:P";
+    out = out || "v:WriteProperty";
+    var pm = WOQL.and(
+        WOQL.re(".*/ontology/seshat#(.*)",inp,["v:AllVP","v:Local_ID"]),
+        WOQL.idgen("scm:",["v:Local_ID"], out)
+    )
+    if(ignore && ignore.length){
+        pm.and(getIgnoreWOQL("v:Local_ID", ignore));
+    }
+    return pm;    
+}
+
+
 
 function getImportValueType(inp, out){
     inp = inp || "v:P";
@@ -84,19 +221,6 @@ function getImportValueType(inp, out){
     )
 }
 
-
-function getPropertyMap(ignore, inp, out){
-    inp = inp || "v:P";
-    out = out || "v:WriteProperty";
-    var pm = WOQL.and(
-        WOQL.re(".*/ontology/seshat#(.*)",inp,["v:All","v:Local_ID"]),
-        WOQL.idgen("scm:",["v:Local_ID"], out)
-    )
-    if(ignore && ignore.length()){
-        pm.and(getIgnoreWOQL("v:Local_ID", ignore));
-    }
-    return pm;    
-}
 
 
 function getImportWOQL(url, ignore){
@@ -218,4 +342,6 @@ function getWriteValue(docid, prop, valueid, valuetype, valprop, val){
     )
 }
 
+
 /* query to ingest RDF turtle files */
+// I want docid -> prop -> O

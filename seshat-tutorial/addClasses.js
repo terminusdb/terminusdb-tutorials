@@ -333,14 +333,10 @@ function getThematicClasses(){
             .label("Community Integration")
             .description("A characteristic relating to Community integration, sum of scores [AR-TL-5] (based on Murdock and Wilson 1972)")
             .parent("PP", "InternalAffairs", "Politics"),            
-        WOQL.add_class("LeaderDifferentiation")
-            .label("Leader Differentiation")
-            .description("How the leaders are differentiated from others")
+        WOQL.add_class("Leadership")
+            .label("Leadership")
+            .description("How the leaders are identified, etc")
             .parent("PP", "Variation", "InternalAffairs", "Politics"),            
-        WOQL.add_class("LeaderIdentification")
-            .label("Leader Identification",)
-            .description("The ways in which a leader can be identified")
-            .parent("PP", "InternalAffairs", "Politics"),            
         WOQL.add_class("MeasurementSystem")
             .label("Measurement System")
             .description("Textual evidence of a measurement system: measurement units are named in sources (e.g. pound, aroura). Archaeological evidence includes finding containers of standard volume, etc. ('inferred presence')")

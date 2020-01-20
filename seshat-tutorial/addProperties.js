@@ -56,7 +56,7 @@ function createBasicProperties(){
           whole region and the settlement network.
           If such an inference cannot be made, this variable is coded as unknown 
          (again, the largest settlement is coded elsewhere).</p>`),                     
-    createSeshatProperty("degree_of_centralization", "DegreeOfCentralization", ["SocialComplexity"], 
+    createSeshatProperty("degree_of_centralization", "ScopedDegreeOfCentralization", ["SocialComplexity"], 
          "Degree of Centralization", 
          `How centralized was power in this political authority?`),                     
     createSeshatProperty("largest_settlement_population", "xdd:integerRange", ["SocialComplexity", "Scale"], 
@@ -107,10 +107,10 @@ function createBasicProperties(){
          (it's coded on the page of the succeeding quasipolity). 
          This code is based on the core region of the current polity (not the NGA region). E.g. 
          Achaemenid Empire's core region was Persia, where they were succeeded by the Macedonian Empire.`),
-     createSeshatProperty("centralization", "DegreeOfCentralization", ["InternalAffairs"], 
+     createSeshatProperty("centralization", "ScopedDegreeOfCentralization", ["InternalAffairs"], 
          "Degree of Centralization", 
          `How centralized was power in this political authority?`),
-    createSeshatProperty("supra_polity_relations", "SupraPolityRelations", ["ExternalAffairs"], 
+    createSeshatProperty("supra_polity_relations", "ScopedSupraPolityRelations", ["ExternalAffairs"], 
          "Supra-polity relations", 
          `What was the relationship between this political authority and larger / higher order power.`),
     createSeshatProperty("predecessor_relationship", "PoliticalEvolution", [], 
@@ -135,30 +135,30 @@ function createBasicProperties(){
 
 function createMonetarySystemProperties(){
     return WOQL.and(
-    createSeshatProperty("monetary_articles", "EpistemicState", ["MonetarySystem", "SocialComplexity"], 
+    createSeshatProperty("monetary_articles", "ScopedEpistemicState", ["MonetarySystem", "SocialComplexity"], 
         "Articles", 
         `Articles with use-value used for exchange and trade, e.g. axes, cattle, grain.`),                     
-    createSeshatProperty("debt_and_credit", "EpistemicState", ["MonetarySystem", "SocialComplexity"], 
+    createSeshatProperty("debt_and_credit", "ScopedEpistemicState", ["MonetarySystem", "SocialComplexity"], 
         "Debt and credit", 
         `Commercial and market debt and credit structures that take physical form, 
         e.g. a contract on parchment (not just verbal agreements)`),
-    createSeshatProperty("foreign_coins", "EpistemicState", ["MonetarySystem", "SocialComplexity"], 
+    createSeshatProperty("foreign_coins", "ScopedEpistemicState", ["MonetarySystem", "SocialComplexity"], 
         "Foreign Coins", 
         `Coins minted by some external polity are used for exchange`),
-    createSeshatProperty("indigenous_coins", "EpistemicState", ["MonetarySystem", "SocialComplexity"], 
+    createSeshatProperty("indigenous_coins", "ScopedEpistemicState", ["MonetarySystem", "SocialComplexity"], 
         "Indigenous Coins", 
         `Coins minted by local authority are in use for exchange`),
-    createSeshatProperty("paper_currency", "EpistemicState", ["MonetarySystem", "SocialComplexity"], 
+    createSeshatProperty("paper_currency", "ScopedEpistemicState", ["MonetarySystem", "SocialComplexity"], 
         "Paper Currency", 
         `Currency notes or other kind of fiat currency`),
-    createSeshatProperty("precious_metals", "EpistemicState", ["MonetarySystem", "SocialComplexity"], 
+    createSeshatProperty("precious_metals", "ScopedEpistemicState", ["MonetarySystem", "SocialComplexity"], 
         "Precious Metals", 
         `Bullion: non-coined silver, gold, platinum.`),
-    createSeshatProperty("stores_of_wealth", "EpistemicState", ["MonetarySystem", "SocialComplexity"], 
+    createSeshatProperty("stores_of_wealth", "ScopedEpistemicState", ["MonetarySystem", "SocialComplexity"], 
         "Stores of Wealth", 
         `Special places for storing wealth: (example: hoard, chest for storing valuables, treasury room). 
         Note for the future: perhaps should separate these into individual variables.`),
-    createSeshatProperty("monetary_tokens", "EpistemicState", ["MonetarySystem", "SocialComplexity"], 
+    createSeshatProperty("monetary_tokens", "ScopedEpistemicState", ["MonetarySystem", "SocialComplexity"], 
         "Tokens",   
         `Tokens used for exchange and trade, e.g. cowrie shells.`)
     );
@@ -166,41 +166,38 @@ function createMonetarySystemProperties(){
 
 function createStandardizationProperties(){
     return WOQL.and(
-    createSeshatProperty("ritual_standardization", "Standardization", ["LoosenessTightness"], 
+    createSeshatProperty("ritual_standardization", "ScopedStandardization", ["LoosenessTightness"], 
         "Ritual Standardization", 
         `To what extent are ritual structures (including mounds, temples, enclosures, etc.)
          standardized versus architecturally diverse? [AR-TL-21]`),
-    createSeshatProperty("home_standardization", "Standardization", ["LoosenessTightness"], 
+    createSeshatProperty("home_standardization", "ScopedStandardization", ["LoosenessTightness"], 
         "Ritual Standardization", 
         `To what extent are ritual structures (including mounds, temples, enclosures, etc.) 
         standardized versus architecturally diverse? [AR-TL-21]`),
-    createSeshatProperty("public_standardization", "Standardization", ["LoosenessTightness"], 
+    createSeshatProperty("public_standardization", "ScopedStandardization", ["LoosenessTightness"], 
         "Home Standardization", 
         `To what extent are living dwellings standardized versus 
         architecturally diverse? [AR-TL-19]`),
-    createSeshatProperty("fineware_standardization", "Standardization", ["LoosenessTightness"], 
+    createSeshatProperty("fineware_standardization", "ScopedStandardization", ["LoosenessTightness"], 
         "Fineware Standardization", "To what extent are fineware ceramics standardized? [AR-TL-15]"),
     )
 }
 
 function createLegalProperties(){
     return WOQL.and(
-        createSeshatProperty("courts", "EpistemicState", ["Legal", "SocialComplexity"], 
+        createSeshatProperty("courts", "ScopedEpistemicState", ["Legal", "SocialComplexity"], 
         "Courts", 
         `Encodes the historical presence of buildings specialized for legal proceedings only.`),
-    createSeshatProperty("formal_legal_code", "EpistemicState", ["Legal", "SocialComplexity"], 
+    createSeshatProperty("formal_legal_code", "ScopedEpistemicState", ["Legal", "SocialComplexity"], 
         "Formal Legal Code", 
         `Codes the historical presence of a formal legal code. Usually, 
         but not always written down. If not written down, it is coded as 'present' 
         when a uniform legal system is established by oral transmission 
         (e.g., officials are taught the rules, or the laws are announced in a public space).`),
-    createSeshatProperty("judges", "EpistemicState", ["Legal", "SocialComplexity"], 
+    createSeshatProperty("judges", "ScopedEpistemicState", ["Legal", "SocialComplexity"], 
         "Judges", 
         `Codes the historical presence of specialist judges`),
-    createSeshatProperty("judges", "EpistemicState", ["Legal", "SocialComplexity"], 
-        "Judges", 
-        `Codes the historical presence of specialist judges`),
-    createSeshatProperty("professional_lawyers", "EpistemicState", ["Legal", "SocialComplexity"], 
+    createSeshatProperty("professional_lawyers", "ScopedEpistemicState", ["Legal", "SocialComplexity"], 
         "Professional Lawyers", 
         `Encodes the historical presence of specialist professional lawyers.`),
     );
@@ -211,13 +208,13 @@ function createBuildingProperties(){
     createSeshatProperty("most_costly_building", "Building", ["Scale", "SocialComplexity"], 
         "Most Costly Building", 
         `The most impressive or costly building constructed by the political authority`),
-    createSeshatProperty("cost", "decimal", ["Scale", "SocialComplexity"], 
+    createSeshatProperty("cost", "xdd:decimalRange", ["Scale", "SocialComplexity"], 
         "Cost", 
         `cost in people-years.`, "Building"),
-    createSeshatProperty("extent", "decimal", ["Scale", "SocialComplexity"], 
+    createSeshatProperty("extent", "xdd:decimalRange", ["Scale", "SocialComplexity"], 
         "Extent", 
         `Length of building along longest axis in metres`, "Building"),
-    createSeshatProperty("extent", "decimal", ["Scale", "SocialComplexity"], 
+    createSeshatProperty("height", "xdd:decimalRange", ["Scale", "SocialComplexity"], 
         "Height", 
         `Height of building in metres`, "Building")
     );
@@ -225,7 +222,7 @@ function createBuildingProperties(){
 
 function createHierarchyProperties(){
     return WOQL.and(
-        createSeshatProperty("administrative_levels", "integer", ["HierarchicalComplexity"], 
+        createSeshatProperty("administrative_levels", "xdd:integerRange", ["HierarchicalComplexity"], 
         "Administrative Levels", 
         `Number of levels in the administrative hierarchy. 
         <p>An example of hierarchy for a state society could be 
@@ -242,7 +239,7 @@ function createHierarchyProperties(){
         (2) mid-level bureaucrats, (1) scribes and clerks. 
         In the narrative paragraph detail what is known about both hierarchies. 
         The machine-readable code should reflect the largest number (the longer chain of command). </p>`),
-    createSeshatProperty("military_levels", "integer", ["HierarchicalComplexity"], 
+    createSeshatProperty("military_levels", "xdd:integerRange", ["HierarchicalComplexity"], 
         "Military Levels", 
         `Number of levels in the military hierarchy. 
         <p>Starts with the commander-in-chief and works down to the private (level 1).</p> 
@@ -251,12 +248,12 @@ function createHierarchyProperties(){
         A complex chiefdom would be coded as having three levels.
         The presence of warrior burials might be the basis for inferring the existence of a military organization. 
         (The lowest military level is always the individual soldier).</p>`),
-    createSeshatProperty("religious_levels", "integer", ["HierarchicalComplexity"], 
+    createSeshatProperty("religious_levels", "xdd:integerRange", ["HierarchicalComplexity"], 
         "Religious Levels", 
         `Number of levels in the religious hierarchy.
          <P>Starts with the head of the official cult 
         (if present) and works down to the local priest (level 1).</p>`),
-    createSeshatProperty("settlement_levels", "integer", ["HierarchicalComplexity"], 
+    createSeshatProperty("settlement_levels", "xdd:integerRange", ["HierarchicalComplexity"], 
         "Settlement Levels", 
         `This variable records the hierarchy of not just settlement sizes, 
          but also their complexity as reflected in different roles they play within the (quasi)polity.
@@ -276,23 +273,23 @@ function createHierarchyProperties(){
 
 function createBureaucraticProperties(){
     return WOQL.and(
-    createSeshatProperty("bureaucrat_income_source", "IncomeSource", ["Public", "BureaucraticSystem"], 
+    createSeshatProperty("bureaucrat_income_source", "ScopedIncomeSource", ["Public", "BureaucraticSystem"], 
         "Bureaucrat Income Source", 
         `Encodes the primary sources of income for professional bureaucrats / administrators`),
-    createSeshatProperty("examination_system", "EpistemicState", ["Public", "BureaucraticSystem"], 
+    createSeshatProperty("examination_system", "ScopedEpistemicState", ["Public", "BureaucraticSystem"], 
         "Examination System", 
         `Codes the presence of an official Examination System. 
         The paradigmatic example is the Chinese imperial system.`),
-    createSeshatProperty("full_time_bureaucrats", "EpistemicState", ["Public", "BureaucraticSystem"], 
+    createSeshatProperty("full_time_bureaucrats", "ScopedEpistemicState", ["Public", "BureaucraticSystem"], 
         "Full-time Bureaucrats", 
         `Codes the presence of full-time specialist bureaucratic officials.`),
-    createSeshatProperty("government_buildings", "EpistemicState", ["BureaucraticSystem", "Public", "Infrastructure"], 
+    createSeshatProperty("government_buildings", "ScopedEpistemicState", ["BureaucraticSystem", "Public", "Infrastructure"], 
         "Government Buildings", 
         `Codes the historical presence of specialized government administration buildings. 
         These buildings are distinct from the ruler's palace and could be used for document storage, 
         registration offices, minting money, etc. 
         Defense structures also are not included here.`),
-    createSeshatProperty("merit_promotion", "EpistemicState", ["BureaucraticSystem", "Public"], 
+    createSeshatProperty("merit_promotion", "ScopedEpistemicState", ["BureaucraticSystem", "Public"], 
         "Merit Promotion", 
         `Codes the historical presence of merit promotion. <i>Present</i> means there were regular, 
         institutionalized procedures for promotion based on performance. When exceptional 
@@ -303,85 +300,85 @@ function createBureaucraticProperties(){
 
 function createAgriculturalProperties(){
     return WOQL.and(
-        createSeshatProperty("horselike_animals", "EpistemicState", ["Agriculture", "PP"], 
+        createSeshatProperty("horselike_animals", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Animals (Horse etc)", 
         `IV-4-2-7 Animals:  Horse, donkey (Order: Perissodactyla)`),
-    createSeshatProperty("sheeplike_animals", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("sheeplike_animals", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Animals (Sheep etc)", 
         `IV-4-2-6 Animals: Sheep, cattle, pig, llama, camel (Order: Artiodactyla)`),
-    createSeshatProperty("birds", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("birds", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Birds", 
         `IV-4-2-9 Animals:  Birds (Orders: Galliformes; Anseriformes)`),
-    createSeshatProperty("cereals", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("cereals", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Cereals", 
         `IV-4-2-1 Crops: Cereals (Order: Poales)`),      
-    createSeshatProperty("fertilizers", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("fertilizers", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Fertilizers", 
         `IV-4-2-12 Fertilizers (Seshat)`),
-    createSeshatProperty("legumes", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("legumes", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Legumes", 
         `IV-4-2-2 Crops: Legumes (Order: Fabales)`),
-    createSeshatProperty("multi_cropping", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("multi_cropping", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Multi-cropping", 
         `IV-4-2-11 Multicropping `),
-    createSeshatProperty("polyculture", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("polyculture", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Polyculture", 
         `IV-4-2-10 Polyculture (Seshat).`),
-    createSeshatProperty("regional_crops", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("regional_crops", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Regional Crops", 
         `IV-4-2-5 Crops: Regionally important subsistence plants`),
-    createSeshatProperty("small_mammals", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("small_mammals", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Small Mammals", 
         `IV-4-2-8 Animals:  Small mammals (Order: Rodentia; Lagomorpha)`),
-    createSeshatProperty("squashes", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("squashes", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Squashes", 
         `IV-4-2-4 Crops: Squashes (Order: Curcurbitales)`),
-    createSeshatProperty("vegetables", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("vegetables", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Vegetables", 
         `IV-4-2-3 Crops: Vegetables (Order: Solanales)`),
-    createSeshatProperty("aquatic_mammals", "EpistemicState", ["Fishing", "PP"], 
+    createSeshatProperty("aquatic_mammals", "ScopedEpistemicState", ["Fishing", "PP"], 
         "Aquatic Mammals", 
         `IV-4-3-6 Fish: Aquatic mammals (Orders: Pinnipedia; Cetacea)`),
-    createSeshatProperty("freshwater_fish", "EpistemicState", ["Fishing", "PP"], 
+    createSeshatProperty("freshwater_fish", "ScopedEpistemicState", ["Fishing", "PP"], 
         "Freshwater Fish", 
         `IV-4-3-4 Fish: Freshwater fish (Class: Osteichthyes)`),
-    createSeshatProperty("gathered_herbs", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("gathered_herbs", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Gathered Herbs", 
         `IV-4-3-11 Gathered Foods: Wild herbs, leaves, blossoms`),
-    createSeshatProperty("hunted_birds", "EpistemicState", ["Hunting", "PP"], 
+    createSeshatProperty("hunted_birds", "ScopedEpistemicState", ["Hunting", "PP"], 
         "Hunted Birds", 
         `IV-4-3-9 Animals Hunted: Birds and Waterfowl (e.g. Orders: Galliformes; Anseriformes)`),
-    createSeshatProperty("insects_grubs_honey", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("insects_grubs_honey", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Insects, Grubs, Honey", 
         `IV-4-3-10 Gathered Foods: Insects, grubs, honey`),
-    createSeshatProperty("large_game", "EpistemicState", ["Hunting", "PP"], 
+    createSeshatProperty("large_game", "ScopedEpistemicState", ["Hunting", "PP"], 
         "Large Game", 
         `IV-4-3-8 Animals Hunted: Large game (e.g. Orders Proboscidea; Perissodactyla; Artiodactyla)`),
-    createSeshatProperty("small_game", "EpistemicState", ["Hunting", "PP"], 
+    createSeshatProperty("small_game", "ScopedEpistemicState", ["Hunting", "PP"], 
         "Small Game", 
         `IV-4-3-7 Animals Hunted: Small game (e.g. Orders Rodentia, Lagomorpha)`),
-    createSeshatProperty("marine_reptiles", "EpistemicState", ["Fishing", "PP"], 
+    createSeshatProperty("marine_reptiles", "ScopedEpistemicState", ["Fishing", "PP"], 
         "Marine Reptiles", 
         `IV-4-3-2 Fish: Shellfish (Class: Malacostraca)`),
-    createSeshatProperty("mollusks", "EpistemicState", ["Fishing", "PP"], 
+    createSeshatProperty("mollusks", "ScopedEpistemicState", ["Fishing", "PP"], 
         "Mollusks", 
         `IV-4-3-1 Fish: Mollusks (Classes: Bivalvia; Gastropodia)`),
-    createSeshatProperty("saltwater_fish", "EpistemicState", ["Fishing", "PP"], 
+    createSeshatProperty("saltwater_fish", "ScopedEpistemicState", ["Fishing", "PP"], 
         "Saltwater fish", 
         `IV-4-3-5 Fish: Saltwater fish (Classes: Chondrichthyes; Osteichthyes)`),
-    createSeshatProperty("shellfish", "EpistemicState", ["Fishing", "PP"], 
+    createSeshatProperty("shellfish", "ScopedEpistemicState", ["Fishing", "PP"], 
         "Shellfish", 
         `IV-4-3-1 Fish: Mollusks (Classes: Bivalvia; Gastropodia)`),      
-    createSeshatProperty("tree_pith", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("tree_pith", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Tree Pith", 
         `IV-4-3-12 Gathered Foods: Tree pith, e.g., sago`),
-    createSeshatProperty("wild_fruit", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("wild_fruit", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Wild Fruit", 
         `IV-4-3-14 Gathered Foods: Wild fruit, seeds, nuts, berries`),
-    createSeshatProperty("wild_roots", "EpistemicState", ["Agriculture", "PP"], 
+    createSeshatProperty("wild_roots", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Wild Roots", 
         `IV-4-3-13 Gathered Foods: Wild roots or tubers`),
-    createSeshatProperty("agricultural_terracing", "EpistemicState", ["Agriculture", "Infrastructure", "PP"], 
+    createSeshatProperty("agricultural_terracing", "ScopedEpistemicState", ["Agriculture", "Infrastructure", "PP"], 
         "Agricultural terracing", 
         `IV-5-2. Agricultural terracing`),
     );
@@ -389,13 +386,13 @@ function createAgriculturalProperties(){
 
 function createInternalAffairsProperties(){
     return WOQL.and(
-    createSeshatProperty("authority_emphasis", "AuthorityEmphasis", ["InternalAffairs", "PP"], 
+    createSeshatProperty("authority_emphasis", "ScopedAuthorityEmphasis", ["InternalAffairs", "PP", "Leadership"], 
         "Authority Emphasis", 
         `Where the emphasis of group authority lies`),
-    createSeshatProperty("leader_differentiation", "LeaderDifferentiation", ["InternalAffairs", "PP"], 
+    createSeshatProperty("leader_differentiation", "ScopedLeaderDifferentiation", ["InternalAffairs", "PP", "Leadership"], 
         "Leader Differentiation", 
         `How the leaders are differentiated from others`),
-    createSeshatProperty("leader_identification", "LeaderIdentification", ["InternalAffairs", "PP"], 
+    createSeshatProperty("leader_identification", "ScopedLeaderIdentification", ["InternalAffairs", "PP", "Leadership"], 
         "Leader Identification", 
         `The ways in which leaders are identified as distinct from commoners`),
     );
@@ -411,16 +408,16 @@ function createMetaProperties(){
 
 function createCeremonialProperties(){
     return WOQL.and(
-    createSeshatProperty("calendrical_ceremonies", "EpistemicState", ["Ceremonials", "PP"], 
+    createSeshatProperty("calendrical_ceremonies", "ScopedEpistemicState", ["Ceremonials", "PP"], 
         "Calendrical Ceremonies", 
         `Calendrical Ceremonies`),
-    createSeshatProperty("magical_ceremonies", "EpistemicState", ["Ceremonials", "PP"], 
+    createSeshatProperty("magical_ceremonies", "ScopedEpistemicState", ["Ceremonials", "PP"], 
         "Magical Ceremonies", 
         `Magical or Religious Ceremonies`),
-    createSeshatProperty("personal_ceremonies", "EpistemicState", ["Ceremonials", "PP"], 
+    createSeshatProperty("personal_ceremonies", "ScopedEpistemicState", ["Ceremonials", "PP"], 
         "Personal Ceremonies", 
         `Individual sponsored and communally attended ceremonies (e.g., moka, potlatch)`),
-    createSeshatProperty("rites_of_passage", "EpistemicState", ["Ceremonials", "PP"], 
+    createSeshatProperty("rites_of_passage", "ScopedEpistemicState", ["Ceremonials", "PP"], 
         "Rites of passage", 
         `Rites of passage (including birth, marriage, and death ceremonies)`)
     );
@@ -428,19 +425,19 @@ function createCeremonialProperties(){
 
 function createFoodStorageProperties(){
     return WOQL.and(
-    createSeshatProperty("food_containers", "EpistemicState", ["FoodStorage", "PP"], 
+    createSeshatProperty("food_containers", "ScopedEpistemicState", ["FoodStorage", "PP"], 
         "Food Containers", 
         `IV-4-1-2 Containers for food storage`),
-    createSeshatProperty("food_preservation", "EpistemicState", ["FoodStorage", "PP"], 
+    createSeshatProperty("food_preservation", "ScopedEpistemicState", ["FoodStorage", "PP"], 
         "Food Preservation", 
         `IV-4-1-1 Food preservation techniques`),
-    createSeshatProperty("household_storage", "EpistemicState", ["FoodStorage", "PP"], 
+    createSeshatProperty("household_storage", "ScopedEpistemicState", ["FoodStorage", "PP"], 
         "Household Storage", 
         `IV-4-1-3 Household food storage facilities`),
-    createSeshatProperty("supra_village_storage", "EpistemicState", ["FoodStorage", "PP"], 
+    createSeshatProperty("supra_village_storage", "ScopedEpistemicState", ["FoodStorage", "PP"], 
         "Supra-Village Storage", 
         `IV-4-1-5 Supra-village food facilities.`),
-    createSeshatProperty("village_storage", "EpistemicState", ["FoodStorage", "PP"], 
+    createSeshatProperty("village_storage", "ScopedEpistemicState", ["FoodStorage", "PP"], 
         "Village Storage", 
         `IV-4-1-4 Village food storage facilities`),
     );
@@ -448,16 +445,16 @@ function createFoodStorageProperties(){
 
 function createProfessionsProperties(){
     return WOQL.and(
-        createSeshatProperty("military_officers", "EpistemicState", ["Professions", "Military"], 
+        createSeshatProperty("military_officers", "ScopedEpistemicState", ["Professions", "Military"], 
         "Military Officers", 
         `Full-time specialist military officers.`),
-    createSeshatProperty("professional_soldiers", "EpistemicState", ["Professions", "Military"], 
+    createSeshatProperty("professional_soldiers", "ScopedEpistemicState", ["Professions", "Military"], 
         "Soldiers", 
         `Full-time specialist paid soldiers.`),
-    createSeshatProperty("priests", "EpistemicState", ["Professions", "Religion"], 
+    createSeshatProperty("priests", "ScopedEpistemicState", ["Professions", "Religion"], 
         "Priesthood", 
         `Codes the presence of full-time specialist religious officials.`),
-    createSeshatProperty("bureaucrats", "EpistemicState", ["Professions", "BureaucraticSystem"], 
+    createSeshatProperty("bureaucrats", "ScopedEpistemicState", ["Professions", "BureaucraticSystem"], 
         "Full-time Bureaucrats", 
         `Codes the presence of full-time specialist bureaucratic officials.`),
     );
@@ -465,28 +462,28 @@ function createProfessionsProperties(){
  
 function createHousingProperties(){
     return WOQL.and(
-    createSeshatProperty("accommodation_for_guests", "EpistemicFrequency", ["HousingVariation", "PP"], 
+    createSeshatProperty("accommodation_for_guests", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
         "Accommodation for guests", 
         `Houses with accommodations for guests`),
-    createSeshatProperty("accommodation_for_servants", "EpistemicFrequency", ["HousingVariation", "PP"], 
+    createSeshatProperty("accommodation_for_servants", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
         "Accommodation for servants", 
         `Houses with accommodations for servants `),
-    createSeshatProperty("external_decoration", "EpistemicFrequency", ["HousingVariation", "PP"], 
+    createSeshatProperty("external_decoration", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
         "External Decoration", 
         `Houses with permanent external decoration`),
-    createSeshatProperty("internal_decoration", "EpistemicFrequency", ["HousingVariation", "PP"], 
+    createSeshatProperty("internal_decoration", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
         "Internal Decoration", 
         `Houses with permanent internal decoration`),
-    createSeshatProperty("multiple_public_areas", "EpistemicFrequency", ["HousingVariation", "PP"], 
+    createSeshatProperty("multiple_public_areas", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
         "Multiple Public Areas", 
         `Houses with multiple public or gathering areas`),
-    createSeshatProperty("multiple_wings", "EpistemicFrequency", ["HousingVariation", "PP"], 
+    createSeshatProperty("multiple_wings", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
         "Multiple Wings", 
         `Houses with multiple wings, atriums, patios`),
-    createSeshatProperty("special_storage", "EpistemicFrequency", ["HousingVariation", "PP"], 
+    createSeshatProperty("special_storage", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
         "Special Storage", 
         `Houses with specialized storage facilities`),
-    createSeshatProperty("specialized_craft_production", "EpistemicFrequency", ["HousingVariation", "PP"], 
+    createSeshatProperty("specialized_craft_production", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
         "Specialized Craft Production", 
         `Houses with specialized craft production facilities`),
     );
@@ -494,22 +491,22 @@ function createHousingProperties(){
 
 function createCommunityIntegrationProperties(){
     return WOQL.and(
-    createSeshatProperty("integration_by_common_identity", "EpistemicState", ["CommunityIntegration", "PP"], 
+    createSeshatProperty("integration_by_common_identity", "ScopedEpistemicState", ["CommunityIntegration", "PP"], 
         "Integration by common identity", 
         `Community integration by common identity, dialect, subculture`),
-    createSeshatProperty("integration_by_common_residence", "EpistemicState", ["CommunityIntegration", "PP"], 
+    createSeshatProperty("integration_by_common_residence", "ScopedEpistemicState", ["CommunityIntegration", "PP"], 
         "Integration by common residence", 
         `Community integration by common residence `),
-    createSeshatProperty("integration_by_kin", "EpistemicState", ["CommunityIntegration", "PP"], 
+    createSeshatProperty("integration_by_kin", "ScopedEpistemicState", ["CommunityIntegration", "PP"], 
         "Integration by kin", 
         `Community integration by overlapping kin ties`),
-    createSeshatProperty("integration_by_political_ties", "EpistemicState", ["CommunityIntegration", "PP"], 
+    createSeshatProperty("integration_by_political_ties", "ScopedEpistemicState", ["CommunityIntegration", "PP"], 
         "Integration by political ties", 
         `Community integration by common political ties`),
-    createSeshatProperty("integration_by_religion", "EpistemicState", ["CommunityIntegration", "PP"], 
+    createSeshatProperty("integration_by_religion", "ScopedEpistemicState", ["CommunityIntegration", "PP"], 
         "Integration by religion", 
         `Community integration by common religious ties`),
-    createSeshatProperty("integration_by_shared_status", "EpistemicState", ["CommunityIntegration", "PP"], 
+    createSeshatProperty("integration_by_shared_status", "ScopedEpistemicState", ["CommunityIntegration", "PP"], 
         "Integration by shared status", 
         `Community integration by common social or economic status`),
     );
@@ -517,16 +514,16 @@ function createCommunityIntegrationProperties(){
 
 function createSpecializedBuildingsProperties(){
     return WOQL.and(
-    createSeshatProperty("public_buildings", "EpistemicState", ["Public", "SpecializedBuildings"], 
+    createSeshatProperty("public_buildings", "ScopedEpistemicState", ["Public", "SpecializedBuildings"], 
         "Communal Buildings", 
         `This encodes the historical presence of Communal buildings. It distinguishes between 
         settlements that consist of only private households (coded 'absent') and settlements 
         where there are communal buildings which could be used for a variety of uses (coded 'present').`),
-    createSeshatProperty("special_houses", "EpistemicState", ["SpecializedBuildings"], 
+    createSeshatProperty("special_houses", "ScopedEpistemicState", ["SpecializedBuildings"], 
         "Special Purpose Houses", 
         `Encodes the historical presence of houses that were used in
          a distinctive or special manner. This code reflects differentiation between houses.`),
-    createSeshatProperty("symbolic_building", "EpistemicState", ["SpecializedBuildings"], 
+    createSeshatProperty("symbolic_building", "ScopedEpistemicState", ["SpecializedBuildings"], 
         "Symbolic Buildings", 
         `Encodes the historical presence of specialized purely symbolic buildings. 
         <P>These are non-utilitarian constructions that display symbols, or are themselves 
@@ -535,30 +532,30 @@ function createSpecializedBuildingsProperties(){
         the Statue of Liberty. Has to be constructed by humans, so sacred groves or mountains 
         are not symbolic buildings. A palace is also not a symbolic building, because it has other, 
         utilitarian functions (houses the ruler).</P>`),
-    createSeshatProperty("fun_houses", "EpistemicState", ["SpecializedBuildings", "Entertainment"], 
+    createSeshatProperty("fun_houses", "ScopedEpistemicState", ["SpecializedBuildings", "Entertainment"], 
         "Entertainment Buildings", 
         `Encodes the historical presence of specialist entertainment buildings. These include theaters, arenas, race tracks.`),
-    createSeshatProperty("libraries", "EpistemicState", ["SpecializedBuildings",  "Writing"], 
+    createSeshatProperty("libraries", "ScopedEpistemicState", ["SpecializedBuildings",  "Writing"], 
         "Knowledge / Information Buildings", 
         `Encodes the historical presence of specialist information / knowledge buildings. 
         These include astronomic observatories, libraries, and museums.`),
-    createSeshatProperty("utilities", "EpistemicState", ["SpecializedBuildings", "Infrastructure"], 
+    createSeshatProperty("utilities", "ScopedEpistemicState", ["SpecializedBuildings", "Infrastructure"], 
         "Utilitarian Public Buildings", 
         `Encodes the historical presence of public utilities. Typical examples include aqueducts, 
         sewers, and granaries (which are also included as separate variables). In the narrative annotations, 
         examples of utilitarian buildings and the most impressive/costly/large ones are included.`),
-    createSeshatProperty("emporia", "EpistemicState", ["SpecializedBuildings"], 
+    createSeshatProperty("emporia", "ScopedEpistemicState", ["SpecializedBuildings"], 
         "Trading Emporia", 
         `Encodes the historical presence of trading settlements characterised by their peripheral locations, 
         on the shore at the edge of a polity, a lack of infrastructure (typically those in Europe contained no churches) 
         and often of a short-lived nature. They include isolated caravanserai along trade routes.`),
-    createSeshatProperty("enclosures", "EpistemicState", ["SpecializedBuildings"], 
+    createSeshatProperty("enclosures", "ScopedEpistemicState", ["SpecializedBuildings"], 
         "Enclosure", 
         `Encodes the historical presence of 'enclosures': a clearly demarcated special-purpose area. 
         It can be separated from surrounding land by earthworks (including banks or ditches), walls, 
         or fencing. It may be as small as a few meters across, or encompass many hectares. It is non-residential,
          but could serve numerous purposes, both practical (animal pens) as well as religious and ceremonial.`),
-    createSeshatProperty("other_site", "EpistemicState", ["SpecializedBuildings"], 
+    createSeshatProperty("other_site", "ScopedEpistemicState", ["SpecializedBuildings"], 
          "Other Site", 
          `Encodes the historical presence of specialised non-residential sites. 
          A description of the site is provided in the notes.`),
@@ -567,19 +564,19 @@ function createSpecializedBuildingsProperties(){
 
 function createTransportProperties(){
     return WOQL.and(
-    createSeshatProperty("roads", "EpistemicState", ["Transport"], 
+    createSeshatProperty("roads", "ScopedEpistemicState", ["Transport"], 
         "Roads", 
         `Encodes the historical presence of roads that were either built or 
         maintained by the political authority.`),
-    createSeshatProperty("bridges", "EpistemicState", ["Transport"], 
+    createSeshatProperty("bridges", "ScopedEpistemicState", ["Transport"], 
         "Bridges", 
         `Encodes the historical presence of bridges that were either built or
         maintained by the political authority.`),
-    createSeshatProperty("canals", "EpistemicState", ["Transport"], 
+    createSeshatProperty("canals", "ScopedEpistemicState", ["Transport"], 
         "Canals", 
         `Encodes the historical presence of canals or artificial waterways 
         that were built or maintained by the political authority.`),
-    createSeshatProperty("ports", "EpistemicState", ["Transport", "Naval"], 
+    createSeshatProperty("ports", "ScopedEpistemicState", ["Transport", "Naval"], 
         "Ports", 
         `Encodes the historical presence of ports that were either built or maintained by the political authority. 
         These include river ports. Direct historical or archaeological evidence of Ports is absent 
@@ -599,29 +596,29 @@ function createTransportProperties(){
 
 function createMetricProperties(){
     return WOQL.and(
-    createSeshatProperty("length_unit", "EpistemicState", ["MeasurementSystem"], 
+    createSeshatProperty("length_unit", "ScopedEpistemicState", ["MeasurementSystem"], 
         "Length", 
         `Encodes the historical presence of a standard way of measuring length. 
         For example: feet, miles, kilometers, inches`),
-    createSeshatProperty("area_unit", "EpistemicState", ["MeasurementSystem"], 
+    createSeshatProperty("area_unit", "ScopedEpistemicState", ["MeasurementSystem"], 
         "Area", 
         `Encodes the historical presence of a standard way of measuring areas. 
         For example: squared feet, hectares`),
-    createSeshatProperty("volume_unit", "EpistemicState", ["MeasurementSystem"], 
+    createSeshatProperty("volume_unit", "ScopedEpistemicState", ["MeasurementSystem"], 
         "Volume", 
         `Encodes the historical presence of a standard way of measuring volume. For example: pint, litre`),
-    createSeshatProperty("weight_unit", "EpistemicState", ["MeasurementSystem"], 
+    createSeshatProperty("weight_unit", "ScopedEpistemicState", ["MeasurementSystem"], 
         "Weight", 
         `Encodes the historical presence of a standard way of measuring weight. For example: pounds, kilograms`),
-    createSeshatProperty("time_unit", "EpistemicState", ["MeasurementSystem"], 
+    createSeshatProperty("time_unit", "ScopedEpistemicState", ["MeasurementSystem"], 
         "Time", 
         `Encodes the historical presence of a standard way of measuring time.
          A natural unit such as 'day' doesn't qualify. 
         Nor does a vague one like 'season'. Archaeological evidence is a clock (e.g., sundial)`),
-    createSeshatProperty("geometrical_unit", "EpistemicState", ["MeasurementSystem"], 
+    createSeshatProperty("geometrical_unit", "ScopedEpistemicState", ["MeasurementSystem"], 
         "Geometrical", 
         `Encodes the historical presence of a standard way of measuring geometries - for example: degrees.`),
-    createSeshatProperty("advanced_unit", "EpistemicState", ["MeasurementSystem"], 
+    createSeshatProperty("advanced_unit", "ScopedEpistemicState", ["MeasurementSystem"], 
         "Other", 
         `More advanced measurements: temperature, force, astronomical.`)
     )
@@ -629,56 +626,56 @@ function createMetricProperties(){
 
 function createWritingProperties(){
     return WOQL.and(
-    createSeshatProperty("mnemonics", "EpistemicState", ["WritingSystem"], 
+    createSeshatProperty("mnemonics", "ScopedEpistemicState", ["WritingSystem"], 
         "Mnemonic Devices", 
         `Marks that serve as memory devices that help people recall larger pieces of information`),
-    createSeshatProperty("non_written_records", "EpistemicState", ["WritingSystem"], 
+    createSeshatProperty("non_written_records", "ScopedEpistemicState", ["WritingSystem"], 
         "Non-written Records", 
         `Knoweldge representation systems that do not use writing - using color, material, etc to convey meaning. e.g., quipu https://en.wikipedia.org/wiki/Quipu`),
-    createSeshatProperty("script", "EpistemicState", ["WritingSystem"], 
+    createSeshatProperty("script", "ScopedEpistemicState", ["WritingSystem"], 
         "Script", 
         `A system for writing symbols that have meaning attached to them. 
         (note that if written records are present, then so is script by defintion)`),
-    createSeshatProperty("written_records", "EpistemicState", ["WritingSystem"], 
+    createSeshatProperty("written_records", "ScopedEpistemicState", ["WritingSystem"], 
         "Written Records", 
         `More than short and fragmentary inscriptions, such as found on tombs or runic stones. 
         There must be several sentences strung together, at the very minimum. For example, 
         royal proclamations from Mesopotamia and Egypt qualify as written records"@en ;`),
-    createSeshatProperty("non_phonetic", "EpistemicState", ["WritingSystem"], 
+    createSeshatProperty("non_phonetic", "ScopedEpistemicState", ["WritingSystem"], 
         "Non-phonetic Writing", 
         `this refers to the kind of script - non-phonetic scripts do not represent the sound of 
         the word but attach symbols to the meaning.`),
-    createSeshatProperty("phonetic", "EpistemicState", ["WritingSystem"], 
+    createSeshatProperty("phonetic", "ScopedEpistemicState", ["WritingSystem"], 
         "Phonetic Alphabet", 
         `this refers to the kind of script - phonetic scripts have alphabets 
         with letters and combinations of letters which represent sounds.`),
-    createSeshatProperty("lists", "EpistemicState", ["WritingGenre"], 
+    createSeshatProperty("lists", "ScopedEpistemicState", ["WritingGenre"], 
         "Lists and Tables", 
         `Written lists, tables and classifications (e.g. debt lists, tax-lists...)`),
-        createSeshatProperty("calendar", "EpistemicState", ["WritingGenre"], 
+        createSeshatProperty("calendar", "ScopedEpistemicState", ["WritingGenre"], 
         "Calendar", 
         `Written calendar or dating system`),
-    createSeshatProperty("sacred_texts", "EpistemicState", ["WritingGenre", "Religion"], 
+    createSeshatProperty("sacred_texts", "ScopedEpistemicState", ["WritingGenre", "Religion"], 
         "Sacred Texts", 
         `Sacred Texts originate from supernatural agents (deities), or are directly inspired by them.`),
-    createSeshatProperty("religious_literature", "EpistemicState", ["WritingGenre", "Religion"], 
+    createSeshatProperty("religious_literature", "ScopedEpistemicState", ["WritingGenre", "Religion"], 
         "Religious Literature", 
         `Religious literature differs from the sacred texts. For example, it may provide commentary 
         on the sacred texts, or advice on how to live a virtuous life.`),
-    createSeshatProperty("manuals", "EpistemicState", ["WritingGenre"], 
+    createSeshatProperty("manuals", "ScopedEpistemicState", ["WritingGenre"], 
         "Practical Literature", 
         `Practical guides and manuals to help people do useful stuff. 
         For example manuals on agriculture, military, cooking, etc`),
-    createSeshatProperty("history", "EpistemicState", ["WritingGenre"], 
+    createSeshatProperty("history", "ScopedEpistemicState", ["WritingGenre"], 
         "History", 
         `Written history existed`),
-    createSeshatProperty("philosophy", "EpistemicState", ["WritingGenre"], 
+    createSeshatProperty("philosophy", "ScopedEpistemicState", ["WritingGenre"], 
         "Philosophy", 
         `Written philosophical treatises`),
-    createSeshatProperty("science", "EpistemicState", ["WritingGenre", "Science"], 
+    createSeshatProperty("science", "ScopedEpistemicState", ["WritingGenre", "Science"], 
         "Science", 
         `Written scientific works, including mathematics, natural sciences, social sciences`),
-    createSeshatProperty("fiction", "EpistemicState", ["WritingGenre"], 
+    createSeshatProperty("fiction", "ScopedEpistemicState", ["WritingGenre"], 
         "Fiction", 
         `Written fictional works - including poetry, novels, short-stories, etc 
         (poetry will be factored out in future versions of the codebook.`))
@@ -686,13 +683,13 @@ function createWritingProperties(){
 
 function createPostalProperties(){
     return WOQL.and(
-    createSeshatProperty("couriers", "EpistemicState", ["PostalSystem"], 
+    createSeshatProperty("couriers", "ScopedEpistemicState", ["PostalSystem"], 
         "Couriers", 
         `Full-time professional couriers.`),
-    createSeshatProperty("post_offices", "EpistemicState", ["PostalSystem", "SpecializedBuildings"], 
+    createSeshatProperty("post_offices", "ScopedEpistemicState", ["PostalSystem", "SpecializedBuildings"], 
         "Postal Stations", 
         `Specialized buildings exclusively devoted to the postal service.`),
-    createSeshatProperty("private_mail", "EpistemicState", ["PostalSystem"], 
+    createSeshatProperty("private_mail", "ScopedEpistemicState", ["PostalSystem"], 
         "General Service", 
         `A postal service that not only serves the ruler's needs, but carries mail for private citizens.`),
     )
@@ -700,36 +697,36 @@ function createPostalProperties(){
 
 function createInfrastructureProperties(){
     return WOQL.and(
-        createSeshatProperty("fortifications", "EpistemicState", ["Military", "Infrastructure", "PP"], 
+        createSeshatProperty("fortifications", "ScopedEpistemicState", ["Military", "Infrastructure", "PP"], 
         "Fortifications", 
         `IV-5-7. Fortifications.`),
-    createSeshatProperty("sewage", "EpistemicState", ["Infrastructure", "PP"], 
+    createSeshatProperty("sewage", "ScopedEpistemicState", ["Infrastructure", "PP"], 
         "Sewage", 
         `IV-5-4. Sewage management systems`),
-    createSeshatProperty("irrigation", "EpistemicState", ["Infrastructure", "Public"], 
+    createSeshatProperty("irrigation", "ScopedEpistemicState", ["Infrastructure", "Public"], 
         "Irrigation Systems", 
         `Encodes the historical presence of irrigation systems.`),
-    createSeshatProperty("potable_water", "EpistemicState", ["Infrastructure", "Public"], 
+    createSeshatProperty("potable_water", "ScopedEpistemicState", ["Infrastructure", "Public"], 
         "Drinking Water Supply", 
         `Encodes the historical presence of systems to supply drinking water to the public.`),
-    createSeshatProperty("markets", "EpistemicState", ["Infrastructure"], 
+    createSeshatProperty("markets", "ScopedEpistemicState", ["Infrastructure"], 
         "Markets", 
         `Encodes the historical presence of markets.`),
-    createSeshatProperty("siloes", "EpistemicState", ["Infrastructure", "Construction", "Food"], 
+    createSeshatProperty("siloes", "ScopedEpistemicState", ["Infrastructure", "Construction", "Food"], 
         "Food Storage Sites", 
         `The historical presence of specialized structures (grain siloes...) for storing food.`),
-    createSeshatProperty("special_sites", "EpistemicState", ["Infrastructure"], 
+    createSeshatProperty("special_sites", "ScopedEpistemicState", ["Infrastructure"], 
         "Special Sites", 
         `The types of special sites that are associated with the polity - 
         primarily useful for coding archaneologically known societies.`),
-    createSeshatProperty("ceremonial_sites", "EpistemicState", ["Ritual", "Infrastructure"], 
+    createSeshatProperty("ceremonial_sites", "ScopedEpistemicState", ["Ritual", "Infrastructure"], 
         "Ceremonial Site", 
         `Encodes the historical presence of sites that were specifically used for ceremonies.`),
-    createSeshatProperty("burial_sites", "EpistemicState", ["Burial", "Infrastructure"], 
+    createSeshatProperty("burial_sites", "ScopedEpistemicState", ["Burial", "Infrastructure"], 
         "Burial Site", 
         `Encodes the historical presence of burial sites, dissociated 
         from settlement habitation, with monumental features.`),
-    createSeshatProperty("mines", "EpistemicState", ["Mining", "Infrastructure"], 
+    createSeshatProperty("mines", "ScopedEpistemicState", ["Mining", "Infrastructure"], 
         "Mine or Quarry", 
         `Encodes the historical presence of mines or quarries within the political authority.`),
     );
@@ -737,31 +734,31 @@ function createInfrastructureProperties(){
 
 function createBurialProperties(){
     return WOQL.and(
-    createSeshatProperty("animal_sacrifices", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("animal_sacrifices", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Animal Sacrifices", 
         `Burials with animal sacrifices`),
-    createSeshatProperty("exotic_objects", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("exotic_objects", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Exotic Objects", 
         `Burials with exotic goods (rare or foreign materials and objects)`),
-    createSeshatProperty("human_sacrifices", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("human_sacrifices", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Human Sacrifices", 
         `Burials with human sacrifices`),
-    createSeshatProperty("personal_ornaments", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("personal_ornaments", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Personal Ornaments", 
         `Burials with personal ornaments`),
-    createSeshatProperty("ritual_objects", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("ritual_objects", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Ritual Objects", 
         `Burials with ritual objects`),
-    createSeshatProperty("sumptuary_objects", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("sumptuary_objects", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Sumptuary Objects", 
         `Burials with sumptuary goods (symbols of power or authority)`),
-    createSeshatProperty("tombs_or_mausoleums", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("tombs_or_mausoleums", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Tombs or Mausoleums", 
         `Burials in tombs or mausoleums`),
-    createSeshatProperty("utilitarian_goods", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("utilitarian_goods", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Utilitarian Goods", 
         `Burials with utilitarian goods (ceramics, tools, etc.)`),
-    createSeshatProperty("wealth_objects", "EpistemicFrequency", ["BurialVariation", "PP"], 
+    createSeshatProperty("wealth_objects", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Wealth Objects", 
         `Burials with wealth objects (fineware ceramics, gold/silver objects, etc.)`),  
     );
