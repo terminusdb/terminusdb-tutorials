@@ -30,7 +30,7 @@ JavaScript API script and embedding on webpage: [bike-tutorial/javascript](https
 
 Query and view on TerminusDB council: [bike-tutorial/view-script](https://github.com/terminusdb/terminus-tutorials/tree/master/bike-tutorial/view-script)
 
-Also see the tutorial blog post.
+Also see the [tutorial blog post](https://medium.com/terminusdb/my-first-terminusdb-graph-visualisation-bike-share-data-39c59a1ab86a?source=friends_link&sk=2f877df5dcb2f00b9e4e85d5088f015e).
 
 ## Politics Tutorial
 
@@ -42,4 +42,4 @@ JavaScript API script and embedding on webpage: [politics-tutorial/javascript](h
 
 Query and view on TerminusDB council: [politics-tutorial/view-script](https://github.com/terminusdb/terminus-tutorials/tree/master/politics-tutorial/view-script)
 
-Also see the tutorial blog post.
+Also see the [tutorial blog post](https://medium.com/terminusdb/are-you-supporting-the-right-politician-b742debbc8d9?source=friends_link&sk=9dcc6e3f2fbd1a8a50a48c41510808ef).
