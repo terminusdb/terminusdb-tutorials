@@ -67,7 +67,7 @@ seshat.rdf.getImportPolityWOQL = function(url, gid){
             WOQL.add_triple("v:Subject_ID", "comment", "v:PDescr")
         )
     )
-    return seshat.rdf.quintetWith(url, woql, gid)
+    return seshat.rdf.quintetWith(url, woql)
 }
 
 
