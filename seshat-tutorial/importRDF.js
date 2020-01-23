@@ -316,7 +316,7 @@ seshat.rdf.getImportDocID = function(inp, out){
         //dacura:end "-0647"^^xdd:gYearRange ;
     //dacura:confidence dacura:uncertain ;
 
-seshat.rdf.importRDFAnnotations = function(client, url){
+seshat.importRDFAnnotations = function(client, url){
     url = url || seshat.rdf.urls.notes; 
     let rules = WOQL.or(
         WOQL.and(
@@ -422,7 +422,7 @@ seshat.rdf.writeAnnotationNote = function(subj, value, valid){
     valid = valid || "v:ID_GEN";
     return WOQL.when(
         WOQL.and(
-            WOQL.quad(subj, "comment", value)
+            WOQL.quad(subj, "comment", value, "graph://temp")
         ),
         WOQL.and(
             WOQL.insert(valid, "scm:Note"),

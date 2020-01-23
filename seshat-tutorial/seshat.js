@@ -160,7 +160,7 @@ function loadSegmentQuery(segment){
 
 function connectToServer(terminus_server_url, terminus_server_key, dbid){
     seshat.tutorialdb = dbid;
-    WOQLclient.connect(terminus_server_url, terminus_server_key, dbid);    
+    WOQLclient.connect(terminus_server_url, terminus_server_key, dbid).then(() => cleanup());    
 }
 
 function runTutorial(){
@@ -204,7 +204,8 @@ function normaliseID(raw, type){
 }
 
 function cleanup(){
-    WOQLclient.deleteDatabase("Anud");
-    WOQLclient.deleteDatabase("YYY");
-
+    //WOQLclient.deleteDatabase("seshat");
+    //WOQLclient.deleteDatabase("seshat3");
+    //WOQLclient.deleteDatabase("seshat_tutorial");
+    //WOQLclient.deleteDatabase("seshat_two");
 }
