@@ -1,16 +1,36 @@
 <html>
 <head><title>Seshat Tutorial Launch Page</title></head>
 <body>
-    <script src="https://terminusdb.github.io/terminus-dashboard/dist/terminus-dashboard.min.js"></script>
+    <script src="../../terminus-dashboard/dist/terminus-dashboard.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <script src="./seshat.js"></script>
+    <script src="./importRDF.js"></script>
     <script src="./addClasses.js"></script>
     <script src="./addProperties.js"></script>
-    <script src="./seshat.js"></script>
+    <script src="./importIronCSV.js"></script>
+    <script src="./importShapefiles.js"></script>
+    <script src="./libs.js"></script>
+    <script>
+    connectToServer("http://localhost:6363/", "root", "seshat3")
+    </script>
     <div id="myresults">
-        <a href="#" onClick='runTutorial("http://localhost:6363/", "root")'>Run Tutorial</a>
-        <a href="#" onClick='runSegment("http://localhost:6363/", "root")'>Run Segment</a>
+        <a href="#" onClick='runTutorial()'>Import All Seshat Data</a>
+        <p><a href="#" onClick='runSegment("CreateDB")'>Create DB</a></p>
+        <p><a href="#" onClick='runSegment("LoadLibraries")'>Load Libraries</a></p>
+        <p><a href="#" onClick='runSegment("CreateBoxClasses")'>Create Box Classes</a></p>
+        <p><a href="#" onClick='runSegment("CreateClasses")'>Create Classes</a></p>
+        <p><a href="#" onClick='runSegment("CreateProperties")'>Create Properties</a></p>
+        <p><a href="#" onClick='runSegment("CreatePolities")'>Create Polities</a></p>
+        <p><a href="#" onClick='runSegment("ImportProperties")'>Import Basic Properties</a></p>
+        <p><a href="#" onClick='runSegment("ImportProperties2")'>Import Epistemic Properties</a></p>
+        <p><a href="#" onClick='runSegment("ImportProperties3")'>Import Extended Properties</a></p>
+        <p><a href="#" onClick='runSegment("ImportAnnotations")'>Import Annotations</a></p>
+        <p><a href="#" onClick='runSegment("ImportIronSchema")'>Import CSV (Extend schema)</a></p>
+        <p><a href="#" onClick='runSegment("ImportIronData")'>Import CSV (Iron data)</a></p>
+        <p><a href="#" onClick='runSegment("ImportShapes")'>Import Shapefile CSVs</a></p>
+        <p><a href="#" onClick='runSegment("ImportConflictSchema")'>Import Conflict Schema</a></p>
     </div>
     <div id="target"></div>
 </body>

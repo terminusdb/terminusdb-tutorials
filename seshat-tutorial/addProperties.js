@@ -1,5 +1,4 @@
-
-function createProperties(){
+seshat.createProperties = function(){
     return WOQL.and(
         createBasicProperties(),
         createMonetarySystemProperties(),
@@ -26,9 +25,180 @@ function createProperties(){
     )
 }
 
+seshat.properties = {}
+
+seshat.properties.basic = {
+    "alternativeNames": ["alternative_names", "string"],
+    "utmZone": ["utm_zone", "string"],
+    "settlementLevels": ["settlement_levels", "integerRange"],
+    "adminLevels": ["administrative_levels", "integerRange"],
+    "religiousLevels": ["religious_levels", "integerRange"],
+    "militaryLevels": ["military_levels", "integerRange"],
+    "language": ["lang", "string"],
+    "capital": ["capital_city", "string"],
+    "population": [false, "integerRange"],
+    "territorialArea": ["territorial_area", "integerRange"],
+    "largestSettlement": ["largest_settlement_population", "integerRange"],
+    "linguisticFamily": ["linguistic_family", "string"],
+    "fastestTravel": ["fastest_travel", "decimalRange"],
+    "supraculturalEntity": ["supracultural_entity"],
+    "longestCommunication": ["longest_communication_distance", "integerRange"],
+    "supraculturalScale": ["supracultural_scale", "integerRange"],
+    "predecessor": [],
+    "successor": [],
+    "references": [],
+    "bureaucratsIncome": ["bureaucrat_income_source", "incomeSource"],
+    "supraRelations": ["supra_polity_relations", "supraPolityRelations"],
+    "predecessorChange": ["predecessor_relationship", "politicalEvolution"],
+    "height": [false, "decimalRange"], 
+    "extent": [false, "decimalRange"],
+    "cost": [false, "decimalRange"],
+    "centralization": [false, "degreeOfCentralization"],
+    "peak": [false, "integerRange", seshat.rdf.urls.dacura + "gYearRange", 
+        WOQL.typecast("v:Target", "xdd:integerRange", "v:Value")],
+}
+
+seshat.properties.booleans = {
+    "professionalSoldiers": ["professional_soldiers"],
+    "bureaucrats": [],
+    "exams": ["examination_system"],
+    "meritPromotion": ["merit_promotion"],
+    "govBuildings": ["government_buildings"],
+    "legalCode": ["formal_legal_code"],
+    "judges": [],
+    "courts": [],
+    "priests": [],
+    "lawyers": ["professional_lawyers"],
+    "publicBuildings": ["public_buildings"],
+    "specialHouses": ["special_houses"],
+    "symbolicBuilding": ["symbolic_building"],
+    "funHouses": ["fun_houses"],
+    "libraries": [],
+    "utilities": [],
+    "irrigation": [],
+    "potableWater": ["potable_water"],
+    "markets": [],
+    "siloes": [],
+    "roads": [],
+    "bridges": [],
+    "canals": [],
+    "ports": [],
+    "specialSites": ["special_sites"],
+    "ceremonialSites": ["ceremonial_sites"],
+    "burialSites": ["burial_sites"],
+    "emporia": [],
+    "enclosures": [],
+    "mines": [],
+    "altSites": ["other_site"],
+    "lengthUnit": ["length_unit"],
+    "areaUnit": ["area_unit"],
+    "volumeUnit": ["volume_unit"],
+    "weightUnit": ["weight_unit"],
+    "timeUnit": ["time_unit"],
+    "geometricalUnit": ["geometrical_unit"],
+    "advancedUnit": ["advanced_unit"],
+    "mnemonics": [],
+    "nonWritten": ["non_written_records"],
+    "hasScript": ["script"],
+    "writtenRecords": ["written_records"],
+    "nonPhonetic": ["non_phonetic"],
+    "phonetic": [],
+    "hasLists": ["lists"],
+    "hasCalendar": ["calendar"],
+    "sacredTexts": ["sacred_texts"],
+    "religiousLit": ["religious_literature"],   
+    "manuals": [],
+    "history": [],
+    "philosophy": [],
+    "science": [],
+    "fiction": [],
+    "articles": ["monetary_articles"],
+    "tokens": ["monetary_tokens"],
+    "preciousMetals": ["precious_metals"],
+    "foreignCoins": ["foreign_coins"],
+    "localCoins": ["indigenous_coins"],
+    "paperMoney": ["paper_currency"],
+    "debtNotes": ["debt_and_credit"],
+    "wealthStores": ["stores_of_wealth"],
+    "couriers": [],
+    "postOffices": ["post_offices"],
+    "privateMail": ["private_mail"]
+}
+
+seshat.properties.extension = {
+    rites_of_passage: [],
+    personal_ceremonies: [],
+    calendrical_ceremonies: [],
+    perissodactyla: ["horselike_animals"],
+    artiodactyla: ["sheeplike_animals"],
+    birds: [],
+    cereals: [],
+    fertilizers: [],
+    legumes: [],
+    multicropping: ["multi_cropping"],
+    polyculture: [],
+    alternative_food: [],
+    regional_crops: [],
+    rodentia: ["small_mammals"],
+    curcurbitales: ["squashes"],
+    solanales: ["vegetables"],
+    aquatic_mammals: [],
+    osteichthyes: ["freshwater_fish"],
+    herbs: ["gathered_herbs"],
+    bird_hunting: ["hunted_birds"],
+    insects: ["insects_grubs_honey"],
+    large_game: [],
+    small_game: [],
+    raptilia: ["marine_reptiles"],
+    mollusks: [],
+    saltwater_fish: [],
+    shellfish: [],
+    tree_pith: [],
+    wild_roots: [],
+    agricultural_terracing: [],
+    food_containers: [],
+    food_preservation: [],
+    household_storage: [],
+    supravillage_storage: ["supra_village_storage"],
+    village_storage: [],
+    common_identity: ["integration_by_common_identity"],
+    common_residence: ["integration_by_common_residence"],
+    common_kin: ["integration_by_kin"],
+    common_politics: ["integration_by_political_ties"],
+    common_religion: ["integration_by_religion"],
+    common_status: ["integration_by_shared_status"],
+    
+    guest_accommodation: ["accommodation_for_guests", "epistemicFrequency"],
+    servant_accommodation:  ["accommodation_for_servants", "epistemicFrequency"],
+    external_decoration: [false, "epistemicFrequency"],
+    internal_decoration: [false, "epistemicFrequency"],
+    multiple_public_areas: [false, "epistemicFrequency"],
+    multiple_wings: [false, "epistemicFrequency"],
+    special_storage: [false, "epistemicFrequency"],
+    special_craft: ["specialized_craft_production", "epistemicFrequency"],
+    animal_sacrifices: [false, "epistemicFrequency"],
+    exotic_goods: ["exotic_objects", "epistemicFrequency"],
+    human_sacrifices: [false, "epistemicFrequency"],
+    personal_ornaments: [false, "epistemicFrequency"],
+    ritual_objects: [false, "epistemicFrequency"],
+    sumptuary_goods: ["sumptuary_objects", "epistemicFrequency"],
+    tombs_or_mausoleums: [false, "epistemicFrequency"],
+    utilitarian_goods: [false, "epistemicFrequency"],
+    wealth_objects: [false, "epistemicFrequency"],
+    leader_identification: [false, "leaderIdentification"],
+    leader_differentiation: [false, "leaderDifferentiation"],
+    authority_emphasis: [false, "authorityEmphasis"],
+    ritual_standardization: [false, "standardization"],
+    home_standardization: [false, "standardization"],
+    public_standardization: [false, "standardization"],
+    fineware_standardization: [false, "standardization"],
+
+}
+
+
 function createBasicProperties(){
     return WOQL.and(
-    createSeshatProperty("longest_communication_distance", "xdd:decimalRange", ["Scale", "SocialComplexity"], 
+    createSeshatProperty("longest_communication_distance", "xdd:integerRange", ["Scale", "SocialComplexity"], 
         "Longest Communication Distance", 
         `Distance in kilometers between the capital and the furthest provincial capital. 
         The figure for the most direct land and/or sea route that was available is used.
@@ -73,10 +243,10 @@ function createBasicProperties(){
     createSeshatProperty("alternative_names", "xsd:string", [], 
          "Alternative names", 
          `Names used in the historical literature or common names used by the inhabitants`),
-    createSeshatProperty("territorial_area", "xdd:decimalRange", [], 
+    createSeshatProperty("territorial_area", "xdd:integerRange", [], 
          "Territorial Area", 
          `The area in squared kilometers of the entity's territory.`),
-    createSeshatProperty("territory", "xdd:decimalRange", [], 
+    createSeshatProperty("territory", "xdd:coordinatePolygon", [], 
          "Territory", 
          `An area on the world map, defined by a coordinate polygon which is the territory of the entity`),
     createSeshatProperty("utm_zone", "xsd:string", [], 
@@ -88,32 +258,29 @@ function createBasicProperties(){
          "Language", 
          `The language(s) are listed that were generally used for administration, religion, and military affairs. 
          The languages spoken by the majority of the population are also listed, if different from the above.`),
-    createSeshatProperty("best_building", "Building", ["Construction"], 
-         "Most Costly Building", 
+    createUnscopedProperty("best_building", "Building", "Most Costly Building", 
          `The most impressive or costly building constructed by the political authority`),
-    createSeshatProperty("peak", "xdd:gYearRange", [], 
+    createSeshatProperty("peak", "xdd:integerRange", [], 
          "Peak Date", 
          `The period when the political power was at its peak, whether militarily,
          in terms of the size of territory controlled, or the degree of cultural development. 
          This variable has a subjective element, but typically historians agree when the peak was.`),
-    createSeshatProperty("predecessor", "PoliticalAuthority", [], 
-         "Preceding Polity", 
+    createUnscopedProperty("predecessor", "PoliticalAuthority", "Preceding Polity", 
          `The immediate preceding political authority. This code is based on the core region of the polity 
          (not the NGA region).  E.g. Achaemenid Empire's core region was Persia, 
          where they were preceded by the Median Empire.`),
-    createSeshatProperty("successor", "PoliticalAuthority", [], 
-         "Succeeding Polity", 
+    createUnscopedProperty("successor", "PoliticalAuthority", "Succeeding Polity", 
          `Name. Only name it here and don't code the nature of change 
          (it's coded on the page of the succeeding quasipolity). 
          This code is based on the core region of the current polity (not the NGA region). E.g. 
          Achaemenid Empire's core region was Persia, where they were succeeded by the Macedonian Empire.`),
-     createSeshatProperty("centralization", "ScopedDegreeOfCentralization", ["InternalAffairs"], 
+    createSeshatProperty("centralization", "ScopedDegreeOfCentralization", ["InternalAffairs"], 
          "Degree of Centralization", 
          `How centralized was power in this political authority?`),
     createSeshatProperty("supra_polity_relations", "ScopedSupraPolityRelations", ["ExternalAffairs"], 
          "Supra-polity relations", 
          `What was the relationship between this political authority and larger / higher order power.`),
-    createSeshatProperty("predecessor_relationship", "PoliticalEvolution", [], 
+    createSeshatProperty("predecessor_relationship", "ScopedPoliticalEvolution", [], 
          "Relationship to Preceding Polity", 
          `How this political authority evolved from its predecessor.`),
     createSeshatProperty("supracultural_entity", "xsd:string", ["ExternalAffairs"], 
@@ -126,7 +293,7 @@ function createBasicProperties(){
          (for example, Peregrine's Atlas of Cultural Evolution). 
          Note, 'supracultural entity' refers to cultural interdependence, and is distinct 
          from a political confederation or alliance, which is coded under 'supra-polity relations.'`),
-    createSeshatProperty("supracultural_scale", "xdd:decimalRange", ["Scale"], 
+    createSeshatProperty("supracultural_scale", "xdd:integerRange", ["Scale"], 
          "Supra-cultural Scale", 
          `An estimate of the area encompassed by the supracultural entity - in km squared.`),
     );                    
@@ -205,7 +372,7 @@ function createLegalProperties(){
 
 function createBuildingProperties(){
     return WOQL.and(
-    createSeshatProperty("most_costly_building", "Building", ["Scale", "SocialComplexity"], 
+    createUnscopedProperty("most_costly_building", "Building",  
         "Most Costly Building", 
         `The most impressive or costly building constructed by the political authority`),
     createSeshatProperty("cost", "xdd:decimalRange", ["Scale", "SocialComplexity"], 
@@ -324,12 +491,15 @@ function createAgriculturalProperties(){
     createSeshatProperty("polyculture", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Polyculture", 
         `IV-4-2-10 Polyculture (Seshat).`),
+    createSeshatProperty("alternative_food", "ScopedEpistemicState", ["Agriculture", "PP"], 
+        "Alternative Food Sources", 
+        `IV-4-3. Alternative Food Sources. [AR-SV-7] [AR-SV-9] [AR-SV-11]`),
     createSeshatProperty("regional_crops", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Regional Crops", 
         `IV-4-2-5 Crops: Regionally important subsistence plants`),
     createSeshatProperty("small_mammals", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Small Mammals", 
-        `IV-4-2-8 Animals:  Small mammals (Order: Rodentia; Lagomorpha)`),
+        `IV-4-2-8 Animals: Small mammals (Order: Rodentia; Lagomorpha)`),
     createSeshatProperty("squashes", "ScopedEpistemicState", ["Agriculture", "PP"], 
         "Squashes", 
         `IV-4-2-4 Crops: Squashes (Order: Curcurbitales)`),
@@ -398,10 +568,10 @@ function createInternalAffairsProperties(){
     );
 }
 
+
 function createMetaProperties(){
     return WOQL.and(
-    createSeshatProperty("references", "CitedWork", [], 
-        "References", 
+    createUnscopedProperty("references", "CitedWork", "References", 
         `The References from the wiki`)
     );
 }
@@ -423,6 +593,7 @@ function createCeremonialProperties(){
     );
 }
 
+
 function createFoodStorageProperties(){
     return WOQL.and(
     createSeshatProperty("food_containers", "ScopedEpistemicState", ["FoodStorage", "PP"], 
@@ -443,6 +614,8 @@ function createFoodStorageProperties(){
     );
 }
 
+
+
 function createProfessionsProperties(){
     return WOQL.and(
         createSeshatProperty("military_officers", "ScopedEpistemicState", ["Professions", "Military"], 
@@ -459,7 +632,7 @@ function createProfessionsProperties(){
         `Codes the presence of full-time specialist bureaucratic officials.`),
     );
 }
- 
+
 function createHousingProperties(){
     return WOQL.and(
     createSeshatProperty("accommodation_for_guests", "ScopedEpistemicFrequency", ["HousingVariation", "PP"], 
@@ -763,3 +936,4 @@ function createBurialProperties(){
         `Burials with wealth objects (fineware ceramics, gold/silver objects, etc.)`),  
     );
 }
+

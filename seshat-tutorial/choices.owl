@@ -31,8 +31,8 @@ scm:EpistemicFrequency
   a owl:Class ;
   rdfs:subClassOf tcs:Enumerated ;
   owl:oneOf (
-   scm:unknown
-   scm:absent
+   scm:unknown_epistemic_frequency
+   scm:never
    scm:rare
    scm:frequent
  ) .
@@ -43,14 +43,13 @@ scm:DegreeOfCentralization
   a owl:Class ;
   rdfs:subClassOf tcs:Enumerated ;
   owl:oneOf (
-   scm:unknown
    scm:quasipolity
    scm:nominal
    scm:loose
    scm:confederated_state
    scm:unitary_state
-   scm:unknown_centralisation
-   scm:no_centralisation
+   scm:unknown_centralization
+   scm:no_centralization
  ) .
 
 scm:Change
@@ -59,7 +58,7 @@ scm:Change
   a owl:Class ;
   rdfs:subClassOf tcs:Enumerated ;
   owl:oneOf (
-   scm:unknown
+   scm:unknown_change
    scm:big_decrease
    scm:small_decrease
    scm:stable
@@ -73,7 +72,7 @@ scm:Change
   a owl:Class ;
   rdfs:subClassOf tcs:Enumerated ;
   owl:oneOf (
-   scm:unknown
+   scm:unknown_complexity_change
    scm:organization_collapses
    scm:complexity_decreases
    scm:stable_complexity
@@ -92,7 +91,7 @@ scm:SupraPolityRelations
    scm:personal_union
    scm:vassalage
    scm:no_supra_polity_relations
-   scm:unknown
+   scm:unknown_supra_polity_relations
  ) .
 
 scm:PoliticalEvolution
@@ -105,7 +104,7 @@ scm:PoliticalEvolution
    scm:assimilation
    scm:elite_migration
    scm:population_migration
-   scm:unknown
+   scm:unknown_evolution
  ) .
 
 scm:IncomeSource
@@ -119,7 +118,7 @@ scm:IncomeSource
    scm:governed_population
    scm:land
    scm:no_income
-   scm:unknown
+   scm:unknown_income
  ) .
 
 scm:Frequency
@@ -135,7 +134,7 @@ scm:Frequency
 	scm:yearly
 	scm:once_per_generation
 	scm:once_in_a_lifetime
-	scm:unknown
+	scm:unknown_frequency
 ) .
 
 scm:AuthorityEmphasis
@@ -144,12 +143,12 @@ scm:AuthorityEmphasis
 	a owl:Class ;
 	rdfs:subClassOf tcs:Enumerated ;
 	owl:oneOf (
-	scm:egalitarian
-	scm:group_solidarity
-	scm:group_priority
-	scm:leader_priority
-	scm:leader_emphasis
-	scm:unknown
+		scm:egalitarian
+		scm:group_solidarity
+		scm:group_priority
+		scm:leader_priority
+		scm:leader_emphasis
+		scm:unknown_emphasis
 	) .
 
 scm:AuthoritySharing
@@ -158,12 +157,12 @@ scm:AuthoritySharing
 	a owl:Class ;
 	rdfs:subClassOf tcs:Enumerated ;
 	owl:oneOf (
-	scm:egalitarian
-	scm:extensive_sharing
-	scm:cadre_sharing
-	scm:rare_sharing
-	scm:exclusive_sharing
-	scm:unknown
+		scm:egalitarian_sharing
+		scm:extensive_sharing
+		scm:cadre_sharing
+		scm:rare_sharing
+		scm:exclusive_sharing
+		scm:unknown_sharing
 	) .
 
 scm:ExternalContact
@@ -172,12 +171,12 @@ scm:ExternalContact
 	a owl:Class ;
 	rdfs:subClassOf tcs:Enumerated ;
 	owl:oneOf (
-	scm:egalitarian
-	scm:few_contacts
-	scm:nonexclusive_leader_participation
-	scm:nonexclusive_leader_control
-	scm:exclusive_leader_control
-	scm:unknown
+		scm:egalitarian_contact
+		scm:few_contacts
+		scm:nonexclusive_leader_participation
+		scm:nonexclusive_leader_control
+		scm:exclusive_leader_control
+		scm:unknown_contact
 	) .
 
 scm:LeaderDifferentiation
@@ -186,12 +185,12 @@ scm:LeaderDifferentiation
 	a owl:Class ;
 	rdfs:subClassOf tcs:Enumerated ;
 	owl:oneOf (
-	scm:egalitarian
-	scm:no_differentiation
-	scm:small_privileges
-	scm:extensive_privileges
-	scm:exclusive_privileges
-	scm:unknown
+		scm:egalitarian_differentiation
+		scm:no_differentiation
+		scm:small_privileges
+		scm:extensive_privileges
+		scm:exclusive_privileges
+		scm:unknown_differentiation
 	) .
 
 scm:LeaderIdentification
@@ -200,12 +199,12 @@ scm:LeaderIdentification
 	a owl:Class ;
 	rdfs:subClassOf tcs:Enumerated ;
 	owl:oneOf (
-	scm:no_leader
-	scm:egalitarian
-	scm:leader_treatment
-	scm:leader_symbols
-	scm:leader_cult
-	scm:unknown
+		scm:no_leader
+		scm:egalitarian_leadership
+		scm:leader_treatment
+		scm:leader_symbols
+		scm:leader_cult
+		scm:unknown_identification
 	) .
 
 scm:Standardization
@@ -214,12 +213,12 @@ scm:Standardization
   a owl:Class ;
   rdfs:subClassOf tcs:Enumerated ;
   owl:oneOf (
-   scm:unknown
-   scm:none
-   scm:unstandardized
-   scm:moderately_unstandardized
-   scm:moderately_standardized
-   scm:standardized
+	scm:unknown_standardization
+	scm:no_standardization
+	scm:unstandardized
+	scm:moderately_unstandardized
+	scm:moderately_standardized
+	scm:standardized
  ) .
 
 scm:daily
@@ -239,8 +238,8 @@ scm:monthly
 
 scm:seasonally
 	rdfs:label "Seasonally"@en ;
-	rdfs:comment "Occurring 4 times per year (or similar frequency)"@en ;
-	a scm:Frequency .
+	rdfs:comment "Occurring 4 times per year (or similar frequency)"@en 
+	a tcs:Frequency.
 
 scm:yearly
 	rdfs:label "Yearly"@en ;
@@ -260,7 +259,7 @@ scm:once_in_a_lifetime
 scm:egalitarian
 	rdfs:label "Egalitarian"@en ;
 	rdfs:comment "Egalitarian / no formal leaders"@en ;
-	a scm:AuthorityEmphasis, scm:AuthoritySharing, scm:ExternalContact, scm:LeaderDifferentiation, scm:LeaderIdentification .
+	a scm:AuthorityEmphasis.
 
 scm:group_solidarity
 	rdfs:label "Group Solidarity"@en ;
@@ -281,8 +280,6 @@ scm:leader_emphasis
 	rdfs:label "Leader Emphasis"@en ;
 	rdfs:comment "emphasis placed on leaders as the embodiment of the group"@en ;
 	a scm:AuthorityEmphasis .
-
-
 
 scm:extensive_sharing
 	rdfs:label "Extensive Sharing"@en ;
@@ -345,10 +342,10 @@ scm:exclusive_privileges
 	rdfs:comment "lleaders have exclusive privileges and exclusive access to special housing, resources, and sumptuary goods"@en ;
 	a scm:LeaderDifferentiation .
 
-scm:none
+scm:no_standardization
 	rdfs:label "None"@en ;
-	rdfs:comment "None exists"@en ;
-	a scm:LeaderIdentification, scm:Standardization .
+	rdfs:comment "No standardization exists"@en ;
+	a scm:Standardization .
 
 scm:leader_treatment
 	rdfs:label "Identified by treatment"@en ;
@@ -366,7 +363,7 @@ scm:leader_cult
 	a scm:LeaderIdentification .
 
 scm:absent
-    a scm:EpistemicState, scm:GodType, scm:EpistemicFrequency ;
+    a scm:EpistemicState;
     rdfs:comment "The feature was absent in this historical context"@en ;
     rdfs:label "Absent"@en .
 
@@ -452,10 +449,12 @@ scm:loose
 
 scm:moderately_standardized
 	a scm:Standardization ;
+	rdfs:comment "Moderately standardized (more standard than not)"@en;
 	rdfs:label "Moderately Standardized"@en .
 
 scm:moderately_unstandardized
 	a scm:Standardization ;
+	rdfs:comment "Moderately Unstandardized (more unstandard than not)"@en;
 	rdfs:label "Moderately Unstandardized"@en .
 
 scm:moralizing
@@ -463,7 +462,7 @@ scm:moralizing
 	rdfs:comment "Present, active, and specifically supportive of human morality"@en ;
 	rdfs:label "Moralizing"@en .
 
-scm:no_centralisation
+scm:no_centralization
 	a scm:DegreeOfCentralization ;
 	rdfs:comment "There is no centralised system"@en ;
 	rdfs:label "None"@en .
@@ -540,6 +539,7 @@ scm:stable_complexity
 
 scm:standardized
 	a scm:Standardization ;
+	rdfs:comment "Standardized across the board"@en;
 	rdfs:label "Standardized"@en .
 
 scm:state_salary
@@ -553,12 +553,13 @@ scm:unitary_state
 	rdfs:label "Unitary State"@en .
 
 scm:unknown
-   a scm:DegreeOfCentralization, scm:Change, scm:ComplexityChange, scm:LeaderIdentification, scm:LeaderDifferentiation, scm:ExternalContact, scm:AuthorityEmphasis, scm:AuthoritySharing, scm:IncomeSource, scm:PoliticalEvolution, scm:Standardization, scm:DegreeOfCentralization, scm:EpistemicFrequency, scm:EpistemicState, scm:Frequency, scm:GodType, scm:SupraPolityRelations ;
+   a scm:EpistemicState;
    rdfs:comment "It can be said with a high degree of confidence that it is not known whether the feature was present or absent in the context."@en ;
    rdfs:label "Unknown"@en .
 
 scm:unstandardized
 	a scm:Standardization ;
+	rdfs:comment "Not standardized at all."@en;
 	rdfs:label "Unstandardized"@en .
 
 scm:vassalage
@@ -580,3 +581,106 @@ scm:uncertain
   rdfs:label "Uncertain"@en ;
   rdfs:comment "The evidence has a high degree of uncertainty"@en ;
   a scm:Confidence .
+
+scm:unknown_identification
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "How the leader is identified is unknown"@en ;
+  a scm:LeaderIdentification .
+
+scm:no_leader
+  rdfs:label "No leader"@en ;
+  rdfs:comment "There is no leader"@en ;
+  a scm:LeaderIdentification .
+
+
+scm:egalitarian_leadership
+  rdfs:label "Egalitarian"@en ;
+  rdfs:comment "Egalitarian leadership"@en ;
+  a scm:LeaderIdentification .
+
+scm:unknown_emphasis
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown Emphasis"@en ;
+  a scm:AuthorityEmphasis.
+
+
+scm:unknown_epistemic_frequency
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown Epistemic Frequency"@en ;
+  a scm:EpistemicFrequency.
+
+
+scm:unknown_frequency
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown Frequency"@en ;
+  a scm:Frequency.
+
+scm:unknown_evolution
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown Evolution"@en ;
+  a scm:PoliticalEvolution.
+
+scm:unknown_supra_polity_relations
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown Relations"@en ;
+  a scm:SupraPolityRelations.
+
+scm:unknown_change
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown Change"@en ;
+  a scm:Change.
+
+scm:never
+  rdfs:label "Never"@en ;
+  rdfs:comment "Never occurs"@en ;
+  a scm:EpistemicFrequency.
+
+scm:unknown_centralization
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown Centralization"@en ;
+  a scm:DegreeOfCentralization.
+
+scm:unknown_complexity_change
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown Change"@en ;
+  a scm:ComplexityChange.
+
+scm:unknown_income
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown source of income"@en ;
+  a scm:IncomeSource.
+
+scm:unknown_sharing
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown authority sharing"@en ;
+  a scm:AuthoritySharing.
+
+scm:egalitarian_sharing
+  rdfs:label "Egalitarian"@en ;
+  rdfs:comment "Egalitarian authority sharing"@en ;
+  a scm:AuthoritySharing.
+
+scm:egalitarian_contact
+  rdfs:label "Egalitarian"@en ;
+  rdfs:comment "Egalitarian contact access"@en ;
+  a scm:ExternalContact.
+
+scm:unknown_contact
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown external contacts"@en ;
+  a scm:ExternalContact.
+	
+scm:egalitarian_differentiation
+  rdfs:label "Egalitarian"@en ;
+  rdfs:comment "Egalitarian differentiation of leaders"@en ;
+  a scm:LeaderDifferentiation.
+	
+scm:unknown_standardization
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown standardization levels"@en ;
+  a scm:Standardization.
+
+scm:unknown_differentiation
+  rdfs:label "Unknown"@en ;
+  rdfs:comment "Unknown differentiation"@en ;
+  a scm:Standardization.

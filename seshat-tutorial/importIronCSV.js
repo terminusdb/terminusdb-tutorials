@@ -1,70 +1,95 @@
-function getSchemaWOQL(){
-    var delta = createSeshatProperty("presence_of_iron", "EpistemicState", ["Metals", "Mining"],
-        "Iron", "Presence of iron - encodes whether the metal iron was present in the area or with the group in question", "NGA");
-    return WOQL.when(true, delta); 
+/**
+ * File for importing a Spreadsheet and integrating it with Seshat
+ * 
+ * The spreadsheet contains data about the presence of Iron in seshat NGAs at a particular time
+ * 
+ * Codes: A, P, A~P are used to indicate absent, present, uncertain
+ */
+
+seshat.iron = {}
+
+seshat.importIronCSV = function(client){
+    let url = "http://seshatdatabank.info/wp-content/uploads/2020/01/Iron-Updated.csv";
+    return seshat.extendSeshatSchema(client)
+        .then(() => seshat.importSeshatCSV(client, url));
 }
 
-function getImportWOQL(url){
-    const get = WOQL.get(
+/**
+ * Creates a new property and adds it to the database 
+ */
+seshat.extendSeshatSchema = function(client){
+    var delta = seshat.createSeshatProperty("presence_of_iron", 
+        "ScopedEpistemicState", ["Metals", "Mining"],
+        "Iron", 
+        `Presence of iron - encodes whether the metal iron was present in the area or
+         with the group in question`, "scm:NaturalGeographicArea");
+    return WOQL.when(true, delta).execute(client); 
+}
+
+seshat.iron.importSeshatCSV = function(client, url){
+    let imports = seshat.iron.getImportWOQL(url);
+    let basic = WOQL.when(imports, seshat.iron.getInsertWOQL());
+    let nimports = WOQL.and(imports, WOQL.eq("v:Presence", {"@value": "A~P", "@type": "xsd:string"}));
+    let complex = WOQL.when(nimports, seshat.iron.getUncertainInsert())
+    return WOQL.and(basic, complex).execute(client);
+}
+
+seshat.iron.getImportWOQL = function(url){
+    const get = seshat.iron.getCSVVariables(url); 
+    return WOQL.and(get, ...seshat.iron.getWrangles());
+}
+
+/**
+ * Loads the CSV columns into variables
+ * @param {String} url - the URL from which the CSV should be loaded 
+ */
+seshat.iron.getCSVVariables = function(url){
+    return WOQL.get(
         WOQL.as("NGA", "v:NGA_Label")
             .as("Date.From", "v:From")
             .as("Date.To", "v:To")
             .as("Iron", "v:Presence")
     ).remote(url);
-    
-   const wrangles = [
+}
+
+/**
+ * Transforms the data to get it into the shape that we want
+ */
+seshat.iron.getWrangles = function(){
+    const wrangles = [
         WOQL.idgen("doc:NGA_", ["v:NGA_Label"], "v:NGA_ID"),
-        WOQL.unique("doc:PresenceOfIron_", ["v:NGA_Label", "v:From", "v:To", "v:Presence"], "v:IronValueID"),
-        WOQL.cast("v:To", "xsd:integerRange", "v:To_Cast"),
-        WOQL.cast("v:From", "xsd:integerRange", "v:From_Cast")
-   ]
-   
-   const inserts = WOQL.and(
-        WOQL.when(
-            WOQL.and(get, WOQL.eq("v:Presence", "A"), ...wrangles), 
-            getSeshatValue("v:NGA_ID", "scm:NaturalGeographicArea", "v:NGA_Label", "scm:presence_of_iron", 
-                "scm:absent", "scm:epistemicState", "v:IronValueID", "v:From_Cast", "v:To_Cast")
-        ), 
-        WOQL.when(
-            WOQL.and(get, WOQL.eq("v:Presence", "P"), ...wrangles), 
-            getSeshatValue("v:NGA_ID", "scm:NaturalGeographicArea", "v:NGA_Label", "scm:presence_of_iron", 
-                "scm:present", "scm:epistemicState", "v:IronValueID", "v:From_Cast", "v:To_Cast")
-        ), 
-        WOQL.when(
-            WOQL.and(get, WOQL.eq("v:Presence", "A~P"), ...wrangles), 
+        WOQL.unique("doc:iron", ["v:NGA_Label", "v:From", "v:To", "v:Presence"], "v:IronValueID"),
+        WOQL.cast("v:To", "xdd:integerRange", "v:To_Cast"),
+        WOQL.cast("v:From", "xdd:integerRange", "v:From_Cast"),
+        WOQL.or(
             WOQL.and(
-                getSeshatValue("v:NGA_ID", "scm:NaturalGeographicArea", "v:NGA_Label", "scm:presence_of_iron", 
-                    "scm:present", "scm:epistemicState", "v:IronValueID", "v:From_Cast", "v:To_Cast"),
-                WOQL.add_triple("v:IronValueID", "scm:epistemicState", "scm:absent"),
-                WOQL.add_triple("v:IronValueID", "scm:confidence", "scm:uncertain")
-            )
+                WOQL.eq("v:Presence", {"@value": "A", "@type": "xsd:string"}),
+                WOQL.eq("v:Value", "scm:absent")
+            ),
+            WOQL.eq("v:Value", "scm:present")
         )
-    );
-    return inserts;  
+   ]
+   return wrangles;
 }
 
-function getSeshatValue(docid, doctype, doclabel, prop, value, valtype, valueid, from, to){
-    var valcls = prop + "_Value";
+seshat.iron.getInsertWOQL = function(){
     return WOQL.and(
-            WOQL.add_triple(docid, "type", doctype), 
-            WOQL.add_triple(docid, "label", doclabel), 
-            WOQL.add_triple(docid, prop, valueid), 
-            WOQL.add_triple(valueid, "type", valcls),
-            WOQL.add_triple(valueid, "scm:start", from),
-            WOQL.add_triple(valueid, "scm:end", to),
-            WOQL.add_triple(valueid, valtype, value),
+        WOQL.add_triple("v:NGA_ID", "type", "scm:NaturalGeographicArea"), 
+        WOQL.add_triple("v:NGA_ID", "label", "v:NGA_Label"), 
+        WOQL.add_triple("v:NGA_ID", "scm:presence_of_iron", "v:IronValueID"), 
+        WOQL.add_triple("v:IronValueID", "type", "scm:presence_of_iron_Value"),
+        WOQL.add_triple("v:IronValueID", "scm:start", "v:From_Cast"),
+        WOQL.add_triple("v:IronValueID", "scm:end", "v:To_Cast"),
+        WOQL.add_triple("v:IronValueID", "scm:epistemicState", "v:Value")
+   )    
+}
+
+seshat.iron.getUncertainInsert = function(){
+    return WOQL.and(
+        WOQL.add_triple("v:IronValueID", "scm:epistemicState", "scm:absent"),
+        WOQL.add_triple("v:IronValueID", "scm:confidence", "scm:uncertain")
     )
-    
 }
 
-function extendSeshatSchema(client){
-    var woql = getSchemaWOQL();
-    return woql.execute(client);
-}
-
-function importSeshatCSV(client, url){
-    var woql = getImportWOQL(url);
-    return woql.execute(client);
-}
 
 

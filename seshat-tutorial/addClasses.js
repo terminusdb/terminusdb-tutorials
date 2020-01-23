@@ -1,4 +1,4 @@
-function getClasses(){
+seshat.getClasses = function(){
     return WOQL.and(
         getThematicClasses(), 
         getDocumentClasses(), 
@@ -71,7 +71,7 @@ function getDocumentClasses(){
         WOQL.doctype("UnitOfTerritory")
             .label("Unit of Territory")
             .description("A free-form unit of territory"),            
-        WOQL.add_class("NaturalGeographicArea")
+        WOQL.doctype("NaturalGeographicArea")
             .label("NGA")
             .description("Natural Geographic Area (NGA). This type of unit is defined spatially by the area enclosed within a boundary drawn on the world map. It does not change with time. Its rough spatial scale is 100 km x 100 km (+/- 50%). Examples: Latium, Upper Egypt, Middle Yellow River Valley."),            
         WOQL.doctype("CitedWork").label("Cited Work").property("remote_url", "xsd:anyURI"),
@@ -98,7 +98,8 @@ function getStructuralClasses(){
             .property("start", "xdd:integerRange")
             .property("end", "xdd:integerRange")
             .property("confidence", "scm:Confidence")
-            .property("notes", "scm:Note")
+            .property("notes", "scm:Note"),
+        WOQL.add_quad("tcs:Document", "rdfs:subClassOf", "scm:ScopedValue", "db:schema")
     );
     return woqls;
 }
