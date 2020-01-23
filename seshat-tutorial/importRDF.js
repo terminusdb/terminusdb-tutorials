@@ -320,13 +320,13 @@ seshat.importRDFAnnotations = function(client, part, url){
     url = url || seshat.rdf.urls.notes; 
     if(part == "polity"){
         var woql = WOQL.and(
-            seshat.rdf.importPolityAnnotations(),
-            seshat.rdf.writeAnnotation()
+            seshat.rdf.writePolityAnnotations(),
+            //seshat.rdf.writeAnnotation()
         )
     }        
-    else if(part == "value"){
+    else if(part == "values"){
         var woql = WOQL.and(
-            seshat.rdf.importValueAnnotations(),
+            //seshat.rdf.importValueAnnotations(),
             seshat.rdf.writeValueAnnotations()
         )
     }
@@ -340,13 +340,15 @@ seshat.importRDFAnnotations = function(client, part, url){
  * @param {*} url 
  */
 
-seshat.rdf.importPolityAnnotations = function(){
-    return WOQL.and(
+seshat.rdf.writePolityAnnotations = function(subj){
+    subj = subj || "v:Subject_ID";
+    let head = WOQL.and(
         seshat.rdf.getAnnotationMatcher(),
         WOQL.re(".*/candidate/(.*)", "v:Annotated_ID", ["v:All_PA", "v:All_PA_Ext"]),
         WOQL.idgen("doc:", ["v:All_PA_Ext"], "v:Subject_ID"),
         WOQL.triple("v:Subject_ID", "type","scm:Polity")
     )
+    return seshat.rdf.writeAnnotation(subj, head);
 }
 
 seshat.rdf.getAnnotationMatcher = function(){
@@ -356,11 +358,23 @@ seshat.rdf.getAnnotationMatcher = function(){
     )
 }
 
-seshat.rdf.writeAnnotation = function(subj){
+seshat.rdf.writeValueAnnotations = function(subj){
+    subj = subj || "v:Subject_ID";
+    let inp = WOQL.and(
+        seshat.rdf.getAnnotationMatcher(),
+        WOQL.unique("doc:", ["v:Annotated_ID"], "v:Subject_ID"),
+        WOQL.triple("v:Subject_ID", "type","v:AnyType")
+    );
+    return seshat.rdf.writeAnnotation(subj, inp)
+}
+
+
+seshat.rdf.writeAnnotation = function(subj, head){
     subj = subj || "v:Subject_ID";
     return WOQL.and( 
         WOQL.when(
             WOQL.and(
+                head,
                 WOQL.quad("v:Annotation", seshat.rdf.urls.dacura + "lifespan", "v:LS_ID", "graph://temp"),
                 WOQL.quad("v:LS_ID", seshat.rdf.urls.dacura + "start", "v:Start_Time", "graph://temp"),
                 WOQL.cast("v:Start_Time", "xdd:integerRange", "v:Start_Value", "graph://temp")    
@@ -369,6 +383,7 @@ seshat.rdf.writeAnnotation = function(subj){
         ),
         WOQL.when(
             WOQL.and(
+                head,
                 WOQL.quad("v:Annotation", seshat.rdf.urls.dacura + "lifespan", "v:LS_ID", "graph://temp"),
                 WOQL.quad("v:LS_ID", seshat.rdf.urls.dacura + "end", "v:End_Time", "graph://temp"),
                 WOQL.cast("v:End_Time", "xdd:integerRange", "v:End_Value", "graph://temp")
@@ -377,28 +392,23 @@ seshat.rdf.writeAnnotation = function(subj){
         ),
         WOQL.when(
             WOQL.and(
+                head,
                 WOQL.quad("v:Annotation", seshat.rdf.urls.dacura + "confidence", "v:Confidence", "graph://temp"),
                 WOQL.re("#(.*)", "v:Confidence", ["v:Allconf", "v:ConfCode"]),
                 WOQL.idgen("scm:", ["v:ConfCode"], "v:Conf_Value")
             ),
             WOQL.add_triple(subj, "scm:confidence", "v:Conf_Value")
+        ),
+        WOQL.when(
+            WOQL.and(
+                head,
+                WOQL.quad(subj, "comment", "v:Comment", "graph://temp")
+            ), WOQL.and(
+                    WOQL.insert("v:ID_GEN", "scm:Note"),
+                    WOQL.add_triple("v:ID_GEN", "rdfs:comment", "v:Comment"),
+                    WOQL.add_triple(subj, "scm:notes", "v:ID_GEN")
+            )
         )
-    )
-}
-
-seshat.rdf.importValueAnnotations = function(){
-    return WOQL.and(
-        seshat.rdf.getAnnotationMatcher(),
-        WOQL.unique("doc:", ["v:All_PA_Ext"], "v:Subject_ID"),
-        WOQL.triple("v:Subject_ID", "type","v:AnyType")
-    )
-}
-
-seshat.rdf.writeValueAnnotations = function(subj){
-    subj = subj || "v:Subject_ID";
-    return WOQL.and(
-        seshat.rdf.writeAnnotation(),
-        seshat.rdf.writeAnnotationNote()
     )
 }
 

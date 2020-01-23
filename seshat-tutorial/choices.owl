@@ -11,6 +11,7 @@ scm:Confidence
 	owl:oneOf (
 		scm:inferred
 		scm:disputed
+   		scm:dubious
 		scm:uncertain
 	) .
 
@@ -575,6 +576,11 @@ scm:inferred
 scm:disputed
   rdfs:label "Disputed"@en ;
   rdfs:comment "The evidence is disputed - some believe this data to be incorrect"@en ;
+  a scm:Confidence .
+
+scm:dubious
+  rdfs:label "Dubious"@en ;
+  rdfs:comment "The evidence is dubious - most believe this data to be incorrect"@en ;
   a scm:Confidence .
 
 scm:uncertain

@@ -18,7 +18,7 @@ seshat.importIronCSV = function(client){
  * Creates a new property and adds it to the database 
  */
 seshat.extendSeshatSchema = function(client){
-    var delta = seshat.createSeshatProperty("presence_of_iron", 
+    var delta = createSeshatProperty("presence_of_iron", 
         "ScopedEpistemicState", ["Metals", "Mining"],
         "Iron", 
         `Presence of iron - encodes whether the metal iron was present in the area or
@@ -26,7 +26,7 @@ seshat.extendSeshatSchema = function(client){
     return WOQL.when(true, delta).execute(client); 
 }
 
-seshat.iron.importSeshatCSV = function(client, url){
+seshat.importSeshatCSV = function(client, url){
     let imports = seshat.iron.getImportWOQL(url);
     let basic = WOQL.when(imports, seshat.iron.getInsertWOQL());
     let nimports = WOQL.and(imports, WOQL.eq("v:Presence", {"@value": "A~P", "@type": "xsd:string"}));
