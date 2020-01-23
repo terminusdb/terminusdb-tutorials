@@ -316,23 +316,21 @@ seshat.rdf.getImportDocID = function(inp, out){
         //dacura:end "-0647"^^xdd:gYearRange ;
     //dacura:confidence dacura:uncertain ;
 
-seshat.importRDFAnnotations = function(client, url){
+seshat.importRDFAnnotations = function(client, part, url){
     url = url || seshat.rdf.urls.notes; 
-    let rules = WOQL.or(
-        WOQL.and(
+    if(part == "polity"){
+        var woql = WOQL.and(
             seshat.rdf.importPolityAnnotations(),
             seshat.rdf.writeAnnotation()
-        ),         
-        WOQL.and(
+        )
+    }        
+    else if(part == "value"){
+        var woql = WOQL.and(
             seshat.rdf.importValueAnnotations(),
             seshat.rdf.writeValueAnnotations()
-        ),
-        WOQL.and(
-            seshat.rdf.importUnmatchedAnnotations(),
-            seshat.rdf.writeUnmatchedAnnotations()
-        )         
-    )
-    return seshat.rdf.quintetWith(url, rules).execute(client);    
+        )
+    }
+    return seshat.rdf.quintetWith(url, woql).execute(client);    
 }
 
 

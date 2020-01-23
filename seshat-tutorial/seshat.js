@@ -151,7 +151,8 @@ function loadSegmentQuery(segment){
     else if(segment == "ImportProperties") return seshat.importProperties("basic").execute(WOQLclient);
     else if(segment == "ImportProperties2") return seshat.importProperties("booleans").execute(WOQLclient);
     else if(segment == "ImportProperties3") return seshat.importProperties("extended").execute(WOQLclient);
-    else if(segment == "ImportAnnotations") return seshat.importRDFAnnotations(WOQLclient);
+    else if(segment == "ImportAnnotations") return seshat.importRDFAnnotations(WOQLclient, "polity");
+    else if(segment == "ImportAnnotations2") return seshat.importRDFAnnotations(WOQLclient, "values");
     else if(segment == "ImportIronSchema") return seshat.extendSeshatSchema(WOQLclient);
     else if(segment == "ImportIronData") return seshat.importSeshatCSV(WOQLclient);
     else if(segment == "ImportConflictSchema") return seshat.importConflictSchema(WOQLclient);
