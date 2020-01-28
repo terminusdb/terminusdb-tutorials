@@ -1,3 +1,4 @@
+if(typeof seshat == "undefined") seshat = {};
 seshat.importShapefileCSVs = function(){
     return seshat.shapes.loadShapefileCSVs(seshat.shapes.files);   
 }
@@ -24,7 +25,7 @@ seshat.shapes.getCSVWOQL = function(url){
         WOQL.lower("v:Polity","v:Polity_Lower"),        
         WOQL.typecast("v:Year", "xdd:integerRange", "v:Time"),        
         WOQL.idgen("doc:",["v:Polity_Lower"], "v:PolityID"),        
-        WOQL.unique("doc:territory",["v:Polity_ID", "v:Year", "v:Coord_String"], "v:ValueID"),        
+        WOQL.unique("doc:territory",["v:Polity", "v:Year", "v:Coord_String"], "v:ValueID"),        
         WOQL.join("v:Records",",","v:Coord_String"),
         WOQL.concat("[v:Coord_String]","v:Coords"),    
     ];
@@ -127,3 +128,10 @@ seshat.shapes.files = [
         "https://terminusdb.com/t/data/seshat/csvs/5000BCE.csv"
 ];
 
+/**
+ * Creates a new property and adds it to the database 
+ */
+seshat.shapes.scopedProperties = function(){
+    return createScopedProperty("territory", "xdd:coordinatePolygon", ["Scale"], "Territory", 
+        "Governed territory")
+}

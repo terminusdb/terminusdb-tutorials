@@ -1,3 +1,4 @@
+//const TerminusTutorial = TerminusDashboard.TerminusViewer().TerminusTutorial();
 const TerminusClient = new TerminusDashboard.TerminusViewer().TerminusClient();
 const WOQLclient = new TerminusClient.WOQLClient();
 const WOQL = TerminusClient.WOQL;
@@ -133,11 +134,33 @@ function loadLibraries(){
     })*/
 }
 
+function showResult(segment){
+    if(segment == "CreateBoxClasses"){
+        showBoxClasses();
+    }
+}
+
+function showError(response, segment){
+    
+}
+
+function showBoxClasses(){
+    var q = WOQL.and(
+        WOQL.sub("v:Class", "scm:EnumeratedType", "")
+    );
+    TerminusViewer.getQueryPane()
+    //TerminusViewer.prototype.getQueryPane = function(query, resultConfigs, results, resultPaneConfigs, queryPaneConfig){
+    
+}
+
+
+
+
 function runSegment(segment){
     var res = loadSegmentQuery(segment);
     if(res){
-        res.then(() => alert("Success " + segment));
-        res.catch(() => alert("Failed " + segment));
+        res.then(() => showResult(segment));
+        res.catch((response) => showError(response, segment));
     }
 }
 
@@ -210,3 +233,71 @@ function cleanup(){
     //WOQLclient.deleteDatabase("seshat_tutorial");
     //WOQLclient.deleteDatabase("seshat_two");
 }
+/*
+function Tutorial(){
+    this.stages = {};
+}
+
+Tutorial.prototype.addStage = function(id, text, query, views, action){
+    var stg = {id: id, text: text, query: query, views: views, action: action};
+    this.stages.push(stg);
+}
+
+let tut = new Tutorial();
+tut.setIntro("The Global History Databank", "Building and analysing an integrated knowledge graph describing world history from diverse sources in a single query");
+//problem description stage
+//create document hierarchy
+//create topic hieararchy
+//import polities
+//creating properties 
+//creating enumerated types
+//Digression into scoping 
+//creating scoped object
+//creating datatype boxes
+//creating document & enumerated boxes
+//Social Complexity Data
+//creating properties
+//importing properties
+//importing annotations
+Presence of Iron CSV
+//create property
+//import data
+Resilience Dataset
+//import schema
+//import data
+Shapefile CSV dumps
+//import all
+Conflict Dataset
+//import Conflict Def
+//import HPI ontology
+
+seshat.createScoping = function(){
+    return WOQL.and(
+        WOQL.add_class("ScopedValue")
+            .abstract()
+            .property("start", "xdd:integerRange")
+                .label("From")
+                .description("The start of a time range")
+            .property("end", "xdd:integerRange")
+                .label("To")
+                .description("The end of a time range")
+            .property("confidence", "scm:Confidence")
+                .label("Confidence")
+                .description("Qualifiers of the confidence of a variable value")
+            .property("notes", "scm:Note")
+                .label("Notes")
+                .description("Editorial notes on values"),
+        WOQL.add_class("Note").label("A Note on a value")
+            .description("Editorial note on the value")
+            .property("citation", "scm:CitedWork")
+                .label("Citation")
+                .description("A link to a cited work")
+            .property("quotation", "xsd:string")
+                .label("Quotation")
+                .description("A quotation from a work"),
+        WOQL.doctype("CitedWork")
+            .label("Cited Work")
+            .description("An extrnal work that is cited by anote in the database")
+    )
+}
+*/

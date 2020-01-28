@@ -92,13 +92,25 @@ function getStructuralClasses(){
         WOQL.add_class("Note").label("A Note on a value")
             .description("Editorial note on the value")
             .property("citation", "scm:CitedWork")
-            .property("quotation", "xsd:string"),
+                .label("Citation")
+                .description("A link to a cited work")
+            .property("quotation", "xsd:string")
+                .label("Quotation")
+                .description("A quotation from a work"),
         WOQL.add_class("ScopedValue")
             .abstract()
             .property("start", "xdd:integerRange")
+                .label("From")
+                .description("The start of a time range")
             .property("end", "xdd:integerRange")
+                .label("To")
+                .description("The end of a time range")
             .property("confidence", "scm:Confidence")
-            .property("notes", "scm:Note"),
+                .label("Confidence")
+                .description("Qualifiers of the confidence of a variable value")
+            .property("notes", "scm:Note")
+                .label("Notes")
+                .description("Editorial notes on values"),
         WOQL.add_quad("tcs:Document", "rdfs:subClassOf", "scm:ScopedValue", "db:schema")
     );
     return woqls;

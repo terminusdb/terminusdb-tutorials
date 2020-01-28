@@ -6,12 +6,13 @@
  * Codes: A, P, A~P are used to indicate absent, present, uncertain
  */
 
-seshat.iron = {}
+seshat.iron = {
+    url: "http://seshatdatabank.info/wp-content/uploads/2020/01/Iron-Updated.csv"
+}
 
 seshat.importIronCSV = function(client){
-    let url = "http://seshatdatabank.info/wp-content/uploads/2020/01/Iron-Updated.csv";
     return seshat.extendSeshatSchema(client)
-        .then(() => seshat.importSeshatCSV(client, url));
+        .then(() => seshat.importSeshatCSV(client, seshat.iron.url));
 }
 
 /**
@@ -27,6 +28,7 @@ seshat.extendSeshatSchema = function(client){
 }
 
 seshat.importSeshatCSV = function(client, url){
+    url = url || seshat.iron.url;
     let imports = seshat.iron.getImportWOQL(url);
     let basic = WOQL.when(imports, seshat.iron.getInsertWOQL());
     let nimports = WOQL.and(imports, WOQL.eq("v:Presence", {"@value": "A~P", "@type": "xsd:string"}));
@@ -93,3 +95,25 @@ seshat.iron.getUncertainInsert = function(){
 
 
 
+seshat.iron.documentClasses = function(){
+    return WOQL.and(
+        WOQL.doctype("UnitOfTerritory")
+            .label("Unit of Territory")
+            .description("A free-form unit of territory"),            
+        WOQL.doctype("NaturalGeographicArea")
+            .label("NGA")
+            .description(`Natural Geographic Area (NGA). This type of unit is defined
+             spatially by the area enclosed within a boundary drawn on the world map. 
+             It does not change with time. Its rough spatial scale is 100 km x 100 km (+/- 50%). 
+             Examples: Latium, Upper Egypt, Middle Yellow River Valley.`)
+    )
+}
+
+/**
+ * Creates a new property and adds it to the database 
+ */
+seshat.iron.scopedProperties = function(){
+    return createScopedProperty("presence_of_iron", "ScopedEpistemicState", ["Metals", "Mining"], "Iron", 
+        `Presence of iron - encodes whether the metal iron was present in the area or
+         with the group in question`, "NaturalGeographicArea")
+}

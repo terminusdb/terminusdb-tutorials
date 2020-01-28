@@ -31,8 +31,11 @@ seshat.rdf = {
         "dacura": "http://dacura.scss.tcd.ie/ontology/dacura#",
         "xdd": "http://dacura.scss.tcd.ie/ontology/xdd#",
         "seshat": "http://dacura.scss.tcd.ie/seshat/ontology/seshat#",
-        "main": "https://terminusdb.com/t/data/seshat/seshat_main_export_graph.ttl",   
-        "notes": "https://terminusdb.com/t/data/seshat/seshat_notes_export_graph.ttl"   
+        "main": "/app/local_files/seshat-main.ttl",   
+        "notes": "/app/local_files/seshat_notes_export_graph.ttl",  
+        //"main": "https://terminusdb.com/t/data/seshat/seshat_main_export_graph.ttl",
+        //"notes": "https://terminusdb.com/t/data/seshat/seshat_notes_export_graph.ttl"
+           
     }
 }
 
@@ -70,11 +73,11 @@ seshat.rdf.getImportPolityWOQL = function(url, gid){
     return seshat.rdf.quintetWith(url, woql)
 }
 
-
 seshat.rdf.quintetWith = function(url, subq, gid){
-    seshat.rdf.urls.noes; 
-
     gid = gid || "graph://temp";
+    if(url.substring(0, 1) == "/"){
+        return WOQL.with(gid, WOQL.file(url, {"type":"turtle"}), subq);
+    }
     return WOQL.with(gid, WOQL.remote(url, {"type":"turtle"}), subq);
 }
 
@@ -230,23 +233,39 @@ seshat.rdf.processPropertyData = function(oprop, pmapdata){
         } 
         else if(pdata[1] == "epistemicFrequency"){
             pdata.push(seshat.rdf.urls.seshat + "hasEpistemicFrequencyChoice")
-            pdata.push(seshat.rdf.transparentValueMap(oprop))
+            var value_map = {}
+            value_map[seshat.rdf.urls.seshat + "absent"] = "never";                     
+            value_map[seshat.rdf.urls.seshat + "unknown"] = "unknown_epistemic_frequency";  
+            pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
        } 
        else if(pdata[1] == "leaderIdentification"){
             pdata.push(seshat.rdf.urls.seshat + "leader_identification_choice")
-            pdata.push(seshat.rdf.transparentValueMap(oprop))
+            var value_map = {}
+            value_map[seshat.rdf.urls.seshat + "egalitarian"] = "egalitarian_leadership";                     
+            value_map[seshat.rdf.urls.seshat + "unknown"] = "unknown_identification";  
+            value_map[seshat.rdf.urls.seshat + "none"] = "no_leader";  
+            pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
        } 
        else if(pdata[1] == "leaderDifferentiation"){
             pdata.push(seshat.rdf.urls.seshat + "leader_differentiation_type")
-            pdata.push(seshat.rdf.transparentValueMap(oprop))
+            var value_map = {}
+            value_map[seshat.rdf.urls.seshat + "egalitarian"] = "egalitarian_differentiation";                     
+            value_map[seshat.rdf.urls.seshat + "unknown"] = "unknown_identification";  
+            value_map[seshat.rdf.urls.seshat + "none"] = "no_differentiation";  
+            pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
        } 
        else if(pdata[1] == "authorityEmphasis"){
             pdata.push(seshat.rdf.urls.seshat + "authority_emphasis_choice")
-            pdata.push(seshat.rdf.transparentValueMap(oprop))
+            var value_map = {}
+            value_map[seshat.rdf.urls.seshat + "unknown"] = "unknown_emphasis";  
+            pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
        } 
        else if(pdata[1] == "standardization"){
             pdata.push(seshat.rdf.urls.seshat + "has_standardization")
-            pdata.push(seshat.rdf.transparentValueMap(oprop))
+            var value_map = {}
+            value_map[seshat.rdf.urls.seshat + "unknown"] = "unknown_standardization";  
+            value_map[seshat.rdf.urls.seshat + "none"] = "no_standardization";  
+            pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
        } 
        else if(pdata[1] == "degreeOfCentralization"){
             pdata.push(seshat.rdf.urls.seshat + pdata[1]);
@@ -255,6 +274,33 @@ seshat.rdf.processPropertyData = function(oprop, pmapdata){
             value_map[seshat.rdf.urls.seshat + "unknown_centralisation"] = "unknown_centralization";                     
             pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
         }
+        else if(pdata[1] == "change"){
+            pdata.push(seshat.rdf.urls.seshat + "has_change_size");
+            pdata.push(seshat.rdf.transparentValueMap(oprop))
+        }
+        else if(pdata[1] == "complexityChange"){
+            pdata.push(seshat.rdf.urls.seshat + "community_size_change");
+            pdata.push(seshat.rdf.transparentValueMap(oprop))            
+        }        
+        else if(pdata[1] == "godType"){
+            pdata.push(seshat.rdf.urls.seshat + "hasGodTypeChoice");
+            var value_map = {}
+            value_map[seshat.rdf.urls.seshat + "unknown"] = "unknown_god";  
+            value_map[seshat.rdf.urls.seshat + "absent"] = "no_god";  
+            pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
+        }        
+        else if(pdata[1] == "frequency"){
+            pdata.push(seshat.rdf.urls.seshat + "hasFrequencyChoice");
+            var value_map = {}
+            value_map[seshat.rdf.urls.seshat + "unknown"] = "unknown_frequency";  
+            pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
+        }      
+        else if(pdata[1] == "externalContact"){
+            pdata.push(seshat.rdf.urls.seshat + "external_contact_choice");
+            var value_map = {}
+            value_map[seshat.rdf.urls.seshat + "egalitarian"] = "egalitarian_contact";  
+            pdata.push(seshat.rdf.generateValueMap(value_map, seshat.rdf.transparentValueMap(oprop)));            
+        }  
         else {
             pdata.push(seshat.rdf.urls.seshat + pdata[1]);
             pdata.push(seshat.rdf.transparentValueMap(oprop))
@@ -402,7 +448,7 @@ seshat.rdf.writeAnnotation = function(subj, head){
         WOQL.when(
             WOQL.and(
                 head,
-                WOQL.quad(subj, "comment", "v:Comment", "graph://temp")
+                WOQL.quad("v:Annotation", "comment", "v:Comment", "graph://temp")
             ), WOQL.and(
                     WOQL.insert("v:ID_GEN", "scm:Note"),
                     WOQL.add_triple("v:ID_GEN", "rdfs:comment", "v:Comment"),
@@ -410,32 +456,4 @@ seshat.rdf.writeAnnotation = function(subj, head){
             )
         )
     )
-}
-
-seshat.rdf.importUnmatchedAnnotations = function(){
-    return WOQL.and(
-        seshat.rdf.getAnnotationMatcher(),
-        seshat.rdf.getImportDocID(false, "v:Subject_ID"),
-    )
-}
-
-seshat.rdf.writeUnmatchedAnnotations = function(subj){
-    subj = subj || "v:Subject_ID";
-    return seshat.rdf.writeAnnotationNote(subj)
-}
-
-seshat.rdf.writeAnnotationNote = function(subj, value, valid){
-    subj = subj || "v:Subject_ID";
-    value = value || "v:Comment_Value";
-    valid = valid || "v:ID_GEN";
-    return WOQL.when(
-        WOQL.and(
-            WOQL.quad(subj, "comment", value, "graph://temp")
-        ),
-        WOQL.and(
-            WOQL.insert(valid, "scm:Note"),
-            WOQL.add_triple(valid, "rdfs:comment", value),
-            WOQL.add_triple(subj, "scm:notes", valid)
-        )
-    )        
 }

@@ -10,28 +10,39 @@
     <script src="./addClasses.js"></script>
     <script src="./addProperties.js"></script>
     <script src="./importIronCSV.js"></script>
+    <script src="./addConflict.js"></script>
     <script src="./importShapefiles.js"></script>
     <script src="./libs.js"></script>
     <script>
-    connectToServer("http://localhost:6363/", "root", "seshat_tutorial")
+    connectToServer("http://localhost:6363/", "root", "seshat_pt")
     </script>
     <div id="myresults">
         <a href="#" onClick='runTutorial()'>Import All Seshat Data</a>
+        <h3>Set up DB</h3>
         <p><a href="#" onClick='runSegment("CreateDB")'>Create DB</a></p>
         <p><a href="#" onClick='runSegment("LoadLibraries")'>Load Libraries</a></p>
         <p><a href="#" onClick='runSegment("CreateBoxClasses")'>Create Box Classes</a></p>
+        <h3>Load Core Seshat Schema</h3>
         <p><a href="#" onClick='runSegment("CreateClasses")'>Create Classes</a></p>
-        <p><a href="#" onClick='runSegment("CreateProperties")'>Create Properties</a></p>
+        <p><a href="#" onClick='runSegment("CreateProperties")'>Create Social Complexity Properties</a></p>
+        <h3>Load Polities</h3>
         <p><a href="#" onClick='runSegment("CreatePolities")'>Create Polities</a></p>
-        <p><a href="#" onClick='runSegment("ImportProperties")'>Import Basic Properties</a></p>
+        <h3>Load Social Complexity Data</h3>
+        <p><a href="#" onClick='runSegment("ImportAnnotations")'>Import Polity Annotations</a></p>
+        <p><a href="#" onClick='runSegment("ImportProperties")'>Import Social Complexity Properties</a></p>
+        <h3>Load Religion and Ritual Data</h3>
         <p><a href="#" onClick='runSegment("ImportProperties2")'>Import Epistemic Properties</a></p>
         <p><a href="#" onClick='runSegment("ImportProperties3")'>Import Extended Properties</a></p>
-        <p><a href="#" onClick='runSegment("ImportAnnotations")'>Import Polity Annotations</a></p>
+        <h3>Import Annotations</h3>
         <p><a href="#" onClick='runSegment("ImportAnnotations2")'>Import Value Annotations</a></p>
-        <p><a href="#" onClick='runSegment("ImportIronSchema")'>Import CSV (Extend schema)</a></p>
-        <p><a href="#" onClick='runSegment("ImportIronData")'>Import CSV (Iron data)</a></p>
-        <p><a href="#" onClick='runSegment("ImportShapes")'>Import Shapefile CSVs</a></p>
+        <h3>Import CSV</h3>
+        <p><a href="#" onClick='runSegment("ImportIronSchema")'>Add Property to schema</a></p>
+        <p><a href="#" onClick='runSegment("ImportIronData")'>Import data from CSV (Iron data)</a></p>
+        <h3>Import Shapefiles</h3>
+        <p><a href="#" onClick='runSegment("ImportShapes")'>Import Shapefiles</a></p>
+        <h3>Import Conflict Schema</h3>
         <p><a href="#" onClick='runSegment("ImportConflictSchema")'>Import Conflict Schema</a></p>
+        <p><a href="#" onClick='runSegment("ImportHPISchema")'>Import HPI Schema</a></p>
     </div>
     <div id="target"></div>
 </body>

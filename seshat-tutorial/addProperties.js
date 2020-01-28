@@ -10,6 +10,7 @@ seshat.createProperties = function(){
         createAgriculturalProperties(),
         createInternalAffairsProperties(),
         createMetaProperties(),
+        createSacredProperties(),
         createCeremonialProperties(),
         createFoodStorageProperties(),
         createProfessionsProperties(),
@@ -21,7 +22,8 @@ seshat.createProperties = function(){
         createWritingProperties(),
         createPostalProperties(),
         createInfrastructureProperties(),
-        createBurialProperties()
+        createBurialProperties(),
+        createResilienceDependants()
     )
 }
 
@@ -56,6 +58,8 @@ seshat.properties.basic = {
     "centralization": [false, "degreeOfCentralization"],
     "peak": [false, "integerRange", seshat.rdf.urls.dacura + "gYearRange", 
         WOQL.typecast("v:Target", "xdd:integerRange", "v:Value")],
+    "frequencyPerParticipant": ["participant_frequency", "frequency"],
+    "highGods": ["high_gods", "godType"],        
 }
 
 seshat.properties.booleans = {
@@ -122,10 +126,13 @@ seshat.properties.booleans = {
     "wealthStores": ["stores_of_wealth"],
     "couriers": [],
     "postOffices": ["post_offices"],
-    "privateMail": ["private_mail"]
+    "privateMail": ["private_mail"],
+    "supernaturalJustice": ["supernatural_justice"], 
+    "supernaturalReciprocity": ["supernatural_reciprocity"], 
+    "supernaturalLoyalty": ["supernatural_loyalty"]         
 }
 
-seshat.properties.extension = {
+seshat.properties.extended = {
     rites_of_passage: [],
     personal_ceremonies: [],
     calendrical_ceremonies: [],
@@ -185,13 +192,23 @@ seshat.properties.extension = {
     tombs_or_mausoleums: [false, "epistemicFrequency"],
     utilitarian_goods: [false, "epistemicFrequency"],
     wealth_objects: [false, "epistemicFrequency"],
+    
     leader_identification: [false, "leaderIdentification"],
     leader_differentiation: [false, "leaderDifferentiation"],
     authority_emphasis: [false, "authorityEmphasis"],
+    external_contacts: [false, "externalContact"],
     ritual_standardization: [false, "standardization"],
     home_standardization: [false, "standardization"],
     public_standardization: [false, "standardization"],
     fineware_standardization: [false, "standardization"],
+    conflict_change: [false, "change"],
+    famine_change: [false, "change"],
+    migration_change: [false, "change"],
+    community_size_change: [false, "complexityChange"],
+    regional_complexity_change: [false, "complexityChange"],
+    community_complexity_change: [false, "complexityChange"],
+    ritual_complexity_change: [false, "complexityChange"]
+    
 
 }
 
@@ -559,6 +576,12 @@ function createInternalAffairsProperties(){
     createSeshatProperty("authority_emphasis", "ScopedAuthorityEmphasis", ["InternalAffairs", "PP", "Leadership"], 
         "Authority Emphasis", 
         `Where the emphasis of group authority lies`),
+    createSeshatProperty("authority_sharing", "ScopedAuthoritySharing", ["InternalAffairs", "PP", "Leadership"], 
+        "Authority Sharing", 
+        `How authority is shared between leaders and others`),
+    createSeshatProperty("external_contacts", "ScopedExternalContact", ["InternalAffairs", "PP", "Leadership"], 
+        "External Contacts", 
+        `IV-3-5 External contacts (excluding warfare) [AR-PE-19]`),
     createSeshatProperty("leader_differentiation", "ScopedLeaderDifferentiation", ["InternalAffairs", "PP", "Leadership"], 
         "Leader Differentiation", 
         `How the leaders are differentiated from others`),
@@ -568,12 +591,34 @@ function createInternalAffairsProperties(){
     );
 }
 
+function createSacredProperties(){
+    return WOQL.and(
+    createSeshatProperty("participant_frequency", "ScopedFrequency", ["Religion", "Ritual"], 
+        "Frequency per participant", 
+        `The frequency of the society's most frequent collective ritual (frequency of individuals' active participation).`),
+    createSeshatProperty("high_gods", "ScopedGodType", ["Religion", "Ritual", "God"], 
+        "High Gods", 
+        `A high god follows the definition of Guy Swanson (1960: chapter III and appendix 1) as "a spiritual being who is believed to have created all reality and/or to be its ultimate governor, even though his sole act was to create other spirits who, in turn, created or control the natural world" (1) "Absent or not reported," (2) "Present but not active in human affairs," (3) "Present and active in human affairs but not supportive of human morality" and (4) Present, active, and specifically supportive of human morality" (Divale 2000).`),
+    createSeshatProperty("supernatural_justice", "ScopedEpistemicState", ["Religion", "Ritual", "God"], 
+        "Supernatural enforcement of fairness", 
+        `Supernatural punishment/reward related to "fairness" (sharing of resources; e.g., dividing disputed resources, bargaining, redistribution of wealth).`),
+    createSeshatProperty("supernatural_reciprocity", "ScopedEpistemicState", ["Religion", "Ritual", "God"], 
+        "Supernatural enforcement of reciprocity", 
+        `Supernatural punishment / reward related to reciprocity (e.g., fulfilling contracts, returning gifts, repaying debts, upholding trust).`),
+    createSeshatProperty("supernatural_loyalty", "ScopedEpistemicState", ["Religion", "Ritual", "God"], 
+        "Supernatural enforcement of group loyalty", 
+        `Supernatural punishment/reward related to the need to remain loyal to UNRELATED members of the same group (e.g., helping coreligionists, going to war for one's group).`),
+    );
+}
+
 
 function createMetaProperties(){
     return WOQL.and(
-    createUnscopedProperty("references", "CitedWork", "References", 
-        `The References from the wiki`)
-    );
+        createUnscopedProperty("references", "CitedWork", "References", 
+            `The References from the wiki`),        
+        createUnscopedProperty("provenance_note", "xsd:string", "Provenance Note", 
+            `Provenance Notes`)
+    )
 }
 
 function createCeremonialProperties(){
@@ -908,7 +953,7 @@ function createInfrastructureProperties(){
 function createBurialProperties(){
     return WOQL.and(
     createSeshatProperty("animal_sacrifices", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
-        "Animal Sacrifices", 
+        "Animal Sacrific    es", 
         `Burials with animal sacrifices`),
     createSeshatProperty("exotic_objects", "ScopedEpistemicFrequency", ["BurialVariation", "PP"], 
         "Exotic Objects", 
@@ -937,3 +982,28 @@ function createBurialProperties(){
     );
 }
 
+function createResilienceDependants(){
+    return WOQL.and(
+        createSeshatProperty("ritual_complexity_change", "ScopedComplexityChange", ["DependantVariables", "Variation", "PP"], 
+            "Change in Ritual Complexity", 
+            `DV-4-3 Change in Communal Ritual [AR-ST-8]`),
+        createSeshatProperty("migration_change", "ScopedChange", ["DependantVariables", "Variation", "PP"], 
+            "Change in Migration", 
+            `DV-1. Migration`),
+        createSeshatProperty("community_size_change", "ScopedComplexityChange", ["DependantVariables", "Variation", "PP"], 
+            "Change in Community Size", 
+            `How much change has taken place in size and complexity`),
+        createSeshatProperty("famine_change", "ScopedChange", ["DependantVariables", "Variation", "PP"], 
+            "Famine / Disease", 
+            `DV-2. Famine and Disease.`),
+        createSeshatProperty("conflict_change", "ScopedChange", ["DependantVariables", "Variation", "PP"], 
+            "Change in Conflict", 
+            `DV-3. Conflict.  Proxied by AR-ST-3`),
+        createSeshatProperty("community_complexity_change", "ScopedComplexityChange", ["DependantVariables", "Variation", "PP", "Scale"], 
+            "Change in Community Scale", 
+            `DV-4-1.  Change in Community Scale and Complexity [AR-ST-6]`),
+        createSeshatProperty("regional_complexity_change", "ScopedComplexityChange", ["DependantVariables", "Variation", "PP", "Scale"], 
+            "Change in Regional Complexity", 
+            `DV-4-2 Change in Regional Scale and Complexity [AR-ST-7]`),
+    )    
+}
