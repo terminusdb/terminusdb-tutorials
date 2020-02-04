@@ -17,17 +17,13 @@ def create_schema(client):
     station = WOQLQuery().doctype("Station").label("Bike Station")
     station.description("A station where bikes are deposited")
     bicycle = WOQLQuery().doctype("Bicycle").label("Bicycle")
-    journey = WOQLQuery().doctype("Journey")
-    journey = journey.label("Journey")
-    journey = journey.property(
-        "start_station", "Station").label("Start Station")
-    journey = journey.property(
-        "end_station", "Station").label("End Station")
-    journey = journey.property("duration", "integer").label("Journey Duration")
-    journey = journey.property("start_time", "dateTime").label("Time Started")
-    journey = journey.property("end_time", "dateTime").label("Time Ended")
-    journey = journey.property(
-        "journey_bicycle", "Bicycle").label("Bicycle Used")
+    journey = WOQLQuery().doctype("Journey").label("Journey")
+    journey.property("start_station", "Station").label("Start Station")
+    journey.property("end_station", "Station").label("End Station")
+    journey.property("duration", "integer").label("Journey Duration")
+    journey.property("start_time", "dateTime").label("Time Started")
+    journey.property("end_time", "dateTime").label("Time Ended")
+    journey.property("journey_bicycle", "Bicycle").label("Bicycle Used")
     schema = WOQLQuery().when(True).woql_and(station, bicycle, journey)
     return schema.execute(client)
 
