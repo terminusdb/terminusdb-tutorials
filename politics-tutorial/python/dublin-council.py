@@ -89,9 +89,9 @@ def load_csvs(client, csvs):
     """
     for key, url in csvs.items():
         csv = get_csv_variables(url)
-        wrangles = get_wrangles(key)
+        wrangles = get_wrangles()
         inputs = WOQLQuery().woql_and(csv, *wrangles)
-        inserts = get_inserts(key)
+        inserts = get_inserts()
         answer = WOQLQuery().when(inputs, inserts)
         answer.execute(client)
 
