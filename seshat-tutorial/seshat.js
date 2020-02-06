@@ -75,7 +75,6 @@ function generateBoxClasses(){
     ));
 }
 
-
 /**
  * 
  * @param {WOQLClient} client 
@@ -231,7 +230,7 @@ function cleanup(){
     //WOQLclient.deleteDatabase("seshat");
     //WOQLclient.deleteDatabase("seshat3");
     //WOQLclient.deleteDatabase("seshat_tutorial");
-    //WOQLclient.deleteDatabase("seshat_two");
+    //WOQLclient.deleteDatabase("seshat");
 }
 /*
 function Tutorial(){

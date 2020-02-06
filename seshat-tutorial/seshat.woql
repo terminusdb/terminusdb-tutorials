@@ -399,11 +399,11 @@ WOQL.and(
   			WOQL.and(
           		WOQL.triple("v:Value_ID", "scm:epistemicState", "v:RawValue"),
           		WOQL.re("#(.*)", "v:RawValue", ["v:FullValue", "v:Value"])
-        	),
-			WOQL.and(
+        ),
+			  WOQL.and(
   			    WOQL.triple("v:Value_ID", "scm:degreeOfCentralization", "v:RawValue"),
             	WOQL.re("#(.*)", "v:RawValue", ["v:FullValue", "v:Value"])
-        	),
+        ),
 			WOQL.and(
   			    WOQL.triple("v:Value_ID", "scm:incomeSource", "v:RawValue"), 
             	WOQL.re("#(.*)", "v:RawValue", ["v:FullValue", "v:Value"])
@@ -431,6 +431,8 @@ WOQL.and(
 )
 
 view = View.graph();
+view.width(1000);
+view.height(800)
 view.edges(["v:Predecessor", "v:Polity"], ["v:Polity", "v:Successor"])
 view.node("v:Predecessor").text("v:Plab").icon({label: true})
 view.node("v:Successor").text("v:Slab").icon({label: true})
