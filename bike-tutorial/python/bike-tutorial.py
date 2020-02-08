@@ -1,52 +1,11 @@
 import woqlclient.woqlClient as woql
 from woqlclient import WOQLQuery
 import json
+from csvs import csvs
 
 server_url = "http://localhost:6363"
 key = "root"
 dbId = "pybike"
-
-csvs = [
-    "https://terminusdb.com/t/data/bikeshare/2011-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2012Q1-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2010-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2012Q2-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2012Q3-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2012Q4-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2013Q1-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2013Q2-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2013Q3-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2013Q4-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2014Q1-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2014Q2-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2014Q3-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2014Q4-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2015Q1-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2015Q2-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2015Q3-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2015Q4-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2016Q1-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2016Q2-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2016Q3-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2016Q4-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2017Q1-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2017Q2-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2017Q3-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/2017Q4-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201801_capitalbikeshare_tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201802-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201803-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201804-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201805-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201806-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201807-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201808-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201809-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201810-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201811-capitalbikeshare-tripdata.csv",
-    "https://terminusdb.com/t/data/bikeshare/201812-capitalbikeshare-tripdata.csv"
-]
-
 
 def create_schema(client):
     """The query which creates the schema
@@ -58,17 +17,13 @@ def create_schema(client):
     station = WOQLQuery().doctype("Station").label("Bike Station")
     station.description("A station where bikes are deposited")
     bicycle = WOQLQuery().doctype("Bicycle").label("Bicycle")
-    journey = WOQLQuery().doctype("Journey")
-    journey = journey.label("Journey")
-    journey = journey.property(
-        "start_station", "Station").label("Start Station")
-    journey = journey.property(
-        "end_station", "Station").label("End Station")
-    journey = journey.property("duration", "integer").label("Journey Duration")
-    journey = journey.property("start_time", "dateTime").label("Time Started")
-    journey = journey.property("end_time", "dateTime").label("Time Ended")
-    journey = journey.property(
-        "journey_bicycle", "Bicycle").label("Bicycle Used")
+    journey = WOQLQuery().doctype("Journey").label("Journey")
+    journey.property("start_station", "Station").label("Start Station")
+    journey.property("end_station", "Station").label("End Station")
+    journey.property("duration", "integer").label("Journey Duration")
+    journey.property("start_time", "dateTime").label("Time Started")
+    journey.property("end_time", "dateTime").label("Time Ended")
+    journey.property("journey_bicycle", "Bicycle").label("Bicycle Used")
     schema = WOQLQuery().when(True).woql_and(station, bicycle, journey)
     return schema.execute(client)
 
