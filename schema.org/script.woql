@@ -1,0 +1,155 @@
+WOQL.get(
+    WOQL.as("id", "v:CID")
+        .as("label", "v:Label")
+        .as("comment", "v:Comment")
+        .as("subTypes", "v:Kids")
+        .as("subTypeOf", "v:Parent")
+    WOQL.and(
+	  WOQL.split("v:Parent", ", ", "v:Parents"),
+    )
+).file("/app/local_files/all-layers-types.csv")
+
+WOQL.when(
+  WOQL.and(
+	WOQL.get(
+	  WOQL.as("id", "v:CID")
+		  .as("label", "v:Label")
+		  .as("comment", "v:Comment")
+          .as("subTypes", "v:Kids")
+		  .as("subTypeOf", "v:Parent")
+	  ).file("/app/local_files/all-layers-types.csv"),
+	WOQL.split("v:Parent", ", ", "v:Parents"),
+	WOQL.member("v:Poppy", "v:Parents"),
+	WOQL.split("v:Kids", ", ", "v:PKID"),
+	WOQL.member("v:Kid", "v:PKID"),
+	WOQL.cast("v:CID", "owl:Thing", "v:ClassID"),
+	WOQL.cast("v:Kid", "owl:Thing", "v:ChildID"),
+	WOQL.cast("v:Poppy", "owl:Thing", "v:PID")
+  ), 
+  WOQL.and(
+   WOQL.doctype("v:ClassID").label("v:Label").description("v:Comment").parent("v:PID"),
+   WOQL.add_quad("v:ChildID", "subClassOf", "v:ClassID", "schema")
+)
+)
+
+
+WOQL.get(
+	  WOQL.as("id", "v:PID")
+		  .as("label", "v:Label")
+		  .as("comment", "v:Comment")
+		  .as("domainIncludes", "v:Domain")
+	  ).file("/app/local_files/all-layers-types.csv"),
+
+
+http://schema.org/Date
+http://schema.org/Text
+http://schema.org/URL
+http://schema.org/Integer
+http://schema.org/Number
+http://schema.org/Boolean
+
+
+WOQL.when(
+    WOQL.and(
+    WOQL.get(
+        WOQL.as("id", "v:PID")
+            .as("label", "v:Label")
+            .as("comment", "v:Comment")
+            .as("rangeIncludes", "v:Range")
+    ).file("/app/local_files/all-layers-properties.csv"), 
+    WOQL.not().re(",", "v:Range", ["v:All"]),
+    WOQL.not().re("/Boolean$|/Text$|/Date$|/URL$|/Integer$|/Number$", "v:Range", ["v:All"]),
+    WOQL.cast("v:PID", "owl:Thing", "v:PropertyID"),
+    WOQL.cast("v:Range", "owl:Thing", "v:RangeID"),
+    ),
+    WOQL.add_property("v:PropertyID", "v:RangeID").label("v:Label").description("v:Comment")
+)
+
+WOQL.when(
+    WOQL.and(
+    WOQL.get(
+        WOQL.as("id", "v:PID")
+            .as("label", "v:Label")
+            .as("comment", "v:Comment")
+            .as("domainIncludes", "v:Domain")
+            .as("rangeIncludes", "v:Range")
+    ).file("/app/local_files/all-layers-properties.csv"), 
+        WOQL.not().re(",", "v:Domain", ["v:All"]),
+        WOQL.not().re(",", "v:Range", ["v:All"]),
+        WOQL.not().re("/Boolean$|/Text$|/Date$|/URL$|/Integer$|/Number$", "v:Range", ["v:All"]),
+        WOQL.cast("v:PID", "owl:Thing", "v:PropertyID"),
+        WOQL.cast("v:Domain", "owl:Thing", "v:DomainID"),
+        WOQL.cast("v:Range", "owl:Thing", "v:RangeID"),
+    ),
+    WOQL.add_quad("v:PropertyID", "type", "owl:ObjectProperty", "schema"), 
+    WOQL.add_quad("v:PropertyID", "label", "v:Label", "schema"), 
+    WOQL.add_quad("v:PropertyID", "comment", "v:Comment", "schema"), 
+    WOQL.add_quad("v:PropertyID", "range", "v:Range", "schema"), 
+    WOQL.add_quad("v:PropertyID", "domain", "v:Domain", "schema") 
+)
+
+WOQL.and(
+    WOQL.get(
+        WOQL.as("id", "v:PID")
+            .as("label", "v:Label")
+            .as("comment", "v:Comment")
+            .as("domainIncludes", "v:Domain")
+            .as("rangeIncludes", "v:Range")
+    ).file("/app/local_files/all-layers-properties.csv"),
+    WOQL.cast("v:PID", "owl:Thing", "v:PropertyID"),
+    WOQL.when( 
+        WOQL.and(
+            WOQL.not().re(",", "v:Range", ["v:All"]),
+            WOQL.not().re("/Boolean$|/Text$|/Date$|/URL$|/Integer$|/Number$", "v:Range", ["v:All"]),
+            WOQL.cast("v:Range", "owl:Thing", "v:RangeID"),
+        )
+    ),
+    WOQL.and(
+        WOQL.add_quad("v:PropertyID", "type", "owl:ObjectProperty", "schema"), 
+        WOQL.add_quad("v:PropertyID", "label", "v:Label", "schema"), 
+        WOQL.add_quad("v:PropertyID", "comment", "v:Comment", "schema"), 
+        WOQL.add_quad("v:PropertyID", "range", "v:Range", "schema"),
+    ),
+    WOQL.when(
+        WOQL.and(
+            WOQL.re(",", "v:Range", ["v:All"]),
+            WOQL.not().re("/Boolean|/Text|/Date|/URL|/Integer|/Number", "v:Range", ["v:All"]),
+            WOQL.split("v:Range", ", ", "v:Ranges"),
+            WOQL.member("v:OneRange", "v:Ranges"),
+            WOQL.concat(["v:PID", {"@value": "Range", "@type": "xsd:string}], "v:NewRange"),
+            WOQL.cast("v:NewRange", "owl:Thing", "v:RangeID"),
+            WOQL.cast("v:OneRange", "owl:Thing", "v:OneRangeID"),
+        ),
+        WOQL.and(
+            WOQL.add_class("v:RangeID").label("v:Label").description("v:Comment").parent("v:OneRangeID"),
+            WOQL.add_property("v:PropertyID", "v:RangeID").label("v:Label").description("v:Comment")
+        )
+    ),
+    WOQL.when(
+        WOQL.and(
+            WOQL.re(",", "v:Range", ["v:All"]),
+            WOQL.re("/Boolean|/Text|/Date|/URL|/Integer|/Number", "v:Range", ["v:All"]),
+        ),
+        WOQL.and(
+            WOQL.add_quad("v:PropertyID", "type", "owl:DatatypeProperty", "schema"), 
+            WOQL.add_quad("v:PropertyID", "label", "v:Label", "schema"), 
+            WOQL.add_quad("v:PropertyID", "comment", "v:Comment", "schema"), 
+            WOQL.add_quad("v:PropertyID", "range", "xsd:anySimpleType", "schema")
+        )
+    ),
+    WOQL.when(
+        WOQL.and(
+            WOQL.not().re(",", "v:Range", ["v:All"]),
+            WOQL.re("Boolean$|Text$|Date$|URL$|Integer|Number", "v:Range", ["v:Ext"]),
+            WOQL.lower("v:Ext", "v:Type"),
+            WOQL.idgen("xsd:", ["v:Type"], "v:RangeType")
+        ),
+        WOQL.and(
+            WOQL.add_quad("v:PropertyID", "type", "owl:DatatypeProperty", "schema"), 
+            WOQL.add_quad("v:PropertyID", "label", "v:Label", "schema"), 
+            WOQL.add_quad("v:PropertyID", "comment", "v:Comment", "schema"), 
+            WOQL.add_quad("v:PropertyID", "range", "v:RangeType", "schema")
+        )
+    )     
+
+)
