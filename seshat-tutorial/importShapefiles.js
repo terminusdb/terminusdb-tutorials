@@ -1,6 +1,6 @@
 if(typeof seshat == "undefined") seshat = {};
 seshat.importShapefileCSVs = function(){
-    return seshat.shapes.loadShapefileCSVs(seshat.shapes.files);   
+    return seshat.shapes.loadShapefileCSVs(seshat.shapes.files);
 }
 
 seshat.shapes = {}
@@ -17,17 +17,17 @@ seshat.shapes.shapeGet = function(url){
 
 seshat.shapes.getCSVWOQL = function(url){
     var inputs = WOQL.and(
-        seshat.shapes.shapeGet(url), 
+        seshat.shapes.shapeGet(url),
         WOQL.concat("[v:xcoord,v:ycoord]","v:Point")
-    ); 
+    );
     var group =  WOQL.group_by(["v:Fid","v:Polity","v:Year"],"v:Point",inputs, "v:Records");
     var wrangles = [
-        WOQL.lower("v:Polity","v:Polity_Lower"),        
-        WOQL.typecast("v:Year", "xdd:integerRange", "v:Time"),        
-        WOQL.idgen("doc:",["v:Polity_Lower"], "v:PolityID"),        
-        WOQL.unique("doc:territory",["v:Polity", "v:Year", "v:Coord_String"], "v:ValueID"),        
+        WOQL.lower("v:Polity","v:Polity_Lower"),
+        WOQL.typecast("v:Year", "xdd:integerRange", "v:Time"),
+        WOQL.idgen("doc:",["v:Polity_Lower"], "v:PolityID"),
+        WOQL.unique("doc:territory",["v:Polity", "v:Year", "v:Coord_String"], "v:ValueID"),
         WOQL.join("v:Records",",","v:Coord_String"),
-        WOQL.concat("[v:Coord_String]","v:Coords"),    
+        WOQL.concat("[v:Coord_String]","v:Coords"),
     ];
 
     var insert = WOQL.and(
@@ -114,7 +114,7 @@ seshat.shapes.files = [
         "https://terminusdb.com/t/data/seshat/csvs/3600BCE.csv",
         "https://terminusdb.com/t/data/seshat/csvs/3700BCE.csv",
         "https://terminusdb.com/t/data/seshat/csvs/3800BCEalt.csv",
-        "https://terminusdb.com/t/data/seshat/csvs/3900BCE.csv",        
+        "https://terminusdb.com/t/data/seshat/csvs/3900BCE.csv",
         "https://terminusdb.com/t/data/seshat/csvs/4000BCE.csv",
         "https://terminusdb.com/t/data/seshat/csvs/4100BCEalt.csv",
         "https://terminusdb.com/t/data/seshat/csvs/4200BCE.csv",
@@ -129,9 +129,9 @@ seshat.shapes.files = [
 ];
 
 /**
- * Creates a new property and adds it to the database 
+ * Creates a new property and adds it to the database
  */
 seshat.shapes.scopedProperties = function(){
-    return createScopedProperty("territory", "xdd:coordinatePolygon", ["Scale"], "Territory", 
+    return createScopedProperty("territory", "xdd:coordinatePolygon", ["Scale"], "Territory",
         "Governed territory")
 }

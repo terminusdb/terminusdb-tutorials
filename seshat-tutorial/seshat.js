@@ -9,7 +9,7 @@ loadAllData = function(){
     return seshat.importRDFData()
     .then(() => seshat.importShapefileCSVs()
     .then(() => seshat.importIronCSV()));
-}       
+}
 
 function createSeshatProperty(npid, nptype, parents, label, description, domain){
     domain = domain || "scm:PoliticalAuthority";
@@ -76,11 +76,11 @@ function generateBoxClasses(){
 }
 
 /**
- * 
- * @param {WOQLClient} client 
- * @param {String} id 
- * @param {String} title 
- * @param {String} description 
+ *
+ * @param {WOQLClient} client
+ * @param {String} id
+ * @param {String} title
+ * @param {String} description
  */
 function createDatabase(id, title, description){
     title = title || "Seshat";
@@ -110,10 +110,10 @@ function createSchema(){
                 return generateProperties().execute(WOQLclient).then(() => {
                     alert("all done");
                 })
-            })    
+            })
         })
     });
-}       
+}
 
 function loadLibraries(){
     let owl = "@prefix scm: <" + WOQLclient.connectionConfig.schemaURL() + "#> .\n";
@@ -121,14 +121,14 @@ function loadLibraries(){
     owl += seshat_libs;
     return WOQLclient.updateSchema(false, owl, {"terminus:encoding": "terminus:turtle"});
     /*return fetch("libs.owl").then(response => {
-        owl += response.text(); 
+        owl += response.text();
         alert(owl);
         return fetch("choices.owl").then(resp2 => {
-            owl += resp2.text(); 
+            owl += resp2.text();
             return fetch("boxes.owl").then(resp3 => {
-                owl += resp3.text(); 
+                owl += resp3.text();
                 return client.updateSchema(false, owl, {"terminus:encoding": "terminus:turtle"});
-            }) 
+            })
         })
     })*/
 }
@@ -140,7 +140,7 @@ function showResult(segment){
 }
 
 function showError(response, segment){
-    
+
 }
 
 function showBoxClasses(){
@@ -149,7 +149,7 @@ function showBoxClasses(){
     );
     TerminusViewer.getQueryPane()
     //TerminusViewer.prototype.getQueryPane = function(query, resultConfigs, results, resultPaneConfigs, queryPaneConfig){
-    
+
 }
 
 
@@ -183,14 +183,14 @@ function loadSegmentQuery(segment){
 
 function connectToServer(terminus_server_url, terminus_server_key, dbid){
     seshat.tutorialdb = dbid;
-    WOQLclient.connect(terminus_server_url, terminus_server_key, dbid).then(() => cleanup());    
+    WOQLclient.connect(terminus_server_url, terminus_server_key, dbid).then(() => cleanup());
 }
 
 function runTutorial(){
     createDatabase(seshat.tutorialdb)
     .then(() => {
         createSchema()
-            .then(() => loadAllData())         
+            .then(() => loadAllData())
     }).catch((error) => console.log(error));
 }
 
@@ -204,7 +204,7 @@ function normaliseID(raw, type){
         var bits = raw.split(":");
         if(bits.length > 1) {
             var nr = bits[1];
-            return "scm:" + nr.charAt(0).toUpperCase() + nr.slice(1)  
+            return "scm:" + nr.charAt(0).toUpperCase() + nr.slice(1)
         }
         else {
             return "scm:" +  raw.charAt(0).toUpperCase() + raw.slice(1);
@@ -248,9 +248,9 @@ tut.setIntro("The Global History Databank", "Building and analysing an integrate
 //create document hierarchy
 //create topic hieararchy
 //import polities
-//creating properties 
+//creating properties
 //creating enumerated types
-//Digression into scoping 
+//Digression into scoping
 //creating scoped object
 //creating datatype boxes
 //creating document & enumerated boxes
