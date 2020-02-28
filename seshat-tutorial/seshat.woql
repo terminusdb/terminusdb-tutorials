@@ -378,23 +378,29 @@ WOQL.put(
         .as("Value", "v:Value")
         .as("From", "v:From")
         .as("To", "v:To")
-        .as("Confidence", "v:Confidence"), 
+        .as("Confidence", "v:Confidence")
+        .as("Notes", "v:Notes"),  
 WOQL.and(
 	  WOQL.triple("v:Polity", "type", "v:Type"),
-      WOQL.re("document/(.*)", "v:Polity", ["v:FullPolity", "v:Polity_ID"]),
+    WOQL.re("document/(.*)", "v:Polity", ["v:FullPolity", "v:Polity_ID"]),
 	  WOQL.sub("v:Type", "scm:PoliticalAuthority"),
 	  WOQL.triple("v:Polity", "v:RawProperty", "v:Value_ID"),
-      WOQL.re("#(.*)", "v:RawProperty", ["v:FullProperty", "v:Property"]),
+    WOQL.re("#(.*)", "v:RawProperty", ["v:FullProperty", "v:Property"]),
 	  WOQL.triple("v:Value_ID", "type", "v:Value_Type"),
+	  WOQL.opt().and(
+      WOQL.triple("v:Value_ID", "notes", "v:NoteObj"),
+      WOQL.triple("v:NoteObj", "comment", "v:Notes"),
+    ),
 	  WOQL.opt().triple("v:Value_ID", "start", "v:From"),
 	  WOQL.opt().triple("v:Value_ID", "end", "v:To"),
 	  WOQL.opt().and(
       	WOQL.triple("v:Value_ID", "confidence", "v:RawConfidence"),
         WOQL.re("#(.*)", "v:RawConfidence", ["v:FullConfidence", "v:Confidence"])
-      ),
+    ),
 	  WOQL.and(
   		WOQL.or(
-  			WOQL.triple("v:Value_ID", "scm:integerRange", "v:Value"),
+  			WOQL.triple("v:Value_ID", "scm:string", "v:Value"),
+        WOQL.triple("v:Value_ID", "scm:integerRange", "v:Value"),
   			WOQL.triple("v:Value_ID", "scm:decimalRange", "v:Value"),
   			WOQL.and(
           		WOQL.triple("v:Value_ID", "scm:epistemicState", "v:RawValue"),
@@ -404,7 +410,7 @@ WOQL.and(
   			    WOQL.triple("v:Value_ID", "scm:degreeOfCentralization", "v:RawValue"),
             	WOQL.re("#(.*)", "v:RawValue", ["v:FullValue", "v:Value"])
         ),
-			WOQL.and(
+			  WOQL.and(
   			    WOQL.triple("v:Value_ID", "scm:incomeSource", "v:RawValue"), 
             	WOQL.re("#(.*)", "v:RawValue", ["v:FullValue", "v:Value"])
         	),
