@@ -1,50 +1,40 @@
 <html>
 <head><title>Seshat Tutorial Launch Page</title></head>
+<script src="https://terminusdb.github.io/terminus-dashboard/dist/terminus-dashboard.min.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<link rel="stylesheet" href="https://terminusdb.github.io/terminus-dashboard/dist/css/theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/codemirror.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/mode/xml/xml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/mode/css/css.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/mode/turtle/turtle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/mode/javascript/javascript.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/addon/hint/anyword-hint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/addon/hint/show-hint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/runmode/runmode.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/http/http.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/edit/closebrackets.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/edit/matchbrackets.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/display/placeholder.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/foldgutter.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/foldcode.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/indent-fold.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/markdown-fold.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/codemirror.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/addon/hint/show-hint.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/theme/neo.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/theme/erlang-dark.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/foldgutter.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/theme/eclipse.css">
 <body>
-    <!--<script src="../../terminus-dashboard/dist/terminus-dashboard.min.js"></script>-->
-    <script src="../../terminus-dashboard/public_pages/1.1.3/dist/terminus-dashboard.min.js"></script>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
-    <script src="./seshat.js"></script>
-    <script src="./importRDF.js"></script>
-    <script src="./addClasses.js"></script>
-    <script src="./addProperties.js"></script>
-    <script src="./importIronCSV.js"></script>
-    <script src="./addConflict.js"></script>
-    <script src="./importShapefiles.js"></script>
-    <script src="./libs.js"></script>
     <script>
-    connectToServer("http://localhost:6363/", "root", "seshat")
+        runTutorial();
     </script>
-    <div id="myresults">
-        <a href="#" onClick='runTutorial()'>Import All Seshat Data</a>
-        <h3>Set up DB</h3>
-        <p><a href="#" onClick='runSegment("CreateDB")'>Create DB</a></p>
-        <p><a href="#" onClick='runSegment("LoadLibraries")'>Load Libraries</a></p>
-        <p><a href="#" onClick='runSegment("CreateBoxClasses")'>Create Box Classes</a></p>
-        <h3>Load Core Seshat Schema</h3>
-        <p><a href="#" onClick='runSegment("CreateClasses")'>Create Classes</a></p>
-        <p><a href="#" onClick='runSegment("CreateProperties")'>Create Social Complexity Properties</a></p>
-        <h3>Load Polities</h3>
-        <p><a href="#" onClick='runSegment("CreatePolities")'>Create Polities</a></p>
-        <h3>Load Social Complexity Data</h3>
-        <p><a href="#" onClick='runSegment("ImportAnnotations")'>Import Polity Annotations</a></p>
-        <p><a href="#" onClick='runSegment("ImportProperties")'>Import Social Complexity Properties</a></p>
-        <h3>Load Religion and Ritual Data</h3>
-        <p><a href="#" onClick='runSegment("ImportProperties2")'>Import Epistemic Properties</a></p>
-        <p><a href="#" onClick='runSegment("ImportProperties3")'>Import Extended Properties</a></p>
-        <h3>Import Annotations</h3>
-        <p><a href="#" onClick='runSegment("ImportAnnotations2")'>Import Value Annotations</a></p>
-        <h3>Import CSV</h3>
-        <p><a href="#" onClick='runSegment("ImportIronSchema")'>Add Property to schema</a></p>
-        <p><a href="#" onClick='runSegment("ImportIronData")'>Import data from CSV (Iron data)</a></p>
-        <h3>Import Shapefiles</h3>
-        <p><a href="#" onClick='runSegment("ImportShapes")'>Import Shapefiles</a></p>
-        <h3>Import Conflict Schema</h3>
-        <p><a href="#" onClick='runSegment("ImportConflictSchema")'>Import Conflict Schema</a></p>
-        <p><a href="#" onClick='runSegment("ImportHPISchema")'>Import HPI Schema</a></p>
-    </div>
-    <div id="target"></div>
+    <p>This tutorial demonstrates the creation of a knowledge graph of world history with TerminusDB. It is based on an RDF dataset that was produced by 
+        the <a href="http://seshatdatabank.info">Seshat project</a> in 2018, as part of the <a href="http://aligned-project.eu">European Commission's Horizon 2020 Aligned project</a>. Seshat researchers are continuously improving, updating and expanding this 
+        data - the latest releases can be found on the <a href="http://seshatdatabank.info/datasets/">Seshat data site</a> 
+    </p>
+    <div id="tutorialContent"></div>
 </body>
 </html>
