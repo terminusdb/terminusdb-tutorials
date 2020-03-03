@@ -43,3 +43,9 @@ JavaScript API script and embedding on webpage: [politics-tutorial/javascript](h
 Query and view on TerminusDB council: [politics-tutorial/view-script](https://github.com/terminusdb/terminus-tutorials/tree/master/politics-tutorial/view-script)
 
 Also see the [tutorial blog post](https://medium.com/terminusdb/are-you-supporting-the-right-politician-b742debbc8d9?source=friends_link&sk=9dcc6e3f2fbd1a8a50a48c41510808ef).
+
+## Schema.org Tutorial
+
+Putting [Schema.org](https://schema.org/) vocabulary into a TerminusDB schema.
+
+Deatils: [schema.org](https://github.com/terminusdb/terminus-tutorials/tree/master/schema.org)

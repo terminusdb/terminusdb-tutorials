@@ -1,13 +1,13 @@
 import woqlclient.woqlClient as woql
 from woqlclient import WOQLQuery
-import json
 
-CSVS = {"OverallSimilarity" : "https://terminusdb.com/t/data/council/weighted_similarity.csv"}
+CSVS = {"OverallSimilarity": "https://terminusdb.com/t/data/council/weighted_similarity.csv"}
 
 server_url = "http://localhost:6363"
-dbId= "mydb"
+dbId = "mydb"
 key = "root"
 dburl = server_url + "/mydb"
+
 
 def create_schema(client):
     """The query which creates the schema
@@ -33,7 +33,8 @@ def create_schema(client):
         )
     return schema.execute(client)
 
-def get_inserts(relation):
+
+def get_inserts():
     inserts = WOQLQuery().woql_and(
         WOQLQuery().insert("v:Party_A_ID", "Party").label("v:Party_A"),
         WOQLQuery().insert("v:Party_B_ID", "Party").label("v:Party_B"),
@@ -48,6 +49,7 @@ def get_inserts(relation):
       )
     return inserts
 
+
 def get_csv_variables(url):
     """Extracting the data from a CSV and binding it to variables
        Parameters
@@ -56,7 +58,7 @@ def get_csv_variables(url):
        url : string, the URL of the CSV
        """
     csv = WOQLQuery().get(
-        WOQLQuery().woql_as("councillor_a","v:Rep_A").
+        WOQLQuery().woql_as("councillor_a", "v:Rep_A").
                     woql_as("councillor_b", "v:Rep_B").
                     woql_as("party_a", "v:Party_A").
                     woql_as("party_b", "v:Party_B").
@@ -64,7 +66,8 @@ def get_csv_variables(url):
         ).remote(url)
     return csv
 
-def get_wrangles(relation):
+
+def get_wrangles():
     wrangles = [
          WOQLQuery().idgen("doc:Party", ["v:Party_A"], "v:Party_A_ID"),
          WOQLQuery().idgen("doc:Party", ["v:Party_B"], "v:Party_B_ID"),
@@ -76,6 +79,7 @@ def get_wrangles(relation):
     ]
     return wrangles
 
+
 def load_csvs(client, csvs):
     """Load the CSVs as input
        Parameters
@@ -85,15 +89,17 @@ def load_csvs(client, csvs):
     """
     for key, url in csvs.items():
         csv = get_csv_variables(url)
-        wrangles = get_wrangles(key)
+        wrangles = get_wrangles()
         inputs = WOQLQuery().woql_and(csv, *wrangles)
-        inserts = get_inserts(key)
+        inserts = get_inserts()
         answer = WOQLQuery().when(inputs, inserts)
         answer.execute(client)
 
-# run tutorial
-client = woql.WOQLClient()
-client.connect(server_url, key)
-client.createDatabase(dbId, "Dublin Council Graph")
-create_schema(client)
-load_csvs(client, CSVS)
+
+if __name__ == "__main__": 
+    # run tutorial
+    client = woql.WOQLClient()
+    client.connect(server_url, key)
+    client.createDatabase(dbId, "Dublin Council Graph")
+    create_schema(client)
+    load_csvs(client, CSVS)
