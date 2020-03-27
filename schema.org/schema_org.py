@@ -6,19 +6,29 @@ server_url = "http://localhost:6363"
 key = "root"
 dbId = "schema_dot_org"
 
-SIMPLE_TYPE=["http://schema.org/Boolean",
-             "http://schema.org/Text",
-             "http://schema.org/Date",
-             "http://schema.org/URL",
-             "http://schema.org/Integer",
-             "http://schema.org/Number"
-             ]
+SIMPLE_TYPE_MAP={"http://schema.org/Boolean": "boolean",
+             "http://schema.org/Text": "string",
+             "http://schema.org/Date": "dateTime",
+             "http://schema.org/DateTime": "dateTime",
+             "http://schema.org/URL": "string",
+             "http://schema.org/XPathType": "string",
+             "http://schema.org/Integer": "integer",
+             "http://schema.org/Number": "integer",
+             "http://schema.org/Float": "decimal"
+             }
 
 def construct_objects(series):
-    result = WOQLQuery().\
-             doctype(series.id).\
-             label(series.label).\
-             description(series.comment)
+    if series.id in SIMPLE_TYPE_MAP:
+        result = WOQLQuery().\
+                 doctype(series.id).\
+                 label(series.label).\
+                 description(series.comment).\
+                 property(series.id+"Value", "xsd:"+SIMPLE_TYPE_MAP[series.id])
+    else:
+        result = WOQLQuery().\
+                 doctype(series.id).\
+                 label(series.label).\
+                 description(series.comment)
     return result
 
 def construct_prop_dr(series):
@@ -80,6 +90,7 @@ def create_schema_from_addon(client, queries):
         if len(query) > 0:
             new_queries.append(WOQLQuery().woql_and(*query))
     schema = WOQLQuery().when(True).woql_and(*new_queries)
+    output_json(schema, filename)
     return schema.execute(client)
 
 print("read types from csv and construct WOQL objects")
