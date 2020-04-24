@@ -11,12 +11,24 @@ SIMPLE_TYPE_MAP={"http://schema.org/Boolean": "boolean",
              "http://schema.org/DateTime": "dateTime",
              "http://schema.org/URL": "string",
              "http://schema.org/XPathType": "string",
-             "http://schema.org/Integer": "integer",
+             "http://schema.org/Integer": "integer", # define in csv that is subType of Number
              "http://schema.org/Number": "integer",
-             "http://schema.org/Float": "decimal"
+             "http://schema.org/Float": "decimal",
+             "http://schema.org/Thing": "string",
              }
 
 # Contruction functions
+
+def construct_simple_type_relations():
+    result = []
+    for key, value in SIMPLE_TYPE_MAP.items():
+        if value == "string" and key != "http://schema.org/Thing":
+            result.append(WOQLQuery().add_quad(key, "subClassOf", "http://schema.org/Thing" ,"schema"))
+        if value == "dateTime" and key != "http://schema.org/DateTime":
+            result.append(WOQLQuery().add_quad(key, "subClassOf", "http://schema.org/DateTime" ,"schema"))
+    for q in result:
+        print(q.json())
+    return result
 
 def construction_schema_objects(series):
     result = WOQLQuery().doctype(series.id).\
@@ -55,6 +67,7 @@ def construction_schema_addon_property(series, type_list):
             for domain in  series.domainIncludes.split(','):
                 domain = domain.strip()
                 if domain in list(type_list):
+                    #result.append(WOQLQuery().add_quad(series.id, "domain", domain, "schema"))
                     result.append(WOQLQuery().add_quad(domain, "subClassOf", series.id+"Domain", "schema"))
             result.append(WOQLQuery().add_quad(series.id, "domain", series.id+"Domain", "schema"))
         else:
@@ -65,6 +78,7 @@ def construction_schema_addon_property(series, type_list):
             for range in series.rangeIncludes.split(','):
                 range = range.strip()
                 if range in list(type_list):
+                    #result.append(WOQLQuery().add_quad(series.id, "range", range, "schema"))
                     result.append(WOQLQuery().add_quad(range, "subClassOf", series.id+"Range", "schema"))
             result.append(WOQLQuery().add_quad(series.id, "range", series.id+"Range", "schema"))
         else:
@@ -90,29 +104,32 @@ def create_schema_add_ons(client, queries):
     result_query = WOQLQuery().when(True).woql_and(*new_queries)
     return result_query.execute(client)
 
-
-
 types = pd.read_csv("all-layers-types.csv")
 types["QueryObjects"] = types.apply(construction_schema_objects, axis=1)
-types["QueryAddOnObj"] = types.apply(construction_schema_addon, axis=1, type_list=types["QueryObjects"])
+types["QueryAddOnObj"] = types.apply(construction_schema_addon, axis=1, type_list=list(types["id"]))
 
 propteries = pd.read_csv("all-layers-properties.csv")
+if id == "http://schema.org/name":
+    print(result.json())
 propteries["QueryObjects"] = propteries.apply(construction_schema_objects, axis=1)
 propteries["QueryObjects_DR"] = propteries.apply(construct_prop_dr, axis=1)
-propteries["QueryAddOnObj"] = propteries.apply(construction_schema_addon_property, axis=1, type_list=types["QueryObjects"])
+propteries["QueryAddOnObj"] = propteries.apply(construction_schema_addon_property, axis=1, type_list=list(types["id"]))
 
 client = WOQLClient()
 client.connect(server_url, key)
 client.deleteDatabase(db_id)
 client.createDatabase(db_id, "Schema.org")
 
-# crete schema for types
+print("crete schema for types")
 create_schema_objects(client, list(types["QueryObjects"]))
-# crete schema add on for types
+print("crete schema relations for simple types")
+#construct_simple_type_relations(type_list=list(types["id"]))
+create_schema_objects(client, construct_simple_type_relations())
+print("crete schema add on for types")
 create_schema_add_ons(client, list(types["QueryAddOnObj"]))
-# crete schema for properties
-create_schema_objects(client, list(propteries["QueryObjects"]))
-# create schema for DR objects
+#print("crete schema for properties")
+#create_schema_objects(client, list(propteries["QueryObjects"]))
+print("create schema for DR objects")
 create_schema_add_ons(client, list(propteries["QueryObjects_DR"]))
-# crete schema add on for properties
+print("crete schema add on for properties")
 create_schema_add_ons(client, list(propteries["QueryAddOnObj"]))
