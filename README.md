@@ -46,6 +46,12 @@ Also see the [tutorial blog post](https://medium.com/terminusdb/are-you-supporti
 
 ## Schema.org Tutorial
 
-Putting [Schema.org](https://schema.org/) vocabulary into a TerminusDB schema.
+Putting [Schema.org](https://schema.org/) vocabulary into a TerminusDB schema. Example application of putting microdata tags form html into TerminusDB graph using that schema.
 
 Deatils: [schema.org](https://github.com/terminusdb/terminus-tutorials/tree/master/schema.org)
+
+## Flight Tutorial
+
+Putting [OpenFlights.org](https://schema.org/) data into a TerminusDB graph.
+
+Deatils: [schema.org](https://github.com/terminusdb/terminus-tutorials/tree/master/flight-tutorial)
