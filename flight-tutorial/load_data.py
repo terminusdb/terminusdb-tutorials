@@ -106,7 +106,7 @@ airports_query = airports.apply(load_airport, axis=1, countries_list=list(countr
 
 def load_flight(series, airports, airlines):
     clean_id = f"{series['Airline Code']}_{series['Source Airport ID']}_{series['Destination Airport ID']}"
-    query_obj = WOQLQuery().insert(clean_id,'Flight').label(f"Flight by {series['Airline Code']} form {series['Source Airport ID']} to {series['Destination Airport ID']}")
+    query_obj = WOQLQuery().insert(clean_id,'Flight').label(f"Flight by {series['Airline Code']} from {series['Source Airport ID']} to {series['Destination Airport ID']}")
 
     # departs
     if len(series['Source Airport ID']) == 3:

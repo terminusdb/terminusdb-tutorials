@@ -63,18 +63,6 @@ def generateMultiInsertQuery(codes, type):
         WOQLQuery().woql_and(*inserts)
     )
 
-def load_data(client):
-    """Load the Sample Data
-       Parameters
-       ==========
-       client : a WOQLClient() connection
-    """
-    codes = ["DUB", "LHR", "ETC", "XXX"]
-    q = generateMultiInsertQuery(codes, "Airport")
-    #print(json.dumps(q.json(), indent=4))
-    q.execute(client)
-
-
 client = woql.WOQLClient()
 client.connect(server_url, key)
 try:
@@ -83,4 +71,3 @@ except:
     print("Databse already Exists")
 client.conConfig.setDB(dbId)
 create_schema(client)
-load_data(client)
