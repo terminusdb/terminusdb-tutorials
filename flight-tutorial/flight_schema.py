@@ -1,5 +1,5 @@
-import woqlclient.woqlClient as woql
-from woqlclient import WOQLQuery
+import terminusdb_client.woqlclient as woql
+from terminusdb_client.woqlquery import WOQLQuery
 import json
 
 server_url = "http://localhost:6363"

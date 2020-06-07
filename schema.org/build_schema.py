@@ -1,4 +1,5 @@
-from woqlclient import WOQLClient, WOQLQuery
+from terminusdb_client.woqlquery import WOQLQuery
+from terminusdb_client.woqlclient import WOQLClient
 import pandas as pd
 
 server_url="http://localhost:6363"

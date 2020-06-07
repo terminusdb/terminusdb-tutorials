@@ -1,5 +1,5 @@
-import woqlclient.woqlClient as woql
-from woqlclient import WOQLQuery
+import terminusdb_client.woqlclient as woql
+from terminusdb_client.woqlquery import WOQLQuery
 
 CSVS = {"OverallSimilarity": "https://terminusdb.com/t/data/council/weighted_similarity.csv"}
 
@@ -96,7 +96,7 @@ def load_csvs(client, csvs):
         answer.execute(client)
 
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     # run tutorial
     client = woql.WOQLClient()
     client.connect(server_url, key)

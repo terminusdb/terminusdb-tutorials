@@ -3,7 +3,8 @@ import requests
 import pprint
 from w3lib.html import get_base_url
 
-from woqlclient import WOQLClient, WOQLQuery
+from terminusdb_client.woqlquery import WOQLQuery
+from terminusdb_client.woqlclient import WOQLClient
 from dateutil.parser import *
 
 # settings for WOQLClient

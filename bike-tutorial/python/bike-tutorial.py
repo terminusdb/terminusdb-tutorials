@@ -1,9 +1,8 @@
-import woqlclient.woqlClient as woql
-from woqlclient import WOQLQuery
+import terminusdb_client.woqlclient as woql
+from terminusdb_client.woqlquery import WOQLQuery
 from csvs import csvs
 
-server_url = "http://localhost:6363"
-key = "root"
+
 dbId = "pybike"
 
 def create_schema(client):
@@ -107,8 +106,8 @@ def load_csvs(client, csvlist, wrangl, insert):
 
 
 if __name__ == "__main__":
-    client = woql.WOQLClient()
-    client.connect(server_url, key)
-    client.createDatabase(dbId, "Bicycle Graph")
+    client = woql.WOQLClient(server_url = "http://localhost:6363")
+    client.connect(key="root", account="admin", user="admin")
+    client.create_database("pybike", "admin", { "label": "Bike Graph", "comment": "Create a graph with bike data"})
     create_schema(client)
     load_csvs(client, csvs, get_wrangles(), get_inserts())
