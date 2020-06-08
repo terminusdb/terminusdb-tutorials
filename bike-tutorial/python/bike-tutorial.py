@@ -27,7 +27,6 @@ def create_schema(client):
             property("end_time", "dateTime").label("Time Ended").
             property("journey_bicycle", "Bicycle").label("Bicycle Used")
     )
-    pp.pprint(schema.to_dict())
     return schema.execute(client)
 
 
@@ -111,6 +110,11 @@ def load_csvs(client, csvlist, wrangl, insert):
 if __name__ == "__main__":
     client = woql.WOQLClient(server_url = "http://localhost:6363")
     client.connect(key="root", account="admin", user="admin")
-    #client.create_database("pybike", "admin", { "label": "Bike Graph", "comment": "Create a graph with bike data"})
+    existing = client.conCapabilities._get_db_metadata(dbId, client.uid())
+    if not existing: 
+        client.create_database("pybike", "admin", { "label": "Bike Graph", "comment": "Create a graph with bike data"})
+        client.create_graph("schema", "main", "Creating schema graph for new database")
+    else: 
+        client.db(dbId)
     create_schema(client)
-    #load_csvs(client, csvs, get_wrangles(), get_inserts())
+    load_csvs(client, csvs, get_wrangles(), get_inserts())
