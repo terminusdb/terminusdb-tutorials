@@ -28,7 +28,7 @@ def create_schema(client):
             property("journey_bicycle", "Bicycle").label("Bicycle Used")
     )
     pp.pprint(schema.to_dict())
-    #return schema.execute(client)
+    return schema.execute(client)
 
 
 def get_csv_variables(url):
