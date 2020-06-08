@@ -2,6 +2,8 @@ import terminusdb_client.woqlclient as woql
 from terminusdb_client.woqlquery import WOQLQuery
 from csvs import csvs
 
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
 dbId = "pybike"
 
@@ -12,7 +14,7 @@ def create_schema(client):
         client : a WOQLClient() connection
 
     """
-    schema = WOQLQuery().when(True).woql_and(
+    schema = WOQLQuery().woql_and(
         WOQLQuery().doctype("Station").
             label("Bike Station").
             description("A station where bikes are deposited"),
@@ -25,7 +27,8 @@ def create_schema(client):
             property("end_time", "dateTime").label("Time Ended").
             property("journey_bicycle", "Bicycle").label("Bicycle Used")
     )
-    return schema.execute(client)
+    pp.pprint(schema.to_dict())
+    #return schema.execute(client)
 
 
 def get_csv_variables(url):
@@ -108,6 +111,6 @@ def load_csvs(client, csvlist, wrangl, insert):
 if __name__ == "__main__":
     client = woql.WOQLClient(server_url = "http://localhost:6363")
     client.connect(key="root", account="admin", user="admin")
-    client.create_database("pybike", "admin", { "label": "Bike Graph", "comment": "Create a graph with bike data"})
+    #client.create_database("pybike", "admin", { "label": "Bike Graph", "comment": "Create a graph with bike data"})
     create_schema(client)
-    load_csvs(client, csvs, get_wrangles(), get_inserts())
+    #load_csvs(client, csvs, get_wrangles(), get_inserts())
