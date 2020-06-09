@@ -1,7 +1,48 @@
-from terminusdb_client.woqlquery import WOQLQuery
-from terminusdb_client.woqlclient import WOQLClient
-import json
+from woqlclient import WOQLClient
+from woqlclient import WOQLQuery
 import pandas as pd
+
+server_url = "http://localhost:6363"
+key = "root"
+dbId = "pyplane"
+
+client = WOQLClient()
+client.connect(server_url, key)
+try:
+    client.createDatabase(dbId, "Airplane Graph")
+except:
+    print("Databse already Exists")
+
+def create_schema(client):
+    """The query which creates the schema
+        Parameters - it uses variables rather than the fluent style as an example
+        ==========
+        client : a WOQLClient() connection
+
+    """
+    base = WOQLQuery().doctype("EphemeralEntity").label("Ephemeral Entity").description("An entity that has a lifespan")
+    base.property("lifespan_start", "dateTime").label("Existed From")
+    base.property("lifespan_end", "dateTime").label("Existed To")
+
+    country = WOQLQuery().add_class("Country").label("Country").description("A nation state").parent("EphemeralEntity")
+    country.property("iso_code", "string").label("ISO Code")
+    country.property("fip_code", "string").label("FIP Code")
+
+    airline = WOQLQuery().add_class("Airline").label("Airline").description("An operator of airplane flights").parent("EphemeralEntity")
+    airline.property("registered_in", "Country").label("Registered In"),
+
+    airport = WOQLQuery().add_class("Airport").label("Airport").description("An airport where flights terminate").parent("EphemeralEntity")
+    airport.property("situated_in", "Country").label("Situated In"),
+
+    flight = WOQLQuery().add_class("Flight").label("Flight").description("A flight between airports").parent("EphemeralEntity")
+    flight.property("departs", "Airport").label("Departs")
+    flight.property("arrives", "Airport").label("Arrives")
+    flight .property("operated_by", "Airline").label("Operated By")
+
+    schema = WOQLQuery().when(True).woql_and(base, country, airline, airport, flight)
+    return schema.execute(client)
+
+#create_schema(client)
 
 countries_header = ['Name',
                     'ISO Code',
@@ -151,16 +192,7 @@ def load_flight(series, airports, airlines):
 
 flights_query = routes.apply(load_flight, axis=1, airports=airports, airlines=airlines).dropna()
 
-db_id = "pyplane"
-client = WOQLClient(server_url = "http://localhost:6363")
-client.connect(key="root", account="admin", user="admin")
-existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
-if not existing:
-    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Dublin council voting data"})
-    client.create_graph("schema", "main", "Creating schema graph for new database")
-else:
-    client.db(db_id)
-WOQLQuery().woql_and(*countries_query).execute(client)
-WOQLQuery().woql_and(*airlines_query).execute(client)
-WOQLQuery().woql_and(*airports_query).execute(client)
-WOQLQuery().woql_and(*flights_query).execute(client)
+client.update(WOQLQuery().when(True).woql_and(*countries_query).json(), dbId)
+client.update(WOQLQuery().when(True).woql_and(*airlines_query).json(), dbId)
+client.update(WOQLQuery().when(True).woql_and(*airports_query).json(), dbId)
+client.update(WOQLQuery().when(True).woql_and(*flights_query).json(), dbId)

@@ -1,10 +1,6 @@
-import terminusdb_client.woqlclient as woql
+from terminusdb_client.woqlclient import WOQLClient
 from terminusdb_client.woqlquery import WOQLQuery
 import json
-
-server_url = "http://localhost:6363"
-key = "root"
-dbId = "pyplane"
 
 def create_schema(client):
     """The query which creates the schema
@@ -63,11 +59,13 @@ def generateMultiInsertQuery(codes, type):
         WOQLQuery().woql_and(*inserts)
     )
 
-client = woql.WOQLClient()
-client.connect(server_url, key)
-try:
-    client.createDatabase(dbId, "Airplane Graph")
-except:
-    print("Databse already Exists")
-client.conConfig.setDB(dbId)
+db_id = "pyplane"
+client = WOQLClient(server_url = "http://localhost:6363")
+client.connect(key="root", account="admin", user="admin")
+existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
+if not existing:
+    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Dublin council voting data"})
+    client.create_graph("schema", "main", "Creating schema graph for new database")
+else:
+    client.db(db_id)
 create_schema(client)

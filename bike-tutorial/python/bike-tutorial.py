@@ -5,8 +5,6 @@ from csvs import csvs
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
-dbId = "pybike"
-
 def create_schema(client):
     """The query which creates the schema
         Parameters - it uses variables rather than the fluent style as an example
@@ -108,13 +106,14 @@ def load_csvs(client, csvlist, wrangl, insert):
 
 
 if __name__ == "__main__":
+    db_id = "pybike"
     client = woql.WOQLClient(server_url = "http://localhost:6363")
     client.connect(key="root", account="admin", user="admin")
-    existing = client.conCapabilities._get_db_metadata(dbId, client.uid())
-    if not existing: 
-        client.create_database("pybike", "admin", { "label": "Bike Graph", "comment": "Create a graph with bike data"})
+    existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
+    if not existing:
+        client.create_database(db_id, "admin", { "label": "Bike Graph", "comment": "Create a graph with bike data"})
         client.create_graph("schema", "main", "Creating schema graph for new database")
-    else: 
-        client.db(dbId)
+    else:
+        client.db(db_id)
     create_schema(client)
     load_csvs(client, csvs, get_wrangles(), get_inserts())

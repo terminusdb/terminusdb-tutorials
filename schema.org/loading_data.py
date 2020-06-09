@@ -7,11 +7,6 @@ from terminusdb_client.woqlquery import WOQLQuery
 from terminusdb_client.woqlclient import WOQLClient
 from dateutil.parser import *
 
-# settings for WOQLClient
-server_url = "http://localhost:6363"
-key = "root"
-dbId = "schema_tutorial"
-
 # Script tags and pretty print
 pp = pprint.PrettyPrinter(indent=2)
 r = requests.get("https://events.terminusdb.com/london/2020/02/11/london-1st-graph.html")
@@ -47,6 +42,13 @@ def extract_data(data, id='event/'):
 
 extract_data(data['microdata'][0])
 
-client = WOQLClient()
-client.connect(server_url, key)
-client.update(WOQLQuery().when(True).woql_and(*execution_queue).json(), dbId)
+db_id = "schema_tutorial"
+client = WOQLClient(server_url = "http://localhost:6363")
+client.connect(key="root", account="admin", user="admin")
+existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
+if not existing:
+    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Dublin council voting data"})
+    client.create_graph("schema", "main", "Creating schema graph for new database")
+else:
+    client.db(db_id)
+WOQLQuery().woql_and(*execution_queue).execute(client)

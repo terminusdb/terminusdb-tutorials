@@ -2,10 +2,6 @@ from terminusdb_client.woqlquery import WOQLQuery
 from terminusdb_client.woqlclient import WOQLClient
 import pandas as pd
 
-server_url="http://localhost:6363"
-key="root"
-db_id="schema_tutorial"
-
 SIMPLE_TYPE_MAP={"http://schema.org/Boolean": "boolean",
              "http://schema.org/Text": "string",
              "http://schema.org/Date": "dateTime",
@@ -28,7 +24,7 @@ def construct_simple_type_relations():
         if value == "dateTime" and key != "http://schema.org/DateTime":
             result.append(WOQLQuery().add_quad(key, "subClassOf", "http://schema.org/DateTime" ,"schema"))
     for q in result:
-        print(q.json())
+        print(q.to_dict())
     return result
 
 def construction_schema_objects(series):
@@ -111,15 +107,21 @@ types["QueryAddOnObj"] = types.apply(construction_schema_addon, axis=1, type_lis
 
 propteries = pd.read_csv("all-layers-properties.csv")
 if id == "http://schema.org/name":
-    print(result.json())
+    print(result.to_dict())
 propteries["QueryObjects"] = propteries.apply(construction_schema_objects, axis=1)
 propteries["QueryObjects_DR"] = propteries.apply(construct_prop_dr, axis=1)
 propteries["QueryAddOnObj"] = propteries.apply(construction_schema_addon_property, axis=1, type_list=list(types["id"]))
 
-client = WOQLClient()
-client.connect(server_url, key)
-client.deleteDatabase(db_id)
-client.createDatabase(db_id, "Schema.org")
+
+db_id = "schema_tutorial"
+client = WOQLClient(server_url = "http://localhost:6363")
+client.connect(key="root", account="admin", user="admin")
+existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
+if not existing:
+    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Dublin council voting data"})
+    client.create_graph("schema", "main", "Creating schema graph for new database")
+else:
+    client.db(db_id)
 
 print("crete schema for types")
 create_schema_objects(client, list(types["QueryObjects"]))
