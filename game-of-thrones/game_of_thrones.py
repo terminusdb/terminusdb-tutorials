@@ -82,12 +82,13 @@ def load_data(client, houses, characters):
 
     return WOQLQuery().when(True).woql_and(*results).execute(client)
 
-client = WOQLClient()
-client.connect(server_url, key)
-try:
-    client.createDatabase(db_id, "Game of Thrones")
-except:
-    print("Databse already Exists")
-client.conConfig.setDB(db_id)
+db_id = "game_of_thrones"
+client = woql.WOQLClient(server_url = "http://localhost:6363")
+client.connect(key="root", account="admin", user="admin")
+existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
+if not existing:
+    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Game of Thrones data"})
+else:
+    client.db(db_id)
 create_schema(client)
 load_data(client, houses, characters)

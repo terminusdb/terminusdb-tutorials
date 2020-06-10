@@ -112,7 +112,6 @@ if __name__ == "__main__":
     existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
     if not existing:
         client.create_database(db_id, "admin", { "label": "Bike Graph", "comment": "Create a graph with bike data"})
-        client.create_graph("schema", "main", "Creating schema graph for new database")
     else:
         client.db(db_id)
     create_schema(client)

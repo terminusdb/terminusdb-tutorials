@@ -64,8 +64,7 @@ client = WOQLClient(server_url = "http://localhost:6363")
 client.connect(key="root", account="admin", user="admin")
 existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
 if not existing:
-    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Dublin council voting data"})
-    client.create_graph("schema", "main", "Creating schema graph for new database")
+    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Open Flights data"})
 else:
     client.db(db_id)
 create_schema(client)
