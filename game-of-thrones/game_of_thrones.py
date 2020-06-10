@@ -85,9 +85,9 @@ def load_data(client, houses, characters):
 db_id = "game_of_thrones"
 client = woql.WOQLClient(server_url = "http://localhost:6363")
 client.connect(key="root", account="admin", user="admin")
-existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
+existing = client.get_metadata(db_id, client.uid())
 if not existing:
-    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Game of Thrones data"})
+    client.create_database(db_id, "admin", { "label": "Game of Thrones Graph", "comment": "Create a graph with Game of Thrones data"})
 else:
     client.db(db_id)
 create_schema(client)
