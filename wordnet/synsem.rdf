@@ -1,0 +1,490 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY vann "http://purl.org/vocab/vann/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY cc "http://creativecommons.org/ns#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY synsem "http://www.w3.org/ns/lemon/synsem#" >
+    <!ENTITY ontolex "http://www.w3.org/ns/lemon/ontolex#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY semiotics "http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.w3.org/ns/lemon/synsem#"
+     xml:base="http://www.w3.org/ns/lemon/synsem"
+     xmlns:cc="http://creativecommons.org/ns#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:synsem="http://www.w3.org/ns/lemon/synsem#"
+     xmlns:ontolex="http://www.w3.org/ns/lemon/ontolex#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:semiotics="http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://www.w3.org/ns/lemon/synsem">
+        <owl:versionInfo rdf:datatype="&xsd;decimal">1.0</owl:versionInfo>
+        <dc:modified rdf:datatype="&xsd;date">2016-01-10</dc:modified>
+        <dc:issued rdf:datatype="&xsd;date">2016-01-10</dc:issued>
+        <dc:description xml:lang="en">A model for the representation of lexical information relative to ontologies. Syntax and semantics module.</dc:description>
+        <dc:rights>CC-Zero</dc:rights>
+        <dc:title xml:lang="en">Lexicon Model for Ontologies - Synsem</dc:title>
+        <vann:preferredNamespaceUri>http://www.w3.org/ns/lemon/synsem#</vann:preferredNamespaceUri>
+        <vann:preferredNamespacePrefix>synsem</vann:preferredNamespacePrefix>
+        <dc:contributor rdf:resource="http://art.uniroma2.it/fiorelli/"/>
+        <dc:contributor rdf:resource="http://art.uniroma2.it/stellato/"/>
+        <dc:contributor rdf:resource="http://jogracia.url.ph/web/"/>
+        <dc:creator rdf:resource="http://john.mccr.ae/"/>
+        <dc:contributor rdf:resource="http://mayor2.dia.fi.upm.es/oeg-upm/index.php/en/teachers/52-emontiel"/>
+        <dc:creator rdf:resource="http://www.cimiano.de/"/>
+        <dc:contributor rdf:resource="http://www.dfki.de/~declerck/"/>
+        <dc:contributor rdf:resource="http://www.ilc.cnr.it/en/content/anas-fahad-khan"/>
+        <dc:contributor rdf:resource="http://www.istc.cnr.it/people/aldo-gangemi"/>
+        <dc:contributor rdf:resource="http://www.oeg-upm.net/index.php/teachers/53-lupe"/>
+        <dc:contributor rdf:resource="http://www.paulbuitelaar.net/"/>
+        <dc:publisher rdf:resource="http://www.w3.org/community/ontolex"/>
+        <owl:imports rdf:resource="http://www.w3.org/ns/lemon/ontolex"/>
+        <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"/>
+        <dc:contributor rdf:resource="https://sites.google.com/site/francescafrontini/"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#comment -->
+
+    <owl:AnnotationProperty rdf:about="&rdfs;comment"/>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#isDefinedBy -->
+
+    <owl:AnnotationProperty rdf:about="&rdfs;isDefinedBy"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topObjectProperty -->
+
+    <owl:ObjectProperty rdf:about="&owl;topObjectProperty"/>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#condition -->
+
+    <owl:ObjectProperty rdf:about="&synsem;condition">
+        <rdfs:label xml:lang="af">voorwaarde</rdfs:label>
+        <rdfs:label xml:lang="de">Bedingung</rdfs:label>
+        <rdfs:label xml:lang="en">condition</rdfs:label>
+        <rdfs:label xml:lang="es">condición</rdfs:label>
+        <rdfs:label xml:lang="fr">condition</rdfs:label>
+        <rdfs:label xml:lang="it">condizione</rdfs:label>
+        <rdfs:label xml:lang="nl">voorwaarde</rdfs:label>
+        <rdfs:label xml:lang="pt">condição</rdfs:label>
+        <rdfs:label xml:lang="ro">condiție</rdfs:label>
+        <rdfs:label xml:lang="sv">villkor</rdfs:label>
+        <rdfs:label xml:lang="ru">состояние</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;condition&apos; property defines an evaluable constraint that derives from using a certain lexical entry to express a given ontological predicate.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;состояние&apos; определяет оценочное ограничение, которое получается из использования определенной словарной единицы для выражения заданного онтологического предиката.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:subPropertyOf rdf:resource="&ontolex;usage"/>
+        <rdfs:domain rdf:resource="&synsem;OntoMap"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#isA -->
+
+    <owl:ObjectProperty rdf:about="&synsem;isA">
+        <rdfs:label xml:lang="af">instansie van</rdfs:label>
+        <rdfs:label xml:lang="de">instanz von</rdfs:label>
+        <rdfs:label xml:lang="es">Instancia de</rdfs:label>
+        <rdfs:label xml:lang="fr">Instance de</rdfs:label>
+        <rdfs:label xml:lang="it">istanza di</rdfs:label>
+        <rdfs:label xml:lang="nl">instantie van</rdfs:label>
+        <rdfs:label xml:lang="pt">é um</rdfs:label>
+        <rdfs:label xml:lang="ro">instanță a</rdfs:label>
+        <rdfs:label xml:lang="sv">är en</rdfs:label>
+        <rdfs:label xml:lang="ru">экземпляр</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;is a&apos; property represents the single argument of a class or unary  predicate.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;экземпляр&apos; представляет одиночный аргумент класса или унарный предикат.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:subPropertyOf rdf:resource="&synsem;ontoCorrespondence"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#marker -->
+
+    <owl:ObjectProperty rdf:about="&synsem;marker">
+        <rdfs:label xml:lang="af">merker</rdfs:label>
+        <rdfs:label xml:lang="de">Marker</rdfs:label>
+        <rdfs:label xml:lang="en">marker</rdfs:label>
+        <rdfs:label xml:lang="es">marcador</rdfs:label>
+        <rdfs:label xml:lang="fr">marqueur</rdfs:label>
+        <rdfs:label xml:lang="it">marcatore</rdfs:label>
+        <rdfs:label xml:lang="nl">merker</rdfs:label>
+        <rdfs:label xml:lang="pt">marcado</rdfs:label>
+        <rdfs:label xml:lang="ro">marcator</rdfs:label>
+        <rdfs:label xml:lang="sv">markör</rdfs:label>
+        <rdfs:label xml:lang="ru">маркер</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;marker&apos; property indicates the marker of a syntactic argument; this can be a case marker or some other lexical entry such as a preposition or particle.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;маркер&apos; указывает маркер синтаксического аргумента; Это может быть маркер падежа или какая-то другая словарная единица, такая как предлог или частица.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:domain rdf:resource="&synsem;SyntacticArgument"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#objOfProp -->
+
+    <owl:ObjectProperty rdf:about="&synsem;objOfProp">
+        <rdfs:label xml:lang="af">voorwerp van predikaat</rdfs:label>
+        <rdfs:label xml:lang="de">objekt des Prädikats</rdfs:label>
+        <rdfs:label xml:lang="en">object of property</rdfs:label>
+        <rdfs:label xml:lang="es">complemento de la propiedad</rdfs:label>
+        <rdfs:label xml:lang="fr">complément de la propriété</rdfs:label>
+        <rdfs:label xml:lang="it">oggetto della proprietà</rdfs:label>
+        <rdfs:label xml:lang="nl">object van predikaat</rdfs:label>
+        <rdfs:label xml:lang="ro">obiect al proprietății</rdfs:label>
+        <rdfs:label xml:lang="sv">objekt av predikat</rdfs:label>
+        <rdfs:label xml:lang="ru">объект свойства</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;objOfProp&apos; represents the 2nd argument or object of a binary predicate (property) in the ontology.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">&apos;Объект свойства&apos; представляет 2-й аргумент или объект бинарного предиката (свойства) в онтологии.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:subPropertyOf rdf:resource="&synsem;ontoCorrespondence"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&synsem;ontoMapping"/>
+            <rdf:Description rdf:about="&synsem;objOfProp"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#ontoCorrespondence -->
+
+    <owl:ObjectProperty rdf:about="&synsem;ontoCorrespondence">
+        <rdfs:label xml:lang="de">ontologische Korrespondenz</rdfs:label>
+        <rdfs:label xml:lang="en">ontological correspondence</rdfs:label>
+        <rdfs:label xml:lang="es">correspondencia ontológica</rdfs:label>
+        <rdfs:label xml:lang="fr">correspondance ontologique</rdfs:label>
+        <rdfs:label xml:lang="it">corrispondenza ontologica</rdfs:label>
+        <rdfs:label xml:lang="nl">ontologische correspondentie</rdfs:label>
+        <rdfs:label xml:lang="ru">онтологическая переписка</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;ontoCorrespondence&apos; property binds an argument of a predicate defined in the ontology to a syntactic argument that realizes this predicate argument syntactically.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;онтологическая переписка&apos; связывает аргумент предиката, определенного в онтологии, с синтаксическим аргументом, который синтаксически реализует этот предикат.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:range rdf:resource="&synsem;SyntacticArgument"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&ontolex;LexicalSense"/>
+                    <rdf:Description rdf:about="&synsem;OntoMap"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#ontoMapping -->
+
+    <owl:ObjectProperty rdf:about="&synsem;ontoMapping">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label xml:lang="de">Ontologieabbildung</rdfs:label>
+        <rdfs:label xml:lang="es">applicación de l&apos;ontología</rdfs:label>
+        <rdfs:label xml:lang="fr">application de l&apos;ontologie</rdfs:label>
+        <rdfs:label xml:lang="it">mappa de l&apos;ontologia</rdfs:label>
+        <rdfs:label xml:lang="nl">ontologieafbeelding</rdfs:label>
+        <rdfs:label xml:lang="ru">отображение онтологии</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;ontoMapping&apos;  property relates an ontology mapping to its corresponding lexical sense.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;onMapping&apos; связывает отображение онтологии с соответствующим ему лексическим смыслом.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:range rdf:resource="&ontolex;LexicalSense"/>
+        <rdfs:domain rdf:resource="&synsem;OntoMap"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#propertyDomain -->
+
+    <owl:ObjectProperty rdf:about="&synsem;propertyDomain">
+        <rdfs:label xml:lang="af">predikaatdefinisiegebied</rdfs:label>
+        <rdfs:label xml:lang="de">Definitionsbereich des Prädikats</rdfs:label>
+        <rdfs:label xml:lang="en">property domain</rdfs:label>
+        <rdfs:label xml:lang="es">dominio de la propiedad</rdfs:label>
+        <rdfs:label xml:lang="fr">ensemble de la propriété</rdfs:label>
+        <rdfs:label xml:lang="it">dominio di proprietà</rdfs:label>
+        <rdfs:label xml:lang="nl">domein van predikaat</rdfs:label>
+        <rdfs:label xml:lang="ro">domeniul proprietății</rdfs:label>
+        <rdfs:label xml:lang="sv">relationsdomän</rdfs:label>
+        <rdfs:label xml:lang="ru">свойство домена</rdfs:label>
+        <rdfs:comment xml:lang="en">&apos;Property domain&apos; provides a pragmatic restriction on the domain of the property referred to by this sense.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">&apos;Свойство домена&apos; обеспечивает прагматическое ограничение на область свойства, на которое ссылается этот смысл.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:subPropertyOf rdf:resource="&synsem;condition"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#propertyRange -->
+
+    <owl:ObjectProperty rdf:about="&synsem;propertyRange">
+        <rdfs:label xml:lang="af">predikaatwaardegebied</rdfs:label>
+        <rdfs:label xml:lang="de">Wertemenge des Prädikats</rdfs:label>
+        <rdfs:label xml:lang="en">property range</rdfs:label>
+        <rdfs:label xml:lang="es">rango de la propiedad</rdfs:label>
+        <rdfs:label xml:lang="fr">image de la propriété</rdfs:label>
+        <rdfs:label xml:lang="it">codominio di proprietà</rdfs:label>
+        <rdfs:label xml:lang="nl">bereik van predikaat</rdfs:label>
+        <rdfs:label xml:lang="ro">gama proprietății</rdfs:label>
+        <rdfs:label xml:lang="sv">relationsräckvidd</rdfs:label>
+        <rdfs:label xml:lang="ru">диапазон свойства</rdfs:label>
+        <rdfs:comment xml:lang="en">&apos;Property domain&apos; provides a pragmatic restriction on the range of the property referred to by this sense.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">&apos;Диапазон свойства&apos; обеспечивает прагматическое ограничение на область диапазона,на которое ссылается этот смысл.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:subPropertyOf rdf:resource="&synsem;condition"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#subjOfProp -->
+
+    <owl:ObjectProperty rdf:about="&synsem;subjOfProp">
+        <rdfs:label xml:lang="af">onderwerp van predikaat</rdfs:label>
+        <rdfs:label xml:lang="de">Subjekt des Prädikats</rdfs:label>
+        <rdfs:label xml:lang="en">subject of property</rdfs:label>
+        <rdfs:label xml:lang="es">sujeto de la propiedad</rdfs:label>
+        <rdfs:label xml:lang="fr">sujet de la propriété</rdfs:label>
+        <rdfs:label xml:lang="it">soggetto della proprietà</rdfs:label>
+        <rdfs:label xml:lang="nl">onderwerp van predikaat</rdfs:label>
+        <rdfs:label xml:lang="ro">subiectul proprietații</rdfs:label>
+        <rdfs:label xml:lang="sv">subjekt av predikat</rdfs:label>
+        <rdfs:label xml:lang="ru">субъект свойства</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;subjOfProp&apos; property represents the 1st argument or subject of a binary predicate (property) in the ontology.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;subjOfProp&apos; представляет 1-й аргумент или субъект бинарного предиката (свойства) в онтологии.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:subPropertyOf rdf:resource="&synsem;ontoCorrespondence"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&synsem;ontoMapping"/>
+            <rdf:Description rdf:about="&synsem;subjOfProp"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#submap -->
+
+    <owl:ObjectProperty rdf:about="&synsem;submap">
+        <rdfs:label xml:lang="de">Subframe</rdfs:label>
+        <rdfs:label xml:lang="en">submap</rdfs:label>
+        <rdfs:label xml:lang="es">parte del marco</rdfs:label>
+        <rdfs:label xml:lang="fr">cadre composante</rdfs:label>
+        <rdfs:label xml:lang="it">subframe</rdfs:label>
+        <rdfs:label xml:lang="nl">deelraam</rdfs:label>
+        <rdfs:label xml:lang="sv">underbetydelse</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;submap&apos; property relates a (complex) ontological mapping to a set of bindings that together bind the arguments of the involved predicates to a set of syntactic arguments that realize them syntactically.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;submap&apos; связывает (сложное) онтологическое отображение с набором привязок, которые вместе связывают аргументы задействованных предикатов с набором синтаксических аргументов, которые реализуют их синтаксически.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:domain rdf:resource="&synsem;OntoMap"/>
+        <rdfs:range rdf:resource="&synsem;OntoMap"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#synArg -->
+
+    <owl:ObjectProperty rdf:about="&synsem;synArg">
+        <rdfs:label xml:lang="af">sintaktiese argument</rdfs:label>
+        <rdfs:label xml:lang="de">syntaktisches Argument</rdfs:label>
+        <rdfs:label xml:lang="en">syntactic argument</rdfs:label>
+        <rdfs:label xml:lang="es">argumento sintáctico</rdfs:label>
+        <rdfs:label xml:lang="fr">actant syntaxique</rdfs:label>
+        <rdfs:label xml:lang="it">argomento sintattico</rdfs:label>
+        <rdfs:label xml:lang="nl">syntactisch argument</rdfs:label>
+        <rdfs:label xml:lang="pt">argumento sintatico</rdfs:label>
+        <rdfs:label xml:lang="ro">argument sintactic</rdfs:label>
+        <rdfs:label xml:lang="sv">syntaktiskt argument</rdfs:label>
+        <rdfs:label xml:lang="ru">синтаксический аргумент</rdfs:label>
+        <rdfs:comment xml:lang="en">The object property synArg relates a syntactic frame to one of its syntactic arguments.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство объекта &apos;synArg&apos; связывает синтаксический фрейм с одним из его синтаксических аргументов.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:range rdf:resource="&synsem;SyntacticArgument"/>
+        <rdfs:domain rdf:resource="&synsem;SyntacticFrame"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#synBehavior -->
+
+    <owl:ObjectProperty rdf:about="&synsem;synBehavior">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label xml:lang="af">sintaktiese dedrag</rdfs:label>
+        <rdfs:label xml:lang="de">syntaktisches Verhalten</rdfs:label>
+        <rdfs:label xml:lang="en">syntactic behavior</rdfs:label>
+        <rdfs:label xml:lang="es">funcionamiento sintáctico</rdfs:label>
+        <rdfs:label xml:lang="fr">conduite syntaxique</rdfs:label>
+        <rdfs:label xml:lang="it">comportamento sintattico</rdfs:label>
+        <rdfs:label xml:lang="nl">syntactisch optreden</rdfs:label>
+        <rdfs:label xml:lang="pt">comportamento sintatico</rdfs:label>
+        <rdfs:label xml:lang="ro">comportament sintactic</rdfs:label>
+        <rdfs:label xml:lang="sv">syntaktiskt beteende</rdfs:label>
+        <rdfs:label xml:lang="ru">синтаксическое поведение</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;syntactic behavior&apos; property relates a lexical entry to one of its syntactic behaviors as captured by a syntactic frame.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;синтаксическое поведение&apos; связывает лексическую запись с одним из ее синтаксических типов поведения, захваченных синтаксическим фреймом.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:domain rdf:resource="&ontolex;LexicalEntry"/>
+        <rdfs:range rdf:resource="&synsem;SyntacticFrame"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topDataProperty -->
+
+    <owl:DatatypeProperty rdf:about="&owl;topDataProperty">
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#optional -->
+
+    <owl:DatatypeProperty rdf:about="&synsem;optional">
+        <rdfs:label xml:lang="af">opsioneel</rdfs:label>
+        <rdfs:label xml:lang="de">optional</rdfs:label>
+        <rdfs:label xml:lang="en">optional</rdfs:label>
+        <rdfs:label xml:lang="es">opcional</rdfs:label>
+        <rdfs:label xml:lang="fr">optionnel</rdfs:label>
+        <rdfs:label xml:lang="it">opzionale</rdfs:label>
+        <rdfs:label xml:lang="nl">optioneel</rdfs:label>
+        <rdfs:label xml:lang="pt">opcional</rdfs:label>
+        <rdfs:label xml:lang="ro">facultativ</rdfs:label>
+        <rdfs:label xml:lang="sv">optionell</rdfs:label>
+        <rdfs:label xml:lang="ru">опциональный</rdfs:label>
+        <rdfs:comment xml:lang="en">The &apos;optional&apos; property indicates whether a syntactic argument is optional, that is, it can be syntactically omitted.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">Свойство &apos;опциональный&apos; указывает, является ли синтаксический аргумент необязательным, то есть его можно синтаксически исключить.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+        <rdfs:domain rdf:resource="&synsem;SyntacticArgument"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#OntoMap -->
+
+    <owl:Class rdf:about="&synsem;OntoMap">
+        <rdfs:label xml:lang="de">Ontologieabbildung</rdfs:label>
+        <rdfs:label xml:lang="en">ontology mapping</rdfs:label>
+        <rdfs:label xml:lang="es">applicación de l&apos;ontología</rdfs:label>
+        <rdfs:label xml:lang="fr">application de l&apos;ontologie</rdfs:label>
+        <rdfs:label xml:lang="it">mappa de l&apos;ontologia</rdfs:label>
+        <rdfs:label xml:lang="nl">ontologieafbeelding</rdfs:label>
+        <rdfs:label xml:lang="ru">отображение онтологии</rdfs:label>
+        <rdfs:comment xml:lang="en">An &apos;ontology mapping&apos; (OntoMap for short) specifies how a syntactic frame and its syntactic arguments map to a set of concepts and properties in the ontology that together specify the meaning of the syntactic frame.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">&apos;Отображение онтологии&apos; (OntoMap для краткости) определяет, как синтаксический фрейм и его синтаксические аргументы сопоставляются с набором понятий и свойств в онтологии, которые вместе определяют значение синтаксического фрейма.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#SyntacticArgument -->
+
+    <owl:Class rdf:about="&synsem;SyntacticArgument">
+        <rdfs:label xml:lang="af">sintaktiese argument</rdfs:label>
+        <rdfs:label xml:lang="de">syntaktisches Argument</rdfs:label>
+        <rdfs:label xml:lang="en">Syntactic Argument</rdfs:label>
+        <rdfs:label xml:lang="es">argumento sintáctico</rdfs:label>
+        <rdfs:label xml:lang="fr">actant syntaxique</rdfs:label>
+        <rdfs:label xml:lang="it">argomento sintattico</rdfs:label>
+        <rdfs:label xml:lang="nl">syntactisch argument</rdfs:label>
+        <rdfs:label xml:lang="pt">argumento sintatico</rdfs:label>
+        <rdfs:label xml:lang="ro">argument sintactic</rdfs:label>
+        <rdfs:label xml:lang="sv">syntaktiskt argument</rdfs:label>
+        <rdfs:label xml:lang="ru">синтаксический аргумент</rdfs:label>
+        <rdfs:comment xml:lang="en">A &apos;syntactic argument&apos; represents a slot that needs to be filled for a certain syntactic frame to be complete. Syntactic arguments typically realize a certain grammatical function (e.g. subject, direct object, indirect object, prepositional object, etc.).</rdfs:comment>
+         <rdfs:comment xml:lang="ru">&apos;Синтаксический аргумент&apos; представляет собой слот, который необходимо заполнить для получения определенного синтаксического фрейма. Синтаксические аргументы обычно реализуют определенную грамматическую функцию (например, субъект, прямой объект, косвенный объект, предпозиционный объект и т.д.).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/lemon/synsem#SyntacticFrame -->
+
+    <owl:Class rdf:about="&synsem;SyntacticFrame">
+        <rdfs:label xml:lang="af">raam</rdfs:label>
+        <rdfs:label xml:lang="de">syntaktisches Frame</rdfs:label>
+        <rdfs:label xml:lang="en">Syntactic Frame</rdfs:label>
+        <rdfs:label xml:lang="es">marco sintáctico</rdfs:label>
+        <rdfs:label xml:lang="fr">cadre syntaxique</rdfs:label>
+        <rdfs:label xml:lang="it">frame</rdfs:label>
+        <rdfs:label xml:lang="nl">raam</rdfs:label>
+        <rdfs:label xml:lang="ro">cadru</rdfs:label>
+        <rdfs:label xml:lang="sv">ram</rdfs:label>
+        <rdfs:label xml:lang="ru">синтаксический фрейм</rdfs:label>
+        <rdfs:comment xml:lang="en">A &apos;syntactic frame&apos; represents the syntactic behavior of an open class word in terms of the (syntactic) arguments it requires. It essentially describes the so called subcategorization structure of the word in question, in particular the syntactic arguments it requires.</rdfs:comment>
+        <rdfs:comment xml:lang="ru">&apos;Синтаксический фрейм&apos; представляет синтаксическое поведение открытого слова класса в терминах (синтаксических) аргументов, которые ему необходимы. Он по существу описывает так называемую структуру подкатегоризации рассматриваемого слова, в частности синтаксические аргументы, которые он требует.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/lemon/synsem"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+
