@@ -45,10 +45,9 @@ extract_data(data['microdata'][0])
 db_id = "schema_tutorial"
 client = WOQLClient(server_url = "http://localhost:6363")
 client.connect(key="root", account="admin", user="admin")
-existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
+existing = client.get_metadata(db_id, client.uid())
 if not existing:
-    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Dublin council voting data"})
-    client.create_graph("schema", "main", "Creating schema graph for new database")
+    client.create_database(db_id, "admin", { "label": "Schema.org Graph", "comment": "Create a graph with Schema.org data"})
 else:
     client.db(db_id)
 WOQLQuery().woql_and(*execution_queue).execute(client)

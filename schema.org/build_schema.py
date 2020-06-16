@@ -28,9 +28,9 @@ def construct_simple_type_relations():
     return result
 
 def construction_schema_objects(series):
-    result = WOQLQuery().doctype(series.id).\
-             label(series.label).\
-             description(series.comment)
+    result = WOQLQuery().doctype(series.id,
+             label=series.label,
+             description=series.comment)
     if series.id in SIMPLE_TYPE_MAP:
         result = result.property(series.id+"Value", "xsd:"+SIMPLE_TYPE_MAP[series.id])
     return result
@@ -88,7 +88,7 @@ def construction_schema_addon_property(series, type_list):
 # Excution funstions
 
 def create_schema_objects(client, queries):
-    result_query = WOQLQuery().when(True).woql_and(*queries)
+    result_query = WOQLQuery().woql_and(*queries)
     return result_query.execute(client)
 
 def create_schema_add_ons(client, queries):
@@ -98,7 +98,7 @@ def create_schema_add_ons(client, queries):
             new_queries.append(WOQLQuery().woql_and(*query_list))
         elif len(query_list) == 1:
             new_queries.append(query_list[0])
-    result_query = WOQLQuery().when(True).woql_and(*new_queries)
+    result_query = WOQLQuery().woql_and(*new_queries)
     return result_query.execute(client)
 
 types = pd.read_csv("all-layers-types.csv")
@@ -116,10 +116,9 @@ propteries["QueryAddOnObj"] = propteries.apply(construction_schema_addon_propert
 db_id = "schema_tutorial"
 client = WOQLClient(server_url = "http://localhost:6363")
 client.connect(key="root", account="admin", user="admin")
-existing = client.conCapabilities._get_db_metadata(db_id, client.uid())
+existing = client.get_metadata(db_id, client.uid())
 if not existing:
-    client.create_database(db_id, "admin", { "label": "Dublin Council Graph", "comment": "Create a graph with Dublin council voting data"})
-    client.create_graph("schema", "main", "Creating schema graph for new database")
+    client.create_database(db_id, "admin", label="Schema.org Graph", description="Create a graph with Schema.org")
 else:
     client.db(db_id)
 

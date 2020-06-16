@@ -13,16 +13,16 @@ with open('characters.json') as json_file:
     characters = json.load(json_file)
 
 def create_schema(client):
-    region = WOQLQuery().doctype("Region").label("Region")
-    seat = WOQLQuery().doctype("Seats").label("Seats")
-    house = WOQLQuery().doctype("House").label("House").\
+    region = WOQLQuery().doctype("Region", label="Region")
+    seat = WOQLQuery().doctype("Seats", label="Seats")
+    house = WOQLQuery().doctype("House", label="House").\
             property("founder", "Person").\
             property("words",  "string").\
             property("region", "Region").\
             property("heir", "Person").\
             property("overlord", "Person").\
             property("seats", "Seats")
-    person = WOQLQuery().doctype("Person").label("Person").\
+    person = WOQLQuery().doctype("Person", label="Person").\
     property("gender", "string").\
     property("father", "Person").\
     property("mother", "Person").\
@@ -30,7 +30,7 @@ def create_schema(client):
     property("spouse", "Person").\
     property("children", "Person")
 
-    return WOQLQuery().when(True).woql_and(region, seat, house, person).execute(client)
+    return WOQLQuery().woql_and(region, seat, house, person).execute(client, "Create schma for Game of Thrones.")
 
 def load_data(client, houses, characters):
     results = []
@@ -42,9 +42,9 @@ def load_data(client, houses, characters):
         else:
             ppl_obj.label(ppl["Name"])
         if ppl["IsFemale"]:
-            ppl_obj.property("gender", {"@value" : "Female", "@type" : "xsd:string"})
+            ppl_obj.property("gender", WOQLQuery().string("Female"))
         else:
-            ppl_obj.property("gender", {"@value" : "Male", "@type" : "xsd:string"})
+            ppl_obj.property("gender", WOQLQuery().string("Male"))
         if ppl["Father"] is not None:
             ppl_obj.property("father", "doc:Person_"+str(ppl["Father"]))
         if ppl["Mother"] is not None:
@@ -54,14 +54,14 @@ def load_data(client, houses, characters):
         for child in ppl["Children"]:
             ppl_obj.property("children", "doc:Person_"+str(child))
         for alias in ppl["Aliases"]:
-            ppl_obj.property("aliases", {"@value" : alias, "@type" : "xsd:string"})
+            ppl_obj.property("aliases", WOQLQuery().string(alias))
         results.append(ppl_obj)
 
     for hus in houses:
         if hus["Region"] is not None:
-            results.append(WOQLQuery().insert("Region_"+hus["Region"], "Region").label(hus["Region"]))
+            results.append(WOQLQuery().insert("Region_"+hus["Region"], "Region", label=hus["Region"]))
         for seat in hus["Seats"]:
-            results.append(WOQLQuery().insert("Seats_"+seat, "Seats").label(seat))
+            results.append(WOQLQuery().insert("Seats_"+seat, "Seats", label=seat))
 
         hus_obj = WOQLQuery().insert("hus"+str(hus["Id"]), "House").label(hus["Name"])
         if hus["Region"] is not None:
@@ -80,14 +80,15 @@ def load_data(client, houses, characters):
         results.append(hus_obj)
 
 
-    return WOQLQuery().when(True).woql_and(*results).execute(client)
+    return WOQLQuery().woql_and(*results).execute(client, "Adding data for Game of Thrones.")
 
-client = WOQLClient()
-client.connect(server_url, key)
-try:
-    client.createDatabase(db_id, "Game of Thrones")
-except:
-    print("Databse already Exists")
-client.conConfig.setDB(db_id)
+db_id = "game_of_thrones"
+client = WOQLClient(server_url = "http://localhost:6363")
+client.connect(key="root", account="admin", user="admin")
+existing = client.get_metadata(db_id, client.uid())
+if not existing:
+    client.create_database(db_id, "admin", label="Game of Thrones Graph", description="Create a graph with Game of Thrones data")
+else:
+    client.db(db_id)
 create_schema(client)
 load_data(client, houses, characters)
