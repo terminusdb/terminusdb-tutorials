@@ -62,7 +62,7 @@ def _clean_id(input, prefix=None):
 def load_country(series):
     if pd.isna(series['Country ID']):
         return None
-    query_obj = WOQLQuery().insert(series['Country ID'],'Country').label(series['Name'])
+    query_obj = WOQLQuery().insert(series['Country ID'],'Country', label=series['Name'])
     if pd.notna(series['ISO Code']):
         data_obj = {"@value" : series['ISO Code'], "@type" : "xsd:string"}
         query_obj.property('iso_code', data_obj)
@@ -77,7 +77,7 @@ countries_query = countries.apply(load_country, axis=1).dropna()
 def load_airline(series, countries_list):
     if (series['Airline ID'] == -1) or (pd.isna(series['Clean ID'])):
         return None
-    query_obj = WOQLQuery().insert(series['Clean ID'],'Airline').label(series['Name'])
+    query_obj = WOQLQuery().insert(series['Clean ID'],'Airline', label=series['Name'])
 
     clean_country = _clean_id(series['Country'], prefix='country')
     if clean_country in countries_list:
@@ -90,7 +90,7 @@ airlines_query = airlines.apply(load_airline, axis=1, countries_list=list(countr
 def load_airport(series, countries_list):
     if (series['Airport ID'] == -1) or (pd.isna(series['Clean ID'])):
         return None
-    query_obj = WOQLQuery().insert(series['Clean ID'],'Airport').label(series['Name'])
+    query_obj = WOQLQuery().insert(series['Clean ID'],'Airport', label=series['Name'])
 
     clean_country = _clean_id(series['Country'], prefix='country')
     if clean_country in countries_list:
@@ -103,7 +103,7 @@ airports_query = airports.apply(load_airport, axis=1, countries_list=list(countr
 
 def load_flight(series, airports, airlines):
     clean_id = f"{series['Airline Code']}_{series['Source Airport ID']}_{series['Destination Airport ID']}"
-    query_obj = WOQLQuery().insert(clean_id,'Flight').label(f"Flight by {series['Airline Code']} from {series['Source Airport ID']} to {series['Destination Airport ID']}")
+    query_obj = WOQLQuery().insert(clean_id,'Flight', label=f"Flight by {series['Airline Code']} from {series['Source Airport ID']} to {series['Destination Airport ID']}")
 
     # departs
     if len(series['Source Airport ID']) == 3:
@@ -156,10 +156,10 @@ client = WOQLClient(server_url = "http://localhost:6363")
 client.connect(key="root", account="admin", user="admin")
 existing = client.get_metadata(db_id, client.uid())
 if not existing:
-    client.create_database(db_id, "admin", { "label": "Flight Graph", "comment": "Create a graph with Open Flights data"})
+    client.create_database(db_id, "admin", label="Flight Graph", description="Create a graph with Open Flights data")
 else:
     client.db(db_id)
-WOQLQuery().woql_and(*countries_query).execute(client)
-WOQLQuery().woql_and(*airlines_query).execute(client)
-WOQLQuery().woql_and(*airports_query).execute(client)
-WOQLQuery().woql_and(*flights_query).execute(client)
+WOQLQuery().woql_and(*countries_query).execute(client, "Insert countries data")
+WOQLQuery().woql_and(*airlines_query).execute(client, "Insert airlines data")
+WOQLQuery().woql_and(*airports_query).execute(client, "Insert airports data")
+WOQLQuery().woql_and(*flights_query).execute(client, "Insert flights data")
