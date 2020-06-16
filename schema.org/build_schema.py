@@ -107,7 +107,6 @@ types["QueryAddOnObj"] = types.apply(construction_schema_addon, axis=1, type_lis
 
 propteries = pd.read_csv("all-layers-properties.csv")
 if id == "http://schema.org/name":
-    print(result.to_dict())
 propteries["QueryObjects"] = propteries.apply(construction_schema_objects, axis=1)
 propteries["QueryObjects_DR"] = propteries.apply(construct_prop_dr, axis=1)
 propteries["QueryAddOnObj"] = propteries.apply(construction_schema_addon_property, axis=1, type_list=list(types["id"]))

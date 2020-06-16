@@ -37,16 +37,16 @@ routes_header = ['Airline Code',
                  'Codeshare',
                  'Number of stops']
 
-countries = pd.read_csv('countries.dat', sep=',', names=countries_header, index_col=False)
+countries = pd.read_csv('countries.dat', encoding='utf-8', sep=',', names=countries_header, index_col=False)
 #print(countries.head())
 
-airlines = pd.read_csv('airlines.dat', sep=',', names=airlines_header, index_col=False)
+airlines = pd.read_csv('airlines.dat', encoding='utf-8', sep=',', names=airlines_header, index_col=False)
 #print(airlines.head())
 
-airports = pd.read_csv('airports.dat', sep=',', names=airports_header, index_col=False)
+airports = pd.read_csv('airports.dat', encoding='utf-8', sep=',', names=airports_header, index_col=False)
 #print(airports.head())
 
-routes = pd.read_csv('routes.dat', sep=',', names=routes_header, index_col=False)
+routes = pd.read_csv('routes.dat', sep=',', encoding='utf-8', names=routes_header, index_col=False)
 #print(routes.head())
 
 def _clean_id(input, prefix=None):
@@ -64,11 +64,9 @@ def load_country(series):
         return None
     query_obj = WOQLQuery().insert(series['Country ID'],'Country', label=series['Name'])
     if pd.notna(series['ISO Code']):
-        data_obj = {"@value" : series['ISO Code'], "@type" : "xsd:string"}
-        query_obj.property('iso_code', data_obj)
+        query_obj.property('iso_code', series['ISO Code'])
     if pd.notna(series['FIP Code']):
-        data_obj = {"@value" : series['FIP Code'], "@type" : "xsd:string"}
-        query_obj.property('fip_code', data_obj)
+        query_obj.property('fip_code', series['FIP Code'])
     return query_obj
 
 countries['Country ID'] = countries['Name'].apply(_clean_id, prefix='country')

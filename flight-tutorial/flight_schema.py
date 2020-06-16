@@ -1,6 +1,9 @@
 from terminusdb_client.woqlclient import WOQLClient
 from terminusdb_client.woqlquery import WOQLQuery
 import json
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+
 
 def create_schema(client):
     """The query which creates the schema
@@ -13,12 +16,13 @@ def create_schema(client):
     base.property("lifespan_start", "dateTime", label="Existed From")
     base.property("lifespan_end", "dateTime", label="Existed To")
 
+
     country = WOQLQuery().add_class("Country").label("Country").description("A nation state").parent("EphemeralEntity")
     country.property("iso_code", "string", label="ISO Code")
     country.property("fip_code", "string", label="FIP Code")
 
     airline = WOQLQuery().add_class("Airline").label("Airline").description("An operator of airplane flights").parent("EphemeralEntity")
-    airline.property("registered_in", "Country", label="Registered In"),
+    airline = airline.property("registered_in", "scm:Country", label="Registered In"),
 
     airport = WOQLQuery().add_class("Airport").label("Airport").description("An airport where flights terminate").parent("EphemeralEntity")
     airport.property("situated_in", "Country", label="Situated In"),
@@ -26,7 +30,7 @@ def create_schema(client):
     flight = WOQLQuery().add_class("Flight").label("Flight").description("A flight between airports").parent("EphemeralEntity")
     flight.property("departs", "Airport", label="Departs")
     flight.property("arrives", "Airport", label="Arrives")
-    flight .property("operated_by", "Airline", label="Operated By")
+    flight.property("operated_by", "Airline", label="Operated By")
 
     schema = WOQLQuery().woql_and(base, country, airline, airport, flight)
     return schema.execute(client, "Creating schema for flight data")
