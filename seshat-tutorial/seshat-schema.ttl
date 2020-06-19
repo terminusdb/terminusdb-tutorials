@@ -1,0 +1,625 @@
+@prefix doc: <http://localhost:6363/seshat_tutorial/document/> .
+@prefix scm: <http://localhost:6363/seshat_tutorial/schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix terminus: <http://terminusdb.com/schema/terminus#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xdd: <http://terminusdb.com/schema/xdd#> .
+@prefix vio: <http://terminusdb.com/schema/vio#> .
+@prefix tcs: <http://terminusdb.com/schema/tcs#> .
+@prefix tbs: <http://terminusdb.com/schema/tbs#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://localhost:6363/seshat_tutorial>
+  a owl:Ontology ;
+  rdfs:comment "http://localhost:6363/seshat_tutorial/schema ontology for http://localhost:6363/seshat_tutorial"@en ;
+  rdfs:label "http://localhost:6363/seshat_tutorial"@en .
+
+scm:Agriculture
+  a owl:Class ;
+  rdfs:comment "Dealing with agricultural matters"@en ;
+  rdfs:label "Agriculture"@en ;
+  rdfs:subClassOf scm:Food .
+
+scm:BureaucraticSystem
+  a owl:Class ;
+  rdfs:comment "A bureaucratic system, decisions are made by office holders"@en ;
+  rdfs:label "Bureaucratic System"@en ;
+  rdfs:subClassOf scm:InternalAffairs ,
+                  scm:Politics .
+
+scm:Burial
+  a owl:Class ;
+  rdfs:comment "Burial Related Variables"@en ;
+  rdfs:label "Burial"@en ;
+  rdfs:subClassOf scm:Ritual .
+
+scm:CitedWork
+  a owl:Class ;
+  rdfs:label "Cited Work"@en ;
+  rdfs:subClassOf tcs:Document .
+
+scm:City
+  a owl:Class ;
+  rdfs:comment "A concentrated human settlement, typically large"@en ;
+  rdfs:label "City"@en ;
+  rdfs:subClassOf scm:Settlement .
+
+scm:Communication
+  a owl:Class ;
+  rdfs:comment "Dealing with Communication"@en ;
+  rdfs:label "Communication"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Confidence
+  a owl:Class ;
+  rdfs:comment "Tags that can be added to values to indicate confidence in the value of some piece data"@en ;
+  rdfs:label "Confidence Tags"@en ;
+  rdfs:subClassOf scm:Enumerated ;
+  owl:oneOf ( scm:inferred scm:disputed scm:dubious scm:uncertain ) .
+
+scm:Construction
+  a owl:Class ;
+  rdfs:comment "Dealing with Construction matters"@en ;
+  rdfs:label "Construction"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:DegreeOfCentralization
+  a owl:Class ;
+  rdfs:comment "An indication of how centralized a political authority was"@en ;
+  rdfs:label "Degree of Centralization"@en ;
+  rdfs:subClassOf scm:Enumerated ;
+  owl:oneOf ( scm:unknown_centralization scm:loose scm:quasipolity scm:no_centralization scm:confederated_state scm:nominal scm:unitary_state ) .
+
+scm:Economics
+  a owl:Class ;
+  rdfs:comment "Dealing with Economics"@en ;
+  rdfs:label "Economics"@en .
+
+scm:Entertainment
+  a owl:Class ;
+  rdfs:comment "Dealing with entertainment"@en ;
+  rdfs:label "Entertainment"@en .
+
+scm:Enumerated
+  a owl:Class ;
+  rdfs:comment "A type that consists of a fixed set of choices"@en ;
+  rdfs:label "Enumerated Type"@en .
+
+scm:EpistemicState
+  a owl:Class ;
+  rdfs:comment "The existence of a feature in the historical record"@en ;
+  rdfs:label "Epistemic State"@en ;
+  rdfs:subClassOf scm:Enumerated ;
+  owl:oneOf ( scm:absent scm:present scm:unknown ) .
+
+scm:ExternalAffairs
+  a owl:Class ;
+  rdfs:comment "Dealing with a group's external affairs"@en ;
+  rdfs:label "External Affairs"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Finance
+  a owl:Class ;
+  rdfs:comment "Dealing with financial affairs"@en ;
+  rdfs:label "Finance"@en ;
+  rdfs:subClassOf scm:Politics .
+
+scm:Fishing
+  a owl:Class ;
+  rdfs:comment "Dealing with fishing matters"@en ;
+  rdfs:label "Fishing"@en ;
+  rdfs:subClassOf scm:Food .
+
+scm:Food
+  a owl:Class ;
+  rdfs:comment "Dealing with food"@en ;
+  rdfs:label "Food"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:HierarchicalComplexity
+  a owl:Class ;
+  rdfs:comment "Encodes the number of levels in the most important hierarchies of a social system."@en ;
+  rdfs:label "Hierarchical Complexity"@en ;
+  rdfs:subClassOf scm:SocialComplexity .
+
+scm:Housing
+  a owl:Class ;
+  rdfs:comment "Dealing with housing matters"@en ;
+  rdfs:label "Housing"@en ;
+  rdfs:subClassOf scm:Construction .
+
+scm:Hunting
+  a owl:Class ;
+  rdfs:comment "Dealing with hunting matters"@en ;
+  rdfs:label "Hunting"@en ;
+  rdfs:subClassOf scm:Food .
+
+scm:Ideology
+  a owl:Class ;
+  rdfs:comment "Dealing with Ideological matters"@en ;
+  rdfs:label "Ideology"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:IncomeSource
+  a owl:Class ;
+  rdfs:comment "A source of income"@en ;
+  rdfs:label "Income Source"@en ;
+  rdfs:subClassOf scm:Enumerated ;
+  owl:oneOf ( scm:governed_population scm:land scm:state_salary scm:no_income scm:unknown_income ) .
+
+scm:Infrastructure
+  a owl:Class ;
+  rdfs:comment "The built infrastructure that a society depends upon"@en ;
+  rdfs:label "Infrastructure"@en ;
+  rdfs:subClassOf scm:Construction .
+
+scm:InterestGroup
+  a owl:Class ;
+  rdfs:comment "An Interest Group (IG) is a social group that pursues some common interest, so that its members are united by a common goal or goals. Polities and religious cults are also interest groups, but this category is broader. It also includes ethnic groups, professional associations, warrior bands, solidarity associations, mutual aid societies, firms and banks (including their pre-modern variants), etc. The Interest Group is defined sociologically, not geographically. However, a geographic area, enclosed within a boundary, refering to its area of operation, may be associated with it in the same way as with a polity or a Religious System(RS). "@en ;
+  rdfs:label "Interest Group"@en ;
+  rdfs:subClassOf scm:Organization .
+
+scm:InternalAffairs
+  a owl:Class ;
+  rdfs:comment "Dealing with a group's internal organisation"@en ;
+  rdfs:label "Internal Affairs"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Legal
+  a owl:Class ;
+  rdfs:comment "Dealing with legal matters"@en ;
+  rdfs:label "Legal"@en ;
+  rdfs:subClassOf scm:Politics .
+
+scm:Literature
+  a owl:Class ;
+  rdfs:comment "Dealing with literature"@en ;
+  rdfs:label "Literature"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:MeasurementSystem
+  a owl:Class ;
+  rdfs:comment "Textual evidence of a measurement system: measurement units are named in sources (e.g. pound, aroura). Archaeological evidence includes finding containers of standard volume, etc. ('inferred presence')"@en ;
+  rdfs:label "Measurement System"@en ;
+  rdfs:subClassOf scm:Science ,
+                  scm:SocialComplexity .
+
+scm:Metals
+  a owl:Class ;
+  rdfs:comment "Dealing with Metals"@en ;
+  rdfs:label "Metals"@en ;
+  rdfs:subClassOf scm:Minerals .
+
+scm:Military
+  a owl:Class ;
+  rdfs:comment "Dealing with Military matters"@en ;
+  rdfs:label "Military"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Minerals
+  a owl:Class ;
+  rdfs:comment "Dealing with Minerals"@en ;
+  rdfs:label "Minerals"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Mining
+  a owl:Class ;
+  rdfs:comment "Dealing with Mining and Mineral Extraction"@en ;
+  rdfs:label "Mining"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:MonetarySystem
+  a owl:Class ;
+  rdfs:comment "The System that produces money"@en ;
+  rdfs:label "Monetary System"@en ;
+  rdfs:subClassOf scm:Economics ,
+                  scm:Finance ,
+                  scm:Money .
+
+scm:Money
+  a owl:Class ;
+  rdfs:comment "Dealing with money"@en ;
+  rdfs:label "Money"@en ;
+  rdfs:subClassOf scm:Finance .
+
+scm:Naval
+  a owl:Class ;
+  rdfs:comment "Dealing with naval matters"@en ;
+  rdfs:label "Naval"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Note
+  a owl:Class ;
+  rdfs:comment "Editorial note on the value"@en ;
+  rdfs:label "A Note on a value"@en .
+
+scm:Organization
+  a owl:Class ;
+  tcs:tag tcs:abstract ;
+  rdfs:comment "A human organization of any type - has the capacity to act as a unit, in some sense"@en ;
+  rdfs:label "Organization"@en ;
+  rdfs:subClassOf tcs:Document .
+
+scm:PoliticalAuthority
+  a owl:Class ;
+  rdfs:comment "A human social group with some autonomous political authority."@en ;
+  rdfs:label "Political Authority"@en ;
+  rdfs:subClassOf scm:Organization .
+
+scm:PoliticalEvolution
+  a owl:Class ;
+  rdfs:comment "How a political authority evolves into another one"@en ;
+  rdfs:label "Political Evolution"@en ;
+  rdfs:subClassOf scm:Enumerated ;
+  owl:oneOf ( scm:assimilation scm:continuity scm:elite_migration scm:population_migration scm:unknown_evolution ) .
+
+scm:Politics
+  a owl:Class ;
+  rdfs:comment "Dealing with political authority and organization"@en ;
+  rdfs:label "Politics"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Polity
+  a owl:Class ;
+  rdfs:comment "A polity is defined as an independent political unit. Kinds of polities range from villages (local communities) through simple and complex chiefdoms to states and empires. A polity can be either centralized or not (e.g., organized as a confederation). What distinguishes a polity from other human groupings and organizations is that it is politically independent of any overarching authority; it possesses sovereignty. Polities are defined spatially by the area enclosed within a boundary on the world map. There may be more than one such areas. Polities are dynamical entities, and thus their geographical extent may change with time. Thus, typically each polity will be defined by a set of multiple boundaries, each for a specified period of time. For prehistoric periods and for areas populated by a multitude of small-scale polities we use a variant called quasi-polity."@en ;
+  rdfs:label "Polity"@en ;
+  rdfs:subClassOf scm:PoliticalAuthority .
+
+scm:PostalSystem
+  a owl:Class ;
+  rdfs:comment "A system for sending physical messages"@en ;
+  rdfs:label "Postal System"@en ;
+  rdfs:subClassOf scm:Communication ,
+                  scm:Infrastructure ,
+                  scm:Transport .
+
+scm:Private
+  a owl:Class ;
+  rdfs:comment "Dealing with private, individual or factional decision making"@en ;
+  rdfs:label "Private"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Professions
+  a owl:Class ;
+  rdfs:comment "A system of professional work"@en ;
+  rdfs:label "Professions"@en ;
+  rdfs:subClassOf scm:Work .
+
+scm:Public
+  a owl:Class ;
+  rdfs:comment "Dealing with public, collective characteristics, decision making, etc"@en ;
+  rdfs:label "Public"@en .
+
+scm:QuasiPolity
+  a owl:Class ;
+  rdfs:comment "The polity-based approach is not feasible for those periods when a region is divided up among a multitude of small-scale polities (e.g., independent villages or even many small chiefdoms). In this instance we use the concept of 'quasi-polity'. Similarly, for societies known only archaeologically we may not be able to establish the boundaries of polities, even approximately. Quasi-polity is defined as a cultural area with some degree of cultural homogeneity (including linguistic, if known) that is distinct from surrounding areas. For example, the Marshall Islands before German occupation had no overarching native or colonial authority (chiefs controlled various subsets of islands and atolls) and therefore it was not a polity. But it was a quasi-polity because of the significant cultural and linguistic uniformity.<P>We collect data for the quasi-polity as a whole. This way we can integrate over (often patchy) data from different sites and different polities to estimate what the 'generic' social and political system was like. Data is not entered for the whole region but for a 'typical' polity in it. For example, when coding a quasi-polity, its territory is not the area of the region as a whole, but the average or typical area of autonomous groups within the NGA."@en ;
+  rdfs:label "Quasi-Polity"@en ;
+  rdfs:subClassOf scm:PoliticalAuthority .
+
+scm:Religion
+  a owl:Class ;
+  rdfs:comment "Relating to religion"@en ;
+  rdfs:label "Religion"@en ;
+  rdfs:subClassOf scm:Ideology .
+
+scm:Resilience
+  a owl:Class ;
+  rdfs:comment "Resilience Related Variables"@en ;
+  rdfs:label "Resilience"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Ritual
+  a owl:Class ;
+  rdfs:comment "Dealing with rituals"@en ;
+  rdfs:label "Ritual"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Scale
+  a owl:Class ;
+  rdfs:comment "Dealing with Social Scale"@en ;
+  rdfs:label "Scale"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Science
+  a owl:Class ;
+  rdfs:comment "Dealing with scientific method"@en ;
+  rdfs:label "Science"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:ScopedValue
+  a owl:Class ;
+  tcs:tag tcs:abstract .
+
+scm:Settlement
+  a owl:Class ;
+  rdfs:comment "A semi-permanent or permanent human settlement"@en ;
+  rdfs:label "Settlement"@en ;
+  rdfs:subClassOf scm:Organization ,
+                  tcs:Document .
+
+scm:SocialComplexity
+  a owl:Class ;
+  rdfs:comment "Social Complexity Variables"@en ;
+  rdfs:label "Social Complexity"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:SpecialSites
+  a owl:Class ;
+  rdfs:comment "Sites not associated with residential areas. This position is primarily useful for coding archaneologically known societies."@en ;
+  rdfs:label "Special Sites"@en ;
+  rdfs:subClassOf scm:Construction ,
+                  scm:Infrastructure .
+
+scm:SpecializedBuildings
+  a owl:Class ;
+  rdfs:comment "Polity-owned: includes owned by the community, or the state."@en ;
+  rdfs:label "Specialized Buildings"@en ;
+  rdfs:subClassOf scm:Construction ,
+                  scm:Public .
+
+scm:SubPolity
+  a owl:Class ;
+  rdfs:comment "A human social group that has some governing authority within a specific region or area of a polity - used to describe regional governments, etc."@en ;
+  rdfs:label "Sub-Polity"@en ;
+  rdfs:subClassOf scm:PoliticalAuthority .
+
+scm:SupraPolityRelations
+  a owl:Class ;
+  rdfs:comment "Relating to relationships between polities."@en ,
+               "The relationship between a polity and its paramount power"@en ;
+  rdfs:label "Supra-Polity Relations"@en ;
+  rdfs:subClassOf scm:Enumerated ,
+                  scm:ExternalAffairs ;
+  owl:oneOf ( scm:vassalage scm:no_supra_polity_relations scm:nominal_allegiance scm:personal_union scm:alliance scm:unknown_supra_polity_relations ) .
+
+scm:SupraculturalEntity
+  a owl:Class ;
+  rdfs:comment "Political Authority entities are often embedded within larger-scale cultural groupings of polities or quasipolities. These are sometimes referred to as 'civilizations'. For example, medieval European kingdoms were part of Latin Christendom. During the periods of disunity in China, warring states there, nevertheless, belonged to the same Chinese cultural sphere. Archaeologists often use 'archaeological traditions' to denote such large-scale cultural entities (for example, Peregrine's Atlas of Cultural Evolution). Note, 'supracultural entity' refers to cultural interdependence, and is distinct from a political confederation or alliance, which should be coded under 'supra-polity relations.'."@en ;
+  rdfs:label "Supra-Cultural Entity"@en ;
+  rdfs:subClassOf scm:Organization .
+
+scm:Topic
+  a owl:Class ;
+  tcs:tag tcs:abstract ;
+  rdfs:comment "A class that represents a topic"@en ;
+  rdfs:label "Topic Class"@en .
+
+scm:Transport
+  a owl:Class ;
+  rdfs:comment "Dealing with Transport matters"@en ;
+  rdfs:label "Transport"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:TransportInfrastructure
+  a owl:Class ;
+  rdfs:comment "Relating to Transport Infrastructure."@en ;
+  rdfs:label "Transport Infrastructure"@en ;
+  rdfs:subClassOf scm:Infrastructure ,
+                  scm:Transport .
+
+scm:Work
+  a owl:Class ;
+  rdfs:comment "Dealing with work"@en ;
+  rdfs:label "Work"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:Writing
+  a owl:Class ;
+  rdfs:comment "Dealing with written word"@en ;
+  rdfs:label "Writing"@en ;
+  rdfs:subClassOf scm:Topic .
+
+scm:WritingGenre
+  a owl:Class ;
+  rdfs:comment "Relating to different types of written material."@en ;
+  rdfs:label "Written Genres"@en ;
+  rdfs:subClassOf scm:Literature ,
+                  scm:SocialComplexity .
+
+scm:WritingSystem
+  a owl:Class ;
+  rdfs:comment "Relating to different types of a writing system."@en ;
+  rdfs:label "Writing System"@en ;
+  rdfs:subClassOf scm:SocialComplexity ,
+                  scm:Writing .
+
+scm:absent
+  a scm:EpistemicState ;
+  rdfs:comment "The feature was absent in this historical context"@en ;
+  rdfs:label "Absent"@en .
+
+scm:alliance
+  a scm:SupraPolityRelations ;
+  rdfs:comment "Belongs to a long-term military-political alliance of independent polities (long-term refers to more\n            or less permanent relationship between polities extending over multiple years"@en ;
+  rdfs:label "Alliance"@en .
+
+scm:assimilation
+  a scm:PoliticalEvolution ;
+  rdfs:comment "Assimilation by another political authority in the absence of substantial population replacement"@en ;
+  rdfs:label "Cultural Assimilation"@en .
+
+scm:citation
+  a owl:ObjectProperty ;
+  rdfs:comment "A link to a cited work"@en ;
+  rdfs:domain scm:Note ;
+  rdfs:label "Citation"@en ;
+  rdfs:range scm:CitedWork .
+
+scm:confederated_state
+  a scm:DegreeOfCentralization ;
+  rdfs:comment "regions enjoy a large degree of autonomy in internal (regional) government. \n            In particular, the regional governors are either hereditary rulers, or are elected by regional elites \n            or by the population of the region; and regional governments can levy and dispose of regional taxes."@en ;
+  rdfs:label "Confederated State"@en .
+
+scm:confidence
+  a owl:ObjectProperty ;
+  rdfs:comment "Qualifiers of the confidence of a variable value"@en ;
+  rdfs:domain scm:ScopedValue ;
+  rdfs:label "Confidence"@en ;
+  rdfs:range scm:Confidence .
+
+scm:continuity
+  a scm:PoliticalEvolution ;
+  rdfs:comment "Gradual change without any discontinuity"@en ;
+  rdfs:label "Continuity"@en .
+
+scm:disputed
+  a scm:Confidence ;
+  rdfs:comment "The evidence is disputed - some believe this data to be incorrect"@en ;
+  rdfs:label "Disputed"@en .
+
+scm:dubious
+  a scm:Confidence ;
+  rdfs:comment "The evidence is dubious - most believe this data to be incorrect"@en ;
+  rdfs:label "Dubious"@en .
+
+scm:elite_migration
+  a scm:PoliticalEvolution ;
+  rdfs:comment "The preceding elites were replaced by new elites coming from elsewhere"@en ;
+  rdfs:label "Elite Migration"@en .
+
+scm:end
+  a owl:DatatypeProperty ;
+  rdfs:comment "The end of a time range"@en ;
+  rdfs:domain scm:ScopedValue ;
+  rdfs:label "To"@en ;
+  rdfs:range xdd:integerRange .
+
+scm:governed_population
+  a scm:IncomeSource ;
+  rdfs:comment "The official directly collects tribute from the population (for example, the kormlenie system in Medieval Russia)"@en ;
+  rdfs:label "Governed Population"@en .
+
+scm:inferred
+  a scm:Confidence ;
+  rdfs:comment "The value has been logically inferred from other evidence"@en ;
+  rdfs:label "Inferred"@en .
+
+scm:land
+  a scm:IncomeSource ;
+  rdfs:comment "Living off land supplied by the state."@en ;
+  rdfs:label "Land"@en .
+
+scm:loose
+  a scm:DegreeOfCentralization ;
+  rdfs:comment "the central government exercises a certain degree of control,\n            especially over military matters and international relations. \n            Otherwise the regional rulers are left alone"@en ;
+  rdfs:label "Loose"@en .
+
+scm:no_centralization
+  a scm:DegreeOfCentralization ;
+  rdfs:comment "There is no centralised system"@en ;
+  rdfs:label "None"@en .
+
+scm:no_income
+  a scm:IncomeSource ;
+  rdfs:comment "The state officials are not compensated (example: in the Republican and Principate Rome \n            the magistrates were wealthy individuals who served without salary, motivated by prestige and social or career advancement)"@en ;
+  rdfs:label "No Income"@en .
+
+scm:no_supra_polity_relations
+  a scm:SupraPolityRelations ;
+  rdfs:comment "No relations with any supracultural entity"@en ;
+  rdfs:label "None"@en .
+
+scm:nominal
+  a scm:DegreeOfCentralization ;
+  rdfs:comment "regional rulers pay only nominal allegiance to the overall ruler and maintain independence on \n            all important aspects of governing, including taxation and warfare. (example: Japan during the Sengoku period)"@en ;
+  rdfs:label "Nominal"@en .
+
+scm:nominal_allegiance
+  a scm:SupraPolityRelations ;
+  rdfs:comment "Paying only nominal allegiance to the overall ruler and \n        maintaining independence on all important aspects of governing, including taxation and warfare."@en ;
+  rdfs:label "Nominal Allegiance"@en .
+
+scm:notes
+  a owl:ObjectProperty ;
+  rdfs:comment "Editorial notes on values"@en ;
+  rdfs:domain scm:ScopedValue ;
+  rdfs:label "Notes"@en ;
+  rdfs:range scm:Note .
+
+scm:personal_union
+  a scm:SupraPolityRelations ;
+  rdfs:comment "The focal polity is united with another, or others, as a result of a dynastic marriage"@en ;
+  rdfs:label "Personal Union"@en .
+
+scm:population_migration
+  a scm:PoliticalEvolution ;
+  rdfs:comment "Evidence for substantial population replacement"@en ;
+  rdfs:label "Population Migration"@en .
+
+scm:present
+  a scm:EpistemicState ;
+  rdfs:comment "The feature was present in this historical context"@en ;
+  rdfs:label "Present"@en .
+
+scm:quasipolity
+  a scm:DegreeOfCentralization ;
+  rdfs:comment "Used for a situation where the poliity is in reality many politically independent groups"@en ;
+  rdfs:label "Quasi-polity"@en .
+
+scm:quotation
+  a owl:DatatypeProperty ;
+  rdfs:comment "A quotation from a work"@en ;
+  rdfs:domain scm:Note ;
+  rdfs:label "Quotation"@en ;
+  rdfs:range xsd:string .
+
+scm:remote_url
+  a owl:DatatypeProperty ;
+  rdfs:domain scm:CitedWork ;
+  rdfs:range xsd:anyURI .
+
+scm:start
+  a owl:DatatypeProperty ;
+  rdfs:comment "The start of a time range"@en ;
+  rdfs:domain scm:ScopedValue ;
+  rdfs:label "From"@en ;
+  rdfs:range xdd:integerRange .
+
+scm:state_salary
+  a scm:IncomeSource ;
+  rdfs:comment "can be paid either in currency or in kind (e.g., koku of rice)."@en ;
+  rdfs:label "State Salary"@en .
+
+scm:uncertain
+  a scm:Confidence ;
+  rdfs:comment "The evidence has a high degree of uncertainty"@en ;
+  rdfs:label "Uncertain"@en .
+
+scm:unitary_state
+  a scm:DegreeOfCentralization ;
+  rdfs:comment "regional governors are appointed and removed by the central authorities, \n            taxes are imposed by, and transmitted to the center"@en ;
+  rdfs:label "Unitary State"@en .
+
+scm:unknown
+  a scm:EpistemicState ;
+  rdfs:comment "It can be said with a high degree of confidence that it is not known whether the feature was present or absent in the context."@en ;
+  rdfs:label "Unknown"@en .
+
+scm:unknown_centralization
+  a scm:DegreeOfCentralization ;
+  rdfs:comment "Unknown Centralization"@en ;
+  rdfs:label "Unknown"@en .
+
+scm:unknown_evolution
+  a scm:PoliticalEvolution ;
+  rdfs:comment "Unknown Evolution"@en ;
+  rdfs:label "Unknown"@en .
+
+scm:unknown_income
+  a scm:IncomeSource ;
+  rdfs:comment "Unknown source of income"@en ;
+  rdfs:label "Unknown"@en .
+
+scm:unknown_supra_polity_relations
+  a scm:SupraPolityRelations ;
+  rdfs:comment "Unknown Relations"@en ;
+  rdfs:label "Unknown"@en .
+
+scm:vassalage
+  a scm:SupraPolityRelations ;
+  rdfs:comment "A central government exercises a certain degree of control, \n        especially over military matters and international relations. Otherwise the polity is left alone"@en ;
+  rdfs:label "Vassalage"@en .
+
+tcs:Document
+  rdfs:subClassOf scm:ScopedValue .
