@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TerminusDB Seshat Tutorial Launch Page</title>
+        <script src="https://terminusdb.github.io/terminus-dashboard/dist/terminus-dashboard.min.js"></script>
+    <script src="./script-of-queries.js"></script>
+    <script src="./tutorial.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <link rel="stylesheet" href="https://terminusdb.github.io/terminus-dashboard/dist/css/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/codemirror.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/mode/xml/xml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/mode/css/css.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/mode/turtle/turtle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/mode/javascript/javascript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/addon/hint/anyword-hint.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/addon/hint/show-hint.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/runmode/runmode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/http/http.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/edit/closebrackets.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/edit/matchbrackets.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/display/placeholder.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/foldgutter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/foldcode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/indent-fold.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/markdown-fold.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/codemirror.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/addon/hint/show-hint.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/theme/neo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/theme/erlang-dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/fold/foldgutter.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/theme/eclipse.css">
+    <link rel="shortcut icon" type="image/png" href="https://terminusdb.com/t/favicon.png"/>
+     <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script>
+        function startTutorial(interactive){
+            let url = document.getElementById("terminus-url").value;
+            let key = document.getElementById("terminus-key").value;
+            let dbid = document.getElementById("terminus-db").value;
+            if(url && key && dbid){
+                runTutorial(url, key, dbid, interactive)
+            }
+        }
+    </script>
+</head>
+<BODY class="h-100">
+    <div class="container-fluid">
+        <div class="row">
+          <nav class="terminus-application-controls col-md-2 d-none d-md-block bg-light sidebar">
+            <img src='https://terminusdb.github.io/terminus-dashboard/dist/css/img/TerminusDB_Logo_Original.png' class='terminus-logo-container'></img>            
+            Tutorial
+            <p>This tutorial demonstrates the creation of a knowledge graph of world history with TerminusDB. It is based on an RDF dataset that was produced by 
+                the <a href="http://seshatdatabank.info">Seshat project</a> in 2018, as part of the <a href="http://aligned-project.eu">European Commission's Horizon 2020 Aligned project</a>. Seshat researchers are continuously improving, updating and expanding this 
+                data - the latest releases can be found on the <a href="http://seshatdatabank.info/datasets/">Seshat data site</a> 
+            </p>        
+          </nav>
+          <nav class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div id="tutorialContent">
+                <h3>Requirements</h3>
+                To run this tutorial you will need to install your own copy of TerminusDB. 
+                The two easiest options are either: 
+                <ol>
+                    <li><a href="https://terminusdb.com/docs/">Download and install your own TerminusDB with docker</a></li>
+                    <li><a href="https://github.com/terminusdb/terminus-heroku">Deploy online to Heroku</a></li>
+                </ol>  
+                <h3>Connect to your TerminusDB</h3>
+                <p>Enter the details of your TerminusDB installation</p>
+                <div class="terminus-form terminus-url-loader">
+	                <div class='terminus-form-border terminus-margin-top'>
+                        <div class= 'terminus-form-margin-top'>
+                            <div class="terminus-form-horizontal terminus-control-group terminus-form-field-spacing terminus-display-flex">
+                                <span class="terminus-control-label terminus-form-label terminus-form-field-label">TerminusDB URL</span>
+                                <input type='text' id="terminus-url" value="http://localhost:6363" class="terminus-form-value terminus-form-url terminus-form-field-input terminus-input-text">                        
+                            </div>    
+                            <div class="terminus-form-horizontal terminus-control-group terminus-form-field-spacing terminus-display-flex">
+                                <span class="terminus-control-label terminus-form-label terminus-form-field-label">API Key</span>
+                                <input type='text' id="terminus-key" value="root" class="terminus-form-value terminus-form-url terminus-form-field-input terminus-input-text">                        
+                            </div>    
+                            <div class="terminus-form-horizontal terminus-control-group terminus-form-field-spacing terminus-display-flex">
+                                <span class="terminus-control-label terminus-form-label terminus-form-field-label">Database ID</span>
+                                <input type='text' id="terminus-db" value="seshat-tutorial" class="terminus-form-value terminus-form-url terminus-form-field-input terminus-input-text">                        
+                            </div>    
+                            <div class="terminus-control-buttons">
+                                <button onclick='startTutorial(true)' class="terminus-control-button terminus-url-load terminus-btn terminus-btn-float-right">Run Interactive Tutorial</button>
+                                <button onclick='startTutorial()' class="terminus-control-button terminus-url-load terminus-btn terminus-btn-float-right">Just Load Everything</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    </div>
+</body>
+</html>
+
+
