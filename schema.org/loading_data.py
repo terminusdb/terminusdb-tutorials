@@ -3,13 +3,9 @@ import requests
 import pprint
 from w3lib.html import get_base_url
 
-from woqlclient import WOQLClient, WOQLQuery
+from terminusdb_client.woqlquery import WOQLQuery
+from terminusdb_client.woqlclient import WOQLClient
 from dateutil.parser import *
-
-# settings for WOQLClient
-server_url = "http://localhost:6363"
-key = "root"
-dbId = "schema_tutorial"
 
 # Script tags and pretty print
 pp = pprint.PrettyPrinter(indent=2)
@@ -46,6 +42,12 @@ def extract_data(data, id='event/'):
 
 extract_data(data['microdata'][0])
 
-client = WOQLClient()
-client.connect(server_url, key)
-client.update(WOQLQuery().when(True).woql_and(*execution_queue).json(), dbId)
+db_id = "schema_tutorial"
+client = WOQLClient(server_url = "http://localhost:6363")
+client.connect(key="root", account="admin", user="admin")
+existing = client.get_metadata(db_id, client.uid())
+if not existing:
+    client.create_database(db_id, "admin", { "label": "Schema.org Graph", "comment": "Create a graph with Schema.org data"})
+else:
+    client.db(db_id)
+WOQLQuery().woql_and(*execution_queue).execute(client)

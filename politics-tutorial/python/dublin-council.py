@@ -1,12 +1,7 @@
-import woqlclient.woqlClient as woql
-from woqlclient import WOQLQuery
+import terminusdb_client.woqlclient as woql
+from terminusdb_client.woqlquery import WOQLQuery
 
 CSVS = {"OverallSimilarity": "https://terminusdb.com/t/data/council/weighted_similarity.csv"}
-
-server_url = "http://localhost:6363"
-dbId = "mydb"
-key = "root"
-dburl = server_url + "/mydb"
 
 
 def create_schema(client):
@@ -15,34 +10,24 @@ def create_schema(client):
         ==========
         client : a WOQLClient() connection
     """
-    schema = WOQLQuery().when(True).woql_and(
-        WOQLQuery().doctype("Party").
-            label("Party").
-            description("Political Party"),
-        WOQLQuery().doctype("Representative").
-            label("Representative").
-            description("An elected member Dublin city council").
-            property("member_of", "Party").
-                label("Member of").cardinality(1),
-        WOQLQuery().doctype("Similarity").
-            label("Similarity").
-            property("similarity", "decimal").
-                label("Similarity").
-            property("similar_to", "Representative").
-                label("Similar To").cardinality(2)
+    schema = WOQLQuery().woql_and(
+        WOQLQuery().doctype("Party", label="Party", description="Political Party"),
+        WOQLQuery().doctype("Representative", label="Representative", description="An elected member Dublin city council").
+            property("member_of", "Party", label="Member of").cardinality(1),
+        WOQLQuery().doctype("Similarity", label="Similarity").
+            property("similarity", "decimal", label="Similarity").
+            property("similar_to", "Representative", label="Similar To").cardinality(2)
         )
-    return schema.execute(client)
+    return schema.execute(client, "Creating schema for Dublin voting data")
 
 
 def get_inserts():
     inserts = WOQLQuery().woql_and(
-        WOQLQuery().insert("v:Party_A_ID", "Party").label("v:Party_A"),
-        WOQLQuery().insert("v:Party_B_ID", "Party").label("v:Party_B"),
-        WOQLQuery().insert("v:Rep_A_ID", "Representative").label("v:Rep_A").
-                    property("member_of", "v:Party_A_ID"),
-        WOQLQuery().insert("v:Rep_B_ID", "Representative").label("v:Rep_B").
-                    property("member_of", "v:Party_B_ID"),
-        WOQLQuery().insert("v:Rel_ID", "Similarity").label("v:Rel_Label").
+        WOQLQuery().insert("v:Party_A_ID", "Party", label="v:Party_A"),
+        WOQLQuery().insert("v:Party_B_ID", "Party", label="v:Party_B"),
+        WOQLQuery().insert("v:Rep_A_ID", "Representative", label="v:Rep_A").property("member_of", "v:Party_A_ID"),
+        WOQLQuery().insert("v:Rep_B_ID", "Representative", label="v:Rep_B").property("member_of", "v:Party_B_ID"),
+        WOQLQuery().insert("v:Rel_ID", "Similarity", label="v:Rel_Label").
                     property("similar_to", "v:Rep_A_ID").
                     property("similar_to", "v:Rep_B_ID").
                     property("similarity", "v:Similarity")
@@ -93,13 +78,17 @@ def load_csvs(client, csvs):
         inputs = WOQLQuery().woql_and(csv, *wrangles)
         inserts = get_inserts()
         answer = WOQLQuery().when(inputs, inserts)
-        answer.execute(client)
+        answer.execute(client, f"Adding {url} into database")
 
 
-if __name__ == "__main__": 
-    # run tutorial
-    client = woql.WOQLClient()
-    client.connect(server_url, key)
-    client.createDatabase(dbId, "Dublin Council Graph")
+if __name__ == "__main__":
+    db_id = "dublin_voting"
+    client = woql.WOQLClient(server_url = "http://localhost:6363")
+    client.connect(key="root", account="admin", user="admin")
+    existing = client.get_metadata(db_id, client.uid())
+    if not existing:
+        client.create_database(db_id, "admin", label="Dublin Council Graph", description="Create a graph with Dublin council voting data")
+    else:
+        client.db(db_id)
     create_schema(client)
     load_csvs(client, CSVS)

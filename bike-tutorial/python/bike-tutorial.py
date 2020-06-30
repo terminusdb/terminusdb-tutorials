@@ -1,10 +1,9 @@
-import woqlclient.woqlClient as woql
-from woqlclient import WOQLQuery
+import terminusdb_client as woql
+from terminusdb_client import WOQLQuery
 from csvs import csvs
 
-server_url = "http://localhost:6363"
-key = "root"
-dbId = "pybike"
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
 def create_schema(client):
     """The query which creates the schema
@@ -13,18 +12,18 @@ def create_schema(client):
         client : a WOQLClient() connection
 
     """
-    schema = WOQLQuery().when(True).woql_and(
-        WOQLQuery().doctype("Station").
-            label("Bike Station").
-            description("A station where bikes are deposited"),
-        WOQLQuery().doctype("Bicycle").label("Bicycle"),
-        WOQLQuery().doctype("Journey").label("Journey").
-            property("start_station", "Station").label("Start Station").
-            property("end_station", "Station").label("End Station").
-            property("duration", "integer").label("Journey Duration").
-            property("start_time", "dateTime").label("Time Started").
-            property("end_time", "dateTime").label("Time Ended").
-            property("journey_bicycle", "Bicycle").label("Bicycle Used")
+    schema = WOQLQuery().woql_and(
+        WOQLQuery().doctype("Station",
+                            label="Bike Station",
+                            description="A station where bikes are deposited"),
+        WOQLQuery().doctype("Bicycle", label="Bicycle"),
+        WOQLQuery().doctype("Journey", label="Journey").
+            property("start_station", "Station", label="Start Station").
+            property("end_station", "Station", label="End Station").
+            property("duration", "integer", label="Journey Duration").
+            property("start_time", "dateTime", label="Time Started").
+            property("end_time", "dateTime", label="Time Ended").
+            property("journey_bicycle", "Bicycle", label="Bicycle Used")
     )
     return schema.execute(client)
 
@@ -73,21 +72,21 @@ def get_wrangles():
 
 def get_inserts():
     inserts = WOQLQuery().woql_and(
-        WOQLQuery().insert("v:Journey_ID", "Journey").
-            label("v:Journey_Label").
-            description("v:Journey_Description").
+        WOQLQuery().insert("v:Journey_ID", "Journey",
+            label="v:Journey_Label",
+            description="v:Journey_Description").
             property("start_time", "v:Start_Time_Cast").
             property("end_time", "v:End_Time_Cast").
             property("duration", "v:Duration_Cast").
             property("start_station", "v:Start_Station_URL").
             property("end_station", "v:End_Station_URL").
             property("journey_bicycle", "v:Bike_URL"),
-        WOQLQuery().insert("v:Start_Station_URL", "Station").
-            label("v:Start_Station_Label"),
-        WOQLQuery().insert("v:End_Station_URL", "Station").
-            label("v:End_Station_Label"),
-        WOQLQuery().insert("v:Bike_URL", "Bicycle").
-            label("v:Bike_Label")
+        WOQLQuery().insert("v:Start_Station_URL", "Station",
+            label="v:Start_Station_Label"),
+        WOQLQuery().insert("v:End_Station_URL", "Station",
+            label="v:End_Station_Label"),
+        WOQLQuery().insert("v:Bike_URL", "Bicycle",
+            label="v:Bike_Label")
     )
     return inserts
 
@@ -103,12 +102,17 @@ def load_csvs(client, csvlist, wrangl, insert):
         csv = get_csv_variables(url)
         inputs = WOQLQuery().woql_and(csv, *wrangl)
         answer = WOQLQuery().when(inputs, insert)
-        answer.execute(client)
+        answer.execute(client, f"loading {url} into the graph")
 
 
 if __name__ == "__main__":
-    client = woql.WOQLClient()
-    client.connect(server_url, key)
-    client.createDatabase(dbId, "Bicycle Graph")
+    db_id = "pybike"
+    client = woql.WOQLClient(server_url = "http://localhost:6363")
+    client.connect(key="root", account="admin", user="admin")
+    existing = client.get_metadata(db_id, client.uid())
+    if not existing:
+        client.create_database(db_id, accountid="admin", label = "Bike Graph", description = "Create a graph with bike data")
+    else:
+        client.db(db_id)
     create_schema(client)
     load_csvs(client, csvs, get_wrangles(), get_inserts())
