@@ -19,7 +19,7 @@ def create_schema(client):
                 )
     WOQLQuery().woql_and(movie_obj, genre_obj, person_obj).execute(client, "Building Schema for the movie graph")
 
-def loading_data(cleint, filename):
+def loading_data(client, file_url):
     read_csv = WOQLQuery().get(
         WOQLQuery().woql_as("Rank", "v:rank_raw")
                    .woql_as("Title", "v:title_raw")
@@ -33,7 +33,7 @@ def loading_data(cleint, filename):
                    .woql_as("Votes", "v:votes_raw")
                    .woql_as("Revenue (Millions)", "v:rev_raw")
                    .woql_as("Metascore","v:metascore_raw")
-    ).remote("https://github.com/terminusdb/terminus-tutorials/raw/master/movies-data/IMDB-Movie-Data.csv")
+    ).remote(file_url)
 
     prepare_genre_obj = WOQLQuery().split("v:genre_raw", ",", "v:genre_list").member("v:one_genre", "v:genre_list").idgen("doc:Gerne", ["v:one_genre"], "v:genre_objid")
 
@@ -48,7 +48,7 @@ def loading_data(cleint, filename):
         .typecast("v:votes_raw", "xsd:integer", "v:votes_clean")
         )
 
-    return WOQLQuery().woql_and(read_csv).execute(cleint)
+    return WOQLQuery().woql_and(read_csv, prepare_genre_obj, prepare_actor_obj, prepare_director_obj, wangles).execute(client)
 
 
 db_id = "movie_graph"
@@ -62,6 +62,6 @@ else:
     client.set_db(db_id)
 
 #create_schema(client)
-result = loading_data(client, 'IMDB-Movie-Data.csv')
+result = loading_data(client, "https://raw.githack.com/terminusdb/terminus-tutorials/master/movies-data/IMDB-Movie-Data.csv")
 result_df = query_to_df(result)
-#print(result_df["one_genre"])
+print(result_df["genre_objid"])
