@@ -41,14 +41,32 @@ def loading_data(client, file_url):
 
     prepare_director_obj = WOQLQuery().split("v:director_raw", ",", "v:director_list").member("v:one_director", "v:director_list").idgen("doc:Person", ["v:one_director"], "v:director_objid")
 
+
     wangles = (
     WOQLQuery().typecast("v:year_raw", "xsd:integer", "v:year_clean")
         .typecast("v:runtime_raw", "xsd:integer", "v:runtime_clean")
         .typecast("v:rating_raw", "xsd:decimal", "v:rating_clean")
         .typecast("v:votes_raw", "xsd:integer", "v:votes_clean")
+        .idgen("doc:Movie",["v:title_raw", "v:director_raw"], "v:movie_id")
         )
 
-    return WOQLQuery().woql_and(read_csv, prepare_genre_obj, prepare_actor_obj, prepare_director_obj, wangles).execute(client)
+    insert = (
+    WOQLQuery().insert("v:genre_objid", "Genre", label="v:genre_raw")
+    .insert("v:actors_objid", "Person", label="v:actors_raw")
+    .insert("v:director_objid", "Person", label="v:director_raw")
+    .insert("v:movie_id", "Movie", label="v:title_raw", description="v:description_raw")
+    .property("Director", "v:director_objid")
+    .property("Cast", "v:actors_objid")
+    .property("MovieGenre", "v:genre_objid")
+    .property("Year", "v:year_clean")
+    .property("Runtime", "v:runtime_clean")
+    .property("Rating", "v:rating_clean")
+    .property("Votes", "v:votes_clean")
+    )
+
+    data_prep = WOQLQuery().woql_and(read_csv, prepare_genre_obj, prepare_actor_obj, prepare_director_obj, wangles)
+
+    return WOQLQuery().woql_and(data_prep, insert).execute(client, "Loading data for the movie graph")
 
 
 db_id = "movie_graph"
@@ -61,7 +79,10 @@ if not existing:
 else:
     client.set_db(db_id)
 
-#create_schema(client)
+create_schema(client)
 result = loading_data(client, "https://raw.githack.com/terminusdb/terminus-tutorials/master/movies-data/IMDB-Movie-Data.csv")
 result_df = query_to_df(result)
-print(result_df["genre_objid"])
+print(result)
+# print(result_df.columns)
+# print("----------------")
+# print(result_df["genre_objid"])
