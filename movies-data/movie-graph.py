@@ -51,9 +51,9 @@ def loading_data(client, file_url):
         )
 
     insert = (
-    WOQLQuery().insert("v:genre_objid", "Genre", label="v:genre_raw")
-    .insert("v:actors_objid", "Person", label="v:actors_raw")
-    .insert("v:director_objid", "Person", label="v:director_raw")
+    WOQLQuery().insert("v:genre_objid", "Genre", label="v:one_genre")
+    .insert("v:actors_objid", "Person", label="v:one_actor")
+    .insert("v:director_objid", "Person", label="v:one_director")
     .insert("v:movie_id", "Movie", label="v:title_raw", description="v:description_raw")
     .property("Director", "v:director_objid")
     .property("Cast", "v:actors_objid")
