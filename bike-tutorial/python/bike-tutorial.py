@@ -109,6 +109,7 @@ if __name__ == "__main__":
     db_id = "pybike"
     client = woql.WOQLClient(server_url = "http://localhost:6363")
     client.connect(key="root", account="admin", user="admin")
+    ##pp.pprint(client.conCapabilities.get_databases())
     existing = client.get_metadata(db_id, client.uid())
     if not existing:
         client.create_database(db_id, accountid="admin", label = "Bike Graph", description = "Create a graph with bike data")
