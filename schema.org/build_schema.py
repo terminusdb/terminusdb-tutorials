@@ -23,8 +23,6 @@ def construct_simple_type_relations():
             result.append(WOQLQuery().add_quad(key, "subClassOf", "http://schema.org/Thing" ,"schema"))
         if value == "dateTime" and key != "http://schema.org/DateTime":
             result.append(WOQLQuery().add_quad(key, "subClassOf", "http://schema.org/DateTime" ,"schema"))
-    for q in result:
-        print(q.to_dict())
     return result
 
 def construction_schema_objects(series):
@@ -106,7 +104,6 @@ types["QueryObjects"] = types.apply(construction_schema_objects, axis=1)
 types["QueryAddOnObj"] = types.apply(construction_schema_addon, axis=1, type_list=list(types["id"]))
 
 propteries = pd.read_csv("all-layers-properties.csv")
-if id == "http://schema.org/name":
 propteries["QueryObjects"] = propteries.apply(construction_schema_objects, axis=1)
 propteries["QueryObjects_DR"] = propteries.apply(construct_prop_dr, axis=1)
 propteries["QueryAddOnObj"] = propteries.apply(construction_schema_addon_property, axis=1, type_list=list(types["id"]))
