@@ -16,7 +16,7 @@ def create_schema(client):
             property("member_of", "Party", label="Member of").cardinality(1),
         WOQLQuery().doctype("Similarity", label="Similarity").
             property("similarity", "decimal", label="Similarity").
-            property("similar_to", "Representative", label="Similar To").cardinality(2)
+            property("similar_to", "Representative", label="Similar To").max(2)
         )
     return schema.execute(client, "Creating schema for Dublin voting data")
 
