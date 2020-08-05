@@ -5,27 +5,28 @@ from csvs import csvs
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
-def create_schema(client):
+def create_schema(client, commit_msg):
     """The query which creates the schema
         Parameters - it uses variables rather than the fluent style as an example
         ==========
         client : a WOQLClient() connection
 
     """
-    schema = WOQLQuery().woql_and(
-        WOQLQuery().doctype("Station",
+    station_dt = WOQLQuery().doctype("Station",
                             label="Bike Station",
-                            description="A station where bikes are deposited"),
-        WOQLQuery().doctype("Bicycle", label="Bicycle"),
-        WOQLQuery().doctype("Journey", label="Journey").
+                            description="A station where bikes are deposited")
+    bicycle_dt = WOQLQuery().doctype("Bicycle", label="Bicycle")
+    journey_dt = (
+            WOQLQuery().doctype("Journey", label="Journey").
             property("start_station", "Station", label="Start Station").
             property("end_station", "Station", label="End Station").
             property("duration", "integer", label="Journey Duration").
             property("start_time", "dateTime", label="Time Started").
             property("end_time", "dateTime", label="Time Ended").
             property("journey_bicycle", "Bicycle", label="Bicycle Used")
-    )
-    return schema.execute(client)
+            )
+    schema = station_dt + bicycle_dt + journey_dt
+    return schema.execute(client, commit_msg)
 
 
 def get_csv_variables(url):
@@ -107,12 +108,12 @@ def load_csvs(client, csvlist, wrangl, insert):
 
 if __name__ == "__main__":
     db_id = "pybike"
-    client = woql.WOQLClient(server_url = "http://localhost:6363")
+    client = woql.WOQLClient(server_url = "https://127.0.0.1:6360")
     client.connect(key="root", account="admin", user="admin")
-    existing = client.get_metadata(db_id, client.uid())
+    existing = client.get_database(db_id, client.uid())
     if not existing:
         client.create_database(db_id, accountid="admin", label = "Bike Graph", description = "Create a graph with bike data")
     else:
         client.db(db_id)
-    create_schema(client)
+    create_schema(client, "Creating bike schema")
     load_csvs(client, csvs, get_wrangles(), get_inserts())
