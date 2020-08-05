@@ -3,7 +3,7 @@
 from terminusdb_client.woqlquery.woql_query import WOQLQuery as WQ
 from terminusdb_client.woqlclient.woqlClient import WOQLClient
 
-server_url = "https://127.0.0.1:6363"
+server_url = "https://127.0.0.1:6364"
 user = "admin"
 account = "admin"
 key = "root"
@@ -15,8 +15,10 @@ description = "An example database for playing with bank accounts"
 client = WOQLClient(server_url)
 client.connect(user=user,account=account,key=key,db=dbid)
 
-# Uncomment this to nuke your old database
-client.delete_database(dbid)
+# Uncomment this to delete your old database first
+# client.delete_database(dbid)
+
+# Create the database
 try:
     client.create_database(dbid,user,label=label, description=description)
 except Exception as E:
@@ -41,14 +43,14 @@ WQ().woql_and(
 # Fix bug in schema
 WQ().woql_and(
     WQ().delete_quad("scm:balance", "label", "owner", "schema/main"),
-    WQ().delete_quad("scm:balance", "label", "balance", "schema/main")
+    WQ().add_quad("scm:balance", "label", "balance", "schema/main")
 ).execute(client, "Label for balance was wrong")
 
 # Add the data from csv to the main branch (again idempotent as widget ids are chosen from sku)
 WQ().woql_and(
-    WQ().insert("doc:mike", "scm:BankAccount"),
-    WQ().add_triple("doc:mike", "scm:owner", "mike"),
-    WQ().add_triple("doc:mike", "scm:balance", 123)
+    WQ().insert("doc:mike", "scm:BankAccount")
+        .property("scm:owner", "mike")
+        .property("scm:balance", 123)
 ).execute(client, "Add mike")
 
 # try to make mike go below zero
@@ -86,18 +88,18 @@ except Exception as E:
 # Add some data to the branch
 client.checkout(branch)
 WQ().woql_and(
-  WQ().add_triple("doc:jim", "type", "scm:BankAccount"),
-  WQ().add_triple("doc:jim", "owner", "jim"),
-  WQ().add_triple("doc:jim", "balance", 8)
+  WQ().insert("doc:jim", "scm:BankAccount")
+      .property("owner", "jim")
+      .property("balance", 8)
 ).execute(client,"Adding Jim")
 
 
 # Return to the 'main' branch and add Jane
 client.checkout('main')
 WQ().woql_and(
-  WQ().add_triple("doc:jane", "type", "scm:BankAccount"),
-  WQ().add_triple("doc:jane", "owner", "jim"),
-  WQ().add_triple("doc:jane", "balance", 887)
+  WQ().insert("doc:jane", "scm:BankAccount")
+      .property("owner", "jim")
+      .property("balance", 887)
 ).execute(client,"Adding Jane")
 
 try:

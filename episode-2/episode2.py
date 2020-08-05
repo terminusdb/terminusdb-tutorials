@@ -65,16 +65,19 @@ query = WQ().woql_and(
             .woql_as('category', category),
         WQ().remote(widgets_url)),
     WQ().idgen("doc:Widget",[sku],widget_ID),
-    WQ().insert(widget_ID, "scm:Widget"),
-    WQ().add_triple(widget_ID, "scm:sku", sku),
-    WQ().add_triple(widget_ID, "scm:date_added", date),
-    WQ().add_triple(widget_ID, "scm:category", category)
+    WQ().insert(widget_ID, "scm:Widget")
+    .property("sku", sku)
+    .property("date_added", date)
+    .property("category", category)
 )
 query.execute(client, "Insert from CSV")
 
 # Move widgets data from main to production
 production_query = WQ.woql_and(
-    WQ().triple(widget_ID,"scm:sku",sku),
+    WQ().
+    WQ().triple(widget_ID,"scm:sku",sku)
+    .property("date_added",date)
+    .property("category", category)
     WQ().triple(widget_ID, "scm:date_added", date),
     WQ().triple(widget_ID, "scm:category", category),
     WQ().eq(date, {'@type' : 'xsd:dateTime', '@value' : '1970-01-01T00:00:00'}),
@@ -82,11 +85,10 @@ production_query = WQ.woql_and(
     WQ().using(
         f'{account}/{dbid}/{repository}/branch/{production}',
         WQ().woql_and(
-            WQ().insert(widget_ID, "scm:Widget"),
-            WQ().add_triple(widget_ID, "scm:sku", sku),
-            WQ().add_triple(widget_ID, "scm:date_added", date),
-            WQ().add_triple(widget_ID, "scm:category", category)
-        )
+            WQ().insert(widget_ID, "scm:Widget")
+            .property("sku",sku)
+            .property("date_added", date)
+            .property("category", category)        )
     )
 )
 production_query.execute(client, "Add to production branch")
