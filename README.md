@@ -63,3 +63,7 @@ A generic "bank account" manipulation tutorial.
 In [Python](https://github.com/terminusdb/terminus-tutorials/tree/master/bank-tutorial/taking_terminus_to_the_bank.py).
 
 Also see the [tutorial blog post](https://terminusdb.com/blog/2020/07/27/taking-terminusdb-to-the-bank/?source=friends_link&sk=9dcc6e3f2fbd1a8a50a48c41510808ef)
+
+## Episode 2
+
+TerminusDB's product roadmap episode 2 implementation in [python](https://github.com/terminusdb/terminus-tutorials/tree/master/episode-2/episode2.py).
