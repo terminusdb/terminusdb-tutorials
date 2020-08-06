@@ -27,7 +27,7 @@ except Exception as E:
         raise(E)
 
 # Add the schema (there is no harm in adding repeatedly as it is idempotent)
-schema_query = WQ().woql_and(
+WQ().woql_and(
     WQ().doctype("scm:Widget")
         .label("Widget")
         .description("A widget")
@@ -38,8 +38,7 @@ schema_query = WQ().woql_and(
             .label("date_added")
         .property("category","xsd:string")
             .label("category")
-)
-schema_query.execute(client, "Adding schema")
+).execute(client, "Adding schema")
 
 # Make the production branch
 production = "production"
@@ -58,7 +57,7 @@ client.checkout('main')
 
 # Add the data from csv to the main branch (again idempotent as widget ids are chosen from sku)
 sku, date, category, widget_ID = WQ().vars('Sku','Date','Category', 'Widget_ID')
-query = WQ().woql_and(
+WQ().woql_and(
     WQ().get(
         WQ().woql_as('sku', sku)
             .woql_as('date_added', date, "xsd:dateTime")
@@ -69,18 +68,15 @@ query = WQ().woql_and(
     .property("sku", sku)
     .property("date_added", date)
     .property("category", category)
-)
-query.execute(client, "Insert from CSV")
+).execute(client, "Insert from CSV")
 
 # Move widgets data from main to production
-production_query = WQ.woql_and(
-    WQ().
-    WQ().triple(widget_ID,"scm:sku",sku)
-    .property("date_added",date)
-    .property("category", category)
-    WQ().triple(widget_ID, "scm:date_added", date),
-    WQ().triple(widget_ID, "scm:category", category),
-    WQ().eq(date, {'@type' : 'xsd:dateTime', '@value' : '1970-01-01T00:00:00'}),
+WQ().woql_and(
+    WQ().node(widget_ID,"Widget")
+    .property("sku", sku)
+    .property("date_added", date)
+    .property("category", category),
+    WQ().eq(date, WQ().literal('1970-01-01T00:00:00','xsd:dateTime')),
     WQ().eq(category, 'widgets'),
     WQ().using(
         f'{account}/{dbid}/{repository}/branch/{production}',
@@ -88,8 +84,8 @@ production_query = WQ.woql_and(
             WQ().insert(widget_ID, "scm:Widget")
             .property("sku",sku)
             .property("date_added", date)
-            .property("category", category)        )
+            .property("category", category)
+        )
     )
-)
-production_query.execute(client, "Add to production branch")
+).execute(client, "Add to production branch")
 
