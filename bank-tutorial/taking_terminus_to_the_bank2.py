@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-
-from terminusdb_client.woqlquery.woql_query import WOQLQuery as WQ
-from terminusdb_client.woqlclient.woqlClient import WOQLClient
+from terminusdb_client import WOQLClient
+from terminusdb_client import WOQLQuery as WQ
 
 server_url = "https://127.0.0.1:6363"
 user = "admin"
