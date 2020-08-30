@@ -92,7 +92,7 @@ Now we loop over the files in the subdirectory containing the split turtle files
 
 Here we call `client.insert_triples`. This will add every triple that it encounters in the string `contents` to the database in an `instance` graph called `main`. This is the default data graph (as opposed to the schema graph) for a branch.
 
-# Rebase: Putting data together
+## Rebase: Putting data together
 
 After this has run (*Warning: this should take a while! perhaps a few hours*), we can create a single branch composed out of the other ingests. We do this with rebase.
 
@@ -113,7 +113,7 @@ for branch in branches:
 ```
 We check out main to signify that it will be the target of the rebase. Then we call `client.rebase` with a dictionary describing what we would like to rebase from, along with a commit message and author. This will merge the data in the `"rebase_from"` branch, replaying the commits of what was already there.
 
-# Making it smaller / faster
+## Making it smaller / faster
 
 If you are trying to create a curated dataset for the first time, you aren't interested in the commit history at the moment, or if you want to create another fresh branch for analytic purposes without provenance, you can use a squash.
 
@@ -155,7 +155,7 @@ Squash may not be the best for consumable publishing as regular data consumers m
 
 ---
 
-# Final remarks
+## Final remarks
 
 And if you've managed to run this much of the program you should have a database which you can play with. You should be able to reuse much of this for any turtle database you'd like to load and play with.
 
