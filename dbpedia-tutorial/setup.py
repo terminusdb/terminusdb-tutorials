@@ -24,4 +24,4 @@ if __name__ == "__main__":
     object_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/mappingbased-objects-uncleaned/2020.08.01/mappingbased-objects-uncleaned_lang=en.ttl.bz2"
     add_ttl("types",type_uri)
     add_ttl("literals",literal_uri)
-    add_ttl("objects",objectx_uri)
+    add_ttl("objects",object_uri)
