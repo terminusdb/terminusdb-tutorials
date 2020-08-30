@@ -11,7 +11,7 @@ lines = 200000
 
 def add_ttl(name, uri):
     os.system(f"mkdir -p {name}")
-    os.system(f"rm {name}/*")
+    os.system(f"rm -f {name}/*")
     os.system(f"wget {uri} -O {name}.bz2")
     os.system(f"bunzip2 -c {name}.bz2 > {name}.ttl")
     os.chdir(f"{name}")
@@ -23,5 +23,7 @@ if __name__ == "__main__":
     literal_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/mappingbased-literals/2020.08.01/mappingbased-literals_lang=en.ttl.bz2"
     object_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/mappingbased-objects-uncleaned/2020.08.01/mappingbased-objects-uncleaned_lang=en.ttl.bz2"
     add_ttl("types",type_uri)
+    sleep(1)
     add_ttl("literals",literal_uri)
+    sleep(1)
     add_ttl("objects",object_uri)

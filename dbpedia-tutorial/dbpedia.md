@@ -69,7 +69,7 @@ You can branch from any commit you'd like simply by using `client.checkout(ref)`
 
 ```python
     print(f"Importing from {branch}")
-    for f in os.listdir(literal_properties_directory):
+    for f in os.listdir(branch):
         filename = f'{branch}/{f}'
         ttl_file = open(filename)
         contents = ttl_file.read()

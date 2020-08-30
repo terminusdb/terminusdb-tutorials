@@ -14,13 +14,13 @@ from terminusdb_client import WOQLQuery as WQ
 # openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt
 server_url = "https://127.0.0.1:6363"
 #server_url = "https://195.201.12.87:6366"
-db = "DBpedia_import_rebase_squash_reset"
-db_label = "DBpedia: import/rebase/squash/reset"
-db_comment = "A test of various pipeline operations"
+db = "dbpedia"
+db_label = "DBpedia"
+db_comment = "Mapped object, property and types from DBpedia's core dataset"
 user = "admin"
 account = "admin"
 key = "root"
-branches = ["literals","types"] # "objects",
+branches = ["literals","types","objects"]
 
 client = WOQLClient(server_url, insecure=True)
 client.connect(user=user, account=account, key=key, db=db, insecure=True)
@@ -41,7 +41,7 @@ for branch in branches:
     client.checkout(branch)
 
     print(f"Importing from {branch}")
-    for f in os.listdir(literal_properties_directory):
+    for f in os.listdir(branch):
         filename = f'{branch}/{f}'
         ttl_file = open(filename)
         contents = ttl_file.read()
@@ -59,16 +59,16 @@ for branch in branches:
         print(f"Update took {total} seconds")
 
 for branch in branches:
-    print("Rebasing {branch}")
+    print(f"Rebasing {branch}")
     client.checkout('main')
     before = time.time()
     client.rebase({"rebase_from": f'{user}/{db}/local/branch/{branch}',
                    "author": user,
-                   "message": "Merging {branch} into main"})
+                   "message": f"Merging {branch} into main"})
     after = time.time()
     total = (after - before)
     print(f"Rebase took {total} seconds")
-    report_total([total])
+
 
 print(f"Squashing main")
 before = time.time()
@@ -76,7 +76,7 @@ result = client.squash('Squash commit of properties and types')
 after = time.time()
 total = (after - before)
 print(f"Squash took {total} seconds")
-report_total([total])
+
 
 commit = result['api:commit']
 print(f"Branch reset to {commit}")
