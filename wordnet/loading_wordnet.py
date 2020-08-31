@@ -5,8 +5,8 @@ import time
 from terminusdb_client import WOQLClient
 from terminusdb_client import WOQLQuery as WQ
 
-server_url = "https://127.0.0.1:6360"
-db = "WordNet"
+server_url = "https://127.0.0.1:6363"
+db = "wordnet"
 user = "admin"
 account = "admin"
 key = "root"
@@ -20,8 +20,6 @@ try:
 except:
     pass
 
-#client.branch('properties')
-#client.checkout('properties')
 times = []
 directory = 'wordnet_chunks'
 for f in os.listdir(directory):
@@ -39,26 +37,17 @@ for f in os.listdir(directory):
     total = (after - before)
     times.append(total)
     print(f"Update took {total} seconds")
-print(times)
 
-# Branch from 'main' to 'types'
-# client.checkout('main')
-# client.branch('types')
-# client.checkout('types')
-# times = []
-# directory = 'instance_100k'
-# for f in os.listdir(directory):
-#     filename = f'{directory}/{f}'
-#     ttl_file = open(filename)
-#     contents = ttl_file.read()
-#     ttl_file.close()
-#     before = time.time()
-#     client.insert_triples(
-#         "instance","main",
-#         contents,
-#         f"Adding types in 100k chunk ({f})")
-#     after = time.time()
-#     total = (after - before)
-#     times.append(total)
-#     print(f"Update took {total} seconds")
-# print(times)
+"""
+print(f"Squashing main")
+before = time.time()
+result = client.squash('Squash commit of properties and types')
+after = time.time()
+total = (after - before)
+print(f"Squash took {total} seconds")
+
+commit = result['api:commit']
+print(f"Branch reset to {commit}")
+client.reset(commit)
+
+"""

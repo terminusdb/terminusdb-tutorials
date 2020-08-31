@@ -47,4 +47,4 @@ def split_ttl(name, path):
 
 if __name__ == "__main__":
     wordnet_file = "english-wordnet-3.3.ttl"
-    split_ttl("wordnet",wordnet_file)
+    split_ttl("wordnet_chunks",wordnet_file)
