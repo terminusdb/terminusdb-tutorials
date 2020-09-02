@@ -83,8 +83,8 @@ def load_data(client, houses, characters):
     return WOQLQuery().woql_and(*results).execute(client, "Adding data for Game of Thrones.")
 
 db_id = "game_of_thrones"
-client = WOQLClient(server_url = "http://localhost:6363")
-client.connect(key="root", account="admin", user="admin")
+client = WOQLClient(server_url = "https://localhost:6363")
+client.connect(key="root", account="admin", user="admin", insecure=True)
 existing = client.get_metadata(db_id, client.uid())
 if not existing:
     client.create_database(db_id, "admin", label="Game of Thrones Graph", description="Create a graph with Game of Thrones data")
