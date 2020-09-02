@@ -47,4 +47,5 @@ def split_ttl(name, path):
 
 if __name__ == "__main__":
     wordnet_file = "english-wordnet-3.3.ttl"
+    os.system(f"unzip {wordnet_file}.zip"),
     split_ttl("wordnet_chunks",wordnet_file)

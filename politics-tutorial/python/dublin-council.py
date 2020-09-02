@@ -83,7 +83,7 @@ def load_csvs(client, csvs):
 
 if __name__ == "__main__":
     db_id = "dublin_voting"
-    client = woql.WOQLClient(server_url = "http://localhost:6363")
+    client = woql.WOQLClient(server_url = "https://localhost:6364",insecure=True)
     client.connect(key="root", account="admin", user="admin")
     existing = client.get_metadata(db_id, client.uid())
     if not existing:
