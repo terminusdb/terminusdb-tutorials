@@ -108,7 +108,7 @@ def load_csvs(client, csvlist, wrangl, insert):
 
 if __name__ == "__main__":
     db_id = "pybike"
-    client = woql.WOQLClient(server_url = "https://127.0.0.1:6360")
+    client = woql.WOQLClient(server_url = "https://127.0.0.1:6364", insecure=True)
     client.connect(key="root", account="admin", user="admin")
     existing = client.get_database(db_id, client.uid())
     if not existing:

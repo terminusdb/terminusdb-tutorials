@@ -12,7 +12,7 @@ client.connect(db=db, key=key, account=account, user=user , insecure=True)
 
 
 def lookup_definitions(Word):
-    result = WQ().woql_and(
+    result = WQ().distinct("v:Definition").woql_and(
         WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
                                                        '@language' : 'en'}),
         WQ().triple("v:X", "ontolex:canonicalForm", "v:_Blank"),
