@@ -27,4 +27,23 @@ def lookup_definition(Word):
         definitions.append(binding['Definition'])
     return definitions
 
+def lookup_antonym(Word):
+    result = WQ().woql_and(
+        WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
+                                                       '@language' : 'en'}),
+        WQ().triple("v:Base_Lemma", "ontolex:canonicalForm", "v:_Blank"),
+        WQ().triple("v:Base_Lemma", "ontolex:sense", "v:Lemma"),
+        WQ().triple("v:Lemma", "wn:antonym", "v:Anto_Lemma"),
+        WQ().triple("v:Anto_Base_Lemma", "ontolex:sense", "v:Anto_Lemma"),
+        WQ().triple("v:Anto_Base_Lemma", "ontolex:canonicalForm", "v:_Blank_2"),
+        WQ().triple("v:_Blank_2", "ontolex:writtenRep", "v:Antonym"),
+
+    ).execute(client)
+    bindings = result['bindings']
+    antonyms = []
+    for binding in bindings:
+        antonyms.append(binding['Antonym']['@value'])
+    return antonyms
+
+
 print(lookup_definition("fruit"))
