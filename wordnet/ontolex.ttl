@@ -1,0 +1,344 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2xml: <http://www.w3.org/2006/12/owl2-xml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix semiotics: <http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<http://purl.org/vocommons/voaf#Vocabulary>
+    a owl:Class .
+
+semiotics:Expression
+    a owl:Class ;
+    rdfs:label "expression"@en .
+
+semiotics:Meaning
+    a owl:Class ;
+    rdfs:label "meaning"@en .
+
+semiotics:denotes
+    a owl:ObjectProperty .
+
+rdf:langString
+    a rdfs:Datatype .
+
+rdfs:isDefinedBy
+    a owl:AnnotationProperty .
+
+owl:topDataProperty
+    a owl:DatatypeProperty .
+
+owl:topObjectProperty
+    a owl:ObjectProperty .
+
+<http://www.w3.org/2004/02/skos/core#Concept>
+    a owl:Class ;
+    rdfs:label "concept"@en .
+
+<http://www.w3.org/2004/02/skos/core#ConceptScheme>
+    a owl:Class ;
+    rdfs:label "concept scheme"@en .
+
+<http://www.w3.org/2004/02/skos/core#inScheme>
+    a owl:ObjectProperty ;
+    rdfs:label "in scheme"@en .
+
+<http://www.w3.org/ns/lemon/ontolex>
+    cc:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    dc:contributor <http://art.uniroma2.it/fiorelli/>, <http://art.uniroma2.it/stellato/>, <http://jogracia.url.ph/web/>, <http://mayor2.dia.fi.upm.es/oeg-upm/index.php/en/teachers/52-emontiel>, <http://www.dfki.de/~declerck/>, <http://www.ilc.cnr.it/en/content/anas-fahad-khan>, <http://www.istc.cnr.it/people/aldo-gangemi>, <http://www.oeg-upm.net/index.php/teachers/53-lupe>, <http://www.paulbuitelaar.net/>, <https://sites.google.com/site/francescafrontini/> ;
+    dc:creator <http://john.mccr.ae/>, <http://www.cimiano.de/> ;
+    dc:description "A model for the representation of lexical information relative to ontologies. Core module."@en ;
+    dc:issued "2016-01-10"^^xsd:date ;
+    dc:modified "2016-01-10"^^xsd:date ;
+    dc:publisher <http://www.w3.org/community/ontolex> ;
+    dc:rights "CC-Zero" ;
+    dc:title "Lexicon Model for Ontologies - Core"@en ;
+    vann:preferredNamespacePrefix "ontolex" ;
+    vann:preferredNamespaceUri "http://www.w3.org/ns/lemon/ontolex#" ;
+    a owl:Ontology ;
+    owl:versionInfo 1.0 .
+
+:Affix
+    a owl:Class ;
+    rdfs:comment "'Аффикс' - это словарная единица, которая представляет морфему (суффикс, префикс, инфикс, циркумфикс), добавляемую к основе слова для образования нового слова."@ru, "An affix is a lexical entry that represents a morpheme (suffix, prefix, infix, circumfix) that is attached to a word stem to form a new word."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Affix"@de, "affiks"@af, "affisso"@it, "affix"@en, "affix"@nl, "affix"@sv, "affixe"@fr, "afijo"@es, "aplică"@ro, "аффикс"@ru ;
+    rdfs:subClassOf :LexicalEntry .
+
+:ConceptSet
+    a owl:Class ;
+    rdfs:comment "'Набор понятий' представляет собой совокупность лексических понятий."@ru, "A concept set represents a collection of lexical concepts."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Konzeptsatz"@de, "banca concetti"@it, "banque de conepts"@fr, "concept set"@en, "conjunto de conceptos"@es, "verzameling van begrippen"@nl, "набор понятий"@ru ;
+    rdfs:subClassOf <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :LexicalConcept ;
+        owl:onProperty <http://www.w3.org/2004/02/skos/core#inScheme>
+    ] .
+
+:Form
+    a owl:Class ;
+    rdfs:comment "'Форма' представляет одну грамматическую реализацию словарной единицы."@ru, "A form represents one grammatical realization of a lexical entry."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Form"@de, "Forma"@pt, "form"@en, "form"@sv, "forma"@es, "forma"@it, "forme"@fr, "formă"@ro, "vorm"@af, "vorm"@nl, "форма"@ru ;
+    rdfs:subClassOf owl:Thing, [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onDataRange rdf:langString ;
+        owl:onProperty :writtenRep
+    ] .
+
+:LexicalConcept
+    a owl:Class ;
+    rdfs:comment "'Лексическое понятие' представляет элемент абстрактного мышления, понятие или единицу мысли, которая может быть лексикализована определенным набором смыслов."@ru, "A lexical concept represents a mental abstraction, concept or unit of thought that embodies the meaning of one or more lexical entries."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "conceito léxico"@pt, "concept lexical"@fr, "concept lexical"@ro, "concepto lexicalizado"@es, "concetto lessicale"@it, "leksikale konsep"@af, "lexical concept"@en, "lexikaal concept"@nl, "lexikalisches Konzept"@de, "lexikaliskt begrepp"@sv, "лексическое понятие"@ru ;
+    rdfs:subClassOf semiotics:Meaning, <http://www.w3.org/2004/02/skos/core#Concept> .
+
+:LexicalEntry
+    a owl:Class ;
+    rdfs:comment "'Словарная единица' представляет собой единицу анализа словаря, которая состоит из совокупности грамматически связанных форм и совокупности основных значений, ассоциирующихся со всеми этими формами. 'Словарная единица' - это слово, словосочетание или аффикс одной части речи, морфологической модели, этимологии и набора значений."@ru, "A lexical entry represents a unit of analysis of the lexicon that consists of a set of forms that are grammatically related and a set of base meanings that are associated with all of these forms. Thus, a lexical entry is a word, multiword expression or affix with a single part-of-speech, morphological pattern, etymology and set of senses."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Lexikoneintrag"@de, "entrada léxica"@es, "entrata lessicale"@it, "entrée lexicale"@fr, "leksikale inskrywing"@af, "lexical entry"@en, "lexikaal item"@nl, "lexikoningång"@sv, "înregistrare lexicală"@ro, "словарная единица"@ru ;
+    rdfs:subClassOf semiotics:Expression, owl:Thing, [
+        a owl:Restriction ;
+        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Form ;
+        owl:onProperty :canonicalForm
+    ], [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Form ;
+        owl:onProperty :lexicalForm
+    ] .
+
+:LexicalSense
+    a owl:Class ;
+    rdfs:comment "'Лексический смысл' обозначает лексическое значение словарной единицы, когда оно понимается как относящееся к соответствующему элементу онтологии. 'Лексический смысл' представляет собой овеществление пары, состоящей из однозначно определяемой словарной единицы и однозначно определяемой сущности отнологии, к которой относится данный лексический смысл. Связь между словарной единицей и сущностью в онтологии посредством объекта 'Лексический Смысл' подразумевает, что словарная статья может быть использована для отсылки к соответствующей сущности в онтологии."@ru, "A lexical sense represents the lexical meaning of a lexical entry when interpreted as referring to the corresponding ontology element. A lexical sense thus represents a reification of a pair of a uniquely determined lexical entry and a uniquely determined ontology entity it refers to. A link between a lexical entry and an ontology entity via a Lexical Sense object implies that the lexical entry can be used to refer to the ontology entity in question."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "acepción léxica"@es, "leksikale sin"@af, "lexical sense"@en, "lexikaal zin"@nl, "lexikalischer Sinn"@de, "lexikonbetydelse"@sv, "sens lexical"@ro, "senso lessicale"@it, "signification lexicale"@fr, "лексический смысл"@ru ;
+    rdfs:subClassOf semiotics:Meaning, [
+        a owl:Restriction ;
+        owl:onClass :LexicalEntry ;
+        owl:onProperty :isSenseOf ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onProperty :reference
+    ] .
+
+:MultiWordExpression
+    a owl:Class ;
+    rdfs:comment "'Словосочетание' - это словарная единица, состоящая из двух или более слов."@ru, "A multiword expression is a lexical entry that consists of two or more words."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Mehrwortausdruck"@de, "espressione di gruppi di parole"@it, "expresie din mai multe cuvinte"@ro, "expresión multipalabra"@es, "expression à mots multiples"@fr, "flerordsuttryck"@sv, "multi-word expression"@en, "multiwoorduitdrukking"@af, "mutliwoorduitdrukking"@nl, "словосочетание"@ru ;
+    rdfs:subClassOf :LexicalEntry .
+
+:Word
+    a owl:Class ;
+    rdfs:comment "'Слово' - это словарная единица, представяющая собой единичную реализацию лексемы."@ru, "A word is a lexical entry that consists of a single token."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Wort"@de, "cuvânt"@ro, "mot"@fr, "ord"@sv, "palabra"@es, "parola"@it, "woord"@af, "woord"@nl, "word"@en, "слово"@ru ;
+    rdfs:subClassOf :LexicalEntry .
+
+:canonicalForm
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The 'canonical form' property relates a lexical entry to its canoncical or dictionary form. This usually indicates the \"lemma\" form of a lexical entry. "@en, "Свойство 'каноническая форма' связывает словарную единицу с ее канонической или словарной формой. Она обычно обозначает \"лемму\" словарной единицы."@ru ;
+    rdfs:domain :LexicalEntry ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "canonical form"@en, "canonieke vorm"@nl, "forma canonica"@it, "forma canonica"@pt, "forma canónica"@es, "forme canonique"@fr, "formă canonică"@ro, "kanoniese vorm"@af, "kanonische Form"@de, "kanonisk form "@sv, "каноническая форма"@ru ;
+    rdfs:range :Form ;
+    rdfs:subPropertyOf :lexicalForm .
+
+:concept
+    a owl:ObjectProperty ;
+    rdfs:comment "The 'concept' property relates an ontological entity to a lexical concept that represents the corresponding meaning."@en, "Свойство 'понятие' связывает сущность в онтологии с лексическим понятием, которое представляет соответствующее значение."@ru ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Konzept"@de, "begrepp"@sv, "begrip"@nl, "conceito"@pt, "concept"@en, "concept"@fr, "concept"@ro, "concepto"@es, "concetto"@it, "konsep"@af, "понятие"@ru ;
+    rdfs:range :LexicalConcept ;
+    owl:inverseOf :isConceptOf .
+
+:denotes
+    a owl:ObjectProperty ;
+    rdfs:comment "The 'denotes' property relates a lexical entry to a predicate in a given ontology that represents its meaning and has some denotational or model-theoretic semantics. "@en, "Свойство 'обозначает' связывает словарную единицу с предикатом в онтологии, который представляет ее значение и обладает денотативной или теоретико-модельной семантикой."@ru ;
+    rdfs:domain :LexicalEntry ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "betecknar"@sv, "bezeichnet"@de, "denota"@es, "denota"@it, "denota"@pt, "denotes"@en, "denotă"@ro, "dui aan"@af, "duidet aan"@nl, "dénote"@fr, "обозначает"@ru ;
+    rdfs:range rdfs:Resource ;
+    rdfs:subPropertyOf semiotics:denotes ;
+    owl:propertyChainAxiom (:sense
+        :reference
+    ) .
+
+:evokes
+    a owl:ObjectProperty ;
+    rdfs:comment "The 'evokes' property relates a lexical entry to one of the lexical concepts it evokes, i.e. the mental concept that speakers of a language might associate when hearing the lexical entry."@en, "Свойство 'порождает' связывает словарную единицу с одним из лексических понятий, которую она порождает, то есть мыслительное понятие, которое возникает в сознании говорящих, когда они слышат данную словарную единицу."@ru ;
+    rdfs:domain :LexicalEntry ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "evoca"@es, "evoca"@it, "evoca"@pt, "evocă"@ro, "evokes"@en, "framkallar"@sv, "lokt uit"@nl, "roep op"@af, "ruft hervor"@de, "évoque"@fr, "порождает"@ru ;
+    rdfs:range :LexicalConcept ;
+    owl:propertyChainAxiom (:sense
+        :isLexicalizedSenseOf
+    ) .
+
+:isConceptOf
+    a owl:ObjectProperty ;
+    rdfs:comment "This property formalizes the meaning of a Lexical Concept by linking it to a particular ontological meaning."@en, "Это свойство формализует значение 'Лексического Понятия', связывая его с отдельным значением в онтологии."@ru ;
+    rdfs:domain :LexicalConcept ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "es concepto de"@es, "est un concept pour "@fr, "este concept a(l)"@ro, "is concept of"@en, "is concept van"@nl, "is konsep van"@af, "ist Konzept von"@de, "är begrepp för"@sv, "è concetto di "@it, "é conceito de"@pt, "является понятием"@ru .
+
+:isDenotedBy
+    a owl:ObjectProperty ;
+    rdfs:comment "The object property isDenotedBy is the inverse of the object property denotes."@en, "Свойство объекта 'обозначается' является обратным к свойству объекта 'обозначает'."@ru ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "betecknas av"@sv, "es denotado por"@es, "est dénoté par"@fr, "este denotat cu"@ro, "is denoted by"@en, "wird bezeichnet von"@de, "word aangedui deur"@af, "wordt aangeduidet door"@nl, "è denotato da"@it, "é denotado por"@pt, "обозначается"@ru ;
+    rdfs:range :LexicalEntry ;
+    owl:inverseOf :denotes .
+
+:isEvokedBy
+    a owl:ObjectProperty ;
+    rdfs:comment "The inverse relation to evokes."@en, "Отношение обратное к 'порождает'."@ru ;
+    rdfs:domain :LexicalConcept ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "es evocado por"@es, "est évoqué par"@fr, "este evocat de"@ro, "framkallas av "@sv, "is evoked by"@en, "wird hervorgerufen von"@de, "word opgeroep deur"@af, "wordt uitgelokt door"@nl, "è evocato da"@it, "порождается"@ru ;
+    rdfs:range :LexicalEntry ;
+    owl:inverseOf :evokes .
+
+:isLexicalizedSenseOf
+    a owl:ObjectProperty ;
+    rdfs:comment "The object property isLexicalizedSenseOf is the inverse property of lexicalized sense."@en, "Свойство объекта 'является лексикализованным смыслом' представляет собой свойство, обратное к свойству 'лексикализованный смысл'."@ru ;
+    rdfs:domain :LexicalSense ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "es l'acepción lexicalizado de"@es, "est le sens lexicalisé de"@fr, "este sens lexicalizat de"@ro, "is geleksikaliseerde sin van"@af, "is lexicalized sense of"@en, "is lexikaal zin van"@nl, "ist lexikalisierter Sinn von"@de, "är lexikaliserad betydelse för"@sv, "è il senso lessicalizzato di"@it, "является лексикализованным смыслом"@ru ;
+    rdfs:range :LexicalConcept ;
+    owl:inverseOf :lexicalizedSense .
+
+:isReferenceOf
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The object property isReferenceOf is the inverse property of reference."@en, "Свойство объекта 'является референцией' представляет собой свойство, обратное к свойству 'референция'."@ru ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "es referencia de"@es, "est référence de"@fr, "este referință a(l)"@ro, "is reference of"@en, "is referentie van"@nl, "is verwysing van"@af, "ist Referenz von"@de, "är referens för"@sv, "è riferimento di"@it, "é referência de"@pt, "является референцией"@ru ;
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf (:LexicalSense
+            <http://www.w3.org/ns/lemon/synsem#OntoMap>
+        )
+    ] ;
+    owl:inverseOf :reference .
+
+:isSenseOf
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The property isSenseOf is the inverse property of sense."@en, "Свойство 'является смыслом' представляет собой свойство, обратное к свойству 'смысл'."@ru ;
+    rdfs:domain :LexicalSense ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "es acepción de"@es, "est signification de"@fr, "este sens a(l)"@ro, "is sense of"@en, "is sin van"@af, "is zin van"@nl, "ist Sinn von"@de, "är betydelse för"@sv, "è il senso di"@it, "é sentido de"@pt, "является смыслом"@ru ;
+    rdfs:range :LexicalEntry .
+
+:lexicalForm
+    a owl:ObjectProperty ;
+    rdfs:comment "The 'lexical form' property relates a lexical entry to one grammatical form variant of the lexical entry."@en, "Свойство 'лексическая форма' соотносит словарную единицу с одним вариантом грамматической формы словарной единицы."@ru ;
+    rdfs:domain :LexicalEntry ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "forma lessicale"@it, "forma léxica"@es, "forme lexicale"@fr, "formă lexicală"@ro, "leksikale vorm"@af, "lexical form"@en, "lexikaal vorm"@nl, "lexikalische Form"@de, "lexikonform"@sv, "лексическая форма"@ru ;
+    rdfs:range :Form .
+
+:lexicalizedSense
+    a owl:ObjectProperty ;
+    rdfs:comment "The 'lexicalized sense' property relates a lexical concept to a corresponding lexical sense that lexicalizes the concept."@en, "Свойство 'лексикализованный смысл' связывает лексическое понятие с соответствующим лексическим смыслом, который лексикализует понятие."@ru ;
+    rdfs:domain :LexicalConcept ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "acepción lexicalizada"@es, "geleksikaliseerde Sin"@af, "lexicalized sense"@en, "lexikaal zin"@nl, "lexikaliserad betydelse"@sv, "lexikalisierter Sinn"@de, "sens lexicalizat"@ro, "senso lessicalizzato"@it, "signification lexicalisé"@fr, "лексикализованный смысл"@ru ;
+    rdfs:range :LexicalSense .
+
+:morphologicalPattern
+    a owl:ObjectProperty ;
+    rdfs:comment "The 'morphological pattern' property indicates the morphological class of a word."@en, "Свойство 'морфологическая модель' обозначает морфологический класс слова."@ru ;
+    rdfs:domain :LexicalEntry ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "model morfologic"@ro, "morfologiese patroon"@af, "morfologische patroon"@nl, "morfologiskt mönster"@sv, "morphological pattern"@en, "morphologisches Muster"@de, "motivo morfologico"@it, "patron morphologique"@fr, "patrón morfológico"@es, "морфологическая модель"@ru .
+
+:otherForm
+    a owl:ObjectProperty ;
+    rdfs:comment "The  'other form' property relates a lexical entry to a non-preferred (\"non-lemma\") form that realizes the given lexical entry."@en, "Свойство 'другая форма' связывает словарную единицу с малоупотребительной формой (\"не леммой\"), которая является реализацией данной словарной единицы"@ru ;
+    rdfs:domain :LexicalEntry ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "altra forma"@it, "altă formă"@ro, "ander form"@af, "andere Form"@de, "andere vorm"@nl, "annan form"@sv, "autre forme"@fr, "other form"@en, "otra forma"@es, "outra forma"@pt, "другая форма"@ru ;
+    rdfs:range :Form ;
+    rdfs:subPropertyOf :lexicalForm .
+
+:phoneticRep
+    a owl:DatatypeProperty ;
+    rdfs:comment "The 'phonetic representation' property indicates one phonetic representation of the pronunciation of the form using a scheme such as the International Phonetic Alphabet (IPA). "@en, "Свойство 'фонетическое представление' обозначает фонетическое представление произношения формы с использованием какой-либо схемы, например, Международного фонетического алфавита (IPA, МФА)."@ru ;
+    rdfs:domain :Form ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "fonetiese voorstelling"@af, "fonetische voorstelling"@nl, "fonetisk representation "@sv, "phonetic representation"@en, "phonetische Darstellung"@de, "rappresentazione fonetica"@it, "representación fonética"@es, "reprezentare fonetică"@ro, "représentation phonétique"@fr, "фонетическое представление"@ru ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf :representation .
+
+:reference
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The 'reference' property relates a lexical sense to an ontological predicate that represents the denotation of the corresponding lexical entry. "@en, "Свойство 'референция' соотносит лексический смысл с предикатом в онтологии, который уточняет значение денотата (соответствующей словарной единицы)."@ru ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (:LexicalSense
+            <http://www.w3.org/ns/lemon/synsem#OntoMap>
+        )
+    ] ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Referenz"@de, "reference"@en, "referencia"@es, "referens"@sv, "referință"@ro, "referntie"@nl, "referência"@pt, "riferimento"@it, "référence"@fr, "verwysing"@af, "референция"@ru ;
+    rdfs:range rdfs:Resource .
+
+:representation
+    a owl:DatatypeProperty ;
+    rdfs:comment "The 'representation' property indicates a string by which the form is represented according to some orthography. "@en, "Свойство 'представление' обозначает некую последовательность, с помощью которой форма может быть представлена средствами орфографии."@ru ;
+    rdfs:domain :Form ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Darstellung"@de, "rappresentazione"@it, "representación"@es, "representation"@en, "representation"@sv, "representação"@pt, "reprezentare"@ro, "représentation"@fr, "voorstelling"@af, "voorstelling"@nl, "представление"@ru ;
+    rdfs:range rdf:langString .
+
+:sense
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The 'sense' property relates a lexical entry to one of its lexical senses. "@en, "Свойство 'смысл' связывает словарную единицу с одним из ее лексических смыслов."@ru ;
+    rdfs:domain :LexicalEntry ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Sinn"@de, "acepción"@es, "betydelse"@sv, "sens"@ro, "sense"@en, "senso"@it, "sentido"@pt, "signification"@fr, "sinne"@af, "zin"@nl, "смысл"@ru ;
+    rdfs:range :LexicalSense ;
+    owl:inverseOf :isSenseOf .
+
+:usage
+    a owl:ObjectProperty ;
+    rdfs:comment "The 'usage' property indicates usage conditions or pragmatic implications when using the lexical entry to refer to the given ontological meaning."@en, "Свойство 'употребление' обозначает условия использования или прагматическое значение при употреблении словарной единицы для соотнесения с определенным значением в онтологии."@ru ;
+    rdfs:domain :LexicalSense ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "Gebrauch"@de, "gebruik"@nl, "usage"@en, "usage"@fr, "uso"@es, "uso"@it, "употребление"@ru ;
+    rdfs:range rdfs:Resource .
+
+:writtenRep
+    a owl:DatatypeProperty ;
+    rdfs:comment "The 'written representation' property indicates the written representation of a form."@en, "Свойство 'письменное представление' обозначает письменное представление формы."@ru ;
+    rdfs:domain :Form ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/lemon/ontolex> ;
+    rdfs:label "geskrewe voorstelling"@af, "rappresentazione scritta"@it, "representación escrita"@es, "representação escrita"@pt, "reprezentare scrisă"@ro, "représentation écrite"@fr, "schriftliche Darstellung"@de, "schriftlijke voorstelling"@nl, "skriven form "@sv, "written representation"@en, "письменное представление"@ru ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf :representation .
+
+<http://www.w3.org/ns/lemon/synsem#OntoMap>
+    a owl:Class .
+
+foaf:Organization
+    a owl:Class .
+
+foaf:Person
+    a owl:Class .
+
