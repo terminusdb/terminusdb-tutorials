@@ -11,7 +11,7 @@ client = WOQLClient(server_url)
 client.connect(db=db, key=key, account=account, user=user , insecure=True)
 
 
-def lookup_definition(Word):
+def lookup_definitions(Word):
     result = WQ().woql_and(
         WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
                                                        '@language' : 'en'}),
@@ -19,16 +19,21 @@ def lookup_definition(Word):
         WQ().triple("v:X", "ontolex:sense", "v:Lemma"),
         WQ().triple("v:Lemma", "ontolex:isLexicalizedSenseOf", "v:PWN"),
         WQ().triple("v:PWN", "wn:definition", "v:_Blank2"),
+        WQ().triple("v:PWN", "wn:partOfSpeech", "v:Part_Of_Speech"),
         WQ().triple("v:_Blank2", "rdf:value", "v:Definition"),
     ).execute(client)
     bindings = result['bindings']
     definitions = []
     for binding in bindings:
-        definitions.append(binding['Definition'])
+        definitions.append({
+            'word' : Word,
+            'part_of_speech' : binding['Part_Of_Speech'],
+            'definition' : binding['Definition']['@value']
+        })
     return definitions
 
-def lookup_antonym(Word):
-    result = WQ().woql_and(
+def lookup_antonyms(Word):
+    result = WQ().distinct("v:Anotnym").woql_and(
         WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
                                                        '@language' : 'en'}),
         WQ().triple("v:Base_Lemma", "ontolex:canonicalForm", "v:_Blank"),
@@ -42,8 +47,32 @@ def lookup_antonym(Word):
     bindings = result['bindings']
     antonyms = []
     for binding in bindings:
-        antonyms.append(binding['Antonym']['@value'])
+        antonyms.append({ 'word' : Word,
+                          'antonym' : binding['Antonym']['@value']})
     return antonyms
 
+def part_of_speech(X):
+    if X == 'http://wordnet-rdf.princeton.edu/ontology#verb':
+        return 'v'
+    elif X == 'http://wordnet-rdf.princeton.edu/ontology#noun':
+        return 'n'
+    elif X == 'http://wordnet-rdf.princeton.edu/ontology#adjective':
+        return 'a'
+    elif X == 'http://wordnet-rdf.princeton.edu/ontology#adverb':
+        return 'av'
+    else:
+        return '(unknown)'
 
-print(lookup_definition("fruit"))
+if __name__ == "__main__":
+    wordlist = ["fruit", "hate", "enjoy"]
+    for word in wordlist:
+        definitions = lookup_definitions(word)
+        for definition in definitions:
+            pos = part_of_speech(definition['part_of_speech'])
+            definition = definition['definition']
+            print(f"{word} ({pos}): {definition}")
+
+        antonyms = lookup_antonyms(word)
+        for antonym in antonyms:
+            anto_word = antonym['antonym']
+            print(f"antonym: {anto_word}")
