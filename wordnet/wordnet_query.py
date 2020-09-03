@@ -51,6 +51,46 @@ def lookup_antonyms(Word):
                           'antonym' : binding['Antonym']['@value']})
     return antonyms
 
+def lookup_hyponyms(Word):
+    result = WQ().distinct("v:Anotnym").woql_and(
+        WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
+                                                       '@language' : 'en'}),
+        WQ().triple("v:Base_Lemma", "ontolex:canonicalForm", "v:_Blank"),
+        WQ().triple("v:Base_Lemma", "ontolex:sense", "v:Lemma"),
+        WQ().triple("v:Lemma", "ontolex:isLexicalizedSenseOf", "v:PWN"),
+        WQ().triple("v:PWN", "wn:hyponym", "v:Hypo_PWN"),
+        WQ().triple("v:Hypo_Lemma", "ontolex:isLexicalizedSenseOf", "v:Hypo_PWN"),
+        WQ().triple("v:Base_Hypo_Lemma", "ontolex:sense", "v:Hypo_Lemma"),
+        WQ().triple("v:Base_Hypo_Lemma", "ontolex:canonicalForm", "v:_Blank_2"),
+        WQ().triple("v:_Blank_2", "ontolex:writtenRep", "v:Hyponym")
+    ).execute(client)
+    bindings = result['bindings']
+    hyponyms = []
+    for binding in bindings:
+        hyponyms.append({ 'word' : Word,
+                          'hyponym' : binding['Hyponym']['@value']})
+    return hyponyms
+
+def lookup_hypernyms(Word):
+    result = WQ().distinct("v:Anotnym").woql_and(
+        WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
+                                                       '@language' : 'en'}),
+        WQ().triple("v:Base_Lemma", "ontolex:canonicalForm", "v:_Blank"),
+        WQ().triple("v:Base_Lemma", "ontolex:sense", "v:Lemma"),
+        WQ().triple("v:Lemma", "ontolex:isLexicalizedSenseOf", "v:PWN"),
+        WQ().triple("v:PWN", "wn:hypernym", "v:Hyper_PWN"),
+        WQ().triple("v:Hyper_Lemma", "ontolex:isLexicalizedSenseOf", "v:Hyper_PWN"),
+        WQ().triple("v:Base_Hyper_Lemma", "ontolex:sense", "v:Hyper_Lemma"),
+        WQ().triple("v:Base_Hyper_Lemma", "ontolex:canonicalForm", "v:_Blank_2"),
+        WQ().triple("v:_Blank_2", "ontolex:writtenRep", "v:Hypernym")
+    ).execute(client)
+    bindings = result['bindings']
+    hypernyms = []
+    for binding in bindings:
+        hypernyms.append({ 'word' : Word,
+                          'hypernym' : binding['Hypernym']['@value']})
+    return hypernyms
+
 def part_of_speech(X):
     if X == 'http://wordnet-rdf.princeton.edu/ontology#verb':
         return 'v'
@@ -64,8 +104,9 @@ def part_of_speech(X):
         return '(unknown)'
 
 if __name__ == "__main__":
-    wordlist = ["fruit", "hate", "enjoy"]
+    wordlist = ["fruit", "hate", "enjoy", "dog", "propel"]
     for word in wordlist:
+        print("")
         definitions = lookup_definitions(word)
         for definition in definitions:
             pos = part_of_speech(definition['part_of_speech'])
@@ -76,3 +117,13 @@ if __name__ == "__main__":
         for antonym in antonyms:
             anto_word = antonym['antonym']
             print(f"antonym: {anto_word}")
+
+        hyponyms = lookup_hyponyms(word)
+        for hyponym in hyponyms:
+            syno_word = hyponym['hyponym']
+            print(f"hyponym: {syno_word}")
+
+        hypernyms = lookup_hypernyms(word)
+        for hypernym in hypernyms:
+            syno_word = hypernym['hypernym']
+            print(f"hypernym: {syno_word}")
