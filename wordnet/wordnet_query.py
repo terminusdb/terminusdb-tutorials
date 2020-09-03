@@ -104,7 +104,7 @@ def part_of_speech(X):
         return '(unknown)'
 
 if __name__ == "__main__":
-    wordlist = ["fruit", "hate", "enjoy", "dog", "propel"]
+    wordlist = ["fruit", "hate", "enjoy", "dog", "propel", "lambast"]
     for word in wordlist:
         print("")
         definitions = lookup_definitions(word)
