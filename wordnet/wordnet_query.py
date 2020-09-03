@@ -33,7 +33,7 @@ def lookup_definitions(Word):
     return definitions
 
 def lookup_antonyms(Word):
-    result = WQ().distinct("v:Anotnym").woql_and(
+    result = WQ().distinct("v:Antonym").woql_and(
         WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
                                                        '@language' : 'en'}),
         WQ().triple("v:Base_Lemma", "ontolex:canonicalForm", "v:_Blank"),
@@ -52,7 +52,7 @@ def lookup_antonyms(Word):
     return antonyms
 
 def lookup_hyponyms(Word):
-    result = WQ().distinct("v:Anotnym").woql_and(
+    result = WQ().distinct("v:Hyponym").woql_and(
         WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
                                                        '@language' : 'en'}),
         WQ().triple("v:Base_Lemma", "ontolex:canonicalForm", "v:_Blank"),
@@ -72,7 +72,7 @@ def lookup_hyponyms(Word):
     return hyponyms
 
 def lookup_hypernyms(Word):
-    result = WQ().distinct("v:Anotnym").woql_and(
+    result = WQ().distinct("v:Hypernym").woql_and(
         WQ().triple("v:_Blank", "ontolex:writtenRep", {'@value' : Word,
                                                        '@language' : 'en'}),
         WQ().triple("v:Base_Lemma", "ontolex:canonicalForm", "v:_Blank"),
