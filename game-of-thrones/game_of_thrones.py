@@ -2,8 +2,7 @@ from terminusdb_client.woqlquery import WOQLQuery
 from terminusdb_client.woqlclient import WOQLClient
 import json
 
-server_url="http://localhost:6363"
-key="root"
+server_url="https://127.0.0.1:6363"
 db_id="game_of_thrones"
 
 with open('houses.json') as json_file:
@@ -83,7 +82,7 @@ def load_data(client, houses, characters):
     return WOQLQuery().woql_and(*results).execute(client, "Adding data for Game of Thrones.")
 
 db_id = "game_of_thrones"
-client = WOQLClient(server_url = "http://localhost:6363")
+client = WOQLClient(server_url = server_url)
 client.connect(key="root", account="admin", user="admin")
 existing = client.get_metadata(db_id, client.uid())
 if not existing:

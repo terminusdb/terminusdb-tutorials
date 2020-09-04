@@ -150,7 +150,7 @@ def load_flight(series, airports, airlines):
 flights_query = routes.apply(load_flight, axis=1, airports=airports, airlines=airlines).dropna()
 
 db_id = "pyplane"
-client = WOQLClient(server_url = "http://localhost:6363")
+client = WOQLClient(server_url = "https://127.0.0.1:6363")
 client.connect(key="root", account="admin", user="admin")
 existing = client.get_metadata(db_id, client.uid())
 if not existing:
