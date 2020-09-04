@@ -37,4 +37,15 @@ for f in os.listdir(directory):
     total = (after - before)
     times.append(total)
     print(f"Update took {total} seconds")
-print(times)
+
+print(f"Squashing main")
+before = time.time()
+client.checkout("main")
+result = client.squash('Squash commit of properties and types')
+after = time.time()
+total = (after - before)
+print(f"Squash took {total} seconds")
+
+commit = result['api:commit']
+print(f"Branch reset to {commit}")
+client.reset(commit)
