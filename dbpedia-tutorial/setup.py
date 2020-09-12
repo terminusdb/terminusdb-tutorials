@@ -23,7 +23,7 @@ if __name__ == "__main__":
     literal_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/mappingbased-literals/2020.08.01/mappingbased-literals_lang=en.ttl.bz2"
     object_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/mappingbased-objects-uncleaned/2020.08.01/mappingbased-objects-uncleaned_lang=en.ttl.bz2"
     add_ttl("types",type_uri)
-    sleep(1)
+    time.sleep(1)
     add_ttl("literals",literal_uri)
-    sleep(1)
+    time.sleep(1)
     add_ttl("objects",object_uri)
