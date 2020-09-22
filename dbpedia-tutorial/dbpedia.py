@@ -20,7 +20,7 @@ db_comment = "Mapped object, property and types from DBpedia's core dataset"
 user = "admin"
 account = "admin"
 key = "root"
-branches = ["literals","types","objects"]
+branches = ["literals","types","objects", "geo"]
 
 client = WOQLClient(server_url, insecure=True)
 client.connect(user=user, account=account, key=key, db=db, insecure=True)

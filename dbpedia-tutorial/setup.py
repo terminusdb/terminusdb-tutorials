@@ -22,8 +22,12 @@ if __name__ == "__main__":
     type_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/instance-types/2020.08.01/instance-types_lang=en_specific.ttl.bz2"
     literal_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/mappingbased-literals/2020.08.01/mappingbased-literals_lang=en.ttl.bz2"
     object_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/mappingbased-objects-uncleaned/2020.08.01/mappingbased-objects-uncleaned_lang=en.ttl.bz2"
+    geo_uri = "https://downloads.dbpedia.org/repo/dbpedia/mappings/geo-coordinates-mappingbased/2020.08.01/geo-coordinates-mappingbased_lang=en.ttl.bz2"
+
     add_ttl("types",type_uri)
-    time.sleep(1)
+
     add_ttl("literals",literal_uri)
-    time.sleep(1)
+
     add_ttl("objects",object_uri)
+
+    add_ttl("geo",geo_uri)
