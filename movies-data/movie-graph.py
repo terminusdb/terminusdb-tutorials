@@ -35,11 +35,11 @@ def loading_data(client, file_url):
                    .woql_as("Metascore","v:metascore_raw")
     ).remote(file_url)
 
-    prepare_genre_obj = WOQLQuery().split("v:genre_raw", ",", "v:genre_list").member("v:one_genre", "v:genre_list").idgen("doc:Gerne", ["v:one_genre"], "v:genre_objid")
+    prepare_genre_obj = WOQLQuery().split("v:genre_raw", ", ", "v:genre_list").member("v:one_genre", "v:genre_list").idgen("doc:Genre", ["v:one_genre"], "v:genre_objid")
 
-    prepare_actor_obj = WOQLQuery().split("v:actors_raw", ",", "v:actors_list").member("v:one_actor", "v:actors_list").idgen("doc:Person", ["v:one_actor"], "v:actors_objid")
+    prepare_actor_obj = WOQLQuery().split("v:actors_raw", ", ", "v:actors_list").member("v:one_actor", "v:actors_list").idgen("doc:Person", ["v:one_actor"], "v:actors_objid")
 
-    prepare_director_obj = WOQLQuery().split("v:director_raw", ",", "v:director_list").member("v:one_director", "v:director_list").idgen("doc:Person", ["v:one_director"], "v:director_objid")
+    prepare_director_obj = WOQLQuery().split("v:director_raw", ", ", "v:director_list").member("v:one_director", "v:director_list").idgen("doc:Person", ["v:one_director"], "v:director_objid")
 
 
     wangles = (
@@ -70,7 +70,11 @@ def loading_data(client, file_url):
 
 
 db_id = "movie_graph"
+<<<<<<< HEAD
 client = WOQLClient("https://127.0.0.1:6363")
+=======
+client = WOQLClient("https://localhost:6363", insecure=True)
+>>>>>>> a99fdc86ce0a43410462ace100840543007d1faa
 client.connect(key="root", account="admin", user="admin")
 
 existing = client.get_metadata(db_id, client.uid())
@@ -81,8 +85,8 @@ else:
 
 create_schema(client)
 result = loading_data(client, "https://raw.githack.com/terminusdb/terminus-tutorials/master/movies-data/IMDB-Movie-Data.csv")
-result_df = query_to_df(result)
-print(result)
+# result_df = query_to_df(result)
+# print(result)
 # print(result_df.columns)
 # print("----------------")
 # print(result_df["genre_objid"])
