@@ -52,7 +52,7 @@ Details: [schema.org](https://github.com/terminusdb/terminus-tutorials/tree/mast
 
 ## Flight Tutorial
 
-Putting [OpenFlights.org](https://schema.org/) data into a TerminusDB graph.
+Putting [OpenFlights.org](https://openflights.org/) data into a TerminusDB graph.
 
 Details: [schema.org](https://github.com/terminusdb/terminus-tutorials/tree/master/flight-tutorial)
 
