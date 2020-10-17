@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eux
 
-# build prolog
+# build swipl
 mkdir $HOME/swipl_bld
 
 cd $HOME/swipl_bld
@@ -14,6 +14,9 @@ cd build
 cmake -DCMAKE_INSTALL_PREFIX=${NB_PYTHON_PREFIX} -G Ninja ..
 ninja
 ninja install
+
+# smoke test swipl
+swipl -g "writeln('hello world')." -t 'halt.'
 
 cd $HOME
 
@@ -44,7 +47,6 @@ swipl install.pl
 
 # get server source
 git clone https://github.com/terminusdb/terminusdb-server
-
 
 # make launcher script
 cat << EOF > start_terminusdb.sh
