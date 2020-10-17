@@ -51,7 +51,7 @@ git clone https://github.com/terminusdb/terminusdb-server
 # make launcher script
 cat << EOF > start_terminusdb.sh
 cd ${HOME}/terminusdb-server
-./utils/db_init -k "${NB_USER}" -s "${NB_USER}" -p "${PORT}"
+./utils/db_init -k "${NB_USER}" -s "${NB_USER}" -p "\${PORT}"
 ./start.pl
 EOF
 
