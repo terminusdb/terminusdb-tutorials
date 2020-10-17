@@ -25,6 +25,19 @@ swipl install.pl
 # get server source
 git clone https://github.com/terminusdb/terminusdb-server
 
+# set up proxy
+cat << EOF > $HOME/.jupyter/jupyter_notebook_config.d/terminusdb-server-proxy.json
+{
+    "ServerProxy": {
+        "servers": {
+            "terminusdb": {
+                "command": ["./terminusdb-server/start.pl"]
+            }
+        }
+    }
+}
+EOF
+
 # install labextensions
 jupyter labextension install --no-build --debug \
     @jupyter-widgets/jupyterlab-manager \

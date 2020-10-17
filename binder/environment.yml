@@ -8,6 +8,7 @@ dependencies:
   - bqplot
   - ipycytoscape
   - ipywidgets
+  - jupyter-server-proxy
   - jupyterlab >=2.2,<3
   - matplotlib-base
   - nodejs >=14,<15
@@ -20,3 +21,4 @@ dependencies:
   - requests
   - pip:
     - terminusdb-client
+    - pyswip
