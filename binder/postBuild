@@ -41,33 +41,6 @@ swipl install.pl
 # get server source
 git clone https://github.com/terminusdb/terminusdb-server --depth=1
 
-# make launcher script
-cat << EOF > start_terminusdb.sh
-export TERMINUSDB_HTTPS_ENABLED=0
-
-cd ${HOME}/terminusdb-server
-./utils/db_init -k "admin" -p "\${PORT}"
-./start.pl
-EOF
-
-# configure proxy
-mkdir -p $HOME/.jupyter/jupyter_notebook_config.d
-cat << EOF > $HOME/.jupyter/jupyter_notebook_config.d/terminusdb-server-proxy.json
-{
-    "ServerProxy": {
-        "servers": {
-            "terminusdb": {
-                "command": ["./start_terminusdb.sh"],
-                "environment": {
-                    "PORT": "{port}"
-                },
-                "timeout": 1000
-            }
-        }
-    }
-}
-EOF
-
 # install labextensions
 jupyter labextension install --no-build --debug \
     @jupyter-widgets/jupyterlab-manager \
