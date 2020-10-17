@@ -56,6 +56,7 @@ cd ${HOME}/terminusdb-server
 EOF
 
 # configure proxy
+mkdir -p $HOME/.jupyter/jupyter_notebook_config.d
 cat << EOF > $HOME/.jupyter/jupyter_notebook_config.d/terminusdb-server-proxy.json
 {
     "ServerProxy": {
