@@ -34,7 +34,7 @@ cat << EOF > install.pl
 :- initialization main.
 
 install:-
-        pack_install(terminus_store_prolog).
+        pack_install(terminus_store_prolog, [interactive(false)]).
 
 main:-
         catch(install, E, (print_message(error, E), fail)),
