@@ -18,9 +18,13 @@ dependencies:
   - pyld
   - pyshacl
   - python >=3.8,<3.9
+  - python-dateutil
   - rdflib-jsonld
   - requests
   - rust
+  - w3lib
   - pip:
     - terminusdb-client
     - pyswip
+    - csvs
+    - extruct
