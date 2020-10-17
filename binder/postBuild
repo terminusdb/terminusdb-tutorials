@@ -2,6 +2,22 @@
 
 set -eux
 
+# build prolog
+mkdir $HOME/swipl_bld
+
+cd $HOME/swipl_bld
+wget -N https://www.swi-prolog.org/download/stable/src/swipl-8.2.1.tar.gz
+tar -xvzf swipl-8.2.1.tar.gz
+cd swipl-8.2.1
+
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=${NB_PYTHON_PREFIX} -G Ninja ..
+ninja
+ninja install
+
+cd $HOME
+
 # get rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 

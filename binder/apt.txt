@@ -1,1 +1,26 @@
-swi-prolog
+build-essential
+cmake
+default-jdk
+junit4
+libarchive-dev
+libdb-dev
+libedit-dev
+libgmp-dev
+libgoogle-perftools-dev
+libice-dev
+libjpeg-dev
+libossp-uuid-dev
+libpcre3-dev
+libreadline-dev
+libssl-dev
+libunwind-dev
+libxext-dev
+libxft-dev
+libxinerama-dev
+libxpm-dev libxt-dev
+libyaml-dev
+ncurses-dev
+ninja-build
+pkg-config
+unixodbc-dev
+zlib1g-dev
