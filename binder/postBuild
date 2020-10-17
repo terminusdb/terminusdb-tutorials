@@ -4,7 +4,10 @@ set -eux
 
 # get rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y
+
 echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+
+source ~/.bashrc
 
 # install prolog package
 cat << EOF > install.pl
@@ -25,13 +28,25 @@ swipl install.pl
 # get server source
 git clone https://github.com/terminusdb/terminusdb-server
 
-# set up proxy
+
+# make launcher script
+cat << EOF > start_terminusdb.sh
+cd ${HOME}/terminusdb-server
+./utils/db_init -k "${NB_USER}" -s "${NB_USER}" -p "${PORT}"
+./start.pl
+EOF
+
+# configure proxy
 cat << EOF > $HOME/.jupyter/jupyter_notebook_config.d/terminusdb-server-proxy.json
 {
     "ServerProxy": {
         "servers": {
             "terminusdb": {
-                "command": ["./terminusdb-server/start.pl"]
+                "command": ["./start_terminusdb.sh"],
+                "environment": {
+                    "PORT": "{port}"
+                },
+                "timeout": 1000
             }
         }
     }
