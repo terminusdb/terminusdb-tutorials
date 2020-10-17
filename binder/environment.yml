@@ -22,6 +22,8 @@ dependencies:
   - rdflib-jsonld
   - requests
   - rust
+  - spacy
+  - spacy-model-en_core_web_lg
   - w3lib
   - pip:
     - terminusdb-client
