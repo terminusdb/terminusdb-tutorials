@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eux
+
+cat << EOF > install.pl
+pack_install(terminus_store_prolog)
+EOF
+
+swipl install.pl
+
+git clone https://github.com/terminusdb/terminusdb-server
+
+jupyter labextension install \
+    @jupyter-widgets/jupyterlab-manager \
+    jupyter-cytoscape
