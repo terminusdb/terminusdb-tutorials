@@ -20,6 +20,7 @@ dependencies:
   - python >=3.8,<3.9
   - rdflib-jsonld
   - requests
+  - rust
   - pip:
     - terminusdb-client
     - pyswip
