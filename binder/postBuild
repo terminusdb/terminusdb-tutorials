@@ -18,6 +18,8 @@ ninja install
 
 cd $HOME
 
+rm -rf $HOME/swipl_bld
+
 # get rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 
