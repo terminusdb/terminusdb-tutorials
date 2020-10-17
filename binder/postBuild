@@ -2,14 +2,34 @@
 
 set -eux
 
+# get rust
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+
+# install prolog package
 cat << EOF > install.pl
-pack_install(terminus_store_prolog)
+:- initialization main.
+
+install:-
+        pack_install(terminus_store_prolog).
+
+main:-
+        catch(install, E, (print_message(error, E), fail)),
+        halt.
+main:-
+        halt(1).
 EOF
 
 swipl install.pl
 
+# get server source
 git clone https://github.com/terminusdb/terminusdb-server
 
-jupyter labextension install \
+# install labextensions
+jupyter labextension install --no-build --debug \
     @jupyter-widgets/jupyterlab-manager \
-    jupyter-cytoscape
+    jupyter-cytoscape \
+    bqplot
+
+# build lab
+jupyter lab build --debug --minimize=False

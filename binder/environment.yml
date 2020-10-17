@@ -5,6 +5,7 @@ channels:
   - nodefaults
 
 dependencies:
+  - bqplot
   - ipycytoscape
   - ipywidgets
   - jupyterlab >=2.2,<3
