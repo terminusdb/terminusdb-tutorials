@@ -41,9 +41,51 @@ swipl install.pl
 # get server source
 git clone https://github.com/terminusdb/terminusdb-server --depth=1
 
+
+# start terminusdb setup
+pushd terminusdb-server
+export TERMINUSDB_HTTPS_ENABLED=0
+./utils/db_init -k "admin" -p "6363"
+
+./start.pl &
+_TMP_TDB_PID=$!
+
+# rewrite some schemas
+export SCHEMA_CREATORS=$(git grep -l create_schema */*.py */*/*.py)
+
+git grep -l ':6364' $SCHEMA_CREATORS \
+    | xargs sed -i 's/localhost:6364/localhost:6363/g' || echo 'no 6366'
+
+git grep -l ':6366' $SCHEMA_CREATORS \
+    | xargs sed -i 's/localhost:6366/localhost:6363/g' || echo 'no 6366'
+
+git grep -l 'https://localhost:6363' $SCHEMA_CREATORS \
+    | xargs sed -i 's/https:\/\/localhost:6363"/http:\/\/localhost:6363", insecure=True/g' || echo 'no https'
+
+git grep -l 'insecure=True,\s*insecure=True' $SCHEMA_CREATORS \
+    | xargs sed -i 's/insecure=True,\s*insecure=True/insecure=True/g' || echo 'no dupe insecure'
+
+# pre-populate database with examples
+for schema_creator in $(git grep create_schema '*/*.py')
+do
+  python $schema_creator
+done
+
+kill $_TMP_TDB_PID
+
+# done with terminusdb setup
+popd
+
+cat << EOF > start_binder_terminusdb.sh
+export TERMINUSDB_HTTPS_ENABLED=0
+cd ${HOME}/terminusdb-server
+./start.pl
+EOF
+
 # install labextensions
 jupyter labextension install --no-build --debug \
     @jupyter-widgets/jupyterlab-manager \
+    @jupyterlab/toc \
     @pyviz/jupyterlab_pyviz \
     bqplot \
     jupyter-cytoscape \

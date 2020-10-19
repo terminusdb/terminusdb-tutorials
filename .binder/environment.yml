@@ -27,6 +27,7 @@ dependencies:
   - scikit-image
   - spacy
   - spacy-model-en_core_web_lg
+  - tabulate
   - w3lib
   - pip:
     - csvs
