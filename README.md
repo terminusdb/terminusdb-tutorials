@@ -1,5 +1,11 @@
 # Tutorials for using TerminusDB
 
+> TODO: fix URL
+> [![Binder-badge][][binder]
+
+[binder-badge]: https://mybinder.org/badge_logo.svg
+[binder]: https://mybinder.org/v2/gh/bollwyvl/terminusdb-tutorials/add-binder?urlpath=lab/workspaces/terminusdb-tutorials
+
 ## Installation
 
 #### TerminusDB

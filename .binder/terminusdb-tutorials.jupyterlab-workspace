@@ -1,0 +1,66 @@
+{
+    "data": {
+        "layout-restorer:data": {
+            "main": {
+                "dock": {
+                    "type": "split-area",
+                    "orientation": "horizontal",
+                    "sizes": [
+                        0.5,
+                        0.5
+                    ],
+                    "children": [
+                        {
+                            "type": "tab-area",
+                            "currentIndex": 0,
+                            "widgets": [
+                                "notebook:START.ipynb"
+                            ]
+                        },
+                        {
+                            "type": "tab-area",
+                            "currentIndex": 0,
+                            "widgets": [
+                                "terminal:1"
+                            ]
+                        }
+                    ]
+                },
+                "mode": "multiple-document",
+                "current": "notebook:START.ipynb"
+            },
+            "left": {
+                "collapsed": true,
+                "widgets": [
+                    "filebrowser",
+                    "running-sessions",
+                    "command-palette",
+                    "jp-property-inspector",
+                    "tab-manager",
+                    "extensionmanager.main-view"
+                ]
+            },
+            "right": {
+                "collapsed": true,
+                "widgets": []
+            }
+        },
+        "file-browser-filebrowser:cwd": {
+            "path": "terminusdb-tutorials"
+        },
+        "notebook:START.ipynb": {
+            "data": {
+                "path": "START.ipynb",
+                "factory": "Notebook"
+            }
+        },
+        "terminal:1": {
+            "data": {
+                "name": "1"
+            }
+        }
+    },
+    "metadata": {
+        "id": "/lab"
+    }
+}

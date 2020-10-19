@@ -93,3 +93,6 @@ jupyter labextension install --no-build --debug \
 
 # build lab
 jupyter lab build --debug --minimize=False
+
+# import workspace
+jupyter workspace import .binder/terminusdb-tutorials.jupyterlab-workspace
