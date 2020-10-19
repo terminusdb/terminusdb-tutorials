@@ -6,6 +6,7 @@ channels:
 
 dependencies:
   - bqplot
+  - datashader
   - ipycytoscape
   - ipywidgets
   - jupyter-server-proxy
@@ -21,7 +22,9 @@ dependencies:
   - python-dateutil
   - rdflib-jsonld
   - requests
+  - requests_cache
   - rust
+  - scikit-image
   - spacy
   - spacy-model-en_core_web_lg
   - w3lib

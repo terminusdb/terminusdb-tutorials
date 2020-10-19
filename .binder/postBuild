@@ -44,8 +44,10 @@ git clone https://github.com/terminusdb/terminusdb-server --depth=1
 # install labextensions
 jupyter labextension install --no-build --debug \
     @jupyter-widgets/jupyterlab-manager \
+    @pyviz/jupyterlab_pyviz \
+    bqplot \
     jupyter-cytoscape \
-    bqplot
+    qgrid2
 
 # build lab
 jupyter lab build --debug --minimize=False
