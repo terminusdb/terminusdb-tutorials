@@ -45,8 +45,7 @@ git clone https://github.com/terminusdb/terminusdb-server --depth=1
 # start terminusdb setup
 pushd terminusdb-server
 export TERMINUSDB_HTTPS_ENABLED=0
-./utils/db_init -k "admin" -p "6363"
-
+./utils/db_init --key "root" --port "6363" --protocol "http"
 ./start.pl &
 _TMP_TDB_PID=$!
 
