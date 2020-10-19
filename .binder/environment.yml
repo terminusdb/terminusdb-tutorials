@@ -26,7 +26,7 @@ dependencies:
   - rust
   - scikit-image
   - spacy
-  - spacy-model-en_core_web_lg
+  - spacy-model-en_core_web_sm
   - tabulate
   - w3lib
   - pip:
