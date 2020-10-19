@@ -65,9 +65,9 @@ git grep -l 'insecure=True,\s*insecure=True' $SCHEMA_CREATORS \
     | xargs sed -i 's/insecure=True,\s*insecure=True/insecure=True/g' || echo 'no dupe insecure'
 
 # pre-populate database with examples
-for schema_creator in $(git grep create_schema '*/*.py')
+for schema_creator in $(git grep -l create_schema '*/*.py')
 do
-  python $schema_creator
+  python $schema_creator || echo "$schema_creator failed, continuing..."
 done
 
 kill $_TMP_TDB_PID
