@@ -82,6 +82,8 @@ cd ${HOME}/terminusdb-server
 ./start.pl
 EOF
 
+chmod +x start_binder_terminusdb.sh
+
 # install labextensions
 jupyter labextension install --no-build --debug \
     @jupyter-widgets/jupyterlab-manager \
