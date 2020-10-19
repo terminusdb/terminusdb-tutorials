@@ -4,7 +4,7 @@
 > [![Binder-badge][][binder]
 
 [binder-badge]: https://mybinder.org/badge_logo.svg
-[binder]: https://mybinder.org/v2/gh/bollwyvl/terminusdb-tutorials/add-binder?urlpath=lab/workspaces/terminusdb-tutorials
+[binder]: https://mybinder.org/v2/gh/bollwyvl/terminusdb-tutorials/add-binder?urlpath=lab
 
 ## Installation
 

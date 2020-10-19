@@ -83,6 +83,9 @@ EOF
 
 chmod +x start_binder_terminusdb.sh
 
+# remove any extras installed by binder (avoid incompatibility complaints with lab)
+jupyter lab clean --all
+
 # install labextensions
 jupyter labextension install --no-build --debug \
     @jupyter-widgets/jupyterlab-manager \
