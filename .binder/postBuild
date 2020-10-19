@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -eux
 
+# do a proper conda activation
+source activate ${NB_PYTHON_PREFIX}
+
 # build swipl
 mkdir $HOME/swipl_bld
 
@@ -82,6 +85,15 @@ cd ${HOME}/terminusdb-server
 EOF
 
 chmod +x start_binder_terminusdb.sh
+
+# get javascript stuff
+yarn global add @terminusdb/terminusdb-client tslab
+
+# link so it works when installed, hard to mess with $PATH
+ln -s ~/.yarn/bin/tslab $CONDA_PREFIX/bin/tslab
+
+# install tslab kernel
+tslab install
 
 # remove any extras installed by binder (avoid incompatibility complaints with lab)
 jupyter lab clean --all
