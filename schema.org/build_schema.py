@@ -109,25 +109,36 @@ propteries["QueryObjects_DR"] = propteries.apply(construct_prop_dr, axis=1)
 propteries["QueryAddOnObj"] = propteries.apply(construction_schema_addon_property, axis=1, type_list=list(types["id"]))
 
 
-db_id = "schema_tutorial"
-client = WOQLClient(server_url = "http://localhost:6363")
-client.connect(key="root", account="admin", user="admin")
-existing = client.get_metadata(db_id, client.uid())
-if not existing:
-    client.create_database(db_id, "admin", label="Schema.org Graph", description="Create a graph with Schema.org")
-else:
-    client.db(db_id)
+server_url = "https://127.0.0.1:6363"
+user = "admin"
+account = "admin"
+key = "root"
+dbid = "schema_tutorial"
+label = "Schema Tutorial"
+description = "Create a graph with Schema.org data"
 
-print("crete schema for types")
+client = WOQLClient(server_url)
+client.connect(user=user,account=account,key=key,db=dbid)
+
+try:
+    client.create_database(dbid,user,label=label, description=description)
+except Exception as E:
+    error_obj = E.errorObj
+    if "api:DatabaseAlreadyExists" == error_obj.get("api:error",{}).get("@type",None):
+        print(f'Warning: Database "{dbid}" already exists!\n')
+    else:
+        raise(E)
+
+print("create schema for types")
 create_schema_objects(client, list(types["QueryObjects"]))
-print("crete schema relations for simple types")
+print("create schema relations for simple types")
 #construct_simple_type_relations(type_list=list(types["id"]))
 create_schema_objects(client, construct_simple_type_relations())
-print("crete schema add on for types")
+print("create schema add on for types")
 create_schema_add_ons(client, list(types["QueryAddOnObj"]))
 #print("crete schema for properties")
 #create_schema_objects(client, list(propteries["QueryObjects"]))
 print("create schema for DR objects")
 create_schema_add_ons(client, list(propteries["QueryObjects_DR"]))
-print("crete schema add on for properties")
+print("create schema add on for properties")
 create_schema_add_ons(client, list(propteries["QueryAddOnObj"]))

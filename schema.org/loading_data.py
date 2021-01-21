@@ -42,12 +42,24 @@ def extract_data(data, id='event/'):
 
 extract_data(data['microdata'][0])
 
-db_id = "schema_tutorial"
-client = WOQLClient(server_url = "http://localhost:6363")
-client.connect(key="root", account="admin", user="admin")
-existing = client.get_metadata(db_id, client.uid())
-if not existing:
-    client.create_database(db_id, "admin", { "label": "Schema.org Graph", "comment": "Create a graph with Schema.org data"})
-else:
-    client.db(db_id)
-WOQLQuery().woql_and(*execution_queue).execute(client)
+server_url = "https://127.0.0.1:6363"
+user = "admin"
+account = "admin"
+key = "root"
+dbid = "schema_tutorial"
+label = "Schema Tutorial"
+description = "Create a graph with Schema.org data"
+
+client = WOQLClient(server_url)
+client.connect(user=user,account=account,key=key,db=dbid)
+
+try:
+    client.create_database(dbid,user,label=label, description=description)
+except Exception as E:
+    error_obj = E.errorObj
+    if "api:DatabaseAlreadyExists" == error_obj.get("api:error",{}).get("@type",None):
+        print(f'Warning: Database "{dbid}" already exists!\n')
+    else:
+        raise(E)
+
+# WOQLQuery().woql_and(*execution_queue).execute(client)
