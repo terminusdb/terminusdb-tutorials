@@ -18,7 +18,7 @@ def build_schema(client):
 
 if __name__ == "__main__":
     db_id = "nlp_spacy"
-    client = WOQLClient(server_url = "http://localhost:6363")
+    client = WOQLClient(server_url = "https://127.0.0.1:6363")
     client.connect(key="root", account="admin", user="admin")
     existing = client.get_metadata(db_id, client.uid())
     if not existing:

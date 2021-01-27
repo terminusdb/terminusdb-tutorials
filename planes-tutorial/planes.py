@@ -1,8 +1,7 @@
-import woqlclient.woqlClient as woql
-from woqlclient import WOQLQuery
+from terminusdb_client import WOQLQuery, WOQLClient
 import json
 
-server_url = "http://localhost:6363"
+server_url = "https://127.0.0.1:6363"
 key = "root"
 dbId = "pyplane2"
 
@@ -77,12 +76,12 @@ def load_data(client):
     q.execute(client)
 
 
-client = woql.WOQLClient()
-client.connect(server_url, key)
-try: 
-    client.createDatabase(dbId, "Airplane Graph")
-except:
-    print("Databse already Exists") 
-client.conConfig.setDB(dbId)
+client = WOQLClient(server_url = "https://127.0.0.1:6363")
+client.connect(key="root", account="admin", user="admin")
+existing = client.get_metadata(dbId, client.uid())
+if not existing:
+    client.create_database(dbId, "admin", label="Airplane Graph")
+else:
+    client.db(dbId)
 create_schema(client)
 load_data(client)

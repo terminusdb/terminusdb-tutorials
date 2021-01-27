@@ -70,11 +70,7 @@ def loading_data(client, file_url):
 
 
 db_id = "movie_graph"
-<<<<<<< HEAD
 client = WOQLClient("https://127.0.0.1:6363")
-=======
-client = WOQLClient("https://localhost:6363", insecure=True)
->>>>>>> a99fdc86ce0a43410462ace100840543007d1faa
 client.connect(key="root", account="admin", user="admin")
 
 existing = client.get_metadata(db_id, client.uid())
