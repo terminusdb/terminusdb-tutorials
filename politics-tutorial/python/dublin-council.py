@@ -83,8 +83,11 @@ def load_csvs(client, csvs):
 
 if __name__ == "__main__":
     db_id = "dublin_voting"
-    client = woql.WOQLClient(server_url = "https://localhost:6364",insecure=True)
-    client.connect(key="root", account="admin", user="admin")
+    server_url = "https://127.0.0.1:6363"
+    key = "root"
+    user = "admin"
+    client = woql.WOQLClient(server_url = server_url, insecure=True)
+    client.connect(user=user,account=user,key=key,db=db_id)
     existing = client.get_metadata(db_id, client.uid())
     if not existing:
         client.create_database(db_id, "admin", label="Dublin Council Graph", description="Create a graph with Dublin council voting data")

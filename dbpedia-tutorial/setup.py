@@ -12,7 +12,7 @@ lines = 200000
 def add_ttl(name, uri):
     os.system(f"mkdir -p {name}")
     os.system(f"rm -f {name}/*")
-    os.system(f"wget {uri} -O {name}.bz2")
+    os.system(f"curl {uri} -o {name}.bz2")
     os.system(f"bunzip2 -c {name}.bz2 > {name}.ttl")
     os.chdir(f"{name}")
     os.system(f"split -l {lines} ../{name}.ttl")
