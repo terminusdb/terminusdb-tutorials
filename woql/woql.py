@@ -22,6 +22,20 @@ client.connect(user=user, account=account, key=key, db=db, insecure=True)
 query = WQ().triple("v:X", "v:Y", "v:Z").to_dict()
 print(query)
 
+# Just stick the query in there...
 WQ().update_object(query).execute(client)
 print("Inserted query")
-# Append
+
+# Instead give the query a name to aid retrieval
+query['@id'] = 'doc:my_triple_query'
+WQ().update_object(query).execute(client)
+print("Inserted named query")
+
+# Get the object back
+results = WQ().read_object('doc:my_triple_query', "v:Query").execute(client)
+my_triple_query = results['bindings'][0]['Query']
+print(f"And here it is: {my_triple_query}")
+
+results = client.query(my_triple_query)['bindings']
+
+print(f"And results are us looking at ourselves: {results}")
