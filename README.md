@@ -54,11 +54,11 @@ Details: [schema.org](https://github.com/terminusdb/terminus-tutorials/tree/mast
 
 Putting [OpenFlights.org](https://openflights.org/) data into a TerminusDB graph.
 
-Details: [schema.org](https://github.com/terminusdb/terminus-tutorials/tree/master/flight-tutorial)
+Details: [flight-tutorial](https://github.com/terminusdb/terminus-tutorials/tree/master/flight-tutorial)
 
 ## Bank Tutorial
 
-A generic "bank account" manipulation tutorial.
+A generic "bank account" manipulation tutorial. Example of how to manage data via multiple branches.
 
 In [Python](https://github.com/terminusdb/terminus-tutorials/tree/master/bank-tutorial/taking_terminus_to_the_bank.py).
 
@@ -67,3 +67,27 @@ Also see the [tutorial blog post](https://terminusdb.com/blog/2020/07/27/taking-
 ## Episode 2
 
 TerminusDB's product roadmap episode 2 implementation in [python](https://github.com/terminusdb/terminus-tutorials/tree/master/episode-2/episode2.py).
+
+## Game of Throne
+
+In Neo4j, there is a famous example of using the Game of Throne data to create a graph visualisation of the character relations. Here we will see if we can do that in TerminusDB, and how.
+
+Details: [game-of-thrones](https://github.com/terminusdb/terminusdb-tutorials/tree/master/game-of-thrones)
+
+## Movies Data
+
+Putting IMDB movie data in a graph and explore the data.
+
+Details: [movies-data](https://github.com/terminusdb/terminusdb-tutorials/tree/master/movies-data)
+
+## WordNet
+
+Putting all the WordNet files (in ttl format) into TerminusDB.
+
+Details: [wordnet](https://github.com/terminusdb/terminusdb-tutorials/tree/master/wordnet)
+
+## SpaCy NLP [WIP]
+
+Putting the analysis from SpaCy into a TerminusDB Graph
+
+Details: [nlp-spacy](https://github.com/terminusdb/terminusdb-tutorials/tree/master/nlp-spacy)
