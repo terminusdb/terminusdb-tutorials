@@ -22,7 +22,7 @@ https://github.com/terminusdb/terminus-client
 
 ## Bike Tutorial
 
-Using bike hire data from [here](https://terminusdb.com/t/data/bikeshare/) to build a graph showing different journeys
+Using bike hire data from [here](https://www.capitalbikeshare.com/system-data) to build a graph showing different journeys
 
 Python API script: [bike-tutorial/python](https://github.com/terminusdb/terminus-tutorials/tree/master/bike-tutorial/python)
 
