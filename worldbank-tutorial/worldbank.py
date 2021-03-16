@@ -22,7 +22,7 @@ client = WOQLClient(server_url, insecure=True)
 client.connect(user=user, account=account, key=key, db=db, insecure=True)
 
 try:
-    client.delete_database(db)
+    client.delete_database(db,account)
 except Exception as E:
     print(E)
 
