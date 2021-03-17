@@ -1,3 +1,7 @@
+"""
+Works in version 1.0.0 of python client
+"""
+
 from terminusdb_client.woqlquery import WOQLQuery
 from terminusdb_client.woqlclient import WOQLClient
 import json
@@ -86,9 +90,13 @@ def load_data(client, houses, characters):
 db_id = "game_of_thrones"
 client = WOQLClient(server_url = server_url)
 client.connect(key="root", account="admin", user="admin")
-if db_id not in client.list_databases():
-    client.create_database(db_id, "admin", label="Game of Thrones Graph", description="Create a graph with Game of Thrones data")
-else:
-    client.set_db(db_id)
+existing = client.get_database(db_id, client.account())
+if existing:
+    client.delete_database(db_id)
+
+client.create_database(db_id, "admin", label="Game of Thrones Graph", description="Create a graph with Game of Thrones data")
+
 create_schema(client)
+
 load_data(client, houses, characters)
+
