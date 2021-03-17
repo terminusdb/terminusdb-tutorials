@@ -92,7 +92,7 @@ client = WOQLClient(server_url = server_url)
 client.connect(key="root", account="admin", user="admin")
 existing = client.get_database(db_id, client.account())
 if existing:
-    client.delete_database(db_id)
+    client.delete_database(db_id, client.account())
 
 client.create_database(db_id, "admin", label="Game of Thrones Graph", description="Create a graph with Game of Thrones data")
 
