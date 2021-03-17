@@ -17,16 +17,12 @@ client.connect(user=user,account=account,key=key,db=dbid)
 
 # Uncomment this to delete your old database first
 # client.delete_database(dbid)
+exists = client.get_database(dbid,account)
 
 # Create the database
-try:
-    client.create_database(dbid,user,label=label, description=description)
-except Exception as E:
-    error_obj = E.error_obj
-    if "api:DatabaseAlreadyExists" == error_obj.get("api:error",{}).get("@type",None):
-        print(f'Warning: Database "{dbid}" already exists!\n')
-    else:
-        raise(E)
+if exists:
+    client.delete_database(dbid,user)
+client.create_database(dbid,user,label=label, description=description)
 
 # Add the schema (there is no harm in adding repeatedly as it is idempotent)
 WQ().woql_and(
@@ -102,10 +98,6 @@ WQ().woql_and(
       .property("balance", 887)
 ).execute(client,"Adding Jane")
 
-try:
-    client.rebase({"rebase_from": f'{user}/{dbid}/{repository}/branch/{branch}',
-                   "author": user,
-                   "message": "Merging jim in from branch_office"})
-except Exception as E:
-    error_obj = E.errorObj
-    print(f'{error_obj}\n')
+client.rebase(rebase_source = f'{user}/{dbid}/{repository}/branch/{branch}',
+              author = user,
+              message = "Merging jim in from branch_office")
