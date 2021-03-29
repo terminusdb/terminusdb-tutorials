@@ -110,10 +110,9 @@ if __name__ == "__main__":
     db_id = "pybike"
     client = woql.WOQLClient(server_url = "https://127.0.0.1:6363", insecure=True)
     client.connect(key="root", account="admin", user="admin")
-    existing = client.get_database(db_id, client.uid())
-    if not existing:
+    if db_id not in client.list_databases():
         client.create_database(db_id, accountid="admin", label = "Bike Graph", description = "Create a graph with bike data")
     else:
-        client.db(db_id)
+        client.set_db(db_id)
     create_schema(client, "Creating bike schema")
     load_csvs(client, csvs, get_wrangles(), get_inserts())

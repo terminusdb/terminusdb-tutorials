@@ -2,6 +2,9 @@ from terminusdb_client.woqlquery import WOQLQuery
 from terminusdb_client.woqlclient import WOQLClient
 import json
 import pandas as pd
+import os
+
+file_dir = os.path.dirname(os.path.abspath(__file__))
 
 countries_header = ['Name',
                     'ISO Code',
@@ -37,17 +40,10 @@ routes_header = ['Airline Code',
                  'Codeshare',
                  'Number of stops']
 
-countries = pd.read_csv('countries.dat', encoding='utf-8', sep=',', names=countries_header, index_col=False)
-#print(countries.head())
-
-airlines = pd.read_csv('airlines.dat', encoding='utf-8', sep=',', names=airlines_header, index_col=False)
-#print(airlines.head())
-
-airports = pd.read_csv('airports.dat', encoding='utf-8', sep=',', names=airports_header, index_col=False)
-#print(airports.head())
-
-routes = pd.read_csv('routes.dat', sep=',', encoding='utf-8', names=routes_header, index_col=False)
-#print(routes.head())
+countries = pd.read_csv(file_dir+'/countries.dat', encoding='utf-8', sep=',', names=countries_header, index_col=False)
+airlines = pd.read_csv(file_dir+'/airlines.dat', encoding='utf-8', sep=',', names=airlines_header, index_col=False)
+airports = pd.read_csv(file_dir+'/airports.dat', encoding='utf-8', sep=',', names=airports_header, index_col=False)
+routes = pd.read_csv(file_dir+'/routes.dat', sep=',', encoding='utf-8', names=routes_header, index_col=False)
 
 def _clean_id(input, prefix=None):
     if pd.isna(input):
@@ -152,11 +148,10 @@ flights_query = routes.apply(load_flight, axis=1, airports=airports, airlines=ai
 db_id = "pyplane"
 client = WOQLClient(server_url = "https://127.0.0.1:6363")
 client.connect(key="root", account="admin", user="admin")
-existing = client.get_metadata(db_id, client.uid())
-if not existing:
+if db_id not in client.list_databases():
     client.create_database(db_id, "admin", label="Flight Graph", description="Create a graph with Open Flights data")
 else:
-    client.db(db_id)
+    client.set_db(db_id)
 WOQLQuery().woql_and(*countries_query).execute(client, "Insert countries data")
 WOQLQuery().woql_and(*airlines_query).execute(client, "Insert airlines data")
 WOQLQuery().woql_and(*airports_query).execute(client, "Insert airports data")

@@ -22,7 +22,7 @@ client.connect(user=user,account=account,key=key,db=dbid)
 try:
     client.create_database(dbid,user,label=label, description=description)
 except Exception as E:
-    error_obj = E.errorObj
+    error_obj = E.error_obj
     if "api:DatabaseAlreadyExists" == error_obj.get("api:error",{}).get("@type",None):
         print(f'Warning: Database "{dbid}" already exists!\n')
     else:
@@ -63,7 +63,7 @@ try:
         WQ().add_triple("doc:mike", "scm:balance", new_balance)
     ).execute(client, "Update mike")
 except Exception as E:
-    error_obj = E.errorObj
+    error_obj = E.error_obj
     print(f'Witness of failure for mike: {error_obj}')
 
 # Subtract less
@@ -79,7 +79,7 @@ branch = "branch_office"
 try:
     client.branch(branch)
 except Exception as E:
-    error_obj = E.errorObj
+    error_obj = E.error_obj
     if "api:BranchExistsError" == error_obj.get("api:error",{}).get("@type",None):
         print(f'Warning: Branch "{branch}" already exists!\n')
     else:

@@ -1,14 +1,16 @@
 from terminusdb_client.woqlquery import WOQLQuery
 from terminusdb_client.woqlclient import WOQLClient
 import json
+import os
+
+file_dir = os.path.dirname(os.path.abspath(__file__))
 
 server_url="https://127.0.0.1:6363"
-db_id="game_of_thrones"
 
-with open('houses.json') as json_file:
+with open(file_dir+'/houses.json') as json_file:
     houses = json.load(json_file)
 
-with open('characters.json') as json_file:
+with open(file_dir+'/characters.json') as json_file:
     characters = json.load(json_file)
 
 def create_schema(client):
@@ -84,10 +86,9 @@ def load_data(client, houses, characters):
 db_id = "game_of_thrones"
 client = WOQLClient(server_url = server_url)
 client.connect(key="root", account="admin", user="admin")
-existing = client.get_metadata(db_id, client.uid())
-if not existing:
+if db_id not in client.list_databases():
     client.create_database(db_id, "admin", label="Game of Thrones Graph", description="Create a graph with Game of Thrones data")
 else:
-    client.db(db_id)
+    client.set_db(db_id)
 create_schema(client)
 load_data(client, houses, characters)

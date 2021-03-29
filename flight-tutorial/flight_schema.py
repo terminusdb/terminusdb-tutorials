@@ -66,9 +66,8 @@ def generateMultiInsertQuery(codes, type):
 db_id = "pyplane"
 client = WOQLClient(server_url = "https://127.0.0.1:6363")
 client.connect(key="root", account="admin", user="admin")
-existing = client.get_metadata(db_id, client.uid())
-if not existing:
+if db_id not in client.list_databases():
     client.create_database(db_id, "admin", label="Flights Graph", description="Create a graph with Open Flights data")
 else:
-    client.db(db_id)
+    client.set_db(db_id)
 create_schema(client)
