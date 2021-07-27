@@ -2,7 +2,6 @@ from typing import List, Optional
 from terminusdb_client import WOQLQuery, WOQLClient
 from terminusdb_client.woqlschema.woql_schema import (
     DocumentTemplate,
-    ObjectTemplate,
     WOQLSchema,
     ValueHashKey,
     HashKey,
@@ -12,7 +11,7 @@ import pandas as pd
 
 my_schema = WOQLSchema()
 
-class Coordinates(ObjectTemplate):
+class Coordinates(DocumentTemplate):
     _schema = my_schema
     longitude: float
     latitude: float
@@ -60,7 +59,6 @@ class Brewery(DocumentTemplate):
     website_url: str
 
 def insert_data(client, url):
-    #client.connect(db='open_brewery')
     all_breweries = []
     df = pd.read_csv(url, usecols = ['name', 'brewery_type', 'street', 'city', 'state', 'postal_code', 'website_url','phone', 'country', 'longitude', 'latitude'])
     df = df.fillna('')
@@ -102,5 +100,5 @@ if __name__ == "__main__":
                            graph_type="schema",
                            commit_msg="I am checking in the schema")
     insert_data(client, url)
-    #results = client.get_all_documents(graph_type="instance", count=2)
-    #print(list(results))
+    results = client.get_all_documents(graph_type="instance", count=2)
+    print(list(results))
