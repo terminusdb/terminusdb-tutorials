@@ -40,7 +40,7 @@ if __name__ == "__main__":
     db_id = "open_brewery"
     url = "https://raw.githubusercontent.com/openbrewerydb/openbrewerydb/master/breweries.csv"
     client = WOQLClient("http://127.0.0.1:6363")
-    client.connect(key="root", account="admin", user="admin")
+    client.connect()
     client.set_db(db_id)
     insert_data(client, url)
     results = client.get_all_documents(graph_type="instance", count=2)
