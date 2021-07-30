@@ -70,11 +70,12 @@ class Brewery(DocumentTemplate):
 
 def insert_data(client, url):
     all_breweries = []
-    df = pd.read_csv(url, usecols = ['name', 'brewery_type', 'street', 'city', 'state', 'postal_code', 'website_url','phone', 'country', 'longitude', 'latitude'])
-    df = df.fillna('')
+    df = pd.read_csv(url)
     print("HEADERS\n", list(df.columns.values))
     print("\nSTATS\n", df.describe(include='all'), "\n\nPROGRESS")
-    for index, row in tqdm(df.iterrows(), total=df.shape[0], desc='Reading data'):
+    selection = df.loc[:, ['name', 'brewery_type', 'street', 'city', 'state', 'postal_code', 'website_url','phone', 'country', 'longitude', 'latitude']]
+    selection = selection.fillna('')
+    for index, row in tqdm(selection.iterrows(), total=df.shape[0], desc='Reading data'):
         country = Country()
         country.name = row['country']
         state = State()
