@@ -8,7 +8,12 @@
 
 from typing import List
 
-from terminusdb_client.woqlschema import DocumentTemplate, RandomKey, ValueHashKey
+from terminusdb_client.woqlschema import (
+    DocumentTemplate,
+    EnumTemplate,
+    RandomKey,
+    ValueHashKey,
+)
 
 
 class Address(DocumentTemplate):
@@ -28,9 +33,18 @@ class Brewery(DocumentTemplate):
     website_url: str
 
 
-class Brewery_Type(DocumentTemplate):
-    _key = ValueHashKey()
-    name: str
+class Brewery_Type(EnumTemplate):
+    micro = ()
+    nano = ()
+    regional = ()
+    brewpub = ()
+    large = ()
+    planning = ()
+    bar = ()
+    contract = ()
+    proprietor = ()
+    closed = ()
+    taproom = ()
 
 
 class City(DocumentTemplate):

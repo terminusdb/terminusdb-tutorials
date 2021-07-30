@@ -2,12 +2,14 @@ from typing import List, Optional
 from terminusdb_client import WOQLQuery, WOQLClient
 from terminusdb_client.woqlschema.woql_schema import (
     DocumentTemplate,
+    EnumTemplate,
     WOQLSchema,
     ValueHashKey,
     HashKey,
 )
 
 import pandas as pd
+from tqdm import tqdm
 
 my_schema = WOQLSchema()
 
@@ -16,10 +18,19 @@ class Coordinates(DocumentTemplate):
     longitude: float
     latitude: float
 
-class Brewery_Type(DocumentTemplate):
+class Brewery_Type(EnumTemplate):
     _schema = my_schema
-    _key = ValueHashKey()
-    name: str
+    micro = ()
+    nano = ()
+    regional = ()
+    brewpub = ()
+    large = ()
+    planning = ()
+    bar = ()
+    contract = ()
+    proprietor = ()
+    closed = ()
+    taproom = ()
 
 class Country(DocumentTemplate):
     _schema = my_schema
@@ -42,11 +53,10 @@ class Address(DocumentTemplate):
     _schema = my_schema
     """This is address"""
 
-    _key = HashKey(["street", "postal_code"])
     _subdocument = []
 
     street: str
-    city = City
+    city: City
     postal_code: str
     coordinates: List[Coordinates]
 
@@ -62,7 +72,9 @@ def insert_data(client, url):
     all_breweries = []
     df = pd.read_csv(url, usecols = ['name', 'brewery_type', 'street', 'city', 'state', 'postal_code', 'website_url','phone', 'country', 'longitude', 'latitude'])
     df = df.fillna('')
-    for index, row in df.iterrows():
+    print("HEADERS\n", list(df.columns.values))
+    print("\nSTATS\n", df.describe(include='all'), "\n\nPROGRESS")
+    for index, row in tqdm(df.iterrows(), total=df.shape[0], desc='Reading data'):
         country = Country()
         country.name = row['country']
         state = State()
@@ -76,22 +88,22 @@ def insert_data(client, url):
         address.city = city
         address.postal_code = row['postal_code']
         address.coordinates = [str(row['longitude']), str(row['latitude'])]
-        brewery_type = Brewery_Type()
-        brewery_type.name = row['brewery_type']
         brewery = Brewery()
-        brewery.type_of = brewery_type
+        brewery.type_of = Brewery_Type[row['brewery_type']]
         brewery.address_of = address
         brewery.phone = row['phone']
         brewery.website_url = row['website_url']
         all_breweries.append(brewery)
-    client.insert_document(all_breweries,
-                           commit_msg="Adding all breweries")
+    with tqdm(total=1, desc='Transfering data') as pbar:
+        client.insert_document(all_breweries,
+                               commit_msg="Adding all breweries")
+        pbar.update(1)
 
 if __name__ == "__main__":
     db_id = "open_brewery"
     url = "https://raw.githubusercontent.com/openbrewerydb/openbrewerydb/master/breweries.csv"
     client = WOQLClient("http://127.0.0.1:6363")
-    client.connect(key="root", account="admin", user="admin")
+    client.connect()
     try:
         client.create_database(db_id, accountid="admin", label = "Open Brewery Graph", description = "Create a graph with brewery data")
     except Exception:
@@ -101,4 +113,4 @@ if __name__ == "__main__":
                            commit_msg="I am checking in the schema")
     insert_data(client, url)
     results = client.get_all_documents(graph_type="instance", count=2)
-    print(list(results))
+    print("\nRESULTS\n", list(results))

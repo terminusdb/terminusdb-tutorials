@@ -1,13 +1,16 @@
 from typing import List, Optional
 from terminusdb_client import WOQLQuery, WOQLClient
 import pandas as pd
+from tqdm import tqdm
 import schema
 
 def insert_data(client, url):
     all_breweries = []
     df = pd.read_csv(url, usecols = ['name', 'brewery_type', 'street', 'city', 'state', 'postal_code', 'website_url','phone', 'country', 'longitude', 'latitude'])
     df = df.fillna('')
-    for index, row in df.iterrows():
+    print("HEADERS\n", list(df.columns.values))
+    print("\nSTATS\n", df.describe(include='all'), "\n\nPROGRESS")
+    for index, row in tqdm(df.iterrows(), total=df.shape[0], desc='Reading data'):
         country = schema.Country()
         country.name = row['country']
         state = schema.State()
@@ -21,16 +24,16 @@ def insert_data(client, url):
         address.city = city
         address.postal_code = row['postal_code']
         address.coordinates = [str(row['longitude']), str(row['latitude'])]
-        brewery_type = schema.Brewery_Type()
-        brewery_type.name = row['brewery_type']
         brewery = schema.Brewery()
-        brewery.type_of = brewery_type
+        brewery.type_of = schema.Brewery_Type[row['brewery_type']]
         brewery.address_of = address
         brewery.phone = row['phone']
         brewery.website_url = row['website_url']
         all_breweries.append(brewery)
-    client.insert_document(all_breweries,
-                           commit_msg="Adding all breweries")
+    with tqdm(total=1, desc='Transfering data') as pbar:
+        client.insert_document(all_breweries,
+                               commit_msg="Adding all breweries")
+        pbar.update(1)
 
 if __name__ == "__main__":
     db_id = "open_brewery"
@@ -40,4 +43,4 @@ if __name__ == "__main__":
     client.set_db(db_id)
     insert_data(client, url)
     results = client.get_all_documents(graph_type="instance", count=2)
-    print(list(results))
+    print("\nRESULTS\n", list(results))
