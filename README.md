@@ -20,8 +20,15 @@ https://github.com/terminusdb/terminus-client-python
 Install using npm following:
 https://github.com/terminusdb/terminus-client
 
-## Index Data
+## Stock Index Data
 
-An example showing how to load stock index data.
+An example showing how to load stock index data from CSV.
+
+Details: [index](https://github.com/terminusdb/terminusdb-tutorials/tree/master/stock_index)
+
+
+## Python Brewery Example
+
+Shows how you can build a complex schema in Python and load it.
 
 Details: [index](https://github.com/terminusdb/terminusdb-tutorials/tree/master/stock_index)
