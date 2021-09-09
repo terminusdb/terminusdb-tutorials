@@ -3,21 +3,10 @@ from terminusdb_client import WOQLClient
 from terminusdb_client import WOQLQuery as WQ
 import csv
 
-#key = "Your Key Here"
-#team = "ubf40420team"
-#endpoint = f"https://cloud-dev.dcm.ist/{team}/"
-
-# TerminusDB
-endpoint = "http://127.0.0.1:6363/"
-user = 'admin'
-team = "admin"
-db = "sed"
-key = 'root'
+# Place the snippet from TerminusX here:
 
 # TerminusX
-#client = WOQLClient(endpoint)
-#client.connect(account=team,jwt_token=key)
-# TerminusDB
+db = "stock_index"
 client = WOQLClient(endpoint)
 client.connect(account=team,user=user,key=key)
 
@@ -26,14 +15,14 @@ exists = client.get_database(db)
 if not exists:
     client.create_database(db,
                            team,
-                           "Stock Exchange Data",
-                           "Data from various Stock Exchanges",
-                           { '@base' : "terminusdb:///stock_exchange/",
-                             '@schema' : "terminusdb:///stock_exchange/schema#" },
+                           "Stock Exchange Index Data",
+                           "Data From Indexes",
+                           { '@base' : "terminusdb:///stock_index/",
+                             '@schema' : "terminusdb:///stock_index/schema#" },
                            True)
     schema = [
         { '@type' : 'Class',
-          '@id' : 'StockExchangeTicker',
+          '@id' : 'IndexRecord',
           '@key' : { '@type' : 'ValueHash' },
           'index' : 'xsd:string',
           'date' : 'xsd:date',
@@ -74,7 +63,7 @@ def load_file(f):
                 volume == 'null'):
                 pass
             else:
-                obj = { '@type' : 'StockExchangeTicker',
+                obj = { '@type' : 'IndexRecord',
                         'index' : index,
                         'date' : date,
                         'open' : open_val,
@@ -108,7 +97,7 @@ client.rebase(f"{team}/{db}/local/branch/second")
 print("About to query")
 
 client.optimize(f"{team}/{db}")
-documents = client.query_document({'@type' : 'StockExchangeTicker',
+documents = client.query_document({'@type' : 'IndexRecord',
                                    'date' : '2021-07-01'})
 
 print(list(documents))
