@@ -1,0 +1,153 @@
+[
+    { "@type" : "Unit",
+      "@id" : "m",
+      "dimension" : "length",
+      "name" : "meter",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "appm",
+      "dimension" : "dimensionless",
+      "name" : "Atom fraction in parts per million",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "m",
+      "dimension" : "length",
+      "name" : "meter",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "W",
+      "dimension" : "power",
+      "derived_from" : "kg⋅m²⋅s⁻³",
+      "name" : "Watts",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "We",
+      "dimension" : "power",
+      "derived_from" : "W",
+      "name" : "Watt electric",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "Wt",
+      "dimension" : "power",
+      "derived_from" : "W",
+      "name" : "Watt thermal",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "J",
+      "dimension" : "energy",
+      "derived_from" : "kg⋅m²⋅s⁻²",
+      "name" : "Joule",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "J",
+      "dimension" : "energy",
+      "derived_from" : "kg⋅m²⋅s⁻²",
+      "name" : "Joule",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "$",
+      "dimension" : "currency",
+      "name" : "US Dollar",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "£",
+      "dimension" : "currency",
+      "name" : "Pound Sterling",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "€",
+      "dimension" : "currency",
+      "name" : "Euro",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "m²",
+      "dimension" : "area",
+      "derived_from" : "m²",
+      "name" : "Meters Squared",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "kg",
+      "dimension" : "mass",
+      "name" : "Kilogram",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "u",
+      "dimension" : "mass",
+      "name" : "Unified mass",
+      "alternative_name" : ["Atomic Mass", "Dalton"]
+    },
+
+    { "@type" : "Unit",
+      "@id" : "%",
+      "dimension" : "dimensionless",
+      "name" : "Percentage"
+    },
+
+    { "@type" : "Unit",
+      "@id" : "%",
+      "dimension" : "dimensionless",
+      "name" : "Percentage"
+    },
+
+    { "@type" : "Unit",
+      "@id" : "V",
+      "dimension" : "electric_potential",
+      "derived_from" : "kg·m²·s⁻³·A⁻¹",
+      "name" : "Volt"
+    },
+
+    { "@type" : "Unit",
+      "@id" : "A",
+      "dimension" : "electric_current",
+      "name" : "Ampere"
+    },
+
+    { "@type" : "Unit",
+      "@id" : "ohm",
+      "dimension" : "electric_resistence",
+      "alternative_name" : ["Ω"]
+      "derived_from" : "V·A⁻¹",
+      "name" : "Volt"
+    },
+
+    { "@type" : "Unit",
+      "@id" : "rpm",
+      "dimension" : "rotational_speed",
+      "derived_from" : "min⁻¹",
+      "name" : "Revolutions per Minute",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "s",
+      "dimension" : "time",
+      "name" : "Second",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "min",
+      "dimension" : "time",
+      "derived_from" : "60·s",
+      "name" : "Minute",
+    },
+
+    { "@type" : "Unit",
+      "@id" : "hour",
+      "dimension" : "time",
+      "derived_from" : "3600·s",
+      "name" : "Hour",
+    }
+
+]
