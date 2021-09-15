@@ -17,12 +17,14 @@ TerminusX](https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key).
 
 You will also need to copy your team name into the enviornment variable
 
-just type:
+If you have [pip](https://pypi.org/project/pip/) already installed you
+can run this tutorial automatically with:
 
 ```shell
+$ pip install pweave
 $ git clone https://github.com/terminusdb/terminusdb-tutorials/
 $ cd terminusdb-tutorials/nuclear
-$ TERMINUSDB_TEAM="my team here" TERMINUSDB_ACCESS_TOKEN="my API key here" pweave nuclear.md
+$ TERMINUSDB_TEAM="my team here" TERMINUSDB_ACCESS_TOKEN="my API key here" pweave nuclear.md -o output.md
 ```
 
 ## Preliminaries
@@ -50,7 +52,7 @@ if there is a problem getting into our account.
 
 
 ```python
-team = os.environ['TERMINUSB_TEAM']
+team = os.environ['TERMINUSDB_TEAM']
 team_quoted = urllib.parse.quote(team)
 client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
 # make sure you have put the token in environment variable
@@ -410,29 +412,23 @@ def import_nuclear(client):
 Now that all of these importation functions are defined, we can go
 ahead and run things!
 
-This part means we're going to run the following code:
-
-```python
-if __name__ == "__main__":
-```
-
 Since we might want to play with this script and run it a few types,
 it's handy to delete the database if it already exists.
-
-
-```python
-    try:
-        client.delete_database(dbid, team=team, force=True)
-    except Exception as E:
-        print("No database exists yet")
-```
-
 
 Now we go ahead and create the database, and presto, you should be
 good to go. You can now try logging in to TerminusX and looking at the
 data product.
 
+Alternatively you can try getting one of the documents out and having
+a read!
+
+
 ```python
+if __name__ == "__main__":
+    try:
+        client.delete_database(dbid, team=team, force=True)
+    except Exception as E:
+        print("No database exists yet")
     exists = client.get_database(dbid)
 
     if not exists:
@@ -449,15 +445,10 @@ data product.
     load_elements(client)
     nuclear_schema(client)
     import_nuclear(client)
-```
 
-Alternatively you can try getting one of the documents out and having
-a read!
-
-
-```python
     result = client.get_document('PowerReactor/Armenian-2')
     print(result)
+
 ```
 
 Now you've got some data, you can try to enrich it. For more on how
