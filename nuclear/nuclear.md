@@ -58,28 +58,6 @@ client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
 client.connect(team=team, use_token=True)
 ```
 
-```
----------------------------------------------------------------------------KeyError
-Traceback (most recent call last)/tmp/ipykernel_233843/1519468822.py
-in <module>
-----> 1 team = os.environ['TERMINUSB_TEAM']
-      2 team_quoted = urllib.parse.quote(team)
-      3 client =
-WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
-      4 # make sure you have put the token in environment variable
-      5 # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-
-key
-/usr/lib/python3.9/os.py in __getitem__(self, key)
-    677         except KeyError:
-    678             # raise KeyError with the original key value
---> 679             raise KeyError(key) from None
-    680         return self.decodevalue(value)
-    681
-KeyError: 'TERMINUSB_TEAM'
-```
-
-
-
 Once we are in, we can start to build our data product. A data product
 is composed of a unique identifier (which will be used in URIs), a
 label, which will be the pretty name used, and a description which can
@@ -194,7 +172,7 @@ You can see that we just open a CSV file, and then do a bit of data
 wrangling in order to get lists which we will submit using the
 `client.insert_documents` function again.
 
-```
+```python
 def elements_schema(client):
     isotope_names = []
     element_names_dict = {}
@@ -271,7 +249,7 @@ Once our schema is loaded, we can load the actual element data. We
 will be able to point to these now when we are interested in
 describing substances such as our moderator.
 
-```
+```python
 def load_elements(client):
     isotopes = []
     elements = {}
@@ -324,7 +302,7 @@ fill from the CSV below, but which can also be filled out later by
 hand in the TerminusX document editor, or by enriching the data
 programmatically.
 
-```
+```python
 def nuclear_schema(client):
     # Opening JSON file
     schema = open('nuclear_schema.json',)
@@ -345,7 +323,7 @@ As you can see from the function, we create a list of years of output,
 all coded with appropriate units (Gigawatt hours) as well as
 geocoordinates and some other information.
 
-```
+```python
 def import_nuclear(client):
     with open('nuclear.csv', newline='') as csvfile:
         next(csvfile)
@@ -434,7 +412,7 @@ ahead and run things!
 
 This part means we're going to run the following code:
 
-```
+```python
 if __name__ == "__main__":
 ```
 
@@ -449,20 +427,12 @@ it's handy to delete the database if it already exists.
         print("No database exists yet")
 ```
 
-```
-  File "<tokenize>", line 3
-    except Exception as E:
-    ^
-IndentationError: unindent does not match any outer indentation level
-```
-
-
 
 Now we go ahead and create the database, and presto, you should be
 good to go. You can now try logging in to TerminusX and looking at the
 data product.
 
-```
+```python
     exists = client.get_database(dbid)
 
     if not exists:
