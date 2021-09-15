@@ -460,14 +460,5 @@ a read!
     print(result)
 ```
 
-```
-  File "/tmp/ipykernel_233843/1216485294.py", line 2
-    print(result)
-    ^
-IndentationError: unexpected indent
-```
-
-
-
 Now you've got some data, you can try to enrich it. For more on how
 you can proceed, see our [documentation](https://docs.terminusdb.com/v10.0/).
