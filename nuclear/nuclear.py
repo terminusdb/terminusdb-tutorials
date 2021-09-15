@@ -11,10 +11,6 @@ client = WOQLClient("https://cloud.terminusdb.com/TerminatorsX/")
 # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-key
 client.connect(team=team, use_token=True)
 
-# team = "admin"
-# client = WOQLClient("http://127.0.0.1:6363")
-# client.connect()
-
 dbid = "nuclear"
 label = "Nuclear"
 description = "A knowledge graph of nuclear power."
