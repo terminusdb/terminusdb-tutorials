@@ -34,11 +34,10 @@ $ make cleaning
 
 [Nuclear.md](./nuclear.md)
 
-# Data Product Query and Verification (Part 2)
+# Data Product Enrichment (Part 2)
 
-[Cleaning.md](./cleaning.md)
+[Enrichment.md](./enrichment.md)
 
 # Data Product Cleaning (Part 3)
 
 TBD
-
