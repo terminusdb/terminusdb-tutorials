@@ -1,0 +1,51 @@
+[
+    { "@type" : "Class",
+      "@id" : "Quantity",
+      "@subdocument" : [],
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["unit", "quantity"] },
+      "unit" : "Unit",
+      "quantity" : "xsd:decimal" },
+
+    { "@type" : "Class",
+      "@id" : "Unit",
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["symbol"] },
+      "symbol" : "xsd:string",
+      "dimension" : "Dimension",
+      "name" : "xsd:string",
+      "plural" : { "@type" : "Optional",
+                   "@class" : "xsd:string" },
+      "alternative_name" : { "@type" : "Set",
+                             "@class" : "xsd:string"},
+      "derived_from" : { "@type" : "Optional",
+                         "@class" : "xsd:string" }},
+
+    { "@type" : "Enum",
+      "@id" : "Dimension",
+      "@value" : [
+          "currency",
+          "time",
+          "length",
+          "mass",
+          "area",
+          "space",
+          "temperature",
+          "energy",
+          "power",
+          "force",
+          "torque",
+          "speed",
+          "rotational_speed",
+          "acceleration",
+          "charge",
+          "electric_potential",
+          "electric_current",
+          "eletcric_resistance",
+          "momentum",
+          "angular_momentum",
+          "dimensionless"
+      ]
+    }
+
+]
