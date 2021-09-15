@@ -1,28 +1,139 @@
+# Nuclear Reactor Data Product
+
+In this tutorial we will be building a knowledge graph of nuclear
+reactors. This will incorporate information about units,
+geocoordinates and elements, all of which are required to fully
+understand our reactors.
+
+## Running the Tutorial
+
+This is a literate programming tutorial. This means you can either
+copy-paste the snippets and run them yourself, but you can also clone
+the repository and run this file directly using
+[pweave](https://mpastell.com/pweave/).
+
+To clone the repository and run it, first you'll need a [key from
+TerminusX](https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key).
+
+You will also need to copy your team name into the enviornment variable
+
+just type:
+
+```shell
+$ git clone https://github.com/terminusdb/terminusdb-tutorials/
+$ cd terminusdb-tutorials/nuclear
+$ TERMINUSDB_TEAM="my team here" TERMINUSDB_ACCESS_TOKEN="my API key here" pweave nuclear.md
+```
+
+## Preliminaries
+
+To get started we first have to import a few python libraries that
+we'll need...
+
+
+```python
 #!/usr/bin/python3
 from terminusdb_client import WOQLClient
 import re
 import csv
 import json
 import math
+import os
+import urllib.parse
+```
 
-team = "TerminatorsX"
-client = WOQLClient("https://cloud.terminusdb.com/TerminatorsX/")
+
+
+We also need to connect to TerminusX, where we are going to store our
+data. Once we have a client, we run connect which will throw an error
+if there is a problem getting into our account.
+
+
+```python
+team = os.environ['TERMINUSB_TEAM']
+team_quoted = urllib.parse.quote(team)
+client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
 # make sure you have put the token in environment variable
 # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-key
 client.connect(team=team, use_token=True)
+```
 
+```
+---------------------------------------------------------------------------KeyError
+Traceback (most recent call last)/tmp/ipykernel_233843/1519468822.py
+in <module>
+----> 1 team = os.environ['TERMINUSB_TEAM']
+      2 team_quoted = urllib.parse.quote(team)
+      3 client =
+WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
+      4 # make sure you have put the token in environment variable
+      5 # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-
+key
+/usr/lib/python3.9/os.py in __getitem__(self, key)
+    677         except KeyError:
+    678             # raise KeyError with the original key value
+--> 679             raise KeyError(key) from None
+    680         return self.decodevalue(value)
+    681
+KeyError: 'TERMINUSB_TEAM'
+```
+
+
+
+Once we are in, we can start to build our data product. A data product
+is composed of a unique identifier (which will be used in URIs), a
+label, which will be the pretty name used, and a description which can
+be a long (or short) introduction to the data product.
+
+We also have to describe our prefixes. These are going to be the base
+of the URI used for identifiers for data (`@base`) or for schema
+elements (`@schema`). These are important in a world of interconnected
+data products so that we don't step on other peoples toes and make
+things interoperable. But don't worry, the URIs do not have to resolve
+to a resource in a browser so just make sure that it is unique.
+
+
+```python
 dbid = "nuclear"
 label = "Nuclear"
 description = "A knowledge graph of nuclear power."
 prefixes = {'@base' : 'http://lib.terminusdb.com/nuclear/',
             '@schema' : 'http://lib.terminusdb.com/nuclear#'}
+```
 
 
-try:
-    client.delete_database(dbid, team=team, force=True)
-except Exception as E:
-    print(E.error_obj)
 
+Now we get to the meat. We will want to describe *where* our reactors
+are. In order to do that we need a geo-coordinate. Hence we've created
+a small schema called `geo_schema.json`, which has (among other
+things), the following definition:
+
+```json
+{ "@type" : "Class",
+  "@id" : "GeoCoordinate",
+  "@subdocument" : [],
+  "@key" : { "@type" : "Lexical",
+             "@fields" : ["latitude", "longitude"] },
+  "latitude" : "xsd:decimal",
+  "longitude" : "xsd:decimal"
+}
+```
+
+This describes a JSON document which should have a `latitude` and
+`longitude`, both of which are numbers. It also describes itself as a
+subdocument, which means it will be contained in our owning document,
+and it will generate a unique key for its id automatically from the
+latitude and longitude.
+
+In order to insert this information, we will load the json as a list
+of dictionaries using the `json` library, and then we will submit it
+to the server with `client.insert_document(schema_objects,
+graph_type="schema")`.  This allows us to insert a number of schema
+objects which may refer to eachother, in a single transaction which
+will be commited to our data product.
+
+
+```python
 def import_geo(client):
     # Opening JSON file
     schema = open('geo_schema.json',)
@@ -32,6 +143,27 @@ def import_geo(client):
     results = client.insert_document(schema_objects,
                                      graph_type="schema")
     print(f"Added geo schema: {results}")
+```
+
+
+
+Once we have run this we will print out the *ids* of the resulting
+inserted objects. We can then get started on the next section. Loading
+our *units*.
+
+Things such as area, power, atomic weight, etc. which might be
+relevant to a reactor data product, all require quantities which are
+expressed in terms of units. And these units in turn are built to
+describe certain *dimensions* such as *length*, *area*, *charge*
+etc. It is useful to avoid confusion by specifying what kind of units
+we are actually storing.
+
+You can take a look in the `unit_schema.json` file to see the schema,
+and then check out some of the pre-defined units which we will be
+importing as data in `units.json`.
+
+
+```python
 
 def import_units(client):
     # Opening JSON file
@@ -48,7 +180,21 @@ def import_units(client):
     client.message = "Adding Units."
     results = client.insert_document(instance_objects)
     print(f"Added units: {results}")
+```
 
+
+
+The next stage is importing the elements. Here we are actually going
+to build up a custom schema from a csv file which incorporates all of
+the elements and their isotopes as enumerated types. Since there are a
+small number of these, and they don't move around much, it makes sense
+to give them fixed ids.
+
+You can see that we just open a CSV file, and then do a bit of data
+wrangling in order to get lists which we will submit using the
+`client.insert_documents` function again.
+
+```
 def elements_schema(client):
     isotope_names = []
     element_names_dict = {}
@@ -119,6 +265,13 @@ def elements_schema(client):
                                      graph_type="schema")
     print(f"Added elements: {results}")
 
+```
+
+Once our schema is loaded, we can load the actual element data. We
+will be able to point to these now when we are interested in
+describing substances such as our moderator.
+
+```
 def load_elements(client):
     isotopes = []
     elements = {}
@@ -163,7 +316,15 @@ def load_elements(client):
     objects = elements + isotopes
     client.message = "Adding Elements."
     client.insert_document(objects)
+```
 
+Our preliminary nuclear reactor schema is not very elaborate. We
+basically just create a few classes and a small hierarchy which we can
+fill from the CSV below, but which can also be filled out later by
+hand in the TerminusX document editor, or by enriching the data
+programmatically.
+
+```
 def nuclear_schema(client):
     # Opening JSON file
     schema = open('nuclear_schema.json',)
@@ -173,7 +334,18 @@ def nuclear_schema(client):
     results = client.insert_document(schema_objects,
                                      graph_type="schema")
     print(f"Added Units: {results}")
+```
 
+And now finally comes the heavy lifting. We import the power reactors
+from the [Global Database of Power
+Plants](https://datasets.wri.org/dataset/globalpowerplantdatabase)
+from the World Resources Institute.
+
+As you can see from the function, we create a list of years of output,
+all coded with appropriate units (Gigawatt hours) as well as
+geocoordinates and some other information.
+
+```
 def import_nuclear(client):
     with open('nuclear.csv', newline='') as csvfile:
         next(csvfile)
@@ -255,9 +427,42 @@ def import_nuclear(client):
             print(json.dumps(reactor, indent=4, sort_keys=True))
             client.message=f"Adding civilian power reactor {name}"
             client.insert_document(reactor)
+```
 
+Now that all of these importation functions are defined, we can go
+ahead and run things!
+
+This part means we're going to run the following code:
+
+```
 if __name__ == "__main__":
+```
 
+Since we might want to play with this script and run it a few types,
+it's handy to delete the database if it already exists.
+
+
+```python
+    try:
+        client.delete_database(dbid, team=team, force=True)
+    except Exception as E:
+        print("No database exists yet")
+```
+
+```
+  File "<tokenize>", line 3
+    except Exception as E:
+    ^
+IndentationError: unindent does not match any outer indentation level
+```
+
+
+
+Now we go ahead and create the database, and presto, you should be
+good to go. You can now try logging in to TerminusX and looking at the
+data product.
+
+```
     exists = client.get_database(dbid)
 
     if not exists:
@@ -266,8 +471,6 @@ if __name__ == "__main__":
                                label=label,
                                description=description,
                                prefixes=prefixes)
-    else:
-        pass
 
     client.author="Gavin Mendel-Gleason"
     import_geo(client)
@@ -276,3 +479,25 @@ if __name__ == "__main__":
     load_elements(client)
     nuclear_schema(client)
     import_nuclear(client)
+```
+
+Alternatively you can try getting one of the documents out and having
+a read!
+
+
+```python
+    result = client.get_document('PowerReactor/Armenian-2')
+    print(result)
+```
+
+```
+  File "/tmp/ipykernel_233843/1216485294.py", line 2
+    print(result)
+    ^
+IndentationError: unexpected indent
+```
+
+
+
+Now you've got some data, you can try to enrich it. For more on how
+you can proceed, see our [documentation](https://docs.terminusdb.com/v10.0/).
