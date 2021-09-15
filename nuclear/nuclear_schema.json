@@ -1,7 +1,8 @@
 [
     { "@type" : "Class",
       "@id" : "AnnualOutput",
-      "@key" : { "@type" : "ValueHash" },
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["year"] },
       "@subdocument" : [],
       "year" : "xsd:gYear",
       "output" : "Quantity" },
@@ -20,12 +21,13 @@
       "coolant" : { "@type" : "Optional",
                     "@class" : "Substance" },
       "gppd_idnr" : "xsd:string",
-      "commissioning_year" : "xsd:gYear",
+      "commissioning_year" : { "@type" : "Optional",
+                               "@class" : "xsd:gYear"},
       "owner" : "xsd:string",
       "url" : "xsd:string",
       "output" : { "@type" : "Set",
-                   "@class" : "AnnualOutput" },
-      "quantity" : "xsd:decimal" },
+                   "@class" : "AnnualOutput" }
+    },
 
     { "@type" : "Class",
       "@id" : "PowerReactor",

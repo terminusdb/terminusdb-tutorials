@@ -3,6 +3,7 @@ from terminusdb_client import WOQLClient
 import re
 import csv
 import json
+import math
 
 team = "TerminatorsX"
 client = WOQLClient("https://cloud.terminusdb.com/TerminatorsX/")
@@ -34,7 +35,7 @@ def import_geo(client):
     client.message = "Adding Geo Schema"
     results = client.insert_document(schema_objects,
                                      graph_type="schema")
-    print(f"success on classes! {results}")
+    print(f"Added geo schema: {results}")
 
 def import_units(client):
     # Opening JSON file
@@ -47,10 +48,10 @@ def import_units(client):
     client.message = "Adding Unit Schema."
     results = client.insert_document(schema_objects,
                                      graph_type="schema")
-    print(f"success on classes! {results}")
+    print(f"Added unit schema: {results}")
     client.message = "Adding Units."
     results = client.insert_document(instance_objects)
-    print(f"success on instance! {results}")
+    print(f"Added units: {results}")
 
 def elements_schema(client):
     isotope_names = []
@@ -79,12 +80,6 @@ def elements_schema(client):
     isotope_names_enum = {'@type' : 'Enum',
                           '@id' : 'IsotopeName',
                           '@value' : isotope_names}
-    isotope = {'@type' : 'Class',
-               '@id' : 'Isotope',
-               'isotope_name' : 'IsotopeName',
-               'abundance' : { "@type" : "Optional",
-                               "@class" : 'Quantity'},
-               'mass' : 'Quantity'}
     substance = { '@type' : 'Class',
                   '@id' : 'Substance',
                   'name' : 'xsd:string' }
@@ -94,6 +89,13 @@ def elements_schema(client):
                  'formula' : 'xsd:string',
                  'elements' : { "@type" : "Set",
                                 "@class" : "Element"} }
+    isotope = {'@type' : 'Class',
+               '@id' : 'Isotope',
+               '@inherits' : ["Substance"],
+               'isotope_name' : 'IsotopeName',
+               'abundance' : { "@type" : "Optional",
+                               "@class" : 'Quantity'},
+               'mass' : 'Quantity'}
     element = {'@type' : 'Class',
                '@id' : 'Element',
                "@inherits" : ["Substance"],
@@ -119,7 +121,7 @@ def elements_schema(client):
     client.message = "Adding Elements Schema"
     results = client.insert_document(classes,
                                      graph_type="schema")
-    print(f"success on classes! {results}")
+    print(f"Added elements: {results}")
 
 def load_elements(client):
     isotopes = []
@@ -145,6 +147,7 @@ def load_elements(client):
 
             isotope = {'@type' : 'Isotope',
                        '@id' : f'Isotope/{symbol}',
+                       'name' : symbol,
                        'isotope_name' : symbol}
 
             if not abundance == '*':
@@ -173,7 +176,7 @@ def nuclear_schema(client):
     client.message="Adding Units Schema."
     results = client.insert_document(schema_objects,
                                      graph_type="schema")
-    print(f"success on classes! {results}")
+    print(f"Added Units: {results}")
 
 def import_nuclear(client):
     with open('nuclear.csv', newline='') as csvfile:
@@ -182,49 +185,56 @@ def import_nuclear(client):
         reactors = []
         for row in isotope_rows:
             country,country_long,name,gppd_idnr,capacity_mw,latitude,longitude,primary_fuel,other_fuel1,other_fuel2,other_fuel3,commissioning_year,owner,source,url,geolocation_source,wepp_id,year_of_capacity_data,generation_gwh_2013,generation_gwh_2014,generation_gwh_2015,generation_gwh_2016,generation_gwh_2017,generation_gwh_2018,generation_gwh_2019,generation_data_source,estimated_generation_gwh_2013,estimated_generation_gwh_2014,estimated_generation_gwh_2015,estimated_generation_gwh_2016,estimated_generation_gwh_2017,estimated_generation_note_2013,estimated_generation_note_2014,estimated_generation_note_2015,estimated_generation_note_2016,estimated_generation_note_2017 = row
-            output = [ {'@type' : 'AnnualOutput',
-                        'year' : 2013,
-                        'output' : { '@type' : 'Quantity',
-                                     'unit' : 'Unit/GWh',
-                                     'quantity' : generation_gwh_2013 }
-                        },
-                       {'@type' : 'AnnualOutput',
-                        'year' : 2014,
-                        'output' : { '@type' : 'Quantity',
-                                     'unit' : 'Unit/GWh',
-                                     'quantity' : generation_gwh_2014 }
-                        },
-                       {'@type' : 'AnnualOutput',
-                        'year' : 2015,
-                        'output' : { '@type' : 'Quantity',
-                                     'unit' : 'Unit/GWh',
-                                     'quantity' : generation_gwh_2015 }
-                        },
-                       {'@type' : 'AnnualOutput',
-                        'year' : 2016,
-                        'output' : { '@type' : 'Quantity',
-                                     'unit' : 'Unit/GWh',
-                                     'quantity' : generation_gwh_2016 }
-                        },
-                       {'@type' : 'AnnualOutput',
-                        'year' : 2017,
-                        'output' : { '@type' : 'Quantity',
-                                     'unit' : 'Unit/GWh',
-                                     'quantity' : generation_gwh_2017 }
-                        },
-                       {'@type' : 'AnnualOutput',
-                        'year' : 2018,
-                        'output' : { '@type' : 'Quantity',
-                                     'unit' : 'Unit/GWh',
-                                     'quantity' : generation_gwh_2018 }
-                        },
-                       {'@type' : 'AnnualOutput',
-                        'year' : 2019,
-                        'output' : { '@type' : 'Quantity',
-                                     'unit' : 'Unit/GWh',
-                                     'quantity' : generation_gwh_2019 }
-                        }
-                      ]
+            output = []
+            if not(generation_gwh_2013 == ''):
+                output.append({'@type' : 'AnnualOutput',
+                               'year' : 2013,
+                               'output' : { '@type' : 'Quantity',
+                                            'unit' : 'Unit/GWh',
+                                            'quantity' : generation_gwh_2013 }
+                               })
+            if not(generation_gwh_2014 == ''):
+                output.append({'@type' : 'AnnualOutput',
+                               'year' : 2014,
+                               'output' : { '@type' : 'Quantity',
+                                            'unit' : 'Unit/GWh',
+                                            'quantity' : generation_gwh_2014 }
+                               })
+            if not(generation_gwh_2015 == ''):
+                output.append({'@type' : 'AnnualOutput',
+                               'year' : 2015,
+                               'output' : { '@type' : 'Quantity',
+                                            'unit' : 'Unit/GWh',
+                                            'quantity' : generation_gwh_2015 }
+                               })
+            if not(generation_gwh_2016 == ''):
+                output.append({'@type' : 'AnnualOutput',
+                               'year' : 2016,
+                               'output' : { '@type' : 'Quantity',
+                                            'unit' : 'Unit/GWh',
+                                            'quantity' : generation_gwh_2016 }
+                               })
+            if not(generation_gwh_2017 == ''):
+                output.append({'@type' : 'AnnualOutput',
+                               'year' : 2017,
+                               'output' : { '@type' : 'Quantity',
+                                            'unit' : 'Unit/GWh',
+                                            'quantity' : generation_gwh_2017 }
+                               })
+            if not(generation_gwh_2018 == ''):
+                output.append({'@type' : 'AnnualOutput',
+                               'year' : 2018,
+                               'output' : { '@type' : 'Quantity',
+                                            'unit' : 'Unit/GWh',
+                                            'quantity' : generation_gwh_2018 }
+                               })
+            if not(generation_gwh_2019 == ''):
+                output.append({'@type' : 'AnnualOutput',
+                               'year' : 2019,
+                               'output' : { '@type' : 'Quantity',
+                                            'unit' : 'Unit/GWh',
+                                            'quantity' : generation_gwh_2019 }
+                               })
 
             reactor = { '@type' : "PowerReactor",
                         'name' : name,
@@ -238,12 +248,21 @@ def import_nuclear(client):
                                        'quantity' : capacity_mw },
                         'gppd_idnr' : gppd_idnr,
                         'owner' : owner,
-                        'commissioning_year' : commissioning_year,
-                        'url' : url,
-                        'output' : output }
-            reactors.append(reactor)
-    client.message="Adding Civilian Power Reactors from the Global Power Plant Database."
-    client.insert_document(reactors)
+                        'url' : url
+                       }
+
+            if not(commissioning_year == ''):
+                reactor['commissioning_year'] = math.floor(float(commissioning_year))
+            if not(output == []):
+                reactor['output'] = output
+
+            print(json.dumps(reactor, indent=4, sort_keys=True))
+            client.message=f"Adding civilian power reactor {name}"
+            client.insert_document(reactor)
+
+            #reactors.append(reactor)
+    #client.message="Adding Civilian Power Reactors from the Global Power Plant Database."
+    #client.insert_document(reactors)
 
 
 if __name__ == "__main__":
