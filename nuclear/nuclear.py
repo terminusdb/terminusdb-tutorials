@@ -4,25 +4,19 @@ import re
 import csv
 import json
 import math
-
-team = "TerminatorsX"
-client = WOQLClient("https://cloud.terminusdb.com/TerminatorsX/")
+import os
+import urllib.parse
+team = os.environ['TERMINUSDB_TEAM']
+team_quoted = urllib.parse.quote(team)
+client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
 # make sure you have put the token in environment variable
 # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-key
 client.connect(team=team, use_token=True)
-
 dbid = "nuclear"
 label = "Nuclear"
 description = "A knowledge graph of nuclear power."
 prefixes = {'@base' : 'http://lib.terminusdb.com/nuclear/',
             '@schema' : 'http://lib.terminusdb.com/nuclear#'}
-
-
-try:
-    client.delete_database(dbid, team=team, force=True)
-except Exception as E:
-    print(E.error_obj)
-
 def import_geo(client):
     # Opening JSON file
     schema = open('geo_schema.json',)
@@ -48,7 +42,6 @@ def import_units(client):
     client.message = "Adding Units."
     results = client.insert_document(instance_objects)
     print(f"Added units: {results}")
-
 def elements_schema(client):
     isotope_names = []
     element_names_dict = {}
@@ -163,7 +156,6 @@ def load_elements(client):
     objects = elements + isotopes
     client.message = "Adding Elements."
     client.insert_document(objects)
-
 def nuclear_schema(client):
     # Opening JSON file
     schema = open('nuclear_schema.json',)
@@ -173,7 +165,6 @@ def nuclear_schema(client):
     results = client.insert_document(schema_objects,
                                      graph_type="schema")
     print(f"Added Units: {results}")
-
 def import_nuclear(client):
     with open('nuclear.csv', newline='') as csvfile:
         next(csvfile)
@@ -254,25 +245,39 @@ def import_nuclear(client):
 
             print(json.dumps(reactor, indent=4, sort_keys=True))
             client.message=f"Adding civilian power reactor {name}"
-            client.insert_document(reactor)
+            reactors.append(reactor)
+
+        result = client.insert_document(reactors)
+        print(f"Added Reactors: {results}")
 
 if __name__ == "__main__":
 
     exists = client.get_database(dbid)
 
-    if not exists:
-        client.create_database(dbid,
-                               team,
-                               label=label,
-                               description=description,
-                               prefixes=prefixes)
-    else:
-        pass
+    if exists:
+        client.delete_database(dbid, team=team, force=True)
 
-    client.author="Gavin Mendel-Gleason"
+    client.create_database(dbid,
+                           team,
+                           label=label,
+                           description=description,
+                           prefixes=prefixes)
+
+    # client.author="Gavin Mendel-Gleason"
     import_geo(client)
     import_units(client)
     elements_schema(client)
     load_elements(client)
     nuclear_schema(client)
     import_nuclear(client)
+
+    print("And what is the CEFR?")
+    result = client.get_document('PowerReactor/CEFR')
+    print(json.dumps(result, indent=4, sort_keys=True))
+
+    print("Which reactors are in Belgium?")
+    result = client.query_document({ '@type' : 'PowerReactor',
+                                     "country" : {"@type" : 'Country',
+                                                  "name" : "Belgium" }})
+    print(json.dumps(list(result), indent=4, sort_keys=True))
+

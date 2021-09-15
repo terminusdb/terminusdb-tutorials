@@ -5,28 +5,6 @@ reactors. This will incorporate information about units,
 geocoordinates and elements, all of which are required to fully
 understand our reactors.
 
-## Running the Tutorial
-
-This is a literate programming tutorial. This means you can either
-copy-paste the snippets and run them yourself, but you can also clone
-the repository and run this file directly using
-[pweave](https://mpastell.com/pweave/).
-
-To clone the repository and run it, first you'll need a [key from
-TerminusX](https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key).
-
-You will also need to copy your team name into the enviornment variable
-
-If you have [pip](https://pypi.org/project/pip/) already installed you
-can run this tutorial automatically with:
-
-```shell
-$ pip install pweave
-$ git clone https://github.com/terminusdb/terminusdb-tutorials/
-$ cd terminusdb-tutorials/nuclear
-$ TERMINUSDB_TEAM="my team here" TERMINUSDB_ACCESS_TOKEN="my API key here" pweave nuclear.md -o output.md
-```
-
 ## Preliminaries
 
 To get started we first have to import a few python libraries that
@@ -406,7 +384,11 @@ def import_nuclear(client):
 
             print(json.dumps(reactor, indent=4, sort_keys=True))
             client.message=f"Adding civilian power reactor {name}"
-            client.insert_document(reactor)
+            reactors.append(reactor)
+
+        result = client.insert_document(reactors)
+        print(f"Added Reactors: {results}")
+
 ```
 
 Now that all of these importation functions are defined, we can go
@@ -425,20 +407,19 @@ a read!
 
 ```python
 if __name__ == "__main__":
-    try:
-        client.delete_database(dbid, team=team, force=True)
-    except Exception as E:
-        print("No database exists yet")
+
     exists = client.get_database(dbid)
 
-    if not exists:
-        client.create_database(dbid,
-                               team,
-                               label=label,
-                               description=description,
-                               prefixes=prefixes)
+    if exists:
+        client.delete_database(dbid, team=team, force=True)
 
-    client.author="Gavin Mendel-Gleason"
+    client.create_database(dbid,
+                           team,
+                           label=label,
+                           description=description,
+                           prefixes=prefixes)
+
+    # client.author="Gavin Mendel-Gleason"
     import_geo(client)
     import_units(client)
     elements_schema(client)
@@ -446,10 +427,11 @@ if __name__ == "__main__":
     nuclear_schema(client)
     import_nuclear(client)
 
-    result = client.get_document('PowerReactor/Armenian-2')
-    print(result)
-
 ```
 
-Now you've got some data, you can try to enrich it. For more on how
-you can proceed, see our [documentation](https://docs.terminusdb.com/v10.0/).
+Now you've got some data, we can take a look at what is in there, and
+what we need to do next in [Part 2: Verifying and Cleaning your Data
+Product](./cleaning.md).
+
+Or you can learn more in our
+[documentation](https://docs.terminusdb.com/v10.0/).

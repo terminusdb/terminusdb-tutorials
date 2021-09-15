@@ -23,7 +23,8 @@
       "gppd_idnr" : "xsd:string",
       "commissioning_year" : { "@type" : "Optional",
                                "@class" : "xsd:gYear"},
-      "owner" : "xsd:string",
+      "owner" : { "@type" : "Optional",
+                  "@class" : "xsd:string" },
       "url" : "xsd:string",
       "output" : { "@type" : "Set",
                    "@class" : "AnnualOutput" }
