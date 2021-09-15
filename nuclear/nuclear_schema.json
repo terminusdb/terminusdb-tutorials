@@ -1,0 +1,53 @@
+[
+    { "@type" : "Class",
+      "@id" : "AnnualOutput",
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["year"] },
+      "@subdocument" : [],
+      "year" : "xsd:gYear",
+      "output" : "Quantity" },
+
+    { "@type" : "Class",
+      "@id" : "Reactor",
+      "@abstract" : [],
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["name"] },
+      "name" : "xsd:string",
+      "location" : "GeoCoordinate",
+      "country" : "Country",
+      "capacity" : "Quantity",
+      "moderator" : { "@type" : "Optional",
+                      "@class" : "Substance" },
+      "coolant" : { "@type" : "Optional",
+                    "@class" : "Substance" },
+      "gppd_idnr" : "xsd:string",
+      "commissioning_year" : { "@type" : "Optional",
+                               "@class" : "xsd:gYear"},
+      "owner" : "xsd:string",
+      "url" : "xsd:string",
+      "output" : { "@type" : "Set",
+                   "@class" : "AnnualOutput" }
+    },
+
+    { "@type" : "Class",
+      "@id" : "PowerReactor",
+      "@inherits" : ["Reactor"],
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["name"] }
+    },
+
+    { "@type" : "Class",
+      "@id" : "ResearchReactor",
+      "@inherits" : ["Reactor"],
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["name"] }
+    },
+
+    { "@type" : "Class",
+      "@id" : "ExperimentalReactor",
+      "@inherits" : ["Reactor"],
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["name"] }
+    }
+
+]

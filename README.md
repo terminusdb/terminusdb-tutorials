@@ -32,3 +32,10 @@ Details: [index](https://github.com/terminusdb/terminusdb-tutorials/tree/master/
 Shows how you can build a complex schema in Python and load it.
 
 Details: [index](https://github.com/terminusdb/terminusdb-tutorials/tree/master/stock_index)
+
+
+## Nuclear Power Plant Example
+
+An example data product which holds information about all operating nuclear power reactors.
+
+Details: [index](https://github.com/terminusdb/terminusdb-tutorials/tree/master/nuclear_tutorial)
