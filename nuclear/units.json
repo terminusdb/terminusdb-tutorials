@@ -15,8 +15,7 @@
       "symbol" : "W",
       "dimension" : "power",
       "derived_from" : "kg⋅m²⋅s⁻³",
-      "name" : "Watt",
-      "plural" : "Watts"
+      "name" : "Watts"
     },
 
     { "@type" : "Unit",
@@ -31,6 +30,27 @@
       "dimension" : "power",
       "derived_from" : "W",
       "name" : "Watt thermal"
+    },
+
+    { "@type" : "Unit",
+      "symbol" : "MWe",
+      "dimension" : "power",
+      "derived_from" : "10⁶⋅We",
+      "name" : "Megawatts electric"
+    },
+
+    { "@type" : "Unit",
+      "symbol" : "MWt",
+      "dimension" : "power",
+      "derived_from" : "10⁶⋅Wt",
+      "name" : "Megawatts thermal"
+    },
+
+    { "@type" : "Unit",
+      "symbol" : "GWh",
+      "dimension" : "energy",
+      "derived_from" : "3.6⋅10¹²⋅J",
+      "name" : "Gigawatt hours"
     },
 
     { "@type" : "Unit",

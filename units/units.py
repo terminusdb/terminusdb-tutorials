@@ -10,9 +10,9 @@ client = WOQLClient("https://cloud.terminusdb.com/TerminatorsX/")
 # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-key
 client.connect(team=team, use_token=True)
 
-dbid = "elements"
-label = "A knowledge graph of the elements."
-description = "A nuclear reactor knowledge graph"
+dbid = "units"
+label = "Units"
+description = "Units data product for dimensional analysis."
 prefixes = {'@base' : 'http://lib.terminusdb.com/units/',
             '@schema' : 'http://lib.terminusdb.com/units#'}
 
@@ -26,7 +26,7 @@ def import_units(client):
 
     # Opening JSON file
     schema = open('unit_schema.json',)
-    instance = open('unit.json',)
+    instance = open('units.json',)
 
     schema_objects = json.load(schema)
 

@@ -1,22 +1,17 @@
 [
-    {"@type" : "@context",
-     "@base" : "http://lib.terminusdb.com/units/",
-     "@schema" : "http://lib.terminusdb.com/units#",
-     "@documentation" :
-     { "@title" : "Dimensional Analysis Library",
-       "@description" : "An importable library describing units for dimensional analysis.",
-       "@authors" : ["Gavin Mendel-Gleason"]
-     }
-    },
-
     { "@type" : "Class",
       "@id" : "Quantity",
       "@subdocument" : [],
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["unit"] },
       "unit" : "Unit",
       "quantity" : "xsd:decimal" },
 
     { "@type" : "Class",
       "@id" : "Unit",
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["symbol"] },
+      "symbol" : "xsd:string",
       "dimension" : "Dimension",
       "name" : "xsd:string",
       "plural" : { "@type" : "Optional",

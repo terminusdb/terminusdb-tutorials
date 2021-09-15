@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 from terminusdb_client import WOQLClient
+import re
+import csv
+import json
 
 team = "TerminatorsX"
 client = WOQLClient("https://cloud.terminusdb.com/TerminatorsX/")
@@ -11,28 +14,45 @@ client.connect(team=team, use_token=True)
 # client = WOQLClient("http://127.0.0.1:6363")
 # client.connect()
 
-dbid = "elements"
-label = "A knowledge graph of the elements."
-description = "A nuclear reactor knowledge graph"
+dbid = "nuclear"
+label = "Nuclear"
+description = "A knowledge graph of nuclear power."
+prefixes = {'@base' : 'http://lib.terminusdb.com/nuclear/',
+            '@schema' : 'http://lib.terminusdb.com/nuclear#'}
+
+
 try:
     client.delete_database(dbid, team=team, force=True)
 except Exception as E:
     print(E.error_obj)
 
-import re
-import csv
+def import_geo(client):
+    # Opening JSON file
+    schema = open('geo_schema.json',)
+    schema_objects = json.load(schema)
 
+    client.message = "Adding Geo Schema"
+    results = client.insert_document(schema_objects,
+                                     graph_type="schema")
+    print(f"success on classes! {results}")
 
-def create_schema(client):
-    context = {'@type' : '@context',
-               '@base' : 'http://example.com/elements/',
-               '@schema' : 'http://example.com/elements#',
-               '@documentation' :
-               { '@title' : 'Periodic Table of the Elements',
-                 '@description' : 'This collection gives the periodic table of the elements with all isotopes together with their names, symbols and masses',
-                 '@authors' : ["Gavin Mendel-Gleason"]
-                }
-               }
+def import_units(client):
+    # Opening JSON file
+    schema = open('unit_schema.json',)
+    instance = open('units.json',)
+
+    schema_objects = json.load(schema)
+    instance_objects = json.load(instance)
+
+    client.message = "Adding Unit Schema."
+    results = client.insert_document(schema_objects,
+                                     graph_type="schema")
+    print(f"success on classes! {results}")
+    client.message = "Adding Units."
+    results = client.insert_document(instance_objects)
+    print(f"success on instance! {results}")
+
+def elements_schema(client):
     isotope_names = []
     element_names_dict = {}
     element_symbols = {}
@@ -63,32 +83,43 @@ def create_schema(client):
                '@id' : 'Isotope',
                'isotope_name' : 'IsotopeName',
                'abundance' : { "@type" : "Optional",
-                               "@class" : 'xsd:decimal'},
-               'mass' : 'xsd:decimal'}
+                               "@class" : 'Quantity'},
+               'mass' : 'Quantity'}
+    substance = { '@type' : 'Class',
+                  '@id' : 'Substance',
+                  'name' : 'xsd:string' }
+    compound = { '@type' : 'Class',
+                 '@id' : 'Compound',
+                 '@inherits' : ["Substance"],
+                 'formula' : 'xsd:string',
+                 'elements' : { "@type" : "Set",
+                                "@class" : "Element"} }
     element = {'@type' : 'Class',
                '@id' : 'Element',
+               "@inherits" : ["Substance"],
                'atomic_number' : 'xsd:nonNegativeInteger',
                'element_name' : 'ElementName',
                'element_symbol' : 'ElementSymbol',
                'isotopes' : {'@type' : 'Set',
                              '@class' : 'Isotope'}}
 
-    classes = [element_names_enum,
-               element_symbols_enum,
-               isotope_names_enum,
-               isotope,
-               element]
+    classes = [
+        # context,
+        element_names_enum,
+        element_symbols_enum,
+        isotope_names_enum,
+        substance,
+        compound,
+        isotope,
+        element
+    ]
 
-    try:
-        documents = client.get_all_documents(graph_type="schema")
-        print(list(documents))
-        results = client.insert_document(classes,
-                                         graph_type="schema")
-        print(f"success on classes! {results}")
-    except Exception as E:
-        print(E)
-        print(E.error_obj)
+    documents = client.get_all_documents(graph_type="schema")
 
+    client.message = "Adding Elements Schema"
+    results = client.insert_document(classes,
+                                     graph_type="schema")
+    print(f"success on classes! {results}")
 
 def load_elements(client):
     isotopes = []
@@ -102,13 +133,14 @@ def load_elements(client):
             if not (z in elements):
                 element = {'@type' : 'Element',
                            '@id' : f'Element/{name}',
+                           'name' : name,
                            'atomic_number' : z_int,
                            'isotopes' : [],
                            'element_name' : name}
 
-                m = re.match('(\d+)*',symbol)
+                m = re.match('\d+([^\d]*)',symbol)
                 if m:
-                    element['element_symbol'] = m[0]
+                    element['element_symbol'] = m[1]
                 elements[z] = element
 
             isotope = {'@type' : 'Isotope',
@@ -116,34 +148,121 @@ def load_elements(client):
                        'isotope_name' : symbol}
 
             if not abundance == '*':
-                isotope['abundance'] = float(abundance)
+                isotope['abundance'] = {'@type' : 'Quantity',
+                                        'unit' : 'Unit/appm',
+                                        'quantity' : float(abundance) * 1000 }
 
             mass_match = re.match('[^\d]*((\d|\.)+)[^\d]*', mass)
             if mass_match:
-                isotope['mass'] = float(mass_match[1])
+                isotope['mass'] = { '@type' : 'Quantity',
+                                    'unit' : 'Unit/u',
+                                    'quantity' : float(mass_match[1]) }
 
             elements[z]['isotopes'].append(isotope)
 
     elements = list(elements.values())
     objects = elements + isotopes
+    client.message = "Adding Elements."
+    client.insert_document(objects)
 
-    try:
-        client.insert_document(objects)
-    except Exception as E:
-        print(E)
-        print(E.error_obj)
+def nuclear_schema(client):
+    # Opening JSON file
+    schema = open('nuclear_schema.json',)
+
+    schema_objects = json.load(schema)
+    client.message="Adding Units Schema."
+    results = client.insert_document(schema_objects,
+                                     graph_type="schema")
+    print(f"success on classes! {results}")
+
+def import_nuclear(client):
+    with open('nuclear.csv', newline='') as csvfile:
+        next(csvfile)
+        isotope_rows = csv.reader(csvfile, delimiter=',')
+        reactors = []
+        for row in isotope_rows:
+            country,country_long,name,gppd_idnr,capacity_mw,latitude,longitude,primary_fuel,other_fuel1,other_fuel2,other_fuel3,commissioning_year,owner,source,url,geolocation_source,wepp_id,year_of_capacity_data,generation_gwh_2013,generation_gwh_2014,generation_gwh_2015,generation_gwh_2016,generation_gwh_2017,generation_gwh_2018,generation_gwh_2019,generation_data_source,estimated_generation_gwh_2013,estimated_generation_gwh_2014,estimated_generation_gwh_2015,estimated_generation_gwh_2016,estimated_generation_gwh_2017,estimated_generation_note_2013,estimated_generation_note_2014,estimated_generation_note_2015,estimated_generation_note_2016,estimated_generation_note_2017 = row
+            output = [ {'@type' : 'AnnualOutput',
+                        'year' : 2013,
+                        'output' : { '@type' : 'Quantity',
+                                     'unit' : 'Unit/GWh',
+                                     'quantity' : generation_gwh_2013 }
+                        },
+                       {'@type' : 'AnnualOutput',
+                        'year' : 2014,
+                        'output' : { '@type' : 'Quantity',
+                                     'unit' : 'Unit/GWh',
+                                     'quantity' : generation_gwh_2014 }
+                        },
+                       {'@type' : 'AnnualOutput',
+                        'year' : 2015,
+                        'output' : { '@type' : 'Quantity',
+                                     'unit' : 'Unit/GWh',
+                                     'quantity' : generation_gwh_2015 }
+                        },
+                       {'@type' : 'AnnualOutput',
+                        'year' : 2016,
+                        'output' : { '@type' : 'Quantity',
+                                     'unit' : 'Unit/GWh',
+                                     'quantity' : generation_gwh_2016 }
+                        },
+                       {'@type' : 'AnnualOutput',
+                        'year' : 2017,
+                        'output' : { '@type' : 'Quantity',
+                                     'unit' : 'Unit/GWh',
+                                     'quantity' : generation_gwh_2017 }
+                        },
+                       {'@type' : 'AnnualOutput',
+                        'year' : 2018,
+                        'output' : { '@type' : 'Quantity',
+                                     'unit' : 'Unit/GWh',
+                                     'quantity' : generation_gwh_2018 }
+                        },
+                       {'@type' : 'AnnualOutput',
+                        'year' : 2019,
+                        'output' : { '@type' : 'Quantity',
+                                     'unit' : 'Unit/GWh',
+                                     'quantity' : generation_gwh_2019 }
+                        }
+                      ]
+
+            reactor = { '@type' : "PowerReactor",
+                        'name' : name,
+                        'country' : { '@type' : 'Country',
+                                      'name' : country_long },
+                        'location' : { '@type' : 'GeoCoordinate',
+                                       'latitude' : latitude,
+                                       'longitude' : longitude },
+                        'capacity' : { '@type' : 'Quantity',
+                                       'unit' : 'Unit/MWe',
+                                       'quantity' : capacity_mw },
+                        'gppd_idnr' : gppd_idnr,
+                        'owner' : owner,
+                        'commissioning_year' : commissioning_year,
+                        'url' : url,
+                        'output' : output }
+            reactors.append(reactor)
+    client.message="Adding Civilian Power Reactors from the Global Power Plant Database."
+    client.insert_document(reactors)
+
 
 if __name__ == "__main__":
 
     exists = client.get_database(dbid)
 
     if not exists:
-        client.create_database(dbid,team,label=label, description=description,
-                               prefixes={'@base' : 'http://example.com/elements/',
-                                         '@schema' : 'http://example.com/elements#'})
+        client.create_database(dbid,
+                               team,
+                               label=label,
+                               description=description,
+                               prefixes=prefixes)
     else:
         pass
-        #client.connect(team=team,db=dbid,use_token=True)
-        #client.connect(team=team,db=dbid)
-    create_schema(client)
+
+    client.author="Gavin Mendel-Gleason"
+    import_geo(client)
+    import_units(client)
+    elements_schema(client)
     load_elements(client)
+    nuclear_schema(client)
+    import_nuclear(client)
