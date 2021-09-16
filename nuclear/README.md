@@ -32,11 +32,11 @@ $ make cleaning
 
 # Nuclear Reactor Data Product (Part 1)
 
-[Nuclear.md](./nuclear.md)
+[Nuclear](./nuclear.md)
 
 # Data Product Enrichment (Part 2)
 
-[Enrichment.md](./enrichment.md)
+[Enrichment](./enrichment.md)
 
 # Data Product Cleaning (Part 3)
 

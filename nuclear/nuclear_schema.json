@@ -1,6 +1,13 @@
 [
     { "@type" : "Class",
       "@id" : "AnnualOutput",
+      "@documentation" : {
+          "@comment" : "Annual Total Output of a Nuclear Power Plant",
+          "@properties" : { "year" : "Year of annual recorded data.",
+                            "output" : "Total energy output."
+                          }
+      },
+
       "@key" : { "@type" : "Lexical",
                  "@fields" : ["year"] },
       "@subdocument" : [],
@@ -8,18 +15,45 @@
       "output" : "Quantity" },
 
     { "@type" : "Class",
-      "@id" : "Reactor",
-      "@abstract" : [],
+      "@id" : "AnnualCapacityFactor",
+      "@documentation" : {
+          "@comment" : "Annual Capacity Factor of a Nuclear Power Plant",
+          "@properties" : { "year" : "Year of annual recorded data.",
+                            "capacity_factor" : "Fraction of maximum output."
+                          }
+      },
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["year"] },
+      "@subdocument" : [],
+      "year" : "xsd:gYear",
+      "capacity_factor" : "xsd:decimal" },
+
+    { "@type" : "Class",
+      "@id" : "NuclearPowerPlant",
+      "@documentation" : {
+          "@comment" : "A Nuclear Power Plant",
+          "@properties" : { "name" : "The name of the plant.",
+                            "location" : "A geo-location of the plant location.",
+                            "country" : "A link to the country in which the plant exists.",
+                            "capacity" : "Maximum power capacity",
+                            "capacity_factor" : "Fraction of total capacity in a given year",
+                            "url" : "URL of power plant",
+                            "owner" : "Owner of the power plant",
+                            "gppd_idnr" : "Global Power Plant Database ID Number",
+                            "commissioning_year" : "Year of commissioning of the plant",
+                            "reactors" : "Reactors that are present at the power plant"
+                          }
+      },
       "@key" : { "@type" : "Lexical",
                  "@fields" : ["name"] },
       "name" : "xsd:string",
       "location" : "GeoCoordinate",
       "country" : "Country",
       "capacity" : "Quantity",
-      "moderator" : { "@type" : "Optional",
-                      "@class" : "Substance" },
-      "coolant" : { "@type" : "Optional",
-                    "@class" : "Substance" },
+      "capacity_factor" : { "@type" : "Set",
+                            "@class" : "AnnualCapacityFactor" },
+      "reactors" : { "@type" : "Set",
+                     "@class" : "Reactor" },
       "gppd_idnr" : "xsd:string",
       "commissioning_year" : { "@type" : "Optional",
                                "@class" : "xsd:gYear"},
@@ -28,6 +62,40 @@
       "url" : "xsd:string",
       "output" : { "@type" : "Set",
                    "@class" : "AnnualOutput" }
+    },
+
+    { "@type" : "Enum",
+      "@id" : "ReactorType",
+      "@value" : [
+          "BWR",
+          "PWR",
+          "HTGR",
+          "AGR",
+          "CANDU",
+          "MSR",
+          "SFR",
+          "LFR"
+      ]
+    },
+
+    { "@type" : "Class",
+      "@id" : "Reactor",
+      "@documentation" : {
+          "@comment" : "A Nuclear Power Plant",
+          "@properties" : { "name" : "The name of the reactor.",
+                            "type" : "The type of the reactor.",
+                            "moderator" : "What substance is used as a moderator.",
+                            "coolant" : "What substance is used as a coolant"
+                          }
+      },
+      "@abstract" : [],
+      "name" : "xsd:string",
+      "type" : { "@type" : "Optional",
+                 "@class" : "ReactorType"},
+      "moderator" : { "@type" : "Optional",
+                      "@class" : "Substance" },
+      "coolant" : { "@type" : "Optional",
+                    "@class" : "Substance" }
     },
 
     { "@type" : "Class",
