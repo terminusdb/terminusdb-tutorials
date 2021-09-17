@@ -1,0 +1,27 @@
+[
+    { "@type" : "Class",
+      "@id" : "GeoCoordinate",
+      "@subdocument" : [],
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["latitude", "longitude"] },
+      "latitude" : "xsd:decimal",
+      "longitude" : "xsd:decimal"
+    },
+
+    { "@type" : "Class",
+      "@id" : "GeoPerimeter",
+      "@subdocument" : [],
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["perimeter"] },
+      "perimeter" : { "@type" : "List",
+                      "@class" : "GeoCoordinate" }
+    },
+
+    { "@type" : "Class",
+      "@id" : "Country",
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["name"] },
+      "name" : "xsd:string"
+    }
+
+]
