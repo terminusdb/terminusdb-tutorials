@@ -1,28 +1,97 @@
+# Nuclear Reactor Data Product
+
+In this tutorial we will be building a knowledge graph of nuclear
+reactors. This will incorporate information about units,
+geocoordinates and elements, all of which are required to fully
+understand our reactors.
+
+## Preliminaries
+
+To get started we first have to import a few python libraries that
+we'll need...
+
+
+```python
 #!/usr/bin/python3
 from terminusdb_client import WOQLClient
 import re
 import csv
 import json
 import math
+import os
+import urllib.parse
+```
 
-team = "TerminatorsX"
-client = WOQLClient("https://cloud.terminusdb.com/TerminatorsX/")
+
+
+We also need to connect to TerminusX, where we are going to store our
+data. Once we have a client, we run connect which will throw an error
+if there is a problem getting into our account.
+
+
+```python
+team = os.environ['TERMINUSDB_TEAM']
+team_quoted = urllib.parse.quote(team)
+client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
 # make sure you have put the token in environment variable
 # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-key
 client.connect(team=team, use_token=True)
+```
 
+Once we are in, we can start to build our data product. A data product
+is composed of a unique identifier (which will be used in URIs), a
+label, which will be the pretty name used, and a description which can
+be a long (or short) introduction to the data product.
+
+We also have to describe our prefixes. These are going to be the base
+of the URI used for identifiers for data (`@base`) or for schema
+elements (`@schema`). These are important in a world of interconnected
+data products so that we don't step on other peoples toes and make
+things interoperable. But don't worry, the URIs do not have to resolve
+to a resource in a browser so just make sure that it is unique.
+
+
+```python
 dbid = "nuclear"
 label = "Nuclear"
 description = "A knowledge graph of nuclear power."
 prefixes = {'@base' : 'http://lib.terminusdb.com/nuclear/',
             '@schema' : 'http://lib.terminusdb.com/nuclear#'}
+```
 
 
-try:
-    client.delete_database(dbid, team=team, force=True)
-except Exception as E:
-    print(E.error_obj)
 
+Now we get to the meat. We will want to describe *where* our reactors
+are. In order to do that we need a geo-coordinate. Hence we've created
+a small schema called `geo_schema.json`, which has (among other
+things), the following definition:
+
+```json
+{ "@type" : "Class",
+  "@id" : "GeoCoordinate",
+  "@subdocument" : [],
+  "@key" : { "@type" : "Lexical",
+             "@fields" : ["latitude", "longitude"] },
+  "latitude" : "xsd:decimal",
+  "longitude" : "xsd:decimal"
+}
+```
+
+This describes a JSON document which should have a `latitude` and
+`longitude`, both of which are numbers. It also describes itself as a
+subdocument, which means it will be contained in our owning document,
+and it will generate a unique key for its id automatically from the
+latitude and longitude.
+
+In order to insert this information, we will load the json as a list
+of dictionaries using the `json` library, and then we will submit it
+to the server with `client.insert_document(schema_objects,
+graph_type="schema")`.  This allows us to insert a number of schema
+objects which may refer to eachother, in a single transaction which
+will be commited to our data product.
+
+
+```python
 def import_geo(client):
     # Opening JSON file
     schema = open('geo_schema.json',)
@@ -32,6 +101,27 @@ def import_geo(client):
     results = client.insert_document(schema_objects,
                                      graph_type="schema")
     print(f"Added geo schema: {results}")
+```
+
+
+
+Once we have run this we will print out the *ids* of the resulting
+inserted objects. We can then get started on the next section. Loading
+our *units*.
+
+Things such as area, power, atomic weight, etc. which might be
+relevant to a reactor data product, all require quantities which are
+expressed in terms of units. And these units in turn are built to
+describe certain *dimensions* such as *length*, *area*, *charge*
+etc. It is useful to avoid confusion by specifying what kind of units
+we are actually storing.
+
+You can take a look in the `unit_schema.json` file to see the schema,
+and then check out some of the pre-defined units which we will be
+importing as data in `units.json`.
+
+
+```python
 
 def import_units(client):
     # Opening JSON file
@@ -48,7 +138,21 @@ def import_units(client):
     client.message = "Adding Units."
     results = client.insert_document(instance_objects)
     print(f"Added units: {results}")
+```
 
+
+
+The next stage is importing the elements. Here we are actually going
+to build up a custom schema from a csv file which incorporates all of
+the elements and their isotopes as enumerated types. Since there are a
+small number of these, and they don't move around much, it makes sense
+to give them fixed ids.
+
+You can see that we just open a CSV file, and then do a bit of data
+wrangling in order to get lists which we will submit using the
+`client.insert_documents` function again.
+
+```python
 def elements_schema(client):
     isotope_names = []
     element_names_dict = {}
@@ -119,6 +223,13 @@ def elements_schema(client):
                                      graph_type="schema")
     print(f"Added elements: {results}")
 
+```
+
+Once our schema is loaded, we can load the actual element data. We
+will be able to point to these now when we are interested in
+describing substances such as our moderator.
+
+```python
 def load_elements(client):
     isotopes = []
     elements = {}
@@ -163,7 +274,15 @@ def load_elements(client):
     objects = elements + isotopes
     client.message = "Adding Elements."
     client.insert_document(objects)
+```
 
+Our preliminary nuclear reactor schema is not very elaborate. We
+basically just create a few classes and a small hierarchy which we can
+fill from the CSV below, but which can also be filled out later by
+hand in the TerminusX document editor, or by enriching the data
+programmatically.
+
+```python
 def nuclear_schema(client):
     # Opening JSON file
     schema = open('nuclear_schema.json',)
@@ -173,12 +292,23 @@ def nuclear_schema(client):
     results = client.insert_document(schema_objects,
                                      graph_type="schema")
     print(f"Added Units: {results}")
+```
 
+And now finally comes the heavy lifting. We import the power reactors
+from the [Global Database of Power
+Plants](https://datasets.wri.org/dataset/globalpowerplantdatabase)
+from the World Resources Institute.
+
+As you can see from the function, we create a list of years of output,
+all coded with appropriate units (Gigawatt hours) as well as
+geocoordinates and some other information.
+
+```python
 def import_nuclear(client):
     with open('nuclear.csv', newline='') as csvfile:
         next(csvfile)
         isotope_rows = csv.reader(csvfile, delimiter=',')
-        reactors = []
+        plants = []
         for row in isotope_rows:
             country,country_long,name,gppd_idnr,capacity_mw,latitude,longitude,primary_fuel,other_fuel1,other_fuel2,other_fuel3,commissioning_year,owner,source,url,geolocation_source,wepp_id,year_of_capacity_data,generation_gwh_2013,generation_gwh_2014,generation_gwh_2015,generation_gwh_2016,generation_gwh_2017,generation_gwh_2018,generation_gwh_2019,generation_data_source,estimated_generation_gwh_2013,estimated_generation_gwh_2014,estimated_generation_gwh_2015,estimated_generation_gwh_2016,estimated_generation_gwh_2017,estimated_generation_note_2013,estimated_generation_note_2014,estimated_generation_note_2015,estimated_generation_note_2016,estimated_generation_note_2017 = row
             output = []
@@ -232,52 +362,76 @@ def import_nuclear(client):
                                             'quantity' : generation_gwh_2019 }
                                })
 
-            reactor = { '@type' : "PowerReactor",
-                        'name' : name,
-                        'country' : { '@type' : 'Country',
-                                      'name' : country_long },
-                        'location' : { '@type' : 'GeoCoordinate',
-                                       'latitude' : latitude,
-                                       'longitude' : longitude },
-                        'capacity' : { '@type' : 'Quantity',
-                                       'unit' : 'Unit/MWe',
-                                       'quantity' : capacity_mw },
-                        'gppd_idnr' : gppd_idnr,
-                        'owner' : owner,
-                        'url' : url
-                       }
+            plant = { '@type' : "NuclearPowerPlant",
+                      'name' : name,
+                      'country' : { '@type' : 'Country',
+                                    'name' : country_long },
+                      'location' : { '@type' : 'GeoCoordinate',
+                                     'latitude' : latitude,
+                                     'longitude' : longitude },
+                      'capacity' : { '@type' : 'Quantity',
+                                     'unit' : 'Unit/MWe',
+                                     'quantity' : capacity_mw },
+                      'gppd_idnr' : gppd_idnr,
+                      'owner' : owner,
+                      'url' : url
+                     }
 
             if not(commissioning_year == ''):
-                reactor['commissioning_year'] = math.floor(float(commissioning_year))
+                plant['commissioning_year'] = math.floor(float(commissioning_year))
             if not(output == []):
-                reactor['output'] = output
+                plant['output'] = output
 
-            print(json.dumps(reactor, indent=4, sort_keys=True))
+            print(json.dumps(plant, indent=4, sort_keys=True))
             client.message=f"Adding civilian power reactor {name}"
-            client.insert_document(reactor)
+            plants.append(plant)
 
-            #reactors.append(reactor)
-    #client.message="Adding Civilian Power Reactors from the Global Power Plant Database."
-    #client.insert_document(reactors)
+        result = client.insert_document(plants)
+        print(f"Added Power Plants: {result}")
+
+```
+
+Now that all of these importation functions are defined, we can go
+ahead and run things!
+
+Since we might want to play with this script and run it a few types,
+it's handy to delete the database if it already exists.
+
+Now we go ahead and create the database, and presto, you should be
+good to go. You can now try logging in to TerminusX and looking at the
+data product.
+
+Alternatively you can try getting one of the documents out and having
+a read!
 
 
+```python
 if __name__ == "__main__":
 
     exists = client.get_database(dbid)
 
-    if not exists:
-        client.create_database(dbid,
-                               team,
-                               label=label,
-                               description=description,
-                               prefixes=prefixes)
-    else:
-        pass
+    if exists:
+        client.delete_database(dbid, team=team, force=True)
 
-    client.author="Gavin Mendel-Gleason"
+    client.create_database(dbid,
+                           team,
+                           label=label,
+                           description=description,
+                           prefixes=prefixes)
+
+    # client.author="Gavin Mendel-Gleason"
     import_geo(client)
     import_units(client)
     elements_schema(client)
     load_elements(client)
     nuclear_schema(client)
     import_nuclear(client)
+
+```
+
+Now you've got some data, we can take a look at what is in there, and
+what we need to do next in [Part 2: Verifying and Cleaning your Data
+Product](./cleaning.md).
+
+Or you can learn more in our
+[documentation](https://docs.terminusdb.com/v10.0/).
