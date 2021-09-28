@@ -8,6 +8,7 @@ from terminusdb_client.woqlschema.woql_schema import (
 
 import pandas as pd
 from tqdm import tqdm
+import tempfile
 
 my_schema = WOQLSchema()
 
@@ -62,15 +63,27 @@ class State(DocumentTemplate):
     _schema = my_schema
     name: str
 
-def insert_data(client, url):
-    breweries = []
-    df = pd.read_csv(url, nrows=4000)
-    print("HEADERS\n", list(df.columns.values))
-    print("\nSTATS\n", df.describe(include='all'), "\n\nPROGRESS")
-    selection = df.loc[:, ['name', 'brewery_type', 'street', 'city', 'state', 'postal_code', 'website_url', 'phone', 'country', 'longitude', 'latitude']]
-    selection = selection.fillna('')
-    for index, row in tqdm(selection.iterrows(), total=df.shape[0], desc='Reading data'):
+def csv_info(url):
+    # Printing headers and stats
+    df = pd.read_csv(url)
+    print("\nSTATS:\n")
+    df.info()
 
+def insert_data(client, url):
+    # Reading and transfering data from CSV file to TerminusDB
+    df = pd.read_csv(url, chunksize=1000, usecols = ['name', 'brewery_type', 'street', 'city', 'state', 'postal_code', 'website_url', 'phone', 'country', 'longitude', 'latitude'])
+    for chunk in tqdm(df, desc='Transfering data'):
+        csv = tempfile.NamedTemporaryFile()
+        chunk.to_csv(csv)
+        breweries = read_data(csv.name)
+        client.insert_document(breweries,
+                               commit_msg="Adding all breweries")
+        
+def read_data(csv):
+    breweries = []
+    df = pd.read_csv(csv)
+    selection = df.fillna('')
+    for index, row in selection.iterrows():
         # City
         city = City()
         city.name = row['city']
@@ -111,10 +124,7 @@ def insert_data(client, url):
         brewery.website_url = row['website_url']
         breweries.append(brewery)
     
-    with tqdm(total=1, desc='Transfering data') as pbar:
-        client.insert_document(breweries,
-                               commit_msg="Adding all breweries")
-        pbar.update(1)
+    return breweries
 
 if __name__ == "__main__":
     db_id = "Brewery"
@@ -128,6 +138,7 @@ if __name__ == "__main__":
     client.insert_document(my_schema.to_dict(),
                            graph_type="schema",
                            commit_msg="I am checking in the schema")
+    csv_info(url)
     insert_data(client, url)
     results = client.get_all_documents(graph_type="instance", count=10)
     print("\nRESULTS\n", list(results))
