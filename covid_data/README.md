@@ -1,8 +1,8 @@
 # The COVID-19 Public Data with Singer.io
 
-In this tutorial, we will pull the COVID-19 Public Data from a [Singer tap] and put it in TerminusDB/ TerminusX.
+In this tutorial, we will pull the COVID-19 Public Data from a [Singer tap](https://www.singer.io/) and put it in TerminusDB/ TerminusX.
 
-## Check your endpoint in running
+## Check your endpoint is running
 
 You can download the TerminusDB docker image to work locally (recommended to use Bootstrap here) or you can connect to TerminusX. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusX, git the information of the endpoint, team, and API token ready (it should be accessible in the TerminusX dashboard under profile.)
 
