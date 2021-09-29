@@ -1,0 +1,6 @@
+{
+    "database": "grades_example",
+    "endpoint": "http://127.0.0.1:6363/",
+    "streams": "Grades",
+    "team": "admin"
+}
