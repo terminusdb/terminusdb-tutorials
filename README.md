@@ -39,3 +39,10 @@ Details: [index](https://github.com/terminusdb/terminusdb-tutorials/tree/master/
 An example data product which holds information about all operating nuclear power reactors.
 
 Details: [index](https://github.com/terminusdb/terminusdb-tutorials/tree/master/nuclear)
+
+
+## The COVID-19 Public Data with Singer.io
+
+Example of showing how to import data (COVID-19 Public Data) from a Singer.io tap to TerminusDB.
+
+Details: [README](https://github.com/terminusdb/terminusdb-tutorials/tree/master/covid_data/README.md)
