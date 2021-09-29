@@ -6,14 +6,21 @@
 
 Docker image available at https://github.com/terminusdb/terminusdb-bootstrap
 
-#### Python Client [![PyPI version shields.io](https://img.shields.io/pypi/v/terminusdb-client.svg?logo=pypi)](https://pypi.python.org/pypi/terminusdb-client/)
+#### Python Client
+
+Latest version: [![PyPI version shields.io](https://img.shields.io/pypi/v/terminusdb-client.svg?logo=pypi)](https://pypi.python.org/pypi/terminusdb-client/)
+
+Create new environment (optional but recommended):
+
+```
+$ python3 -m venv ~/.virtualenvs/terminusdb
+$ source ~/.virtualenvs/terminusdb/bin/activate
+```
 
 Install using pip:
 
-`pip install terminusdb-client`
+`$ python3 -m pip install terminusdb-client`
 
-Install from source following:
-https://github.com/terminusdb/terminusdb-client-python
 
 #### JavaScript Client
 
