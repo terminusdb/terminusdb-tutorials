@@ -4,16 +4,16 @@
 
 #### TerminusDB
 
-Docker image available at https://github.com/terminusdb/terminus-quickstart
+Docker image available at https://github.com/terminusdb/terminusdb-bootstrap
 
-#### Python Client
+#### Python Client [![PyPI version shields.io](https://img.shields.io/pypi/v/terminusdb-client.svg?logo=pypi)](https://pypi.python.org/pypi/terminusdb-client/)
 
 Install using pip:
 
-`pip install terminus-client-python`
+`pip install terminusdb-client`
 
 Install from source following:
-https://github.com/terminusdb/terminus-client-python
+https://github.com/terminusdb/terminusdb-client-python
 
 #### JavaScript Client
 
