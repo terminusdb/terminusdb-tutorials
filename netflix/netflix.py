@@ -49,6 +49,7 @@ class Rating(EnumTemplate):
     UR = ()
 
 class Country(DocumentTemplate):
+    _subdocument = []
     _schema = my_schema
     name: str
 
