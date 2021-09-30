@@ -17,15 +17,43 @@ class Netflix(DocumentTemplate):
     title: str
     type_of: "Content_Type"
     director: str
+    country: "Country"
     release_year: int
+    rating: "Rating"
+    duration: str
+    listed_in: str
+    description: str
 
 class Content_Type(EnumTemplate):
     _schema = my_schema
     TV_Show = "TV Show"
     Movie = "Movie"
 
+class Rating(EnumTemplate):
+    _schema = my_schema
+    TV_MA = "TV-MA"
+    R = ()
+    PG_13 = "PG-13"
+    TV_14 = "TV-14"
+    TV_PG = "TV-PG"
+    NR = ()
+    TV_G = "TV-G"
+    TV_Y = "TV-Y"
+    TV_Y7 = "TV-Y7"
+    TY = ()
+    TY_7 = "TY-7"
+    PG = ()
+    G = ()
+    NC_17 = "NC-17"
+    TV_Y7_FV = "TV-Y7-FV"
+    UR = ()
+
+class Country(DocumentTemplate):
+    _schema = my_schema
+    name: str
+
 def insert_data(client, url):
-    df = pd.read_csv(url, chunksize=1000, usecols = ['type', 'title', 'director', 'release_year'])
+    df = pd.read_csv(url, chunksize=1000, usecols = ['type', 'title', 'director', 'country', 'release_year', 'rating', 'duration', 'listed_in', 'description'])
     for chunk in tqdm(df, desc='Transfering data'):
         csv = tempfile.NamedTemporaryFile()
         chunk.to_csv(csv)
@@ -40,14 +68,26 @@ def read_data(csv):
     for index, row in selection.iterrows():
 
         type_of = row['type'].replace(" ", "_")
+        rating = "NR" if row['rating'] == "" else row['rating'].replace("-", "_")
+
+        #Country
+        country = Country()
+        country.name = row['country']
+        records.append(country)
+
         # Netflix
         netflix = Netflix()
         netflix.title = row['title']
         netflix.type_of = Content_Type[type_of]
         netflix.director = row['director']
+        netflix.country = country
         netflix.release_year = row['release_year']
+        netflix.rating = Rating[rating]
+        netflix.duration = row['duration']
+        netflix.listed_in = row['listed_in']
+        netflix.description = row['description']
         records.append(netflix)
-    
+
     return records
 
 if __name__ == "__main__":
