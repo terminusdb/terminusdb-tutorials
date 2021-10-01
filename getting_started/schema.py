@@ -10,20 +10,9 @@ Title: Phonebook for Awesome Startup
 Description: Database storing all the contact details of all employees in Awesome Startup
 Authors: Destiny Norris, Fabian Dalby
 """
-from typing import List, Optional, Set
+from typing import Optional
 
-from terminusdb_client.woqlschema import (
-    DocumentTemplate,
-    EnumTemplate,
-    HashKey,
-    TaggedUnion,
-)
-
-
-class Team(EnumTemplate):
-    """Team within the company"""
-    marketing = "Marketing"
-    it = "Information Technology"
+from terminusdb_client.woqlschema import DocumentTemplate, EnumTemplate
 
 
 class Address(DocumentTemplate):
@@ -31,26 +20,41 @@ class Address(DocumentTemplate):
 
     Attributes
     ----------
-    street_num : int
-        Street number.
-    street : str
-        Street name.
-    town : str
-        Town name.
     postcode : str
         Postal Code
+    street : str
+        Street name.
+    street_num : int
+        Street number.
+    town : str
+        Town name.
     """
+
     _subdocument = []
-    street_num: int
-    street: str
-    town: str
     postcode: str
+    street: str
+    street_num: int
+    town: str
 
 
 class Employee(DocumentTemplate):
     """Employee of the Company"""
+
+    address: "Address"
+    contact_number: str
+    manager: Optional["Employee"]
     name: str
     title: str
-    manager: Optional['Employee']
-    address: Address
-    contact_number: str
+
+
+class Team(EnumTemplate):
+    Marketing = ()
+    Information_Technology = "Information Technology"
+
+
+class EmployeesFromCSV(DocumentTemplate):
+    employee_id: str
+    manager: Optional["EmployeesFromCSV"]
+    name: Optional[str]
+    team: Optional[str]
+    title: Optional[str]

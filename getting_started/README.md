@@ -6,7 +6,7 @@ This is a step by step tutorial to get you started using TerminusDB/ TerminusX f
 - Lesson 2 - Importing a CSV into the database
 - Lesson 3 - Importing data form Python script
 - Lesson 4 - Query on the database and get result back as CSV
-- Lesson 5 - Version control: branching and rebase
+- Lesson 5 - Version control: time travel, branching and rebase
 
 ## Extra lessons:
 
