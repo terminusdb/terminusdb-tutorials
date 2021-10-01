@@ -21,11 +21,21 @@ Install using pip:
 
 `$ python3 -m pip install terminusdb-client`
 
+If you are new to TerminusDB/ TerminusX and will use Python client, you are recommended to check out the [Getting Started tutorial series](https://github.com/terminusdb/terminusdb-tutorials/tree/master/getting_started/README.md).
+
 
 #### JavaScript Client
 
 Install using npm following:
 https://github.com/terminusdb/terminus-client
+
+---
+
+## Getting Started using TerminusDB/ TerminusX with Python client
+
+A tutorial series to help anyone who's new to TerminusDB/ TerminusX to start working using the Ptyon client.
+
+Details: [README](https://github.com/terminusdb/terminusdb-tutorials/tree/master/getting_started/README.md)
 
 ## Stock Index Data
 
