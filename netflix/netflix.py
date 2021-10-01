@@ -17,12 +17,14 @@ class Netflix(DocumentTemplate):
     title: str
     type_of: "Content_Type"
     director: str
+    cast: str
     country: "Country"
     release_year: int
     rating: "Rating"
     duration: str
     listed_in: str
     description: str
+    date_added: str
 
 class Content_Type(EnumTemplate):
     _schema = my_schema
@@ -54,7 +56,7 @@ class Country(DocumentTemplate):
     name: str
 
 def insert_data(client, url):
-    df = pd.read_csv(url, chunksize=1000, usecols = ['type', 'title', 'director', 'country', 'release_year', 'rating', 'duration', 'listed_in', 'description'])
+    df = pd.read_csv(url, chunksize=1000, usecols = ['type', 'title', 'director', 'cast', 'country', 'release_year', 'rating', 'duration', 'listed_in', 'description', 'date_added'])
     for chunk in tqdm(df, desc='Transfering data'):
         csv = tempfile.NamedTemporaryFile()
         chunk.to_csv(csv)
@@ -81,12 +83,14 @@ def read_data(csv):
         netflix.title = row['title']
         netflix.type_of = Content_Type[type_of]
         netflix.director = row['director']
+        netflix.cast = row['cast']
         netflix.country = country
         netflix.release_year = row['release_year']
         netflix.rating = Rating[rating]
         netflix.duration = row['duration']
         netflix.listed_in = row['listed_in']
         netflix.description = row['description']
+        netflix.date_added = row['date_added']
         records.append(netflix)
 
     return records
