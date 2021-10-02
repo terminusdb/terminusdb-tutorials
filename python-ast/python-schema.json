@@ -168,6 +168,7 @@
       "@id" : "Value",
       "@key" : { "@type" : "ValueHash" },
       "@inherits" : ["AST"],
+      "@subdocument" : [],
       "integer" : "xsd:integer",
       "boolean" : "xsd:boolean",
       "float" : "xsd:float",

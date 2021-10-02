@@ -3,6 +3,7 @@
 from terminusdb_client import WOQLClient
 import json
 import ast
+import astunparse
 import urllib
 import sys
 import os
@@ -25,7 +26,7 @@ def ast_to_json(tree):
         return res
     elif isinstance(tree, str):
         return { '@type' : 'Value',
-                 'string' : tree }
+                'string' : tree }
     elif isinstance(tree, int):
         return { '@type' : 'Value',
                  'integer' : tree }
@@ -39,14 +40,55 @@ def ast_to_json(tree):
         cls = tree.__class__.__name__
         if cls in ['Load', 'Store', 'Del']:
             return cls
-        obj = {'@type' : cls}
-        for field in tree._fields:
-            obj[field] = ast_to_json(getattr(tree,field))
-        return obj
+        elif cls == 'Constant':
+            const_obj = { '@type' : 'Constant',
+                           'kind' : tree.kind }
+            if tree.value == None:
+                const_obj['value'] = { '@type' : 'Value',
+                                       'none' : [] }
+            else:
+                const_obj['value'] = ast_to_json(tree.value)
+            return const_obj
+        else:
+            obj = {'@type' : cls}
+            for field in tree._fields:
+                obj[field] = ast_to_json(getattr(tree,field))
+            return obj
 
 def json_to_ast(tree):
-    """We need to do the inverse of above"""
-    pass
+    if isinstance(tree, dict):
+        ty = tree['@type']
+        if ty == 'Value':
+            # print(tree)
+            if 'none' in tree:
+                return None
+            elif 'integer' in tree:
+                return tree['integer']
+            elif 'boolean' in tree:
+                return tree['boolean']
+            elif 'float' in tree:
+                return tree['float']
+            elif 'string' in tree:
+                return tree['string']
+            else:
+                # Dubious!
+                return None
+        else:
+            Cls = getattr(ast, ty)
+            obj = Cls()
+            for field in tree.keys():
+                if field in ['@id', '@type']:
+                    pass
+                else:
+                    setattr(obj, field, json_to_ast(tree[field]))
+
+            return obj
+    elif isinstance(tree, list):
+        asts = []
+        for elt in tree:
+            asts.append(json_to_ast(elt))
+        asts.reverse()
+        return asts
 
 def import_schema(client):
     with open('python-schema.json', 'r') as f:
@@ -60,7 +102,9 @@ def import_program(client, code):
     result = ast.parse(code)
     #print(ast.dump(result, indent=4))
     js = code_to_json(result)
+    #print("-----------------------------------")
     #print(json.dumps(js, indent=4))
+    #print("-----------------------------------")
     results = client.insert_document(js)
     print(f"Added Program: {results}")
 
@@ -98,5 +142,6 @@ if __name__ == "__main__":
         hello_world = f.read()
 
     import_program(client,hello_world)
-    modules = client.query_document({'@type' : 'Module'})
-    print(json.dumps(modules, indent=4))
+    [my_module] = list(client.query_document({'@type' : 'Module'}))
+    res = json_to_ast(my_module)
+    print(astunparse.unparse(res))
