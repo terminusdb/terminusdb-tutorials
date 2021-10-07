@@ -104,7 +104,7 @@ class Employee(DocumentTemplate):
 
 class Team(EnumTemplate):
     marketing = ()
-    it = "Information Technology"
+    it = ()
 ```
 
 Now we have the right schema plan, let's commit it to be database:

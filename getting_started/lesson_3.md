@@ -62,18 +62,26 @@ with open("Contact.csv") as file:
     next(csv_file)  # skiping header
     for row in csv_file:
         contact_numbers[row[0]] = row[1]
-        street = row[2].split(',')[0]
-        street_num = int(street.split(' ')[0])
-        street_name = ' '.join(street.split(' ')[1:])
-        town = row[2].split(',')[1]
-        addresses[row[0]] = Address(street_num = street_num, street = street_name, town = town, postcode = row[3])
+        street = row[2].split(",")[0]
+        street_num = int(street.split(" ")[0])
+        street_name = " ".join(street.split(" ")[1:])
+        town = row[2].split(",")[1]
+        addresses[row[0]] = Address(
+            street_num=street_num, street=street_name, town=town, postcode=row[3]
+        )
 
 with open("Employees.csv") as file:
     csv_file = csv.reader(file)
     next(csv_file)  # skiping header
     for row in csv_file:
         team = eval(f"Team.{row[3].lower()}")
-        employees[row[0]] = Employee(name = row[1], title = row[2], address=addresses[row[0]], contact_number=contact_numbers[row[0]])
+        employees[row[0]] = Employee(
+            _id="Employee/" + row[0],
+            name=row[1],
+            title=row[2],
+            address=addresses[row[0]],
+            contact_number=contact_numbers[row[0]],
+        )
         managers[row[0]] = row[4]
 ```
 

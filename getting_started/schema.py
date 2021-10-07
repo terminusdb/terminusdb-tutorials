@@ -47,14 +47,14 @@ class Employee(DocumentTemplate):
     title: str
 
 
-class Team(EnumTemplate):
-    marketing = ()
-    it = "Information Technology"
-
-
 class EmployeesFromCSV(DocumentTemplate):
     employee_id: str
     manager: Optional["EmployeesFromCSV"]
     name: Optional[str]
     team: Optional[str]
     title: Optional[str]
+
+
+class Team(EnumTemplate):
+    marketing = ()
+    it = ()
