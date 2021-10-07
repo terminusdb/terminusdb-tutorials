@@ -56,13 +56,13 @@ class Country(DocumentTemplate):
     name: str
 
 def insert_data(client, url):
-    df = pd.read_csv(url, chunksize=1000, usecols = ['type', 'title', 'director', 'cast', 'country', 'release_year', 'rating', 'duration', 'listed_in', 'description', 'date_added'])
+    df = pd.read_csv(url, chunksize=1000)
     for chunk in tqdm(df, desc='Transfering data'):
         csv = tempfile.NamedTemporaryFile()
         chunk.to_csv(csv)
         netflix_content = read_data(csv.name)
         client.insert_document(netflix_content,
-                               commit_msg="Adding all breweries")
+                               commit_msg="Adding all Netflix content")
 
 def read_data(csv):
     records = []
@@ -98,16 +98,21 @@ def read_data(csv):
 if __name__ == "__main__":
     db_id = "Netflix"
     url = "netflix.csv"
-    client = WOQLClient("http://127.0.0.1:6363")
-    client.connect()
+    #client = WOQLClient("http://127.0.0.1:6363")
+    #client.connect()
+
+    team = "team"
+    client = WOQLClient("https://cloud.terminusdb.com/team/")
+
+    client.connect(team=team, use_token=True)
+    
     try:
-        client.create_database(db_id, team="admin", label = "Netflix Graph", description = "Create a graph with Netflix data")
+        client.create_database(db_id, team=team, label = "Netflix Graph", description = "Create a graph with Netflix data")
     except Exception:
         client.set_db(db_id)
     client.insert_document(my_schema.to_dict(),
                            graph_type="schema",
                            commit_msg="I am checking in the schema")
-    #csv_info(url)
     insert_data(client, url)
     results = client.get_all_documents(graph_type="instance", count=10)
     print("\nRESULTS\n", list(results))
