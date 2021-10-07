@@ -48,8 +48,8 @@ class Employee(DocumentTemplate):
 
 
 class Team(EnumTemplate):
-    Marketing = ()
-    Information_Technology = "Information Technology"
+    marketing = ()
+    it = "Information Technology"
 
 
 class EmployeesFromCSV(DocumentTemplate):

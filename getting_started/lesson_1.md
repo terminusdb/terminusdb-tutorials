@@ -57,7 +57,55 @@ And the other is the contact details of the employees ([Contact.csv](Contact.csv
 | 003         | (01274) 708080  | 139 Otley Road, Shipley       | BD18 2PT |
 | 004         | (0161) 532 7302 | 2 Ansdell Road, Stockport     | SK5 6SY  |
 
-The schema that I created will be [something like this](schema.py)
+The schema that I created will be something like this:
+
+```python
+"""
+Title: Phonebook for Awesome Startup
+Description: Database storing all the contact details of all employees in Awesome Startup
+Authors: Destiny Norris, Fabian Dalby
+"""
+from typing import Optional
+
+from terminusdb_client.woqlschema import DocumentTemplate, EnumTemplate
+
+
+class Address(DocumentTemplate):
+    """Home address of Employee
+
+    Attributes
+    ----------
+    postcode : str
+        Postal Code
+    street : str
+        Street name.
+    street_num : int
+        Street number.
+    town : str
+        Town name.
+    """
+
+    _subdocument = []
+    postcode: str
+    street: str
+    street_num: int
+    town: str
+
+
+class Employee(DocumentTemplate):
+    """Employee of the Company"""
+
+    address: "Address"
+    contact_number: str
+    manager: Optional["Employee"]
+    name: str
+    title: str
+
+
+class Team(EnumTemplate):
+    marketing = ()
+    it = "Information Technology"
+```
 
 Now we have the right schema plan, let's commit it to be database:
 

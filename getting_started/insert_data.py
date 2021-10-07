@@ -37,6 +37,6 @@ for emp_id, man_id in managers.items():
 # client.connect(db="demo_workshop", team="<Your Team>", use_token=True)
 
 client = WOQLClient("http://127.0.0.1:6363/")
-client.connect(db="demo_workshop")
+client.connect(db="getting_started")
 
 client.insert_document(list(employees.values()))

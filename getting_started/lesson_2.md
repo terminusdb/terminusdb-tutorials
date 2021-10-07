@@ -80,7 +80,7 @@ $ terminusdb alldocs
 [{'@id': 'EmployeesFromCSV/001', '@type': 'EmployeesFromCSV', 'employee_id': '001', 'name': 'Destiny Norris', 'team': 'Marketing', 'title': 'Marketing Manager'}, {'@id': 'EmployeesFromCSV/002', '@type': 'EmployeesFromCSV', 'employee_id': '002', 'manager': 'EmployeesFromCSV/001', 'name': 'Darci Prosser', 'team': 'Marketing', 'title': 'Creative Writer'}, {'@id': 'EmployeesFromCSV/003', '@type': 'EmployeesFromCSV', 'employee_id': '003', 'manager': 'EmployeesFromCSV/004', 'name': 'Alanah Bloggs', 'team': 'IT', 'title': 'Frontend Developer'}, {'@id': 'EmployeesFromCSV/004', '@type': 'EmployeesFromCSV', 'employee_id': '004', 'name': 'Fabian Dalby', 'team': 'IT', 'title': 'Web Service Manager'}]
 ```
 
-In [later chapters](lesson_4.md) we will also learn how to query this data and/ or export data into CSV ([or using Singer.io to export data into other data products](https://github.com/terminusdb/terminusdb-tutorials/tree/master/google_sheets/README.md)).
+In [later chapters](lesson_5.md) we will also learn how to query this data and/ or export data into CSV ([or using Singer.io to export data into other data products](https://github.com/terminusdb/terminusdb-tutorials/tree/master/google_sheets/README.md)).
 
 ---
 

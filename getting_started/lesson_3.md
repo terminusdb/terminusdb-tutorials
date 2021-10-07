@@ -127,4 +127,4 @@ Or if the data is on TerminusX, you can check it in the [TerminusX dashboard](ht
 
 ---
 
-[Move on to Lesson 4 - Query on the database and get result back as CSV](lesson_4.md)
+[Move on to Lesson 4 - Update and import new data that links to old data](lesson_4.md)
