@@ -40,7 +40,7 @@ destiny_raw = client.get_document("Employee/001")
 `destiny_raw` would be a dictionary, we can update it directly, however, is many cases, converting back to a `Employee` object would make updating it a bit easier:
 
 ```python
-destiny = data_schema.import_objects([destiny_raw])[0]
+destiny = data_schema.import_objects(destiny_raw)
 ```
 
 Notice `import_objects` will take a list of dictionaries and return back a list of objects.
@@ -84,7 +84,7 @@ And for the manager, we will get that person from the database just like we did 
 
 ```python
 manager_raw = client.get_document("Employee/004")
-ethan_manager = data_schema.import_objects([manager_raw])[0]
+ethan_manager = data_schema.import_objects(manager_raw)
 ```
 
 We can now create `ethan`:

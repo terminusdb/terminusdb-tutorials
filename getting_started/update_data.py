@@ -14,7 +14,7 @@ data_schema.from_db(client)
 # Update a document
 
 destiny_raw = client.get_document("Employee/001")
-destiny = data_schema.import_objects([destiny_raw])[0]
+destiny = data_schema.import_objects(destiny_raw)
 
 destiny.address.postcode = "PH12 3RP"
 destiny.address.street = "Lairg Road"
@@ -34,7 +34,7 @@ ethan_address = Address(
 )
 
 manager_raw = client.get_document("Employee/004")
-ethan_manager = data_schema.import_objects([manager_raw])[0]
+ethan_manager = data_schema.import_objects(manager_raw)
 
 ethan = Employee(
     name="Ethan Abbott",
