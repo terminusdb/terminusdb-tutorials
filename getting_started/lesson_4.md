@@ -43,7 +43,7 @@ destiny_raw = client.get_document("Employee/001")
 destiny = data_schema.import_objects(destiny_raw)
 ```
 
-Notice `import_objects` will take a list of dictionaries and return back a list of objects.
+Notice `import_objects` will also take a list of dictionaries and return back a list of objects.
 
 ## Update a document
 
