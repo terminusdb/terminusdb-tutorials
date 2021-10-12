@@ -1,13 +1,4 @@
 [
-    { "@type" : "@context",
-      "@documentation" : {
-          "@title" : "Python AST",
-          "@description" :"The Python AST as a document structure",
-          "@author" : [ "Gavin Mendel-Gleason" ]
-      },
-      "@base" : "iri://python_ast/",
-      "@schema" : "iri://python_ast#"
-    },
 
     { "@type" : "Class",
       "@id" : "AST",

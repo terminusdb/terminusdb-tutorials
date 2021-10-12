@@ -431,8 +431,7 @@ if __name__ == "__main__":
 ```
 
 Now you've got some data, we can take a look at what is in there, and
-what we need to do next in [Part 2: Verifying and Cleaning your Data
-Product](./cleaning.md).
+what we need to do next in [Part 2: Data Product Enrichment](./enrichment.md).
 
 Or you can learn more in our
 [documentation](https://docs.terminusdb.com/v10.0/).

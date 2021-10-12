@@ -94,8 +94,7 @@ def import_schema(client):
     with open('python-schema.json', 'r') as f:
         python_schema = json.load(f)
     results = client.insert_document(python_schema,
-                                     graph_type="schema",
-                                     full_replace="true")
+                                     graph_type="schema")
     print(f"Added Classes: {results}")
 
 def import_program(client, code):
@@ -117,26 +116,35 @@ if __name__ == "__main__":
     prefixes = {'@base' : base,
                 '@schema' : schema }
 
-    team = os.environ['TERMINUSDB_TEAM']
+    # team = os.environ['TERMINUSDB_TEAM']
+    team = "admin"
     team_quoted = urllib.parse.quote(team)
-    client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
+    client = WOQLClient('http://localhost:6363')
+    #    client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
     # make sure you have put the token in environment variable
     # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-key
-    client.connect(team=team, use_token=True)
+    client.connect(team=team) # , use_token=True)
 
     exists = client.get_database(dbid)
-    if True or not exists:
+
+    if exists:
         print(f"Recreating {dbid}")
         client.delete_database(dbid, team=team, force=True)
         client.create_database(dbid,
-                           team,
-                           label=label,
-                           description=description,
-                           prefixes=prefixes)
+                               team,
+                               label=label,
+                               description=description,
+                               prefixes=prefixes)
         import_schema(client)
     else:
         print(f"Connecting to {dbid}")
-        client.connect(db=dbid,team=team,use_token=True)
+        client.create_database(dbid,
+                               team,
+                               label=label,
+                               description=description,
+                               prefixes=prefixes)
+        import_schema(client)
+        client.connect(db=dbid) # ,team=team) # ,use_token=True)
 
     with open('hello-world.py', 'r') as f:
         hello_world = f.read()

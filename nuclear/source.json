@@ -1,0 +1,36 @@
+[
+    { "@type" : "Class",
+      "@id" : "SourcedQuantity",
+      "@documentation" : {
+          "@comment" : "A data point which has a recorded source",
+          "@properties" : { "source" : "The source from which the quantity was found."}
+      },
+      "@inherits" : "Quantity",
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["unit", "quantity"] },
+      "@subdocument" : [],
+      "source" : "Source" },
+
+    { "@type" : "Class",
+      "@id" : "Source",
+      "@documentation" : {
+          "@comment" : "The Source of some data."
+      }
+    },
+
+    { "@type" : "Class",
+      "@id" : "ScrapedSource",
+      "@documentation" : {
+          "@comment" : "Source of data scraped from a URL on the internet.",
+          "@properties" : { "name" : "Name of the scraped source.",
+                            "url" : "The URL of the scraped resource.",
+                            "scraped_at" : "Date time at which the resource was scraped."
+                          }
+      },
+      "@key" : { "@type" : "Lexical",
+                 "@fields" : ["url", "scraped_at"] },
+      "@inherits" : "Source",
+      "name" : "xsd:string",
+      "url" : "xsd:string",
+      "scraped_at" : "xsd:dateTime" }
+]
