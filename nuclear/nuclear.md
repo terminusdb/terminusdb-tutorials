@@ -33,9 +33,8 @@ if there is a problem getting into our account.
 team = os.environ['TERMINUSDB_TEAM']
 team_quoted = urllib.parse.quote(team)
 client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
-#client = WOQLClient("https://cloud-dev.dcm.ist/{team_quoted}/")
 # make sure you have put the token in environment variable
-# https://docs.terminusdb.com/beta/#/terminusx/get-your-api-key
+# https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key
 client.connect(team=team, use_token=True)
 ```
 
