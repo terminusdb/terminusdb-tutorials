@@ -17,7 +17,6 @@ import urllib.parse
 team = os.environ['TERMINUSDB_TEAM']
 team_quoted = urllib.parse.quote(team)
 client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
-#client = WOQLClient("https://cloud-dev.dcm.ist/{team_quoted}/")
 client.connect(db="nuclear", team=team, use_token=True)
 ```
 
@@ -107,4 +106,6 @@ for plant in plants:
 
 ```
 
-## Adding Links
+Now that we've seen some enrichment based on inference from data which
+we already have, you might be interested in how to further improve our
+data in [Part 3: Scraping Data](./scraping.md).

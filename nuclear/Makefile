@@ -8,3 +8,9 @@ nuclear:
 enrichment:
 	cat enrichment.md | sed -n '/^```python/,/^```/ p' | sed '/^```python/ d' | sed '/^```/ d' > enrichment.py
 	TERMINUSDB_TEAM=${TERMINUSDB_TEAM} TERMINUSDB_ACCESS_TOKEN=${TERMINUSDB_ACCESS_TOKEN} python enrichment.py
+
+
+.PHONY: scraping
+scraping:
+	cat scraping.md | sed -n '/^```python/,/^```/ p' | sed '/^```python/ d' | sed '/^```/ d' > scraping.py
+	TERMINUSDB_TEAM=${TERMINUSDB_TEAM} TERMINUSDB_ACCESS_TOKEN=${TERMINUSDB_ACCESS_TOKEN} python scraping.py
