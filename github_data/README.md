@@ -2,6 +2,8 @@
 
 In this tutorial, we will use a GitHub [Singer tap](https://www.singer.io/) to pull the stargazers from our repo and put it in TerminusDB/ TerminusX.
 
+[![Putting GitHub Data into TerminusDB](https://img.youtube.com/vi/MtgV9SU3s78/0.jpg)](https://www.youtube.com/watch?v=MtgV9SU3s78 "Putting GitHub Data into TerminusDB")
+
 ## Check your endpoint is running
 
 You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusX. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusX, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusX dashboard](https://dashboard.terminusdb.com/) under profile.)

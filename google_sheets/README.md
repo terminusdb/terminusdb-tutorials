@@ -2,6 +2,7 @@
 
 In this tutorial, we will export data from TerminusDB to a Google Sheets with  [Singer target](https://www.singer.io/).
 
+[![Exporting Data to Google Sheets with Singer.io](https://img.youtube.com/vi/0LMpmtqT7Ns/0.jpg)](https://www.youtube.com/watch?v=0LMpmtqT7Ns "Exporting Data to Google Sheets with Singer.io")
 
 ## Check your endpoint is running
 
