@@ -37,6 +37,7 @@ manager_raw = client.get_document("Employee/004")
 ethan_manager = data_schema.import_objects(manager_raw)
 
 ethan = Employee(
+    _id="Employee/005",
     name="Ethan Abbott",
     title="Backend Developer",
     team=Team.it,

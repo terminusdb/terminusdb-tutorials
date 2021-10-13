@@ -81,6 +81,7 @@ with open("Employees.csv") as file:
             title=row[2],
             address=addresses[row[0]],
             contact_number=contact_numbers[row[0]],
+            team=team
         )
         managers[row[0]] = row[4]
 ```

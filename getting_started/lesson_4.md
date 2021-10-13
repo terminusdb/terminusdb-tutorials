@@ -91,6 +91,7 @@ We can now create `ethan`:
 
 ```python
 ethan = Employee(
+    _id="Employee/005",
     name="Ethan Abbott",
     title="Backend Developer",
     team=Team.it,
@@ -120,4 +121,4 @@ Or if you are using TerminusX, you can also check it in the dashboard.
 
 ---
 
-[Move on to Lesson 5 - Query on the database and get result back as CSV](lesson_5.md)
+[Move on to Lesson 5 - Query on the database and get result back as CSV or DataFrame](lesson_5.md)

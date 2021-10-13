@@ -45,6 +45,7 @@ class Employee(DocumentTemplate):
     manager: Optional["Employee"]
     name: str
     title: str
+    team: "Team"
 
 
 class EmployeesFromCSV(DocumentTemplate):
