@@ -21,7 +21,7 @@ destiny.address.street = "Lairg Road"
 destiny.address.street_num = 73
 destiny.address.town = "Newbigging"
 
-client.update_document(destiny)
+client.update_document(destiny, commit_msg="Update Destiny")
 
 # Linking a new document to an old document
 
@@ -46,4 +46,4 @@ ethan = Employee(
     manager=ethan_manager,
 )
 
-client.update_document(ethan)
+client.update_document(ethan, commit_msg="Adding Ethan")

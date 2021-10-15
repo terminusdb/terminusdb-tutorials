@@ -48,4 +48,4 @@ for emp_id, man_id in managers.items():
 client = WOQLClient("http://127.0.0.1:6363/")
 client.connect(db="getting_started")
 
-client.insert_document(list(employees.values()))
+client.insert_document(list(employees.values()), commit_msg="Adding 4 Employees")

@@ -44,8 +44,13 @@ class Employee(DocumentTemplate):
     contact_number: str
     manager: Optional["Employee"]
     name: str
-    title: str
     team: "Team"
+    title: str
+
+
+class Team(EnumTemplate):
+    marketing = ()
+    it = ()
 
 
 class EmployeesFromCSV(DocumentTemplate):
@@ -54,8 +59,3 @@ class EmployeesFromCSV(DocumentTemplate):
     name: Optional[str]
     team: Optional[str]
     title: Optional[str]
-
-
-class Team(EnumTemplate):
-    marketing = ()
-    it = ()

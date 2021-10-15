@@ -43,7 +43,7 @@ $ terminusdb alldocs --type Employee -q team=it
 [{'@id': 'Employee/003', '@type': 'Employee', 'address': {'@id': 'Address/543050aaa73c4590b38f9aed129b17ff', '@type': 'Address', 'postcode': 'BD18 2PT', 'street': 'Otley Road', 'street_num': 139, 'town': ' Shipley'}, 'contact_number': '(01274) 708080', 'manager': 'Employee/004', 'name': 'Alanah Bloggs', 'team': 'it', 'title': 'Frontend Developer'}, {'@id': 'Employee/004', '@type': 'Employee', 'address': {'@id': 'Address/6665e689224d412aa3a882fcfd287676', '@type': 'Address', 'postcode': 'SK5 6SY', 'street': 'Ansdell Road', 'street_num': 2, 'town': ' Stockport'}, 'contact_number': '(0161) 532 7302', 'name': 'Fabian Dalby', 'team': 'it', 'title': 'Web Service Manager'}, {'@id': 'Employee/005', '@type': 'Employee', 'address': {'@id': 'Address/358ac353adbf494f97100330b504e818', '@type': 'Address', 'postcode': 'IV27 2TG', 'street': 'Shore Street', 'street_num': 84, 'town': 'Stoer'}, 'contact_number': '070 7796 8035', 'manager': 'Employee/004', 'name': 'Ethan Abbott', 'team': 'it', 'title': 'Backend Developer'}]
 ```
 
-IT's a bit hard to see so we are going to export it to [a CSV](exported_it_team.csv):
+It's a bit hard to see so we are going to export it to [a CSV](exported_it_team.csv):
 
 `$ terminusdb alldocs --type Employee -q team=it -e --filename exported_it_team.csv`
 
@@ -78,12 +78,16 @@ team_it_avg = team_it["name"].apply(len).sum() / len(team_it)
 team_marketing_avg = team_it["name"].apply(len).sum() / len(team_marketing)
 ```
 
-Print out the results. I won't spoil the results for you, you have to find it out yourself :-)
+Print out the results.
 
 ```python
 print(f"Average name length of IT team is {team_it_avg}")
 print(f"Average name length of Marketing team is {team_marketing_avg}")
 ```
+
+I won't spoil the results for you, you have to find it out yourself :-)
+
+`$ python query_data.py`
 
 ---
 

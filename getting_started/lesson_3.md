@@ -115,7 +115,7 @@ If you are using TerminusX, you can find the information of your endpoint, team,
 Now we are all ready, the last thing to do is to insert the documents:
 
 ```python
-client.insert_document(list(employees.values()))
+client.insert_document(list(employees.values()), commit_msg="Adding 4 Employees")
 ```
 
 ## Running the script

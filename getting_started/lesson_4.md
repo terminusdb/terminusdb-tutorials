@@ -59,7 +59,7 @@ destiny.address.town = "Newbigging"
 Let's send `destiny` back to the database with `update_document`, the difference between `insert_document` and `update_document` is that, is an object(s) is already exist, `update_docuemnt` with replace the old with the new. It will also insert the document if it does not exist:
 
 ```python
-client.update_document(destiny)
+client.update_document(destiny, commit_msg="Update Destiny")
 ```
 
 ## Linking a new document to an old document
@@ -104,14 +104,18 @@ ethan = Employee(
 All is ready, let's put `ethan` into the database. To prove `update_document` will also work, we will use it to insert `ethan`:
 
 ```python
-client.update_document(ethan)
+client.update_document(ethan, commit_msg="Adding Ethan")
 ```
 
 Or if you like, you can update `destiny` and insert `ethan` all at once like this:
 
 ```python
-client.update_document([destiny, ethan])
+client.update_document([destiny, ethan], commit_msg="Update Destiny and adding Ethan")
 ```
+
+Run the scripts:
+
+`$ python update_data.py`
 
 To check if the database is up-to-date, you can do in the terminal like we did before:
 
