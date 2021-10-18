@@ -106,4 +106,6 @@ for plant in plants:
 
 ```
 
-## Adding Links
+Now that we've seen some enrichment based on inference from data which
+we already have, you might be interested in how to further improve our
+data in [Part 3: Scraping Data](./scraping.md).

@@ -1,0 +1,6 @@
+Document id,contact_number,name,team,title,manager,address.postcode,address.street,address.street_num,address.town
+Employee/001,(01986) 113367,Destiny Norris,marketing,Marketing Manager,,PH12 3RP,Lairg Road,73,Newbigging
+Employee/002,(01925) 682388,Darci Prosser,marketing,Creative Writer,,WA1 4HJ,Manchester Road,200, Woolston
+Employee/003,(01274) 708080,Alanah Bloggs,it,Frontend Developer,Employee/004,BD18 2PT,Otley Road,139, Shipley
+Employee/004,(0161) 532 7302,Fabian Dalby,it,Web Service Manager,,SK5 6SY,Ansdell Road,2, Stockport
+Employee/005,070 7796 8035,Ethan Abbott,it,Backend Developer,Employee/004,IV27 2TG,Shore Street,84,Stoer

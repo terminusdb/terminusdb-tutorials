@@ -1,0 +1,171 @@
+[
+
+    { "@type" : "Class",
+      "@id" : "AST",
+      "lineno" : { "@type" : "Optional",
+                   "@class" : "xsd:integer"},
+      "col_offset" : { "@type" : "Optional",
+                       "@class" : "xsd:integer"},
+      "end_lineno" : { "@type" : "Optional",
+                       "@class" : "xsd:integer"},
+      "end_col_offset" : { "@type" : "Optional",
+                           "@class" : "xsd:integer"}
+    },
+
+    { "@type" : "Class",
+      "@id" : "Module",
+      "body" : { "@type" : "Set",
+                 "@class" : "AST" },
+      "type_ignores" : {"@type" : "Set",
+                        "@class" : "Expr" }
+    },
+
+    { "@type" : "Class",
+      "@id" : "Expr",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["AST"],
+      "value" : { "@type" : "Optional",
+                  "@class" : "AST" }
+    },
+
+    { "@type" : "Enum",
+      "@id" : "Context",
+      "@value" : [
+          "Load",
+          "Store",
+          "Del"
+      ]
+    },
+
+    { "@type" : "Class",
+      "@id" : "Name_or_Attribute",
+      "@inherits" : ["AST"],
+      "@abstract" : []
+    },
+
+    { "@type" : "Class",
+      "@id" : "Name",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["Name_or_Attribute"],
+      "id" : "xsd:string",
+      "ctx" : "Context"
+    },
+
+    { "@type" : "Class",
+      "@id" : "Attribute",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["Name_or_Attribute"],
+      "value" : "Name_or_Attribute",
+      "attr" : "xsd:string",
+      "ctx" : "Context"
+    },
+
+    { "@type" : "Class",
+      "@id" : "Call",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["AST"],
+      "func" : "Name_or_Attribute",
+      "args" : { "@type" : "List",
+                 "@class" : "Expr" },
+      "keywords" : { "@type" : "List",
+                     "@class" : "Expr" }
+    },
+
+    { "@type" : "Class",
+      "@id" : "Import",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["AST"],
+      "names" : { "@type" : "List",
+                  "@class" : "alias" }
+    },
+
+    { "@type" : "Class",
+      "@id" : "alias",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["AST"],
+      "name" : "xsd:string",
+      "asname" : { "@type" : "Optional",
+                   "@class" : "xsd:string" }
+    },
+
+    { "@type" : "Class",
+      "@id" : "FunctionDef",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["AST"],
+      "name" : "xsd:string",
+      "args" : "arguments",
+      "body" : { "@type" : "List",
+                 "@class" : "Expr"},
+      "decorator_list" : { "@type" : "List",
+                           "@class" : "Expr"},
+      "returns" : { "@type" : "Optional",
+                    "@class" : "Expr"},
+      "type_comment" : { "@type" : "Optional",
+                         "@class" : "Expr"},
+      "asname" : { "@type" : "Optional",
+                   "@class" : "xsd:string" }
+    },
+
+    { "@type" : "Class",
+      "@id" : "arguments",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["AST"],
+      "args" : { "@type" : "List",
+                 "@class" : "arg" },
+      "defaults" : { "@type" : "List",
+                     "@class" : "Constant"},
+      "kw_defaults" : { "@type" : "List",
+                        "@class" : "Constant"},
+      "kwarg" : { "@type" : "Optional",
+                  "@class" : "arg"},
+      "kwonlyargs" : { "@type" : "List",
+                       "@class" : "Constant"},
+      "posonlyargs" : { "@type" : "List",
+                        "@class" : "alias"},
+      "vararg" : { "@type" : "Optional",
+                   "@class" : "arg"}
+    },
+
+    { "@type" : "Class",
+      "@id" : "arg",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["AST"],
+      "arg" : "xsd:string",
+      "annotation" : { "@type" : "Optional",
+                       "@class" : "Name" },
+      "type_comment" : { "@type" : "Optional",
+                         "@class" : "xsd:string" }
+    },
+
+    { "@type" : "Class",
+      "@id" : "Constant",
+      "@subdocument" : [],
+	    "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["Expr"],
+      "kind" : { "@type" : "Optional",
+                 "@class" : "xsd:string" }
+    },
+
+    { "@type" : "TaggedUnion",
+      "@id" : "Value",
+      "@key" : { "@type" : "ValueHash" },
+      "@inherits" : ["AST"],
+      "@subdocument" : [],
+      "integer" : "xsd:integer",
+      "boolean" : "xsd:boolean",
+      "float" : "xsd:float",
+      "string" : "xsd:string",
+      "none" : "sys:Unit"
+    }
+]
+
+

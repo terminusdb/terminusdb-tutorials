@@ -92,6 +92,8 @@
       "name" : "xsd:string",
       "type" : { "@type" : "Optional",
                  "@class" : "ReactorType"},
+      "capacity" : { "@type" : "Optional",
+                     "@class" : "Quantity" },
       "moderator" : { "@type" : "Optional",
                       "@class" : "Substance" },
       "coolant" : { "@type" : "Optional",

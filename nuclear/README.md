@@ -28,6 +28,7 @@ $ export TERMINUSDB_TEAM="TerminatorsX"
 $ export TERMINUSDB_ACCESS_TOKEN="eyJhbG..."
 $ make nuclear
 $ make cleaning
+$ make scraping
 ```
 
 # Nuclear Reactor Data Product (Part 1)
@@ -38,6 +39,10 @@ $ make cleaning
 
 [Enrichment](./enrichment.md)
 
-# Data Product Cleaning (Part 3)
+# Scraping Data (Part 3)
 
-TBD
+[Scraping](./scraping.md)
+
+# Validating Data (Part 4)
+
+... coming soon ...
