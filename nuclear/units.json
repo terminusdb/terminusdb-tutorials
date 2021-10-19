@@ -119,7 +119,7 @@
 
     { "@type" : "Unit",
       "symbol" : "ohm",
-      "dimension" : "electric_resistence",
+      "dimension" : "electric_resistance",
       "alternative_name" : ["Ω"],
       "derived_from" : "V·A⁻¹",
       "name" : "Volt"
