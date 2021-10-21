@@ -99,6 +99,7 @@ class Employee(DocumentTemplate):
     contact_number: str
     manager: Optional["Employee"]
     name: str
+    team: "Team"
     title: str
 
 
