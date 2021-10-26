@@ -163,6 +163,7 @@ loadJSON(function(response){
         return Object.assign(svg.node(), {scales: {color}});
     }
 
+    console.log(data)
     chart = ForceGraph(data, {
         nodeId: d => d['@id'],
         nodeGroup: d => d['@type'],
