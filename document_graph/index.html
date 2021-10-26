@@ -44,15 +44,15 @@ loadJSON(function(response){
         nodeStroke = "#fff", // node stroke color
         nodeStrokeWidth = 1.5, // node stroke width, in pixels
         nodeStrokeOpacity = 1, // node stroke opacity
-        nodeRadius = 5, // node radius, in pixels
+        nodeRadius = 15, // node radius, in pixels
         nodeStrength,
         linkSource = ({source}) => source, // given d in links, returns a node identifier string
         linkTarget = ({target}) => target, // given d in links, returns a node identifier string
         linkStroke = "#999", // link stroke color
         linkStrokeOpacity = 0.6, // link stroke opacity
-        linkStrokeWidth = 1.5, // given d in links, returns a stroke width in pixels
+        linkStrokeWidth = 2.5, // given d in links, returns a stroke width in pixels
         linkStrokeLinecap = "round", // link stroke linecap
-        linkStrength,
+        linkStrength = .01,
         colors = d3.schemeTableau10, // an array of color strings, for the node groups
         width = 640, // outer width, in pixels
         height = 400, // outer height, in pixels
@@ -163,7 +163,6 @@ loadJSON(function(response){
         return Object.assign(svg.node(), {scales: {color}});
     }
 
-    console.log(data)
     chart = ForceGraph(data, {
         nodeId: d => d['@id'],
         nodeGroup: d => d['@type'],
