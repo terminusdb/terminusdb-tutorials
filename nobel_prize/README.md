@@ -30,7 +30,7 @@ $ source ~/.virtualenvs/target-terminusdb/bin/activate
 $ python3 -m pip install target-terminusdb pandas tqdm tempfile
 ```
 
-pandas, tqdm and tempfile are also required.
+`pandas`, `tqdm` and `tempfile` are also required.
 
 ## Start the project
 
@@ -44,9 +44,11 @@ You will be prompt with a few questions. Pick a project name and if you are runn
 
 This is what I did:
 
+```bash
 Please enter a project name (this will also be the database name): nobel_prize
 Please enter a endpoint location (press enter to use localhost default) [http://127.0.0.1:6363/]:
 config.json and schema.py created, please customize them to start your project.
+```
 
 ## Reading CSV
 
@@ -102,7 +104,7 @@ We'll use `pandas` to read the CSV file, `tqdm` to put a progress bar and `tempf
 
 We create the schema of the data we'll be writing to the stream formatted as a JSON Schema.
 
-Records in the dataset aer read by calling `read_data` function and written to the stream by calling `write_data`.
+Records in the dataset are read by calling `read_data` function and written to the stream by calling `write_data`.
 
 ## Import the Nobel Prize winners data into TerminusDB/ TerminusX
 
