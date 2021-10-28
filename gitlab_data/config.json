@@ -1,0 +1,5 @@
+{
+    "database": "gitlab_data",
+    "endpoint": "http://127.0.0.1:6363/",
+    "team": "admin"
+}
