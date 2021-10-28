@@ -99,6 +99,7 @@ class Employee(DocumentTemplate):
     contact_number: str
     manager: Optional["Employee"]
     name: str
+    team: "Team"
     title: str
 
 
@@ -119,7 +120,11 @@ To verify the schema is commit, if you are using TerminusX, you can see changes 
 
 ```
 $ terminusdb log
-
+========
+Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
+on branch 'main'
+with team 'admin'
+========
 
 commit c3b0nqwl87z92suvpobqtpzr552vzqs
 Author: admin

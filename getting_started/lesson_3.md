@@ -107,7 +107,7 @@ client = WOQLClient("http://127.0.0.1:6363/")
 Then we will connect the client to our database. If you are connecting locally and use default setting, just provide the database you are connecting to:
 
 ```python
-client.connect(db="demo_workshop")
+client.connect(db="getting_started")
 ```
 
 If you are using TerminusX, you can find the information of your endpoint, team, and API token from the [TerminusX dashboard](https://dashboard.terminusdb.com/) under profile.
