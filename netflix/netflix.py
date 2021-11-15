@@ -71,6 +71,44 @@ def read_data(csv):
 
     return records
 
+def query_documents(client):
+    documents = client.get_all_documents()
+
+    # documents comes back as a iterable that can be convert into a list
+    print("\nAll documents\n")
+    print(list(documents))
+
+    matches = client.query_document({"@type"  : "Netflix",
+                                 "type_of": "Movie",
+                                 "release_year": "2020"})
+
+    # matches comes back as a iterable that can be convert into a list
+    print("\nDocuments matches\n")
+    print(list(matches))
+
+    # If you want to get a specific number of records, just add count=number when calling both functions:
+    documents = client.get_all_documents(count=5)
+    matches = client.query_document({"@type"  : "Netflix",
+                                    "type_of": "Movie",
+                                    "release_year": "2020"}, count=5)
+
+def branches(client):
+    #You can create a new branch by calling the create_branch method
+    client.create_branch("some_branch", empty=False)
+
+    # When empty is set to False, a new branch will be created, 
+    # containing the schema and data inserted into the database previously. 
+    # If set to True, an empty branch will be created.
+    client.create_branch("some_branch1", empty=True)
+
+    # You can delete a branch by calling the delete and passing the name of the branch as parameter.
+    client.delete_branch("some_branch")
+
+    # List all branches
+    branches = client.get_all_branches()
+
+    print(branches)
+
 if __name__ == "__main__":
     db_id = "Netflix"
     url = "netflix.csv"
@@ -89,3 +127,13 @@ if __name__ == "__main__":
     insert_data(client, url)
     results = client.get_all_documents(count=10)
     print("\nRESULTS\n", list(results))
+
+    print("\nQUERYING DOCUMENTS\n")
+    query_documents(client)
+
+    print("\nBranches\n")
+    branches(client)
+
+    # Get the whole commit history:
+    commit_history = client.get_commit_history()
+    print("\nCOMMIT HISTORY\n",commit_history)
