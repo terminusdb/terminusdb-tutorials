@@ -120,7 +120,9 @@ def time_travel(client):
 
     # Squash the current branch HEAD into a commit
     # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.squash
-    client.squash('This is a squash commit message!')
+    commit_res = client.squash('This is a squash commit message!',"username")
+    # reset to the squash commit 
+    client.reset(commit['api:commit'],use_path=True)
 
     # Rebase the current branch onto the specified remote branch
     # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.rebase
