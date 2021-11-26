@@ -104,17 +104,38 @@ def branches(client):
     # You can delete a branch by calling the delete and passing the name of the branch as parameter.
     client.delete_branch("some_branch")
 
+    # You can switch to a different branch by setting the branch variable
+    client.branch = "some_branch1"
+
     # List all branches
     branches = client.get_all_branches()
 
     print(branches)
 
+def time_travel(client):
+    # Reset the current branch HEAD to the specified commit path. 
+    # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.reset
+    # eg: 
+    client.reset('hvatquoq9531k1u223v4azcdr1bfyde')
+
+    # Squash the current branch HEAD into a commit
+    # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.squash
+    commit_res = client.squash('This is a squash commit message!',"username")
+    # reset to the squash commit 
+    client.reset(commit['api:commit'],use_path=True)
+
+    # Rebase the current branch onto the specified remote branch
+    # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.rebase
+    client.rebase("main")
+
+
 if __name__ == "__main__":
     db_id = "Netflix"
     url = "netflix.csv"
 
-    team = "mariog"
-    client = WOQLClient("https://cloud.terminusdb.com/mariog/")
+    # TODO: change the team name 
+    team = "<TEAM_NAME>"
+    client = WOQLClient("https://cloud.terminusdb.com/"+team)
     
     try:
         client.connect(team=team, use_token=True)
@@ -128,12 +149,16 @@ if __name__ == "__main__":
     results = client.get_all_documents(count=10)
     print("\nRESULTS\n", list(results))
 
-    print("\nQUERYING DOCUMENTS\n")
+    print("\nQUERING DOCUMENTS\n")
     query_documents(client)
 
     print("\nBranches\n")
     branches(client)
-
+    
     # Get the whole commit history:
     commit_history = client.get_commit_history()
     print("\nCOMMIT HISTORY\n",commit_history)
+
+    # Manipulate the commit history
+    print("\nTime Travel\n")
+    time_travel(client)
