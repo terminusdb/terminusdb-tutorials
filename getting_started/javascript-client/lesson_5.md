@@ -65,7 +65,7 @@ await getCommitHistory("main");
 
 ```
 
-```json
+```javascript
 [
   {
     Author: { '@type': 'xsd:string', '@value': 'undefined' },
@@ -123,7 +123,7 @@ await getCommitHistory("contractors");
 
 And check the log again:
 
-```json
+```javascript
 [
   {
     Author: { '@type': 'xsd:string', '@value': 'undefined' },
