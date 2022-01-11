@@ -35,7 +35,7 @@ https://github.com/terminusdb/terminus-client
 
 A tutorial series to help anyone who's new to TerminusDB/ TerminusX to start working using the Ptyon client.
 
-Details: [README](https://github.com/terminusdb/terminusdb-tutorials/tree/master/getting_started/python_client)
+Details: [README](https://github.com/terminusdb/terminusdb-tutorials/tree/master/getting_started/python-client)
 
 ## Stock Index Data
 
