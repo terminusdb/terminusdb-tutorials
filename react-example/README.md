@@ -1,6 +1,6 @@
-# Building React app with TermiunsDB
+# Using TerminusX in React App
 
-In this tutorial, we will use TerminusDB to build a React app that serves as a simple blog. The purpose of this tutorial is to demonstrate how to use TerminusX (cloud version of TerminusDB) in conjunction with it's clients to build an web application. As we prioritise the aspect of simplicity and demonstration, some practice we use here is not meant for production.
+In this tutorial, we will use TerminusX to build a React app that serves as a simple content management app. The purpose of this tutorial is to demonstrate how to use TerminusX (cloud version of TerminusDB) in conjunction with it's clients to build an web application. As we prioritise the aspect of simplicity and demonstration, some practice we use here is not meant for production.
 
 In this repo is the finished project, you can clone it and run the finished app directly as long as you have set up a TerminusX backend (see [Setup for the Backend](#setup-for-the-backend)). If you want to build the app step by step, you can follow along all the chapters.
 
