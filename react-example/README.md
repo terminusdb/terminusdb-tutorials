@@ -2,7 +2,7 @@
 
 In this tutorial, we will use TerminusX to build a React app that serves as a simple content management app. The purpose of this tutorial is to demonstrate how to use TerminusX (cloud version of TerminusDB) in conjunction with it's clients to build an web application. As we prioritise the aspect of simplicity and demonstration, some practice we use here is not meant for production.
 
-In this repo is the finished project, you can clone it and run the finished app directly as long as you have set up a TerminusX backend (see [Setup for the Backend](#setup-for-the-backend)). If you want to build the app step by step, you can follow along all the chapters.
+[In this directory](./) is the finished project, you can clone it and run the finished app directly as long as you have set up a TerminusX backend (see [Setup for the Backend](#setup-for-the-backend)). If you want to build the app step by step, you can follow along all the chapters.
 
 The original of this project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -55,7 +55,7 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 2. Make sure you have installed [TerminusDB Python Client](https://github.com/terminusdb/terminusdb-client-python#installation) with the `dataframe` option.
 3. Make sure you have [sign up for TerminusX](https://dashboard.terminusdb.com/)
 4. Start a new directory `$mkdir blog-app-backend`
-5. Start a new project named `blog-app` and [connect to TerminusX](https://github.com/terminusdb/terminusdb-tutorials/blob/master/getting_started/python-client/lesson_1.md#start-project) using `$terminusdb startproject`. Connection details to TerminusX can be found at your [TerminusX dashboard](https://dashboard.terminusdb.com/profile).
+5. Start a new project named `blog-app` and [connect to TerminusX](/getting_started/python-client/lesson_1.md#start-project) using `$terminusdb startproject`. Connection details to TerminusX can be found at your [TerminusX dashboard](https://dashboard.terminusdb.com/profile).
 6. Replace the content `schema.py` with the code here:
 
 ```python
@@ -74,7 +74,7 @@ class Entry(DocumentTemplate):
     last_update: dt.datetime
 ```
 
-To learn more about TerminusDB/ TerminusX schema management using Python client, see [this tutorial](https://github.com/terminusdb/terminusdb-tutorials/tree/master/getting_started/python-client).
+To learn more about TerminusDB/ TerminusX schema management using Python client, see [this tutorial](/getting_started/python-client/README.md).
 
 ### Setup for React app
 
