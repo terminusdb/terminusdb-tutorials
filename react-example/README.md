@@ -82,8 +82,8 @@ To learn more about TerminusDB/ TerminusX schema management using Python client,
 2. Follow the [installation instructions for Create React App](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) to make a new project.
 3. Install the (JavaScript client)(https://github.com/terminusdb/terminusdb-client-js#npm-module) as a Node.js module (`$npm install --save @terminusdb/terminusdb-client`)
 3. Delete all files in the `src/` folder of the new project.
-4. Add a file named `index.css` in the `src/` folder with [this CSS code](/src/index.css).
-5. Add a file named `index.js` in the `src/` folder with [this JS code](/src/index-0.js).
+4. Add a file named `index.css` in the `src/` folder with [this CSS code](./src/index.css).
+5. Add a file named `index.js` in the `src/` folder with [this JS code](./src/index-0.js).
 
 ---
 
@@ -160,7 +160,7 @@ if (this.props.schema) {
 
 Now if you try logging in again, after a few second delay, you should be `Connected`.
 
-This is the end of Chapter 1, your code should look like [this](/src/index-1.js).
+This is the end of Chapter 1, your code should look like [this](./src/index-1.js).
 
 ---
 
@@ -264,7 +264,7 @@ this.props.handleEntry(entryObj).then(() => {
 
 Now we can add a new entry to the database. After you added the entry, you can see that it appears in your [document explorer](https://dashboard.terminusdb.com/document_explorer) as well.
 
-This is the end of Chapter 2, your code should now look like [this](/src/index-2.js).
+This is the end of Chapter 2, your code should now look like [this](./src/index-2.js).
 
 ---
 
@@ -377,7 +377,7 @@ const lastUpdate = this.state.lastUpdate? "Last updated:" + this.state.lastUpdat
 <input type="submit" value="Add New Entry"/>
 ```
 
-This is the end of Chapter 3, your code should now look like [this](/src/index-3.js).
+This is the end of Chapter 3, your code should now look like [this](./src/index-3.js).
 
 ---
 
@@ -522,7 +522,7 @@ handleSubmit(event) {
 
 Note that we use ISO string to represent time in TerminusX by default.
 
-This is the end of Chapter 4, your code should now look like [this](/src/index-4.js).
+This is the end of Chapter 4, your code should now look like [this](./src/index-4.js).
 
 ---
 
@@ -615,4 +615,4 @@ We pass this in as a props for `Content`:
 
 Now when we successfully delete an entry, it will reset to the `-- Add new entry --` option. And you have a fully functional simple content management app.
 
-This is the end of Chapter 5, your code should now look like [this](/src/index.js).
+This is the end of Chapter 5, your code should now look like [this](./src/index.js).
