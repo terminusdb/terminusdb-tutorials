@@ -1,0 +1,22 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+label {
+  padding-left: 10px;
+}
+
+input, textarea, button {
+  margin: 4px;
+  padding: 2px;
+}
+
+textarea{
+  width: 500px;
+  height: 300px;
+}
