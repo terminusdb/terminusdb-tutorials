@@ -62,10 +62,33 @@ new_item_1 = {
 tbd_endpoint = WOQLClient("http://localhost:6363/")
 
 # Find the item back from database in case someone already changed it
-item_1 = collection_name.find_one({"_id" : "U1IT00001"})
+item_1 = collection_name.find_one({"item_name" : "Blender"})
 patch = tbd_endpoint.diff(item_1, new_item_1)
 
 pprint(patch.content)
 
 # If we apprive, then proceed
 collection_name.update_one(patch.before, {"$set": patch.update})
+
+# Working on more complicated objects
+
+expiry_date = '2021-07-15T00:00:00.000'
+expiry = dt.datetime.fromisoformat(expiry_date)
+new_item_3 = {
+"item_name" : "Bread",
+"quantity" : 5,
+"ingredients" : "all-purpose flour",
+"expiry_date" : expiry
+}
+
+item_3 = collection_name.find_one({"item_name" : "Bread"})
+item_id = item_3.pop('_id') # We wnat to pop it out and optionally we can add it back
+patch = tbd_endpoint.diff(item_3, new_item_3)
+
+pprint(patch.content)
+
+# Add _id back, though it still works without
+before = patch.before
+before['_id'] = item_id
+
+collection_name.update_one(before, {"$set": patch.update})
