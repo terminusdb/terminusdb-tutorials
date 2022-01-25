@@ -68,5 +68,4 @@ patch = tbd_endpoint.diff(item_1, new_item_1)
 pprint(patch.content)
 
 # If we apprive, then proceed
-import pdb; pdb.set_trace()
-collection_name.update_one(patch.before, patch.update)
+collection_name.update_one(patch.before, {"$set": patch.update})
