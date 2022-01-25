@@ -39,16 +39,20 @@ const jane = db.inventory.findOne( {name : "Jane" });
 const janine = JSON.parse(JSON.stringify(jane));
 janine.name = "Janine";
 
-let patch = client.getDiff(jane,janine,{});
-console.log(patch);
+let patchPromise = client.getDiff(jane,janine,{});
+patchPromise.then( patch => {
+    let [q,s] = mongoPatch(patch)
+    console.log([q,s]);
 
-let [q,s] = mongoPatch(patch)
-console.log([q,s]);
+    const res = db.inventory.updateOne(q, { $set : s});
+    console.log(res);
+    if (res.modifiedCount == 1){
+        console.log("yay!")
+    }else{
+        console.log("boo!")
+    }
+    console.log(patch);
+});
 
-const res = db.inventory.updateOne(q, { $set : s});
-console.log(res);
-if (res.modifiedCount == 1){
-    console.log("yay!")
-}else{
-    console.log("boo!")
-}
+
+
