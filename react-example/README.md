@@ -74,6 +74,8 @@ class Entry(DocumentTemplate):
     last_update: dt.datetime
 ```
 
+7. Push the schema to TerminusX: `$terminusdb commit`
+
 To learn more about TerminusDB/ TerminusX schema management using Python client, see [this tutorial](/getting_started/python-client/README.md).
 
 ### Setup for React app
