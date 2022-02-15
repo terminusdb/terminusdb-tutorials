@@ -1,8 +1,8 @@
 # Using TerminusX in React App
 
-In this tutorial, we will use TerminusX to build a React app that serves as a simple content management app. The purpose of this tutorial is to demonstrate how to use TerminusX (cloud version of TerminusDB) in conjunction with it's clients to build an web application. As we prioritise the aspect of simplicity and demonstration, some practice we use here is not meant for production.
+In this tutorial, we will use TerminusX to build a React app that serves as a simple content management app. The purpose of this tutorial is to demonstrate how to use TerminusX (cloud version of TerminusDB) in conjunction with its clients to build a web application. As we will prioritize simplicity and demonstration, some practices we use here are not designed for production.
 
-[In this directory](./) is the finished project, you can clone it and run the finished app directly as long as you have set up a TerminusX backend (see [Setup for the Backend](#setup-for-the-backend)). If you want to build the app step by step, you can follow along all the chapters.
+[In this directory](./) you will find the finished project, you can clone it and run the finished app directly as long as you have set up a TerminusX backend (see [Setup for the Backend](#setup-for-the-backend)). If you want to build the app step by step, you can follow along all the chapters.
 
 The original of this project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -43,7 +43,7 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However, we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ---
 
@@ -91,11 +91,11 @@ To learn more about TerminusDB/ TerminusX schema management using Python client,
 
 ## Chapter 1 - Connect to TerminusX
 
-Inspect `index.js` and run `$npm start` note the following that is already in to code:
+Inspect `index.js` and run `$npm start` note the following that is already in the code:
 
 1. Importing the client with `import TerminusClient from "@terminusdb/terminusdb-client";`
-2. Simple login interface with 4 input fields. We need these information from the user to connect to their TerminusX database. More detail available at your [TerminusX dashboard](https://dashboard.terminusdb.com/profile).
-3. Simple text showing is we are connected to the database or not. Right now it's always `false`. We will have to determine what to be used as a flag.
+2. Simple login interface with 4 input fields. We need this information from the user to connect to their TerminusX database. More detail available at your [TerminusX dashboard](https://dashboard.terminusdb.com/profile).
+3. Simple text showing if we are connected to the database or not. Right now it's always `false`. We will have to determine what to be used as a flag.
 
 First, we will have to make `makeConnection` works. It will be an `async` function as it will be making api calls using the client.
 
@@ -121,7 +121,7 @@ console.log("Schema");
 console.log(schema);
 ```
 
-Now if we open the console and try logging in (filling in the information and click the `Submit` button) to your backend database, you should see the schema showing in the console. (*there may be a few second delay depending on your connection*)
+Now if we open the console and try logging in (filling in the information and click the `Submit` button) to your backend database, you should see the schema showing in the console. (*there may be a few seconds delay depending on your connection*)
 
 Another thing that we will need in the future will be all documents in the database. If you just created the database following this tutorial you have have no documents in the database, only the schema. However, we will do it now as we are very sure we will need them in the future.
 
@@ -150,7 +150,7 @@ One last thing before we move on, we should change the status text when we have 
           entries={this.state.entries}/>
 ```
 
-Then we can change the text depending on if we have a schema. Note that we does not use entries here as we have no entries right now.
+Then we can change the text depending on whether we have a schema. Note that we does not use entries here as we have no entries right now.
 
 ```js
 if (this.props.schema) {
@@ -160,7 +160,7 @@ if (this.props.schema) {
 }
 ```
 
-Now if you try logging in again, after a few second delay, you should be `Connected`.
+Now if you try logging in again, after a few seconds delay, you should be `Connected`.
 
 This is the end of Chapter 1, your code should look like [this](./src/index-1.js).
 
@@ -168,7 +168,7 @@ This is the end of Chapter 1, your code should look like [this](./src/index-1.js
 
 ## Chapter 2 - Add new entry
 
-To move on, we are going to add a form that user can add a new entry to our database. We have to modify the `render` of the "connected" in the `Content`. Instead of the `<h2>` tag, we have:
+To move on, we are going to add a form so that users can add a new entry to our database. We have to modify the `render` of the "connected" in the `Content`. Instead of the `<h2>` tag, we have:
 
 ```js
 <div>
@@ -224,7 +224,7 @@ handleSubmit(event) {
 }
 ```
 
-Our challenge now lies on how we can handle the actual adding of the entry. One option is to pass the client from `Page` into `Content` and use the client there. However, a more future-proof approach would be create a handler in `Page` and pass to `Content`. You will see the benifit of this approach in the future chapters.
+Our challenge now lies in how we can handle the actual adding of the entry. One option is to pass the client from `Page` into `Content` and use the client there. However, a more future-proof approach would be create a handler in `Page` and pass to `Content`. You will see the benifit of this approach in the future chapters.
 
 In `Page` we create a handler to handle adding or updating an entry:
 
@@ -239,7 +239,7 @@ async addAndUpdateEntry(entryObj){
 }
 ```
 
-Even though this function is called `addAndUpdateEntry`, all it is doing now is add the document described in `entryObj`. In later chapters we will give it more functionalities. Now let's use this as an event hook and pass it to `Content`.
+Even though this function is called `addAndUpdateEntry`, all it is doing now is adding the document described in `entryObj`. In later chapters we will give it more functionalities. Now let's use this as an event hook and pass it to `Content`.
 
 ```js
 < Content schema={this.state.schema}
@@ -272,7 +272,7 @@ This is the end of Chapter 2, your code should now look like [this](./src/index-
 
 ## Chapter 3 - Show all entries
 
-Before we move on to more complicated operation to the entries. We need a way to show them back to the user. The way we do it here is to add a select menu for the user to choose which entry they want to see and the title and content will be display in the form.
+Before we move on to more complicated operations to the entries. We need a way to show them to the user. The way we do it here is to add a select menu for the user to choose which entry they want to see and the title and content will be display in the form.
 
 First we want to add the select menu above the title input. The options will be the entries that we have, thus we need to render it dynamically:
 
@@ -385,7 +385,7 @@ This is the end of Chapter 3, your code should now look like [this](./src/index-
 
 ## Chapter 4 - Update entry
 
-The advantage of what we did in Chapter 3, showing the title and content in the `Content` form, is that we can let the user to modify it and update the document when submitting. We already have `handleContentChange` in place which will update the state when any of them is changed. Let's work on the submit button next.
+The advantage of what we did in Chapter 3, showing the title and content in the `Content` form, is that we can let the user modify it and update the document when submitting. We already have `handleContentChange` in place which will update the state when any of them is changed. Let's work on the submit button next.
 
 First thing first, now the text in the button is still `Add new entry` even if it is showing an already existing entry. Let's change it up:
 
@@ -393,7 +393,7 @@ First thing first, now the text in the button is still `Add new entry` even if i
 <input type="submit" value={this.state.selectedEntry? "Update Entry":"Add New Entry"}/>
 ```
 
-Now it will check if there's an selected entry and if it is the text will be `Update Entry`. Next we need to add the handle of the update entry at our `handleSubmit` in the `Content` and `addAndUpdateEntry` in `Page`.
+Now it will check if there's a selected entry and if it is the text will be `Update Entry`. Next we need to add the handle of the update entry at our `handleSubmit` in the `Content` and `addAndUpdateEntry` in `Page`.
 
 First we add a `if` cause in `handleSubmit`:
 
@@ -455,7 +455,7 @@ async addAndUpdateEntry(entryObj){
 
 We use the fact that if it's update document there will be `@id` provided to check which action we need to take.
 
-Before we call it the end of the Chapter, we want to add one more thing, see now we have only update the `status` text in `<h2>` to reflect what has been done. For the refreshing of the changes entries, either adding new one or updating existing ones, a user need to refresh the page, which is a bit annoying. We can fetch all the documents (entries) in `addAndUpdateEntry` when we have finish updating:
+Before we call it the end of the Chapter, we want to add one more thing, see now we have only updated the `status` text in `<h2>` to reflect what has been done. For the refreshing of the changes entries, either adding new one or updating existing ones, a user need to refresh the page, which is a bit annoying. We can fetch all the documents (entries) in `addAndUpdateEntry` when we have finished updating:
 
 ```js
 async addAndUpdateEntry(entryObj){
@@ -530,7 +530,7 @@ This is the end of Chapter 4, your code should now look like [this](./src/index-
 
 ## Chapter 5 - Delete entry
 
-Now we can add new entries and update existing entries, what if I want to delete an entry? For this, we will add an extra button **below the form** for deletion. This button should only show up when there's an existing entry.
+Now we can add new entries and update existing entries, but what if I want to delete an entry? For this, we will add an extra button **below the form** for deletion. This button should only show up when there's an existing entry.
 
 ```js
 <div>
@@ -562,7 +562,7 @@ Now we can add new entries and update existing entries, what if I want to delete
 </div>
 ```
 
-As show, we need `handleDelete` it will be set up in a similar fashion as how we did with the submit button in Chapter 2 and Chapter 4.
+As shown, we need `handleDelete` it will be set up in a similar fashion as we did with the submit button in Chapter 2 and Chapter 4.
 
 ```js
 handleDelete(event) {
@@ -589,7 +589,7 @@ Remember to bind this function in the `Content` constructor:
 this.handleDelete = this.handleDelete.bind(this);
 ```
 
-Note that we have added the prompt to confirm if the user wants to delete this entry. When the user click `Confirm` we need to have a function to delete the entry in `Page`.
+Note that we have added the prompt to confirm if the user wants to delete this entry. When the user clicks `Confirm` we need to have a function to delete the entry in `Page`.
 
 ```js
 async deleteEntry(entryObj){
