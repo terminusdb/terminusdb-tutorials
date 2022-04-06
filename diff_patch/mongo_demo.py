@@ -58,12 +58,12 @@ new_item_1 = {
 
 # But before we update it in Mongo, I want to review the changes first
 
-# Create a TerminusX client (see https://dashboard.terminusdb.com/profile)
-tbd_endpoint = WOQLClient("http://localhost:6363/")
+# Using TerminusDB Open API for JSON Diff
+tdb_endpoint = WOQLClient("https://cloud.terminusdb.com/jsondiff")
 
 # Find the item back from database in case someone already changed it
 item_1 = collection_name.find_one({"item_name" : "Blender"})
-patch = tbd_endpoint.diff(item_1, new_item_1)
+patch = tdb_endpoint.diff(item_1, new_item_1)
 
 pprint(patch.content)
 
@@ -83,12 +83,11 @@ new_item_3 = {
 
 item_3 = collection_name.find_one({"item_name" : "Bread"})
 item_id = item_3.pop('_id') # We wnat to pop it out and optionally we can add it back
-patch = tbd_endpoint.diff(item_3, new_item_3)
+patch = tdb_endpoint.diff(item_3, new_item_3)
 
 pprint(patch.content)
 
 # Add _id back, though it still works without
 before = patch.before
 before['_id'] = item_id
-
 collection_name.update_one(before, {"$set": patch.update})
