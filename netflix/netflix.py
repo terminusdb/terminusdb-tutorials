@@ -117,8 +117,8 @@ def branches(client):
     #You can create a new branch by calling the create_branch method
     client.create_branch("some_branch", empty=False)
 
-    # When empty is set to False, a new branch will be created, 
-    # containing the schema and data inserted into the database previously. 
+    # When empty is set to False, a new branch will be created,
+    # containing the schema and data inserted into the database previously.
     # If set to True, an empty branch will be created.
     client.create_branch("some_branch1", empty=True)
 
@@ -134,15 +134,15 @@ def branches(client):
     print(branches)
 
 def time_travel(client):
-    # Reset the current branch HEAD to the specified commit path. 
+    # Reset the current branch HEAD to the specified commit path.
     # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.reset
-    # eg: 
+    # eg:
     # client.reset('hvatquoq9531k1u223v4azcdr1bfyde')
 
     # Squash the current branch HEAD into a commit
     # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.squash
     commit_res = client.squash('This is a squash commit message!',"username")
-    # reset to the squash commit 
+    # reset to the squash commit
     client.reset(commit_res, use_path=True)
 
     # Rebase the current branch onto the specified remote branch
@@ -154,18 +154,21 @@ if __name__ == "__main__":
     db_id = "Netflix"
     url = "netflix.csv"
 
-    # TODO: change the team name 
-    team = "<TEAM_NAME>"
-    client = WOQLClient("https://cloud.terminusdb.com/"+team)
-    
-    try:
-        client.connect(team=team, use_token=True)
-        client.create_database(db_id, label = "Netflix Graph", description = "Create a graph with Netflix data")
-    except Exception:
-        client.connect(db=db_id, team=team, use_token=True)
+    # TODO: change the team name
+    # team = "<TEAM_NAME>"
+    # client = WOQLClient("https://cloud.terminusdb.com/"+team)
 
-    schema.commit(client, commit_msg = "Adding Netflix Schema")
-    
+    # try:
+    #     client.connect(team=team, use_token=True)
+    #     client.create_database(db_id, label = "Netflix Graph", description = "Create a graph with Netflix data")
+    # except Exception:
+    #     client.connect(db=db_id, team=team, use_token=True)
+    #
+    # schema.commit(client, commit_msg = "Adding Netflix Schema")
+
+    client = WOQLClient("http://127.0.0.1:6363/")
+    client.connect(db=db_id)
+
     insert_content_data(client, url)
 
     contents = client.query_document({"@type"  : "Content"}, count=50)
@@ -177,7 +180,7 @@ if __name__ == "__main__":
 
     print("\nBranches\n")
     branches(client)
-    
+
     # Get the whole commit history:
     commit_history = client.get_commit_history()
     print("\nCOMMIT HISTORY\n",commit_history)
