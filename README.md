@@ -55,7 +55,7 @@ Details: [index](./brewery)
 
 An example data product which holds information about all operating nuclear power reactors.
 
-Details: [index](,/nuclear)
+Details: [index](./nuclear)
 
 
 ## Exporting Data to Google Sheets with Singer.io
