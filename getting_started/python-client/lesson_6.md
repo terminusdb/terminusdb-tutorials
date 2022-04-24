@@ -215,4 +215,4 @@ We are back to where we were again.
 
 ---
 
-[Check out other tutorials](README.md)
+[Move on to Lesson 7 - Logical query using triple and WOQL](lesson_7.md)
