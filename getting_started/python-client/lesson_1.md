@@ -17,6 +17,8 @@ Then we can install using pip:
 
 ## Start Project
 
+> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+
 Now go to the project directory (or start a new one):
 
 `$ cd ../getting_started`

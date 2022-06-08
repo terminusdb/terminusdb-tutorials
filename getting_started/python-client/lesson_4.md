@@ -1,5 +1,7 @@
 # Lesson 4 - Update and import new data that links to old data
 
+> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+
 Remember our imaginary Awesome Startup that has their Phonebook stored in TerminusDB? It has been a few months and they have a new recruit:
 
 | Employee id | Name           | Title               | Team        | Manager     |

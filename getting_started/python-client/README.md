@@ -1,5 +1,7 @@
 # Getting started using TerminusDB Python Client
 
+> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+
 This is a step by step tutorial to get you started using TerminusDB/ TerminusX for the first time. This will cover all the basics that you can work with TerminusDB/ TerminusX using the Python client.
 
 - [Lesson 1 - Installing, start project and create an empty database with schema](lesson_1.md)

@@ -1,5 +1,7 @@
 # Lesson 3 - Importing data form Python script
 
+> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+
 In last lesson, we have import the [Employees.csv](Employees.csv) with the `terminusdb` commmand. It auto generate the schema for you and pipe in the data form the CSV. Let's check the [schema.py](schema.py), you can see the schema that is generate from the CSV:
 
 ```python
