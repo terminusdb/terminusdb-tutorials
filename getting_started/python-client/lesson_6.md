@@ -1,5 +1,7 @@
 # Lesson 6 - Version control: time travel, branching and rebase
 
+> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+
 In this lesson about version control, we will be doing some git like operation that can let us collaborate and time travel.
 
 ## Branch, creating a copy and jump between versions

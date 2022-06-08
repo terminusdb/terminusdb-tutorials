@@ -1,5 +1,7 @@
 # Lesson 2 - Importing a CSV into the database
 
+> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+
 ## The `terminusdb importcsv` Command
 
 In this lesson, we will try to import a CSV with the `terminusdb importcsv` command. It provide a very simple way to import a CSV with less manual effort. There are a few things that you can control with the `terminusdb importcsv` command, like setting the separator character, how to handle NAs and linking columns using a key columns etc. For more complicated data handling, a Python script will be needed and we will demonstrate that the next lesson: [Importing data form Python script](lesson_3.md)

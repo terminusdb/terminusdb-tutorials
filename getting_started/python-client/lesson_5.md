@@ -1,5 +1,7 @@
 # Lesson 5 - Query on the database and get result back as CSV or DataFrame
 
+> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+
 In the past lessons, we have learnt how to build schema and import data. Now the database has all the data we wanted, what we will do after is to get information out of the data we have in the database.
 
 In this lesson, we will learn how to query the database, get the information that we wanted. Then export either to a CSV for later use or to import as Pandas DataFrames for further investigation.
