@@ -99,7 +99,7 @@
       "@inherits" : "Geometry",
       "type" : "MultiPolygon_Type",
       "coordinates" : { "@type" : "Array",
-                        "@dimensions" : 3,
+                        "@dimensions" : 4,
                         "@class" : "xsd:decimal" }
     },
 
