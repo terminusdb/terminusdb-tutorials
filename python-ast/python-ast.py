@@ -125,7 +125,7 @@ if __name__ == "__main__":
     # https://docs.terminusdb.com/beta/#/terminusx/get-your-api-key
     client.connect(team=team) # , use_token=True)
 
-    exists = client.get_database(dbid)
+    exists = client.has_database(dbid)
 
     if exists:
         print(f"Recreating {dbid}")
