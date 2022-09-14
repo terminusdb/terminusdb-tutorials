@@ -10,7 +10,7 @@ db = "stock_index"
 client = WOQLClient(endpoint)
 client.connect(account=team,user=user,key=key)
 
-exists = client.get_database(db)
+exists = client.has_database(db)
 
 if not exists:
     client.create_database(db,

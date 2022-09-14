@@ -408,7 +408,7 @@ a read!
 ```python
 if __name__ == "__main__":
 
-    exists = client.get_database(dbid)
+    exists = client.has_database(dbid)
 
     if exists:
         client.delete_database(dbid, team=team, force=True)
