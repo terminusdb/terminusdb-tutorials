@@ -1,5 +1,0 @@
-{
-    "api_token": "YOUR_GITHUB_API_TOKEN",
-    "start_date": "2021-01-01T00:00:00Z",
-    "user_agent": "tap-covid-19 <api_user_email@your_company.com>"
-}
