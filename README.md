@@ -33,7 +33,7 @@ https://github.com/terminusdb/terminus-client
 
 ## Getting Started using TerminusDB/ TerminusX with Python client
 
-A tutorial series to help anyone who's new to TerminusDB/ TerminusX to start working using the Ptyon client.
+A tutorial series to help anyone who's new to TerminusDB/ TerminusX to start working using the Python client.
 
 Details: [README](./getting_started/python-client/README.md)
 
