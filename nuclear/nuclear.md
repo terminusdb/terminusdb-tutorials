@@ -12,7 +12,7 @@ we'll need...
 
 
 ```python
-#!/usr/bin/python3
+#!/usr/bin/env python3
 from terminusdb_client import WOQLClient
 import re
 import csv
