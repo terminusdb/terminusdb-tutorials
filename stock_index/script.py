@@ -4,12 +4,14 @@ from terminusdb_client import WOQLQuery as WQ
 import csv
 
 # Place the snippet from TerminusX here:
+# Code: API key environment configuration
+# export TERMINUSDB_ACCESS_TOKEN="my API key here"
 
-# TerminusX
+# Or for the local endpoint use the following two lines:
+client = WOQLClient("http://localhost:6363")
+client.connect(account="admin",user="admin",key="root")
+
 db = "stock_index"
-client = WOQLClient(endpoint)
-client.connect(account=team,user=user,key=key)
-
 exists = client.has_database(db)
 
 if not exists:
