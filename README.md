@@ -43,14 +43,6 @@ An example showing how to load stock index data from CSV.
 
 Details: [index](./stock_index)
 
-
-## Python Brewery Example
-
-Shows how you can build a complex schema in Python and load it.
-
-Details: [index](./brewery)
-
-
 ## Nuclear Power Plant Example
 
 An example data product which holds information about all operating nuclear power reactors.
