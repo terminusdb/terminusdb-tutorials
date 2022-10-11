@@ -1,20 +1,18 @@
 # Lesson 5 - Query on the database and get result back as CSV or DataFrame
 
-> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
-
 In the past lessons, we have learnt how to build schema and import data. Now the database has all the data we wanted, what we will do after is to get information out of the data we have in the database.
 
 In this lesson, we will learn how to query the database, get the information that we wanted. Then export either to a CSV for later use or to import as Pandas DataFrames for further investigation.
 
-## Query data with `terminusdb` Command
+## Query data with the `tdbpy` command
 
-The most direct way to query on data and export it as CSV is to use the `terminusdb` command.
+The most direct way to query on data and export it as CSV is to use the `tdbpy` command.
 
-If you are planning to export all documents in a particular type. You can simply use the `terminusdb exportcsv` command. Let's have a look a the command:
+If you are planning to export all documents in a particular type. You can simply use the `tdbpy exportcsv` command. Let's have a look a the command:
 
 ```
-$ terminusdb exportcsv --help
-Usage: terminusdb exportcsv [OPTIONS] CLASS_OBJ
+$ tdbpy exportcsv --help
+Usage: tdbpy exportcsv [OPTIONS] CLASS_OBJ
 
   Export all documents in a TerminusDB class into a flatten CSV file.
 
@@ -34,20 +32,20 @@ Options:
 
 Now let's try to export all `Employee` to a file named `exported_employees.csv`
 
-`$ terminusdb exportcsv --filename exported_employees.csv Employee`
+`$ tdbpy exportcsv --filename exported_employees.csv Employee`
 
 Inspect [exported_employees.csv](exported_employees.csv) and it look just as what we expected. All 5 employees information is there.
 
-But now, we want to only want the members of the IT team to be export in a CSV, we will have to do a bit of query. Let's try using the `-q` options with `terminusdb alldocs`
+But now, we want to only want the members of the IT team to be export in a CSV, we will have to do a bit of query. Let's try using the `-q` options with `tdbpy alldocs`
 
 ```
-$ terminusdb alldocs --type Employee -q team=it
+$ tdbpy alldocs --type Employee -q team=it
 [{'@id': 'Employee/003', '@type': 'Employee', 'address': {'@id': 'Address/543050aaa73c4590b38f9aed129b17ff', '@type': 'Address', 'postcode': 'BD18 2PT', 'street': 'Otley Road', 'street_num': 139, 'town': ' Shipley'}, 'contact_number': '(01274) 708080', 'manager': 'Employee/004', 'name': 'Alanah Bloggs', 'team': 'it', 'title': 'Frontend Developer'}, {'@id': 'Employee/004', '@type': 'Employee', 'address': {'@id': 'Address/6665e689224d412aa3a882fcfd287676', '@type': 'Address', 'postcode': 'SK5 6SY', 'street': 'Ansdell Road', 'street_num': 2, 'town': ' Stockport'}, 'contact_number': '(0161) 532 7302', 'name': 'Fabian Dalby', 'team': 'it', 'title': 'Web Service Manager'}, {'@id': 'Employee/005', '@type': 'Employee', 'address': {'@id': 'Address/358ac353adbf494f97100330b504e818', '@type': 'Address', 'postcode': 'IV27 2TG', 'street': 'Shore Street', 'street_num': 84, 'town': 'Stoer'}, 'contact_number': '070 7796 8035', 'manager': 'Employee/004', 'name': 'Ethan Abbott', 'team': 'it', 'title': 'Backend Developer'}]
 ```
 
 It's a bit hard to see so we are going to export it to [a CSV](exported_it_team.csv):
 
-`$ terminusdb alldocs --type Employee -q team=it -e --filename exported_it_team.csv`
+`$ tdbpy alldocs --type Employee -q team=it -e --filename exported_it_team.csv`
 
 ## Query data in Python script
 

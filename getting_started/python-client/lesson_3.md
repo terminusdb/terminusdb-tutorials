@@ -1,8 +1,6 @@
 # Lesson 3 - Importing data form Python script
 
-> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
-
-In last lesson, we have import the [Employees.csv](Employees.csv) with the `terminusdb` commmand. It auto generate the schema for you and pipe in the data form the CSV. Let's check the [schema.py](schema.py), you can see the schema that is generate from the CSV:
+In the last lesson, we have imported the [Employees.csv](Employees.csv) with the `tdbpy` commmand. It auto generates the schema for you and pipes in the data from the CSV. Let's check the [schema.py](schema.py), you can see the schema that is generate from the CSV:
 
 ```python
 class EmployeesFromCSV(DocumentTemplate):
@@ -129,10 +127,10 @@ Do back to our terminal, we can run the script. Make sure you are in a Python en
 $ python insert_data.py
 ```
 
-To check if the data is insert correctly, we can use the `terminusdb alldocs` command again:
+To check if the data is insert correctly, we can use the `tdbpy alldocs` command again:
 
 ```
-$ terminusdb alldocs --type Employee
+$ tdbpy alldocs --type Employee
 ```
 
 Or if the data is on TerminusX, you can check it in the [TerminusX dashboard](https://dashboard.terminusdb.com/)

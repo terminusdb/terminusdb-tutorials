@@ -1,15 +1,13 @@
 # Lesson 2 - Importing a CSV into the database
 
-> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
-
-## The `terminusdb importcsv` Command
+## The `tdbpy importcsv` Command
 
 In this lesson, we will try to import a CSV with the `terminusdb importcsv` command. It provide a very simple way to import a CSV with less manual effort. There are a few things that you can control with the `terminusdb importcsv` command, like setting the separator character, how to handle NAs and linking columns using a key columns etc. For more complicated data handling, a Python script will be needed and we will demonstrate that the next lesson: [Importing data form Python script](lesson_3.md)
 
 To see all the available options in `terminusdb importcsv`:
 
 ```
-$ terminusdb importcsv --help
+$ tdbpy importcsv --help
 Usage: terminusdb importcsv [OPTIONS] CSV_FILE [KEYS]...
 
   Import CSV file into pandas DataFrame then into TerminusDB, with
@@ -43,7 +41,7 @@ Options:
 
 ## Importing CSV
 
-Continue working with the phonebook example. We can now try to import the [Employees.csv](Employees.csv). Which looks like this:
+Make sure you are in the directory with the `Employees.csv` file. Continue working with the phonebook example. We can now try to import the [Employees.csv](Employees.csv). Which looks like this:
 
 | Employee id | Name           | Title               | Team        | Manager     |
 | ----------- | -------------- | ------------------- | ----------- | ----------- |
@@ -54,10 +52,10 @@ Continue working with the phonebook example. We can now try to import the [Emplo
 
 As you see there are `Employee id` which are used as a key to link the `Manager` field to the person that is the manager of that employee.
 
-To link them, we will do the following command to import the CSV:
+To link them, we will do the following command to import the CSV (we are assuming you are in the subdirectory getting\_started from the previous lesson):
 
 ```
-$ terminusdb importcsv Employees.csv --classname EmployeesFromCSV --id "Employee id" -e Manager -m "Import Employees from CSV"
+$ tdbpy importcsv Employees.csv --classname EmployeesFromCSV --id "Employee id" -e Manager -m "Import Employees from CSV"
 0it [00:00, ?it/s]
 Schema object EmployeesFromCSV created with Employees.csv being imported into database.
 1it [00:00,  1.27it/s]
@@ -78,11 +76,11 @@ class EmployeesFromCSV(DocumentTemplate):
 Now we can verify our data:
 
 ```
-$ terminusdb alldocs
+$ tdbpy alldocs
 [{'@id': 'EmployeesFromCSV/001', '@type': 'EmployeesFromCSV', 'employee_id': '001', 'name': 'Destiny Norris', 'team': 'Marketing', 'title': 'Marketing Manager'}, {'@id': 'EmployeesFromCSV/002', '@type': 'EmployeesFromCSV', 'employee_id': '002', 'manager': 'EmployeesFromCSV/001', 'name': 'Darci Prosser', 'team': 'Marketing', 'title': 'Creative Writer'}, {'@id': 'EmployeesFromCSV/003', '@type': 'EmployeesFromCSV', 'employee_id': '003', 'manager': 'EmployeesFromCSV/004', 'name': 'Alanah Bloggs', 'team': 'IT', 'title': 'Frontend Developer'}, {'@id': 'EmployeesFromCSV/004', '@type': 'EmployeesFromCSV', 'employee_id': '004', 'name': 'Fabian Dalby', 'team': 'IT', 'title': 'Web Service Manager'}]
 ```
 
-In [later chapters](lesson_5.md) we will also learn how to query this data and/ or export data into CSV ([or using Singer.io to export data into other data products](https://github.com/terminusdb/terminusdb-tutorials/tree/master/google_sheets/README.md)).
+In [later chapters](lesson_5.md) we will also learn how to query this data and/ or export data into CSV.
 
 ---
 

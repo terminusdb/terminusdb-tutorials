@@ -51,7 +51,7 @@ A few things to note here, first we have to create a WOQLQuery object with the s
 
 Second, the prefix before the `:` is telling TerminusDB how to treat the strings in the query. For example, a `v:` denote a variable so `v:person` is a variable that we don't know and would like to find what it is in the query. On the other hand, `@schema:` denote that it is a property that is defined in the schema, so `@schema:name` says that `name` is the property that we stated for the `Employee` documents in the schema.
 
-Third, we can linked up the triples that we created with [`wq().triple`](https://terminusdb.github.io/terminusdb-client-python/woqlQuery.html#terminusdb_client.WOQLQuery.triple) with either [`wq().woql_and`](https://terminusdb.github.io/terminusdb-client-python/woqlQuery.html#terminusdb_client.WOQLQuery.woql_and) or a simple `+` like we did above.
+Third, we can linked up the triples that we created with [`wq().triple`](https://terminusdb.com/docs/guides/reference-guides/python-client-reference/terminusdb_client.woqlquery) with either [`wq().woql_and`](https://terminusdb.com/docs/guides/reference-guides/python-client-reference/terminusdb_client.woqlquery) or a simple `+` like we did above.
 
 So the query above can be interpreted as:
 

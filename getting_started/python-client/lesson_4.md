@@ -1,7 +1,5 @@
 # Lesson 4 - Update and import new data that links to old data
 
-> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
-
 Remember our imaginary Awesome Startup that has their Phonebook stored in TerminusDB? It has been a few months and they have a new recruit:
 
 | Employee id | Name           | Title               | Team        | Manager     |
@@ -24,7 +22,7 @@ How are we going to update the records?
 
 Let's look at how to update Destiny's Address. We did it with the [update_data.py](update_data.py). The first step after connecting with the client is to get back the schema of the database. In the terminal we can use:
 
-`$ terminusdb sync`
+`$ tdbpy sync`
 
 To update the `schema.py` for easy inspection. However, since we have to do it in the script and import the documents, we will create a `WOQLSchema` object and sync up that object with the database's schema:
 
@@ -121,7 +119,7 @@ Run the scripts:
 
 To check if the database is up-to-date, you can do in the terminal like we did before:
 
-`$ terminusdb alldocs`
+`$ tdbpy alldocs`
 
 Or if you are using TerminusX, you can also check it in the dashboard.
 
