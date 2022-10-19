@@ -11,11 +11,13 @@ Making a branch is like making a copy of the database. The good thing about this
 First we will connect to the server:
 
 ```javascript
-// Connecting to TerminusX
-// TODO: Change teamname
+// TODO: Change teamname and username
+const teamName = "teamname"
+const username = "username"
+
 const client = new TerminusClient.WOQLClient(
-  "https://cloud.terminusdb.com/teamname/",
-  { user: "username", organization: "teamname", db: "GettingStartedDB" }
+  `https://cloud.terminusdb.com/${teamName}/`,
+  { user: username, organization: teamName , db:"GettingStartedDB" }
 );
 ```
 
@@ -191,7 +193,7 @@ To do it, let's go back to `main` and rebase from `contractors`:
 ```javascript
 client.checkout("main");
 
-await client.rebase({rebase_from: "teamname/GettingStartedDB/local/branch/contractors/", message: "Merging from contractors",author: "user"});
+await client.rebase({rebase_from: `${teamName}/GettingStartedDB/local/branch/contractors/`, message: "Merging from contractors",author: "user"});
   
 ```
 
@@ -212,20 +214,21 @@ Let's verify our commit history again:
 
 ```javascript
 
-console.log("Main Commit History: ")
-await getCommitHistory("main");
+const mainCommits = await getCommitHistory("main");
 
+//from the commit history we get the commit ID that we need 
+const mainCommitObj = mainCommits.find(item=>item["Message"]["@value"] === 'Adding ethan')
+const oldMainCommitID = mainCommitObj['Commit ID']['@value']
 ```
 
-We would like to keep the commits up to the `Adding Ethan` one, take note of the commit id of that commit. Mine is `2zt3shmtvrrdsk63kvdxiwtzakthwb3`, yours will be different.
-
+We would like to keep the commits up to the `Adding Ethan` one.
 To reset, we use the `client.resetBranch(branch,commitID)` function:
 
 ```javascript
-await client.resetBranch("main", "2zt3shmtvrrdsk63kvdxiwtzakthwb3"); 
+await client.resetBranch("main", oldMainCommitID); 
 ```
 
-Notice that it is a hard reset, meaning that the changes after the commit `Adding Ethan` is gone forever!
+IMPORTANT!!!! That it is an hard reset, meaning that the changes after the commit `Adding Ethan` is gone forever!
 Now let's have a look at the log again:
 
 ```javascript

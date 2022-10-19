@@ -1,12 +1,14 @@
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
-// Connecting to TerminusX
-// TODO: Change teamname
-const client = new TerminusClient.WOQLClient(
-  "https://cloud.terminusdb.com/cloudux/",
-  { user: "username", organization: "cloudux", db: "GettingStartedDB" }
-);
 
+// TODO: Change teamname and username
+const teamName = "yourTeam"
+const username = "yourUser"
+
+const client = new TerminusClient.WOQLClient(
+  `https://cloud.terminusdb.com/${teamName}/`,
+  { user: username, organization: teamName , db:"GettingStartedDB" }
+);
 //Assign your key to environment variable TERMINUSDB_ACCESS_TOKEN
 client.setApiKey(process.env.TERMINUSDB_ACCESS_TOKEN);
 

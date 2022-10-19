@@ -42,14 +42,12 @@ Then we go head and read the CSVs and do the corresponding data managing:
 // function to load and parse huge CSV files
 const readCsv = (fileName) => {
   // TODO: change the directoryPath to point were the csv are stored
-  const directoryPath = "../../terminusdb-tutorials/getting_started/javascript/"
   return new Promise((resolve, reject) => {
     const data = [];
 
     fs.createReadStream(
       path.resolve(
         __dirname,
-        directoryPath,
         fileName
       )
     )
@@ -112,11 +110,13 @@ Now, the `employees` list should be populated with the `Employee` objects that i
 The next step is the insert all `Employees` into the database. But before, we need to create a client with our cloud endpoint:
 
 ```javascript
-// Connecting to TerminusX
-// TODO: Change teamname
+// TODO: Change teamname and username
+const teamName = "teamname"
+const username = "username"
+
 const client = new TerminusClient.WOQLClient(
-  "https://cloud.terminusdb.com/teamname/",
-  { user: "username", organization: "teamname", db:"GettingStartedDB" }
+  `https://cloud.terminusdb.com/${teamName}/`,
+  { user: username, organization: teamName , db:"GettingStartedDB" }
 );
 
 // If you are using TerminusX 

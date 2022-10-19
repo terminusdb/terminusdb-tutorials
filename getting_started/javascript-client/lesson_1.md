@@ -145,13 +145,17 @@ The schema.js file will look like this in the end:
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
-// TODO: Change teamname
+// TODO: Change teamname and username
+const teamName = "teamname"
+const username = "username"
+
 const client = new TerminusClient.WOQLClient(
-  "https://cloud.terminusdb.com/teamname/",
-  { user: "usernmae", organization: "teamname" }
+  `https://cloud.terminusdb.com/${teamName}/`,
+  { user: username, organization: teamName }
 );
 
-// If you are using TerminusX
+// If you are using TerminusX you need to generate you api key
+// https://terminusdb.com/docs/terminusx/get-api-key here the documentation
 client.setApiKey(process.env.TERMINUSDB_ACCESS_TOKEN);
 
 const address_schema = {

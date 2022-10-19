@@ -1,10 +1,12 @@
 const TerminusClient = require("@terminusdb/terminusdb-client");
 
-// Connecting to TerminusX
-// TODO: Change teamname
+// TODO: Change teamname and username
+const teamName = "yourTeam"
+const username = "yourUser"
+
 const client = new TerminusClient.WOQLClient(
-  "https://cloud.terminusdb.com/cloudux/",
-  { user: "username", organization: "cloudux", db: "GettingStartedDB" }
+  `https://cloud.terminusdb.com/${teamName}/`,
+  { user: username, organization: teamName , db:"GettingStartedDB" }
 );
 
 //Assign your key to environment variable TERMINUSDB_ACCESS_TOKEN
@@ -17,6 +19,8 @@ const getCommitHistory = async (branch) => {
 
   const res = await client.query(commitQuery);
   console.log(res.bindings);
+  return res.bindings
+  
 };
 
 const addContractors = async () => {
@@ -57,43 +61,52 @@ const addContractors = async () => {
 
 
 const runScript = async () => {
+  try{
 
-  const defaultBranches = await client.getBranches();
-  console.log("Default Branches: ", defaultBranches);
+      const defaultBranches = await client.getBranches();
+      console.log("Default Branches: ", defaultBranches);
 
-  // Create new contractor branch
-  await client.branch("contractors");
-  console.log("Branch created successfully!")
+      // Create new contractor branch
+      await client.branch("contractors");
+      console.log("Branch created successfully!")
 
-  const newBranches = await client.getBranches();
-  console.log("New Branches: ", newBranches);
+      const newBranches = await client.getBranches();
+      console.log("New Branches: ", newBranches);
 
-  // checkout to new branch contractors
-  client.checkout("contractors");
+      // checkout to new branch contractors
+      client.checkout("contractors");
 
-  await addContractors();
-  console.log("Added Contractors successfully!")
+      await addContractors();
+      console.log("Added Contractors successfully!")
 
-  
-  console.log("Main Commit History: ")
-  await getCommitHistory("main");
+      
+      console.log("Main Commit History: ")
+      await getCommitHistory("main");
 
 
-  console.log("Contractors Commit History: ")
-  await getCommitHistory("contractors");
+      console.log("Contractors Commit History: ")
+      await getCommitHistory("contractors");
 
-  client.checkout("main");
+      client.checkout("main");
 
-  await client.rebase({rebase_from: "cloudux/GettingStartedDB/local/branch/contractors/", message: "Merging from contractors" , author: "USer"});
-  console.log("Rebase done successfully!");
+      await client.rebase({rebase_from: `${teamName}/GettingStartedDB/local/branch/contractors/`, message: "Merging from contractors" , author: "USer"});
+      console.log("Rebase done successfully!");
 
-  console.log("main Commit History: ")
-  await getCommitHistory("main");
+      const mainCommits = await getCommitHistory("main");
 
-  await client.resetBranch("main", "2zt3shmtvrrdsk63kvdxiwtzakthwb3"); 
-  console.log("Reset done successfully!");
+      //We would like to keep the commits up to the `Adding Ethan` one
+      const mainCommitObj = mainCommits.find(item=>item["Message"]["@value"] === 'Adding ethan')
+      const oldMainCommitID = mainCommitObj['Commit ID']['@value']
 
-  console.log("Main Commit History: ")
-  await getCommitHistory("main");
+      console.log('Main Commit ID',oldMainCommitID )
+
+      await client.resetBranch("main", oldMainCommitID); 
+      console.log("Reset done successfully!");
+
+      console.log("Main Commit History: ")
+      await getCommitHistory("main");
+  }catch(err){
+     console.log(err.message) 
+  }
 }
 runScript();
