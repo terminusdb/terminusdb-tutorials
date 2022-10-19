@@ -3,11 +3,11 @@
 This is a multipart tutorial which will help to teach you the chops
 you need to build real world data products.
 
-To run the full code for the tutorial, you
+To run the full code for the tutorial, you need to follow the instructions below.
 
 ## Getting the Python Client
 
-First you should go and see how to get installed with the [Python Client](https://docs.terminusdb.com/v10.0/#/terminusx/start-with-a-client) in our documentation.
+First you should go and see how to get installed with the [Python Client](https://terminusdb.com/docs/get-started/install-client/install-python-client) in our documentation.
 
 ## Running the Tutorial
 
@@ -19,7 +19,7 @@ directly using our short script in our `make`-file.
 To clone the repository and run it, however, first you'll need a [key from
 TerminusX](https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key).
 
-You will also need to copy your *team name* into the enviornment variable
+You will also need to copy your *team name* into the environment variable
 
 ```shell
 $ git clone https://github.com/terminusdb/terminusdb-tutorials/
@@ -27,7 +27,7 @@ $ cd terminusdb-tutorials/nuclear
 $ export TERMINUSDB_TEAM="TerminatorsX"
 $ export TERMINUSDB_ACCESS_TOKEN="eyJhbG..."
 $ make nuclear
-$ make cleaning
+$ make enrichment
 $ make scraping
 ```
 
@@ -42,7 +42,3 @@ $ make scraping
 # Scraping Data (Part 3)
 
 [Scraping](./scraping.md)
-
-# Validating Data (Part 4)
-
-... coming soon ...
