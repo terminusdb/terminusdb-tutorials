@@ -37,7 +37,7 @@ $ python3 -m pip install target-terminusdb pandas tqdm tempfile
 In the project directory start a TerminusDB project:
 
 ```
-$ terminusdb startproject
+$ tdbpy startproject
 ```
 
 You will be prompt with a few questions. Pick a project name and if you are running the localhost server with default port you can just press Enter. You have to provide the endpoint and other login information if you are using TerminusX or otherwise.
@@ -117,5 +117,5 @@ $ python nobel_prize.py | target-terminusdb -c config.json
 Check if the documents are looking good by using the following command to get 10 documents to inspect:
 
 ```
-$ terminusdb alldocs -h 10
+$ tdbpy alldocs -h 10
 ```

@@ -24,7 +24,7 @@ How are we going to update the records?
 
 Let's look at how to update Destiny's Address. We did it with the [update_data.py](update_data.py). The first step after connecting with the client is to get back the schema of the database. In the terminal we can use:
 
-`$ terminusdb sync`
+`$ tdbpy sync`
 
 To update the `schema.py` for easy inspection. However, since we have to do it in the script and import the documents, we will create a `WOQLSchema` object and sync up that object with the database's schema:
 
@@ -121,7 +121,7 @@ Run the scripts:
 
 To check if the database is up-to-date, you can do in the terminal like we did before:
 
-`$ terminusdb alldocs`
+`$ tdbpy alldocs`
 
 Or if you are using TerminusX, you can also check it in the dashboard.
 
