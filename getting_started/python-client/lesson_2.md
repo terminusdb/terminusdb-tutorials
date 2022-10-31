@@ -2,15 +2,15 @@
 
 > **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
 
-## The `terminusdb importcsv` Command
+## The `tdbpy importcsv` Command
 
-In this lesson, we will try to import a CSV with the `terminusdb importcsv` command. It provide a very simple way to import a CSV with less manual effort. There are a few things that you can control with the `terminusdb importcsv` command, like setting the separator character, how to handle NAs and linking columns using a key columns etc. For more complicated data handling, a Python script will be needed and we will demonstrate that the next lesson: [Importing data form Python script](lesson_3.md)
+In this lesson, we will try to import a CSV with the `tdbpy importcsv` command. It provide a very simple way to import a CSV with less manual effort. There are a few things that you can control with the `tdbpy importcsv` command, like setting the separator character, how to handle NAs and linking columns using a key columns etc. For more complicated data handling, a Python script will be needed and we will demonstrate that the next lesson: [Importing data form Python script](lesson_3.md)
 
-To see all the available options in `terminusdb importcsv`:
+To see all the available options in `tdbpy importcsv`:
 
 ```
-$ terminusdb importcsv --help
-Usage: terminusdb importcsv [OPTIONS] CSV_FILE [KEYS]...
+$ tdbpy importcsv --help
+Usage: tdbpy importcsv [OPTIONS] CSV_FILE [KEYS]...
 
   Import CSV file into pandas DataFrame then into TerminusDB, with
   read_csv() options. Options like chunksize, sep etc
@@ -57,7 +57,7 @@ As you see there are `Employee id` which are used as a key to link the `Manager`
 To link them, we will do the following command to import the CSV:
 
 ```
-$ terminusdb importcsv Employees.csv --classname EmployeesFromCSV --id "Employee id" -e Manager -m "Import Employees from CSV"
+$ tdbpy importcsv Employees.csv --classname EmployeesFromCSV --id "Employee id" -e Manager -m "Import Employees from CSV"
 0it [00:00, ?it/s]
 Schema object EmployeesFromCSV created with Employees.csv being imported into database.
 1it [00:00,  1.27it/s]
@@ -78,7 +78,7 @@ class EmployeesFromCSV(DocumentTemplate):
 Now we can verify our data:
 
 ```
-$ terminusdb alldocs
+$ tdbpy alldocs
 [{'@id': 'EmployeesFromCSV/001', '@type': 'EmployeesFromCSV', 'employee_id': '001', 'name': 'Destiny Norris', 'team': 'Marketing', 'title': 'Marketing Manager'}, {'@id': 'EmployeesFromCSV/002', '@type': 'EmployeesFromCSV', 'employee_id': '002', 'manager': 'EmployeesFromCSV/001', 'name': 'Darci Prosser', 'team': 'Marketing', 'title': 'Creative Writer'}, {'@id': 'EmployeesFromCSV/003', '@type': 'EmployeesFromCSV', 'employee_id': '003', 'manager': 'EmployeesFromCSV/004', 'name': 'Alanah Bloggs', 'team': 'IT', 'title': 'Frontend Developer'}, {'@id': 'EmployeesFromCSV/004', '@type': 'EmployeesFromCSV', 'employee_id': '004', 'name': 'Fabian Dalby', 'team': 'IT', 'title': 'Web Service Manager'}]
 ```
 
