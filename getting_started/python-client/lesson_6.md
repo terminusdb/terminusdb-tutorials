@@ -10,26 +10,26 @@ Let's follow the Awesome Startup again. Now they are super busy and decided to h
 
 Making a branch is like making a copy of the database. The good thing about this operation is that, if the contractors has does something wrong and accidentally modify the data that they should not be modifying, the changes will only be remained in the branched database. It gives the managers chances to review the changes before adopting the change in the main database.
 
-To make a branch, we can use the `terminusdb branch` or `terminusdb checkout -b` command. The difference is that `terminusdb branch` will create a new branch WITHOUT going (checkout) to that branch, while `terminusdb checkout` is used to go to another branch but with option `-b` you will create that new branch before going there.
+To make a branch, we can use the `tdbpy branch` or `tdbpy checkout -b` command. The difference is that `tdbpy branch` will create a new branch WITHOUT going (checkout) to that branch, while `tdbpy checkout` is used to go to another branch but with option `-b` you will create that new branch before going there.
 
 Before we create the branch, let see what we have for now:
 
 ```
-$ terminusdb branch
+$ tdbpy branch
 main
 ```
 
 We only have the `main` branch. The `main` branch is the default branch that is created when you created a new database. Let's create the new barnch:
 
 ```
-$ terminusdb branch contractors
+$ tdbpy branch contractors
 Branch 'contractors' created. Remain on 'main' branch.
 ```
 
 We have created the `contractors` branch. Let's verify:
 
 ```
-$ terminusdb branch            
+$ tdbpy branch            
 main
 contractors
 ```
@@ -49,7 +49,7 @@ Now run the script:
 To verify we did things right, let's see if there is any changes in the current `main` branch, you can see all the logs with:
 
 ```
-$ terminusdb log     
+$ tdbpy log     
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'main'
@@ -93,14 +93,14 @@ So the last time we make changes is adding Ethan, the contractors are not added 
 Now let's go to the `contractors` branch:
 
 ```
-$ terminusdb checkout contractors
+$ tdbpy checkout contractors
 Checked out 'contractors' branch.
 ```
 
 And check the log again:
 
 ```
-$ terminusdb log           
+$ tdbpy log           
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'contractors'
@@ -128,16 +128,16 @@ Rebase means that we take the changes we made since the branching and will conti
 To do it, let's go back to `main` and rebase from `contractors`:
 
 ```
-$ terminusdb checkout main
+$ tdbpy checkout main
 Checked out 'main' branch.
-$ terminusdb rebase contractors
+$ tdbpy rebase contractors
 Rebased contractors branch.
 ```
 
-Now when we do `terminusdb log` we see that we have the `Adding contractors` commit in it.
+Now when we do `tdbpy log` we see that we have the `Adding contractors` commit in it.
 
 ```
-$ terminusdb log
+$ tdbpy log
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'main'
@@ -161,7 +161,7 @@ Time fries, now the project is done and the contractors has done their jobs and 
 Let's verify our log again:
 
 ```
-$ terminusdb log                 
+$ tdbpy log                 
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'main'
@@ -186,17 +186,17 @@ Date: 2021-10-15 11:48:32
 
 We would like to keep the commits up to the `Adding Ethan` one, take note of the commit id of that commit. Mine is `8o4vkomwryjogg37u3abojflpzrt0r4`, yours will be different.
 
-To reset, we use the `terminusdb reset` command:
+To reset, we use the `tdbpy reset` command:
 
 ```
-$ terminusdb reset 8o4vkomwryjogg37u3abojflpzrt0r4
+$ tdbpy reset 8o4vkomwryjogg37u3abojflpzrt0r4
 Hard reset to commit 8o4vkomwryjogg37u3abojflpzrt0r4
 ```
 
 Notice that it is a hard reset, meaning that the changes after the commit `Adding Ethan` is gone forever! If you are not sure or just want to temporary reset to a previous time, make sure you use `--soft` option. Now let's have a look at the log again:
 
 ```
-$ terminusdb log
+$ tdbpy log
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'main'

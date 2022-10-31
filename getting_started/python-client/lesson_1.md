@@ -25,7 +25,7 @@ Now go to the project directory (or start a new one):
 
 In the project directory start a TerminusDB project:
 
-`$ terminusdb startproject`
+`$ tdbpy startproject`
 
 You will be prompt with a few questions. Pick a project name (or the database name if you already have a working database) and if you are running the localhost server with default port you can just press Enter. You have to provide the endpoint and other login information if you are using TerminusX or otherwise.
 
@@ -113,7 +113,7 @@ class Team(EnumTemplate):
 Now we have the right schema plan, let's commit it to be database:
 
 ```
-$ terminusdb commit -m "update phonebook schema"
+$ tdbpy commit -m "update phonebook schema"
 getting_started created.
 getting_started schema updated.
 ```
@@ -121,7 +121,7 @@ getting_started schema updated.
 To verify the schema is commit, if you are using TerminusX, you can see changes in the dashboard. Since we are using TerminusDB locally (it works with TerminusX as well), we can look at the logs by:
 
 ```
-$ terminusdb log
+$ tdbpy log
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'main'
@@ -140,7 +140,7 @@ Date: 2021-10-01 11:38:49
 Also, you can look at the objects in the schema graph like this:
 
 ```
-$ terminusdb alldocs --schema
+$ tdbpy alldocs --schema
 [{'@base': 'terminusdb:///data/', '@documentation': {'@authors': ['Destiny Norris', 'Fabian Dalby'], '@description': 'Database storing all the contact details of all employees in Awesome Startup', '@title': 'Phonebook for Awesome Startup'}, '@schema': 'terminusdb:///schema#', '@type': '@context'}, {'@documentation': {'@comment': 'Home address of Employee', '@properties': {'postcode': 'Postal Code', 'street': 'Street name.', 'street_num': 'Street number.', 'town': 'Town name.'}}, '@id': 'Address', '@key': {'@type': 'Random'}, '@subdocument': [], '@type': 'Class', 'postcode': 'xsd:string', 'street': 'xsd:string', 'street_num': 'xsd:integer', 'town': 'xsd:string'}, {'@documentation': {'@comment': 'Employee of the Company'}, '@id': 'Employee', '@type': 'Class', 'address': 'Address', 'contact_number': 'xsd:string', 'manager': {'@class': 'Employee', '@type': 'Optional'}, 'name': 'xsd:string', 'title': 'xsd:string'}, {'@id': 'Team', '@type': 'Enum', '@value': ['Marketing', 'Information Technology']}]
 ```
 
