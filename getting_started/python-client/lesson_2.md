@@ -1,10 +1,10 @@
-# Lesson 2 - Importing a CSV into the database
+# Lesson 2 - Importing a CSV file into the database
 
 > **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
 
 ## The `tdbpy importcsv` Command
 
-In this lesson, we will try to import a CSV with the `tdbpy importcsv` command. It provide a very simple way to import a CSV with less manual effort. There are a few things that you can control with the `tdbpy importcsv` command, like setting the separator character, how to handle NAs and linking columns using a key columns etc. For more complicated data handling, a Python script will be needed and we will demonstrate that the next lesson: [Importing data form Python script](lesson_3.md)
+In this lesson, we will try to import a CSV file with the `tdbpy importcsv` command. It provide a very simple way to import a CSV with less manual effort. There are a few things that you can control with the `tdbpy importcsv` command, like setting the separator character, how to handle NAs and linking columns using a key columns etc. For more complicated data handling, a Python script will be needed and we will demonstrate that the next lesson: [Importing data form Python script](lesson_3.md)
 
 To see all the available options in `tdbpy importcsv`:
 
@@ -43,7 +43,7 @@ Options:
 
 ## Importing CSV
 
-Continue working with the phonebook example. We can now try to import the [Employees.csv](Employees.csv). Which looks like this:
+Continue working with the phonebook example. We can now try to import the [Employees.csv](Employees.csv) file. Which looks like this:
 
 | Employee id | Name           | Title               | Team        | Manager     |
 | ----------- | -------------- | ------------------- | ----------- | ----------- |
@@ -54,7 +54,11 @@ Continue working with the phonebook example. We can now try to import the [Emplo
 
 As you see there are `Employee id` which are used as a key to link the `Manager` field to the person that is the manager of that employee.
 
-To link them, we will do the following command to import the CSV:
+To link them, we must first install the `pandas` library.
+```sh
+$ pip install pandas
+```
+We can then import the CSV file with the following command:
 
 ```
 $ tdbpy importcsv Employees.csv --classname EmployeesFromCSV --id "Employee id" -e Manager -m "Import Employees from CSV"
@@ -64,7 +68,7 @@ Schema object EmployeesFromCSV created with Employees.csv being imported into da
 Records in Employees.csv inserted as type EmployeesFromCSV into database with specified ids.
 ```
 
-We have imported the CSV with the class as `EmployeesFromCSV` you can see that there is a new class object in `schema.py` that is created as well:
+We have imported the CSV file with the class as `EmployeesFromCSV` you can see that there is a new class object in `schema.py` that is created as well:
 
 ```python
 class EmployeesFromCSV(DocumentTemplate):
