@@ -1,1 +1,105 @@
+body {
+    color: #d8dff0;
+    background: #2f3044;
+}
 
+a {
+    color: #3dffc5;
+}
+
+.App {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 20px;
+    font-family: "Roboto",monospace;
+}
+
+table.blogTable {
+    border: none;
+}
+
+td.blogImage {
+    border: none;
+    width: 40%;
+}
+
+td.blogData {
+    border: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+img.Thumbnail {
+    border: none;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
+
+.App-header {
+  background-color: #2f3044;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "JetBrains Mono",Menlo,Monaco,"Courier New",monospace;
+  font-size: 100%;
+  color: #d8dff0;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    height: 5em;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: right;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  /* background-color: #ddd; */
+  /* color: black; */
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  /*  background-color: #04AA6D;
+  color: white; */
+}
+
+/* Right-aligned section inside the top navigation */
+.topnav-right {
+  float: right;
+}
+
+th, td {
+    padding: 10px;
+    margin: 0px;
+    border: 1px solid;
+}
+table, td, thead th, tbody + tbody {
+  border-color:  #d8dff0;
+}
+
+td {
+    padding: 5px;
+}
+
+.morePosts {
+    align: center;
+}
