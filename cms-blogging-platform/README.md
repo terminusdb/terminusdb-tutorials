@@ -4,8 +4,25 @@ How easy is it to make a blog-focused CMS in TerminusDB?
 
 Very!
 
-This project is designed to show how you can build a custom web-app
-using TerminusDB from scratch with little effort.
+This
+[TerminusDB powered blog](https://github.com/terminusdb/terminusdb-tutorials/tree/master/cms-blogging-platform) is
+designed to show how easy it is to build a custom web-app using
+TerminusDB from scratch.
+
+You should be able to clone the repository and run it locally provided
+you have
+[npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+and [terminusdb](https://github.com/terminusdb/terminusdb) installed.
+
+Just run:
+
+```shell
+make
+npm start & terminusdb serve &
+```
+
+And you should be able to view the blog at `localhost:3000`. The
+TerminusDB backend will be available at `localhost:6363`.
 
 ## The Schema
 
@@ -110,7 +127,7 @@ really beautiful however, I had to crib some tricks from [Amir
 Ardalan's blog on
 Markdown](https://amirardalan.com/blog/syntax-highlight-code-in-markdown).
 
-Now we're basically ready to go, we just need to edit our [App.js](../assets/App.js) file
+Now we're basically ready to go, we just need to edit our [App.js](blog/src/assets/App.js) file
 and give ourselves a river of news.
 
 ```jsx
@@ -189,7 +206,7 @@ We need to serve up a few pages, so its convenient to put in a router.
 npm install react-router-dom
 ```
 
-The main [App()](../assets/App.js) is pretty straight forward.
+The main [App()](blog/src/App.js) is pretty straight forward.
 
 ```js
 function App() {
@@ -230,7 +247,7 @@ query SitemapQuery {
 ## Getting Some Data In
 
 To get the data in, I just wrote a short python
-[script](../assets/create_from_files.py) that grabbed my already
+[script](create_from_files.py) that grabbed my already
 existing blogs.
 
 Since the files are already Markdown, I just stick them in a content
@@ -241,6 +258,8 @@ a datetime from the unix timestamp of the file.
 
 I never really used the Author object, as I'm the only Author, but
 otherwise it's a fairly useable blogging engine as is.
+
+![Blog engine in TerminusDB](blog/public/blog.png)
 
 I'm keen to put this up on TerminusX, and try to host the front end on
 something like [Heroku](https://www.heroku.com/).
