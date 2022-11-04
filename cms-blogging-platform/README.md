@@ -127,7 +127,7 @@ really beautiful however, I had to crib some tricks from [Amir
 Ardalan's blog on
 Markdown](https://amirardalan.com/blog/syntax-highlight-code-in-markdown).
 
-Now we're basically ready to go, we just need to edit our [App.js](blog/src/assets/App.js) file
+Now we're basically ready to go, we just need to edit our [App.js](blog/src//blog/src/App.js) file
 and give ourselves a river of news.
 
 ```jsx
