@@ -1,0 +1,4 @@
+{"@id":"SiteMap/%5B%5D","@type":"SiteMap","items":["SiteItem/947d24ee19e267d3736644c0ba0a5d555102323bb9e36b3f951bde3bdcc69022","SiteItem/d5b81b686e5ce9452660a336fd9269c56eeaeeb998e4628a5a504b1969c3eb85"],"self":[]}
+{"@id":"SiteItem/947d24ee19e267d3736644c0ba0a5d555102323bb9e36b3f951bde3bdcc69022","@type":"SiteItem","location":"http://localhost:3000/","name":"Home","order":0}
+{"@id":"SiteItem/d5b81b686e5ce9452660a336fd9269c56eeaeeb998e4628a5a504b1969c3eb85","@type":"SiteItem","location":"http://localhost:3000/Page/About","name":"About","order":1}
+{"@id":"Page/About","@type":"Page","content":"This is Gavin Mendel-Gleason's technical blog, exploring database and data management with a focus on connected data.","title":"About"}
