@@ -31,11 +31,33 @@ https://github.com/terminusdb/terminus-client
 
 ---
 
-## Getting Started using TerminusDB/ TerminusX with Python client
+## GraphQL Tutorials
+
+For more details about how to use GraphQL with TerminusDB, please refer to the [GraphQL section of our documentation](https://terminusdb.com/docs/guides/reference-guides/graphql_query).
+
+### Building a Blog-Focused CMS with TerminusDB
+
+This project is designed to show how you can build a custom web-app using TerminusDB from scratch with little effort.
+
+Details: [README](./terminusBlog)
+
+### Playing with Star Wars RDF Data Set Using GraphQL
+
+Taking you through the process of loading RDF into TerminusDB and then using GraphQL to query the Star Wars data.
+
+Details: [README](./star-wars)
+
+## Getting Started using TerminusDB/ TerminusX with the Python client
 
 A tutorial series to help anyone who's new to TerminusDB/ TerminusX to start working using the Python client.
 
 Details: [README](./getting_started/python-client/README.md)
+
+## Getting Started using TerminusDB/ TerminusX with the JavaScript client
+
+A tutorial series to help anyone who's new to TerminusDB/ TerminusX to start working using the JavaScript client.
+
+Details: [README](./getting_started/javascript-client)
 
 ## Stock Index Data
 
