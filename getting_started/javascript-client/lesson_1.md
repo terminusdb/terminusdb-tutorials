@@ -174,10 +174,11 @@ const address_schema = {
 const employee_schema = {
     "@id": "Employee",
     "@key": {
-      "@type": "ValueHash"
+      "@type": "Lexical",
+      "@fields": ["employee_id"]
     },
-    "@subdocument": [],
     "@type": "Class",
+    "employee_id": "xsd:string",
     "address": "Address",
     "contact_number": "xsd:string",
     "manager": {
@@ -193,8 +194,8 @@ const team_schema = {
     "@id": "Team",
     "@type": "Enum",
     "@value": [
-      "marketing",
-      "it"
+      "Marketing",
+      "IT"
     ]
 };
 
