@@ -16,7 +16,7 @@ team_it = result_to_df(team_it_raw)
 team_marketing = result_to_df(team_marketing_raw)
 
 team_it_avg = team_it["name"].apply(len).sum() / len(team_it)
-team_marketing_avg = team_it["name"].apply(len).sum() / len(team_marketing)
+team_marketing_avg = team_marketing["name"].apply(len).sum() / len(team_marketing)
 
 print(f"Average name length of IT team is {team_it_avg}")
 print(f"Average name length of Marketing team is {team_marketing_avg}")
