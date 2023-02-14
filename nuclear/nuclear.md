@@ -364,12 +364,12 @@ def import_nuclear(client):
                                })
 
             countries[country_long] = { '@type' : 'Country',
-                                        '@capture' : country_long,
+                                        '@capture' : f"Country/{country_long}",
                                         'name' : country_long }
 
             plant = { '@type' : "NuclearPowerPlant",
                       'name' : name,
-                      'country' : { '@ref' : country_long },
+                      'country' : { '@ref' : f"Country/{country_long}" },
                       'location' : { '@type' : 'GeoCoordinate',
                                      'latitude' : latitude,
                                      'longitude' : longitude },
