@@ -309,6 +309,7 @@ def import_nuclear(client):
         next(csvfile)
         isotope_rows = csv.reader(csvfile, delimiter=',')
         plants = []
+        countries = {}
         for row in isotope_rows:
             country,country_long,name,gppd_idnr,capacity_mw,latitude,longitude,primary_fuel,other_fuel1,other_fuel2,other_fuel3,commissioning_year,owner,source,url,geolocation_source,wepp_id,year_of_capacity_data,generation_gwh_2013,generation_gwh_2014,generation_gwh_2015,generation_gwh_2016,generation_gwh_2017,generation_gwh_2018,generation_gwh_2019,generation_data_source,estimated_generation_gwh_2013,estimated_generation_gwh_2014,estimated_generation_gwh_2015,estimated_generation_gwh_2016,estimated_generation_gwh_2017,estimated_generation_note_2013,estimated_generation_note_2014,estimated_generation_note_2015,estimated_generation_note_2016,estimated_generation_note_2017 = row
             output = []
@@ -362,10 +363,13 @@ def import_nuclear(client):
                                             'quantity' : generation_gwh_2019 }
                                })
 
+            countries[country_long] = { '@type' : 'Country',
+                                        '@capture' : f"Country/{country_long}",
+                                        'name' : country_long }
+
             plant = { '@type' : "NuclearPowerPlant",
                       'name' : name,
-                      'country' : { '@type' : 'Country',
-                                    'name' : country_long },
+                      'country' : { '@ref' : f"Country/{country_long}" },
                       'location' : { '@type' : 'GeoCoordinate',
                                      'latitude' : latitude,
                                      'longitude' : longitude },
@@ -386,10 +390,18 @@ def import_nuclear(client):
             client.message=f"Adding civilian power reactor {name}"
             plants.append(plant)
 
-        result = client.insert_document(plants)
+        docs = plants + list(countries.values())
+        result = client.insert_document(docs)
         print(f"Added Power Plants: {result}")
 
 ```
+
+Of particular note here is the `@capture`, which gives us a temporary
+id that we can use in the transaction when referencing another object
+in the transaction. We then reference it as the country in this
+transaction as `{ '@ref' : country_long }`. Since we are placing the
+countries in a dict, we can be sure we only have the country once when
+we peform the `client.insert_documents(docs)`.
 
 Now that all of these importation functions are defined, we can go
 ahead and run things!
