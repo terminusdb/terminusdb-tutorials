@@ -32,10 +32,16 @@ if there is a problem getting into our account.
 ```python
 team = os.environ['TERMINUSDB_TEAM']
 team_quoted = urllib.parse.quote(team)
+####
+# To use TerminusCMS
 client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
 # make sure you have put the token in environment variable
-# https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key
+# https://terminusdb.com/docs/terminuscms/get-api-key
 client.connect(team=team, use_token=True)
+####
+# to connect locally, comment the above client and call and try this instead:
+# client = WOQLClient("http://localhost:6363/")
+#client.connect(team=team)
 ```
 
 Once we are in, we can start to build our data product. A data product
@@ -63,17 +69,20 @@ prefixes = {'@base' : 'http://lib.terminusdb.com/nuclear/',
 
 Now we get to the meat. We will want to describe *where* our reactors
 are. In order to do that we need a geo-coordinate. Hence we've created
-a small schema called `geo_schema.json`, which has (among other
-things), the following definition:
+a small schema called `geo_schema.json`, which is a subset of the
+GeoJSON schema, and has (among other things) a point type, with the
+following definition:
 
 ```json
-{ "@type" : "Class",
-  "@id" : "GeoCoordinate",
-  "@subdocument" : [],
-  "@key" : { "@type" : "Lexical",
-             "@fields" : ["latitude", "longitude"] },
-  "latitude" : "xsd:decimal",
-  "longitude" : "xsd:decimal"
+{ "@id": "Point",
+  "@inherits": "Geometry",
+  "@type": "Class",
+  "coordinates": {
+    "@class": "xsd:decimal",
+    "@dimensions": 1,
+    "@type": "Array"
+  },
+  "type": "Point_Type"
 }
 ```
 
@@ -370,9 +379,9 @@ def import_nuclear(client):
             plant = { '@type' : "NuclearPowerPlant",
                       'name' : name,
                       'country' : { '@ref' : f"Country/{country_long}" },
-                      'location' : { '@type' : 'GeoCoordinate',
-                                     'latitude' : latitude,
-                                     'longitude' : longitude },
+                      'location' : { '@type' : "Point",
+                                     'type' : "Point",
+                                     'coordinates': [latitude, longitude] },
                       'capacity' : { '@type' : 'Quantity',
                                      'unit' : 'Unit/MWe',
                                      'quantity' : capacity_mw },
