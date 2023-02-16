@@ -1,22 +1,35 @@
 [
     { "@type" : "Class",
-      "@id" : "GeoCoordinate",
-      "@subdocument" : [],
-      "@key" : { "@type" : "Lexical",
-                 "@fields" : ["latitude", "longitude"] },
-      "latitude" : "xsd:decimal",
-      "longitude" : "xsd:decimal"
+      "@id" : "GeoJSON",
+      "@abstract" : [],
+      "bbox" : { "@class" : "xsd:double",
+                 "@dimensions" : 1,
+                 "@type" : "Array" }
     },
-
     { "@type" : "Class",
-      "@id" : "GeoPerimeter",
-      "@subdocument" : [],
-      "@key" : { "@type" : "Lexical",
-                 "@fields" : ["perimeter"] },
-      "perimeter" : { "@type" : "List",
-                      "@class" : "GeoCoordinate" }
+      "@id" : "Geometry",
+      "@inherits": "GeoJSON",
+      "@abstract" : [],
+      "@unfoldable" : []
     },
-
+    {
+        "@id": "Point",
+        "@inherits": "Geometry",
+        "@type": "Class",
+        "coordinates": {
+            "@class": "xsd:double",
+            "@dimensions": 1,
+            "@type": "Array"
+        },
+        "type": "Point_Type"
+    },
+    {
+        "@id": "Point_Type",
+        "@type": "Enum",
+        "@value": [
+            "Point"
+        ]
+    },
     { "@type" : "Class",
       "@id" : "Country",
       "@key" : { "@type" : "Lexical",

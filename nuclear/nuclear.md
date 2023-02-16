@@ -63,17 +63,20 @@ prefixes = {'@base' : 'http://lib.terminusdb.com/nuclear/',
 
 Now we get to the meat. We will want to describe *where* our reactors
 are. In order to do that we need a geo-coordinate. Hence we've created
-a small schema called `geo_schema.json`, which has (among other
-things), the following definition:
+a small schema called `geo_schema.json`, which is a subset of the
+GeoJSON schema, and has (among other things) a point type, with the
+following definition:
 
 ```json
-{ "@type" : "Class",
-  "@id" : "GeoCoordinate",
-  "@subdocument" : [],
-  "@key" : { "@type" : "Lexical",
-             "@fields" : ["latitude", "longitude"] },
-  "latitude" : "xsd:decimal",
-  "longitude" : "xsd:decimal"
+{ "@id": "Point",
+  "@inherits": "Geometry",
+  "@type": "Class",
+  "coordinates": {
+    "@class": "xsd:decimal",
+    "@dimensions": 1,
+    "@type": "Array"
+  },
+  "type": "Point_Type"
 }
 ```
 
@@ -370,9 +373,8 @@ def import_nuclear(client):
             plant = { '@type' : "NuclearPowerPlant",
                       'name' : name,
                       'country' : { '@ref' : f"Country/{country_long}" },
-                      'location' : { '@type' : 'GeoCoordinate',
-                                     'latitude' : latitude,
-                                     'longitude' : longitude },
+                      'location' : { 'type' : "Point",
+                                     'coordinates': [latitude, longitude] },
                       'capacity' : { '@type' : 'Quantity',
                                      'unit' : 'Unit/MWe',
                                      'quantity' : capacity_mw },
