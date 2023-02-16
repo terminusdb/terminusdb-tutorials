@@ -32,10 +32,16 @@ if there is a problem getting into our account.
 ```python
 team = os.environ['TERMINUSDB_TEAM']
 team_quoted = urllib.parse.quote(team)
+####
+# To use TerminusCMS
 client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
 # make sure you have put the token in environment variable
-# https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key
+# https://terminusdb.com/docs/terminuscms/get-api-key
 client.connect(team=team, use_token=True)
+####
+# to connect locally, comment the above client and call and try this instead:
+# client = WOQLClient("http://localhost:6363/")
+#client.connect(team=team)
 ```
 
 Once we are in, we can start to build our data product. A data product
@@ -373,7 +379,8 @@ def import_nuclear(client):
             plant = { '@type' : "NuclearPowerPlant",
                       'name' : name,
                       'country' : { '@ref' : f"Country/{country_long}" },
-                      'location' : { 'type' : "Point",
+                      'location' : { '@type' : "Point",
+                                     'type' : "Point",
                                      'coordinates': [latitude, longitude] },
                       'capacity' : { '@type' : 'Quantity',
                                      'unit' : 'Unit/MWe',

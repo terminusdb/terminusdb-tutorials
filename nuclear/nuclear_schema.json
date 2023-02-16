@@ -44,10 +44,25 @@
                             "reactors" : "Reactors that are present at the power plant"
                           }
       },
+      "@metadata" : {
+          "order_by" : [
+              "name",
+              "country",
+              "capacity",
+              "owner",
+              "commissioning_year",
+              "location",
+              "capacity_factor",
+              "output",
+              "url",
+              "gppd_idnr",
+              "reactors"
+          ]
+      },
       "@key" : { "@type" : "Lexical",
                  "@fields" : ["name"] },
       "name" : "xsd:string",
-      "location" : "GeoCoordinate",
+      "location" : "Point",
       "country" : "Country",
       "capacity" : "Quantity",
       "capacity_factor" : { "@type" : "Set",
