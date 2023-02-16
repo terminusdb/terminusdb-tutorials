@@ -50,6 +50,19 @@ which is just going to look much less ugly when we use GraphQL
 (perhaps later we will allow local renaming of classes and properties
 for use in GraphQL).
 
+Next, we want to setup our prefixes so that they look like TerminusDB
+generated prefixes, with the appropriate type appended to the URI. We
+can do this again with a sed script:
+
+```shell
+$ sed -i 's#sw:people-#people:#' star-wars-dataset.ttl
+$ sed -i 's#sw:species-#species:#' star-wars-dataset.ttl
+$ sed -i 's#sw:film-#film:#' star-wars-dataset.ttl
+$ sed -i 's#sw:vehicle-#vehicle:#' star-wars-dataset.ttl
+$ sed -i 's#sw:starship-#starship:#' star-wars-dataset.ttl
+$ sed -i 's#sw:planet-#planet:#' star-wars-dataset.ttl
+```
+
 Then we just swap out the prefixes in the header to yield this [file](/star-wars/star-wars-dataset.ttl):
 
 ```ttl
@@ -57,6 +70,12 @@ Then we just swap out the prefixes in the header to yield this [file](/star-wars
 @prefix sw:   <terminusdb:///star-wars/> .
 @prefix schema:   <terminusdb:///schema/star-wars#> .
 @prefix xs:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix people: <terminusdb:///star-wars/People/> .
+@prefix species: <terminusdb:///star-wars/Species/> .
+@prefix film: <terminusdb:///star-wars/Film/> .
+@prefix vehicle: <terminusdb:///star-wars/Vehicle/> .
+@prefix starship: <terminusdb:///star-wars/Starship/> .
+@prefix planet: <terminusdb:///star-wars/Planet/> .
 
 sw:people-1  a  schema:People .
 sw:people-1  rdfs:label  "Luke Skywalker" .
@@ -77,7 +96,7 @@ $ terminusdb db create admin/star-wars --schema=false
 Now we can load the turtle:
 
 ```sh
-$ terminsudb triples load terminusdb triples load admin/starwars/local/branch/main/instance star-wars-terminusdb.ttl
+$ terminsudb triples load admin/starwars/local/branch/main/instance star-wars-terminusdb.ttl
 ```
 
 Presto! We've got a Star Wars Database!
