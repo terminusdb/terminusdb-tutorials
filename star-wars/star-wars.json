@@ -6,6 +6,28 @@
 
     { "@type" : "Class",
       "@id" : "People",
+      "@metadata" : { "render_as" : { "desc" : "markdown" },
+                      "order_by" : [
+                          "label",
+                          "mass",
+                          "desc",
+                          "height",
+                          "weight",
+                          "hair_colors",
+                          "skin_colors",
+                          "eye_color",
+                          "gender",
+                          "birth_year",
+                          "species",
+                          "homeworld",
+                          "film",
+                          "vehicle",
+                          "starship",
+                          "created",
+                          "edited",
+                          "url"
+                      ]
+                    },
       "height" : { "@type" : "Optional", "@class" :"xsd:string"},
       "mass" : { "@type" : "Optional", "@class" :"xsd:string"},
       "hair_colors" : {"@type" : "Optional", "@class" : "xsd:string"},
