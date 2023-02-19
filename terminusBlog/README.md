@@ -115,7 +115,7 @@ really beautiful however, I had to crib some tricks from [Amir
 Ardalan's blog on
 Markdown](https://amirardalan.com/blog/syntax-highlight-code-in-markdown).
 
-Now we're basically ready to go, we just need to edit our [App.js](App.js) file
+Now we're basically ready to go, we just need to edit our [App.js](/blog/src/App.js) file
 and give ourselves a river of news.
 
 ```jsx
@@ -194,7 +194,7 @@ We need to serve up a few pages, so its convenient to put in a router.
 npm install react-router-dom
 ```
 
-The main [App()](App.js) is pretty straight forward.
+The main [App()](/blog/src/App.js) is pretty straight forward.
 
 ```js
 function App() {
