@@ -194,7 +194,7 @@ We need to serve up a few pages, so its convenient to put in a router.
 npm install react-router-dom
 ```
 
-The main [App()](../assets/App.js) is pretty straight forward.
+The main [App()](App.js) is pretty straight forward.
 
 ```js
 function App() {
@@ -235,7 +235,7 @@ query SitemapQuery {
 ## Getting Some Data In
 
 To get the data in, I just wrote a short python
-[script](../assets/create_from_files.py) that grabbed my already
+[script](create_from_files.py) that grabbed my already
 existing blogs.
 
 Since the files are already Markdown, I just stick them in a content
