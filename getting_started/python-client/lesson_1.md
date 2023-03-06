@@ -21,7 +21,7 @@ Then we can install using pip:
 
 Now go to the project directory (or start a new one):
 
-`$ cd ../getting_started`
+`$ cd terminusdb-tutorials/getting_started/python_client`
 
 In the project directory start a TerminusDB project:
 
