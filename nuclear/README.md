@@ -17,7 +17,7 @@ them yourself or you can clone the repository and run the files
 directly using our short script in our `make`-file.
 
 To clone the repository and run it, however, first you'll need a [key from
-TerminusX](https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key).
+TerminusCMS](https://docs.terminusdb.com/v10.0/#/terminusx/get-your-api-key).
 
 You will also need to copy your *team name* into the environment variable
 

@@ -18,7 +18,7 @@ Also, our Marketing Manager Destiny has moved to a new address:
 
 How are we going to update the records?
 
-## Getting data objects back from TerminusDB/ TerminusX
+## Getting data objects back from TerminusDB/ TerminusCMS
 
 Let's look at how to update Destiny's Address. We did it with the [update_data.js](update_data.js). 
 
@@ -89,7 +89,7 @@ const result = await client.getDocument({"as_list":true});
 console.log(result);
 ```
 
-Or if you are using TerminusX, you can also check it in the dashboard.
+Or if you are using TerminusCMS, you can also check it in the dashboard.
 
 ---
 

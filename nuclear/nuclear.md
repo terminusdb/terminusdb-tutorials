@@ -24,7 +24,7 @@ import urllib.parse
 
 
 
-We also need to connect to TerminusX, where we are going to store our
+We also need to connect to TerminusCMS, where we are going to store our
 data. Once we have a client, we run connect which will throw an error
 if there is a problem getting into our account.
 
@@ -288,7 +288,7 @@ def load_elements(client):
 Our preliminary nuclear reactor schema is not very elaborate. We
 basically just create a few classes and a small hierarchy which we can
 fill from the CSV below, but which can also be filled out later by
-hand in the TerminusX document editor, or by enriching the data
+hand in the TerminusCMS document editor, or by enriching the data
 programmatically.
 
 ```python
@@ -419,7 +419,7 @@ Since we might want to play with this script and run it a few types,
 it's handy to delete the database if it already exists.
 
 Now we go ahead and create the database, and presto, you should be
-good to go. You can now try logging in to TerminusX and looking at the
+good to go. You can now try logging in to TerminusCMS and looking at the
 data product.
 
 Alternatively you can try getting one of the documents out and having

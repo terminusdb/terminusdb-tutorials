@@ -13,9 +13,9 @@ The building blocks of the model are:
 ## Clone
 
 The simplest way to see how the TerminusDB CLI can be used is to clone
-a resource from TerminusX. This is analogous to creating a repository on GitHub.
+a resource from TerminusCMS. This is analogous to creating a repository on GitHub.
 
-First we log into TerminusX, create a new data product, and make sure
+First we log into TerminusCMS, create a new data product, and make sure
 we have an access token to the team in which we created that data
 product. Then copy the URL to clone from the data product info page.
 
@@ -120,12 +120,12 @@ Because of this, our push command just needs our authentication token (the one w
 admin/example pushed: new("71030a31c7057e6cd9cb9e354ede032717023aa6")
 ```
 
-Great! We now have our data on the TerminusX!
+Great! We now have our data on the TerminusCMS!
 
 ## Managing Change
 
 We can now go in to the server and create a new Person, Jane through
-the document UI in TerminusX. Once this is done, we can then do the following:
+the document UI in TerminusCMS. Once this is done, we can then do the following:
 
 ```shell
 ./terminusdb pull admin/example --token='...'

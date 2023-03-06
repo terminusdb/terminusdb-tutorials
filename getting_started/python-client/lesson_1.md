@@ -2,7 +2,7 @@
 
 ## Installing
 
-You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusX. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusX, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusX dashboard](https://dashboard.terminusdb.com/) under profile.)
+You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusCMS. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusCMS, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.)
 
 It is recommended to install the TerminusDB Python client (works with [Python >= 3.7](https://www.python.org/downloads)) in a [separate Python environment](https://docs.python.org/3/tutorial/venv.html). For example, if we use `venv` which comes with standard installation of Python 3. First we create new environment:
 
@@ -27,7 +27,7 @@ In the project directory start a TerminusDB project:
 
 `$ tdbpy startproject`
 
-You will be prompt with a few questions. Pick a project name (or the database name if you already have a working database) and if you are running the localhost server with default port you can just press Enter. You have to provide the endpoint and other login information if you are using TerminusX or otherwise.
+You will be prompt with a few questions. Pick a project name (or the database name if you already have a working database) and if you are running the localhost server with default port you can just press Enter. You have to provide the endpoint and other login information if you are using TerminusCMS or otherwise.
 
 This is what I did:
 
@@ -118,7 +118,7 @@ getting_started created.
 getting_started schema updated.
 ```
 
-To verify the schema is commit, if you are using TerminusX, you can see changes in the dashboard. Since we are using TerminusDB locally (it works with TerminusX as well), we can look at the logs by:
+To verify the schema is commit, if you are using TerminusCMS, you can see changes in the dashboard. Since we are using TerminusDB locally (it works with TerminusCMS as well), we can look at the logs by:
 
 ```
 $ tdbpy log

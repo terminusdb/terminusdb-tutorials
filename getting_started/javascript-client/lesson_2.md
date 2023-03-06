@@ -20,7 +20,7 @@ const path = require("path");
 const csv = require("fast-csv");
 ```
 
-Also we need to import `WOQLClient` which is the client that communitcate with the TerminusDB/ TerminusX:
+Also we need to import `WOQLClient` which is the client that communitcate with the TerminusDB/ TerminusCMS:
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
@@ -119,11 +119,11 @@ const client = new TerminusClient.WOQLClient(
   { user: username, organization: teamName , db:"GettingStartedDB" }
 );
 
-// If you are using TerminusX 
+// If you are using TerminusCMS 
 client.setApiKey(process.env.TERMINUSDB_ACCESS_TOKEN);
 ```
 
-If you are using TerminusX, you can find the information of your endpoint, team, and API token from the [TerminusX dashboard](https://dashboard.terminusdb.com/) under profile.
+If you are using TerminusCMS, you can find the information of your endpoint, team, and API token from the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.
 
 Now we are all ready, the last thing to do is to insert the documents:
 
@@ -152,7 +152,7 @@ const result = await client.getDocument({"as_list":true});
 console.log(result);
 ```
 
-Or if the data is on TerminusX, you can check it in the [TerminusX dashboard](https://dashboard.terminusdb.com/)
+Or if the data is on TerminusCMS, you can check it in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/)
 
 ---
 

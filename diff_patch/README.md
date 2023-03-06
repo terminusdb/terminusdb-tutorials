@@ -1,4 +1,4 @@
-# Diff and Patch with TerminusDB/ TerminusX Demo
+# Diff and Patch with TerminusDB/ TerminusCMS Demo
 
 In this demo tutorial, we will show how the diff and patch operation can be applied to monitor changes in TerminusDB schema, TerminusDB documents, JSON schema and with other document database like MongoDB.
 

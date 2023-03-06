@@ -2,7 +2,7 @@
 
 ## Installing
 
-You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusX. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusX, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusX dashboard](https://dashboard.terminusdb.com/) under profile.)
+You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusCMS. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusCMS, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.)
 
 It is recommended to install the TerminusDB Javascript client (works with [Nodejs >= 10](https://nodejs.org/en/download/)) in a separate new nodejs project.
 
@@ -122,7 +122,7 @@ const createDatabaseAndSchema = async () => {
 createDatabaseAndSchema();
 ```
 
-To verify the schema is committed, if you are using TerminusX, you can see changes in the dashboard. Since we are using TerminusDB locally (it works with TerminusX as well), we can look at the commit history by:
+To verify the schema is committed, if you are using TerminusCMS, you can see changes in the dashboard. Since we are using TerminusDB locally (it works with TerminusCMS as well), we can look at the commit history by:
 
 ```javascript
   // Get commit history
@@ -154,7 +154,7 @@ const client = new TerminusClient.WOQLClient(
   { user: username, organization: teamName }
 );
 
-// If you are using TerminusX you need to generate you api key
+// If you are using TerminusCMS you need to generate you api key
 // https://terminusdb.com/docs/terminusx/get-api-key here the documentation
 client.setApiKey(process.env.TERMINUSDB_ACCESS_TOKEN);
 

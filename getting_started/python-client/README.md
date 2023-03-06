@@ -2,7 +2,7 @@
 
 > **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
 
-This is a step by step tutorial to get you started using TerminusDB/ TerminusX for the first time. This will cover all the basics that you can work with TerminusDB/ TerminusX using the Python client.
+This is a step by step tutorial to get you started using TerminusDB/ TerminusCMS for the first time. This will cover all the basics that you can work with TerminusDB/ TerminusCMS using the Python client.
 
 - [Lesson 1 - Installing, start project and create an empty database with schema](lesson_1.md)
 - [Lesson 2 - Importing a CSV into the database](lesson_2.md)

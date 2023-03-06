@@ -1,10 +1,10 @@
 # Nobel Prize Winners (1900 - 2020)
 
-In this tutorial, we will pull the Nobel Prize winners data from a [CSV file](https://www.kaggle.com/rishidamarla/nobel-prize-winners-19002020) and put it in TerminusDB/TerminusX.
+In this tutorial, we will pull the Nobel Prize winners data from a [CSV file](https://www.kaggle.com/rishidamarla/nobel-prize-winners-19002020) and put it in TerminusDB/TerminusCMS.
 
 ## Check your endpoint is running
 
-You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusX. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusX, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusX dashboard](https://dashboard.terminusdb.com/) under profile.
+You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusCMS. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusCMS, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.
 
 ## Clone this repository
 
@@ -40,7 +40,7 @@ In the project directory start a TerminusDB project:
 $ tdbpy startproject
 ```
 
-You will be prompt with a few questions. Pick a project name and if you are running the localhost server with default port you can just press Enter. You have to provide the endpoint and other login information if you are using TerminusX or otherwise.
+You will be prompt with a few questions. Pick a project name and if you are running the localhost server with default port you can just press Enter. You have to provide the endpoint and other login information if you are using TerminusCMS or otherwise.
 
 This is what I did:
 
@@ -106,13 +106,13 @@ We create the schema of the data we'll be writing to the stream formatted as a J
 
 Records in the dataset are read by calling `read_data` function and written to the stream by calling `write_data`.
 
-## Import the Nobel Prize winners data into TerminusDB/ TerminusX
+## Import the Nobel Prize winners data into TerminusDB/ TerminusCMS
 
 ```
 $ python nobel_prize.py | target-terminusdb -c config.json
 ```
 
-## Verify the data is in TerminusDB/TerminusX
+## Verify the data is in TerminusDB/TerminusCMS
 
 Check if the documents are looking good by using the following command to get 10 documents to inspect:
 
