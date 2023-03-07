@@ -1,47 +1,52 @@
-# Lesson 1 - Installing, start project and create an empty database with schema
+# Lesson 1 - Install, start a project, and create an empty database with a schema
 
 ## Installing
 
-You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusCMS. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusCMS, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.)
+You can download the TerminusDB Docker image to work locally ([TerminusDB Bootstrap](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusCMS. If you are using the Docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusCMS, you will need the endpoint, team, and API token available from the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.
 
-It is recommended to install the TerminusDB Python client (works with [Python >= 3.7](https://www.python.org/downloads)) in a [separate Python environment](https://docs.python.org/3/tutorial/venv.html). For example, if we use `venv` which comes with standard installation of Python 3. First we create new environment:
+It is recommended that you install the TerminusDB Python client (which works with
+[Python >= 3.7](https://www.python.org/downloads)) in a [separate
+Python environment](https://docs.python.org/3/tutorial/venv.html). In the example below we use `venv` which comes with the standard installation of
+Python 3. 
+
+We create the new environment:
 
 ```
 $ python3 -m venv ~/.virtualenvs/terminusdb
 $ source ~/.virtualenvs/terminusdb/bin/activate
 ```
 
-Then we can install using pip:
+Then we can install the TerminusDB Python client using pip:
 
 `$ python3 -m pip install terminusdb-client`
 
 ## Start Project
 
-> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+> **_NOTE:_** from version 10.1.0 the CLI command is `tdbpy` instead of `terminusdb`
 
-Now go to the project directory (or start a new one):
+Go to the project directory (or start a new one):
 
 `$ cd terminusdb-tutorials/getting_started/python_client`
 
-In the project directory start a TerminusDB project:
+In the project directory, start a TerminusDB project:
 
 `$ tdbpy startproject`
 
-You will be prompt with a few questions. Pick a project name (or the database name if you already have a working database) and if you are running the localhost server with default port you can just press Enter. You have to provide the endpoint and other login information if you are using TerminusCMS or otherwise.
+You will be asked a few questions. Pick a project name (or the database name if you already have a working database). If you are running the localhost server with default port you can just press Enter. If you're using TerminusCMS you need to provide the endpoint and other login information.
 
 This is what I did:
 
 ```
-Please enter a project name (this will also be the database name): getting_started
-Please enter a endpoint location (press enter to use localhost default) [http://127.0.0.1:6363/]:
+Please enter a project name (this is also the database name): getting_started
+Please enter an endpoint location (press enter to use the localhost default) [http://127.0.0.1:6363/]:
 config.json and schema.py created, please customize them to start your project.
 ```
 
 ## Create an Empty Database with Schema
 
-Now with `schema.py` you can build a schema for our new database. If you open the `schema.py` you will see an example. You can commit the example as is (with the example schema) but I would make changes to it before I commit so it could be useful to us in the future lessons.
+Now with `schema.py` you can build a schema for the new database. If you open the `schema.py` you will see an example. You can commit the example as it is but I want to make changes to it before I commit so it is useful to us in a future lesson.
 
-In this tutorial series, we will use a fabricated phone book database of a company as an example. It consists of only 2 tables, the first one is the structure of the company ([Employees.csv](Employees.csv)):
+In this tutorial series, we will use a company phonebook database as an example. It consists of only 2 tables, the first is the structure of the company ([Employees.csv](Employees.csv)):
 
 | Employee id | Name           | Title               | Team        | Manager     |
 | ----------- | -------------- | ------------------- | ----------- | ----------- |
@@ -50,7 +55,7 @@ In this tutorial series, we will use a fabricated phone book database of a compa
 | 003         | Alanah Bloggs  | Frontend Developer  | IT          | 004         |
 | 004         | Fabian Dalby   | Web Service Manager | IT          |             |
 
-And the other is the contact details of the employees ([Contact.csv](Contact.csv)):
+And the second is the contact details of the employees ([Contact.csv](Contact.csv)):
 
 | Employee id | Contact number  | Home address                  | Postcode |
 | ----------- | --------------- | ----------------------------- | -------- |
@@ -59,7 +64,7 @@ And the other is the contact details of the employees ([Contact.csv](Contact.csv
 | 003         | (01274) 708080  | 139 Otley Road, Shipley       | BD18 2PT |
 | 004         | (0161) 532 7302 | 2 Ansdell Road, Stockport     | SK5 6SY  |
 
-The schema that I created will be something like this:
+The schema for looks like this:
 
 ```python
 """
@@ -118,7 +123,7 @@ getting_started created.
 getting_started schema updated.
 ```
 
-To verify the schema is commit, if you are using TerminusCMS, you can see changes in the dashboard. Since we are using TerminusDB locally (it works with TerminusCMS as well), we can look at the logs by:
+To verify the schema has been committed we can look at the logs using the example below. If you are using TerminusCMS, you can see the changes in the dashboard:
 
 ```
 $ tdbpy log
@@ -137,7 +142,7 @@ Date: 2021-10-01 11:38:49
 
 ```
 
-Also, you can look at the objects in the schema graph like this:
+You can also look at the objects in the schema graph like this:
 
 ```
 $ tdbpy alldocs --schema
@@ -146,4 +151,4 @@ $ tdbpy alldocs --schema
 
 ---
 
-[Move on to Lesson 2 - Importing a CSV into the database](lesson_2.md)
+[Lesson 2 - Importing a CSV into the database](lesson_2.md)
