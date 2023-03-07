@@ -21,7 +21,7 @@ Install using pip:
 
 `$ python3 -m pip install terminusdb-client`
 
-If you are new to TerminusDB/ TerminusX and will use Python client, you are recommended to check out the [Getting Started tutorial series](./getting_started/python-client).
+If you are new to TerminusDB/ TerminusCMS and will use Python client, you are recommended to check out the [Getting Started tutorial series](./getting_started/python-client).
 
 
 #### JavaScript Client
@@ -47,15 +47,15 @@ Taking you through the process of loading RDF into TerminusDB and then using Gra
 
 Details: [README](./star-wars)
 
-## Getting Started using TerminusDB/ TerminusX with the Python client
+## Getting Started using TerminusDB/ TerminusCMS with the Python client
 
-A tutorial series to help anyone who's new to TerminusDB/ TerminusX to start working using the Python client.
+A tutorial series to help anyone who's new to TerminusDB/ TerminusCMS to start working using the Python client.
 
 Details: [README](./getting_started/python-client/README.md)
 
-## Getting Started using TerminusDB/ TerminusX with the JavaScript client
+## Getting Started using TerminusDB/ TerminusCMS with the JavaScript client
 
-A tutorial series to help anyone who's new to TerminusDB/ TerminusX to start working using the JavaScript client.
+A tutorial series to help anyone who's new to TerminusDB/ TerminusCMS to start working using the JavaScript client.
 
 Details: [README](./getting_started/javascript-client)
 
@@ -71,8 +71,8 @@ An example data product which holds information about all operating nuclear powe
 
 Details: [index](./nuclear)
 
-## Using TerminusX in React App
+## Using TerminusCMS in React App
 
-Use TerminusX to build a React app that serves as a simple content management app.
+Use TerminusCMS to build a React app that serves as a simple content management app.
 
 Details: [README](./react-example/README.md)

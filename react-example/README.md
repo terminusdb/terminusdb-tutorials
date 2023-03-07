@@ -1,8 +1,8 @@
-# Using TerminusX in React App
+# Using TerminusCMS in React App
 
-In this tutorial, we will use TerminusX to build a React app that serves as a simple content management app. The purpose of this tutorial is to demonstrate how to use TerminusX (cloud version of TerminusDB) in conjunction with its clients to build a web application. As we will prioritize simplicity and demonstration, some practices we use here are not designed for production.
+In this tutorial, we will use TerminusCMS to build a React app that serves as a simple content management app. The purpose of this tutorial is to demonstrate how to use TerminusCMS (cloud version of TerminusDB) in conjunction with its clients to build a web application. As we will prioritize simplicity and demonstration, some practices we use here are not designed for production.
 
-[In this directory](./) you will find the finished project, you can clone it and run the finished app directly as long as you have set up a TerminusX backend (see [Setup for the Backend](#setup-for-the-backend)). If you want to build the app step by step, you can follow along all the chapters.
+[In this directory](./) you will find the finished project, you can clone it and run the finished app directly as long as you have set up a TerminusCMS backend (see [Setup for the Backend](#setup-for-the-backend)). If you want to build the app step by step, you can follow along all the chapters.
 
 The original of this project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -51,11 +51,11 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ### Setup for the backend
 
-1. Sign up for TerminusX for free if you haven't. [Sign up/in here](https://dashboard.terminusdb.com).
+1. Sign up for TerminusCMS for free if you haven't. [Sign up/in here](https://dashboard.terminusdb.com).
 2. Make sure you have installed [TerminusDB Python Client](https://github.com/terminusdb/terminusdb-client-python#installation) with the `dataframe` option.
-3. Make sure you have [sign up for TerminusX](https://dashboard.terminusdb.com/)
+3. Make sure you have [sign up for TerminusCMS](https://dashboard.terminusdb.com/)
 4. Start a new directory `$mkdir blog-app-backend`
-5. Start a new project named `blog-app` and [connect to TerminusX](/getting_started/python-client/lesson_1.md#start-project) using `$terminusdb startproject`. Connection details to TerminusX can be found at your [TerminusX dashboard](https://dashboard.terminusdb.com/profile).
+5. Start a new project named `blog-app` and [connect to TerminusCMS](/getting_started/python-client/lesson_1.md#start-project) using `$terminusdb startproject`. Connection details to TerminusCMS can be found at your [TerminusCMS dashboard](https://dashboard.terminusdb.com/profile).
 6. Replace the content `schema.py` with the code here:
 
 ```python
@@ -74,9 +74,9 @@ class Entry(DocumentTemplate):
     last_update: dt.datetime
 ```
 
-7. Push the schema to TerminusX: `$terminusdb commit`
+7. Push the schema to TerminusCMS: `$terminusdb commit`
 
-To learn more about TerminusDB/ TerminusX schema management using Python client, see [this tutorial](/getting_started/python-client/README.md).
+To learn more about TerminusDB/ TerminusCMS schema management using Python client, see [this tutorial](/getting_started/python-client/README.md).
 
 ### Setup for React app
 
@@ -89,17 +89,17 @@ To learn more about TerminusDB/ TerminusX schema management using Python client,
 
 ---
 
-## Chapter 1 - Connect to TerminusX
+## Chapter 1 - Connect to TerminusCMS
 
 Inspect `index.js` and run `$npm start` note the following that is already in the code:
 
 1. Importing the client with `import TerminusClient from "@terminusdb/terminusdb-client";`
-2. Simple login interface with 4 input fields. We need this information from the user to connect to their TerminusX database. More detail available at your [TerminusX dashboard](https://dashboard.terminusdb.com/profile).
+2. Simple login interface with 4 input fields. We need this information from the user to connect to their TerminusCMS database. More detail available at your [TerminusCMS dashboard](https://dashboard.terminusdb.com/profile).
 3. Simple text showing if we are connected to the database or not. Right now it's always `false`. We will have to determine what to be used as a flag.
 
 First, we will have to make `makeConnection` works. It will be an `async` function as it will be making api calls using the client.
 
-The step to create a connection to TerminusX is quite standard. Example can be easily found at your [TerminusX dashboard](https://dashboard.terminusdb.com/profile). Following that we will add the following code at `makeConnection`, within the `try` cause:
+The step to create a connection to TerminusCMS is quite standard. Example can be easily found at your [TerminusCMS dashboard](https://dashboard.terminusdb.com/profile). Following that we will add the following code at `makeConnection`, within the `try` cause:
 
 ```js
 const serverUrl = this.state.endpoint.concat("/", this.state.team, "/");
@@ -522,7 +522,7 @@ handleSubmit(event) {
 }
 ```
 
-Note that we use ISO string to represent time in TerminusX by default.
+Note that we use ISO string to represent time in TerminusCMS by default.
 
 This is the end of Chapter 4, your code should now look like [this](./src/index-4.js).
 

@@ -39,7 +39,7 @@ In the first half of the script, we have to manage and import the data form CSV.
 import csv
 ```
 
-Also we need to import `WOQLClient` which is the client that communitcate with the TerminusDB/ TerminusX and `schema.py`:
+Also we need to import `WOQLClient` which is the client that communitcate with the TerminusDB/ TerminusCMS and `schema.py`:
 
 ```python
 from terminusdb_client import WOQLClient
@@ -113,7 +113,7 @@ Then we will connect the client to our database. If you are connecting locally a
 client.connect(db="getting_started")
 ```
 
-If you are using TerminusX, you can find the information of your endpoint, team, and API token from the [TerminusX dashboard](https://dashboard.terminusdb.com/) under profile.
+If you are using TerminusCMS, you can find the information of your endpoint, team, and API token from the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.
 
 Now we are all ready, the last thing to do is to insert the documents:
 
@@ -135,7 +135,7 @@ To check if the data is insert correctly, we can use the `tdbpy alldocs` command
 $ tdbpy alldocs --type Employee
 ```
 
-Or if the data is on TerminusX, you can check it in the [TerminusX dashboard](https://dashboard.terminusdb.com/)
+Or if the data is on TerminusCMS, you can check it in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/)
 
 ---
 

@@ -1,10 +1,10 @@
-# [Why TerminusX](https://terminusdb.com/)
+# [Why TerminusCMS](https://terminusdb.com/terminuscms/)
 
 I feel some relief and a lot of trepidation that I'm finally seeing
-the launch of the TerminusX cloud service. Some very long nights and
+the launch of the TerminusCMS cloud service. Some very long nights and
 too many days have gone into making this possible.
 
-The TerminusX cloud service is built on the substantially over-hauled
+The TerminusCMS cloud service is built on the substantially over-hauled
 and backward incompatible TerminusDB v10. Since we have changed things
 so fundamentally, its only fair to explain *why*. Of course the pithy
 explanation is: *developer experience*.
@@ -84,7 +84,7 @@ We realised that while a git-like hub might be useful at some point
 (after people have built lots of shareable data products) what we
 really needed was a cloud database that people could use.
 
-## TerminusX
+## TerminusCMS
 
 Eventually we felt we could no longer face our users judgement without
 changing things. We decided to simplify the interface, make the

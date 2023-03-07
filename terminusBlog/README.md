@@ -247,7 +247,7 @@ a datetime from the unix timestamp of the file.
 I never really used the Author object, as I'm the only Author, but
 otherwise it's a fairly useable blogging engine as is.
 
-I'm keen to put this up on TerminusX, and try to host the front end on
+I'm keen to put this up on TerminusCMS, and try to host the front end on
 something like [Heroku](https://www.heroku.com/).
 
 The whole thing demonstrates that TerminusDB makes a flexible GraphQL

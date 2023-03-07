@@ -20,7 +20,7 @@ Also, our Marketing Manager Destiny has moved to a new address:
 
 How are we going to update the records?
 
-## Getting data objects back from TerminusDB/ TerminusX
+## Getting data objects back from TerminusDB/ TerminusCMS
 
 Let's look at how to update Destiny's Address. We will make our changes in the file [update_data.py](update_data.py). The first step after connecting with the client is to get back the schema of the database. In the terminal we can use:
 
@@ -123,7 +123,7 @@ To check if the database is up-to-date, you can do in the terminal like we did b
 
 `$ tdbpy alldocs`
 
-Or if you are using TerminusX, you can also check it in the dashboard.
+Or if you are using TerminusCMS, you can also check it in the dashboard.
 
 ---
 

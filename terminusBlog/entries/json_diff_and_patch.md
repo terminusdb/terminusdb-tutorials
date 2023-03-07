@@ -224,7 +224,7 @@ graphs of interconnected objects (as exists in TerminusDB).
 
 ## What we have and where we are going
 
-I've implemented a simple JSON diff and patch in TerminusX. But we're
+I've implemented a simple JSON diff and patch in TerminusCMS. But we're
 also working on the extensions of this to those specified by a
 schema. It's also easy to implement and very interesting to imagine a
 full space of patches, many of which could never be determined by a
