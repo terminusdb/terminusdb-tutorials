@@ -22,11 +22,11 @@ How are we going to update the records?
 
 ## Getting data objects back from TerminusDB/ TerminusX
 
-Let's look at how to update Destiny's Address. We did it with the [update_data.py](update_data.py). The first step after connecting with the client is to get back the schema of the database. In the terminal we can use:
+Let's look at how to update Destiny's Address. We will make our changes in the file [update_data.py](update_data.py). The first step after connecting with the client is to get back the schema of the database. In the terminal we can use:
 
 `$ tdbpy sync`
 
-To update the `schema.py` for easy inspection. However, since we have to do it in the script and import the documents, we will create a `WOQLSchema` object and sync up that object with the database's schema:
+This will update the `schema.py` with the latest schema from TerimnusDB for easy inspection. However, since we want to work with a script we will create a `WOQLSchema` object and sync up that object with the database's schema:
 
 ```python
 data_schema = WOQLSchema()
