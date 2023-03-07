@@ -4,7 +4,11 @@
 
 You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusCMS. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusCMS, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.)
 
-It is recommended to install the TerminusDB Python client (works with [Python >= 3.7](https://www.python.org/downloads)) in a [separate Python environment](https://docs.python.org/3/tutorial/venv.html). For example, if we use `venv` which comes with standard installation of Python 3. First we create new environment:
+It is recommended that you install the TerminusDB Python client (which works with
+[Python >= 3.7](https://www.python.org/downloads)) in a [separate
+Python environment](https://docs.python.org/3/tutorial/venv.html). For
+example, if we use `venv` which comes with standard installation of
+Python 3. First we create new environment:
 
 ```
 $ python3 -m venv ~/.virtualenvs/terminusdb
