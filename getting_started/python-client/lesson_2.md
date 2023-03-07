@@ -1,12 +1,12 @@
 # Lesson 2 - Importing a CSV file into the database
 
-> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+> **_NOTE:_** from version 10.1.0 the CLI command is `tdbpy` instead of `terminusdb`
 
 ## The `tdbpy importcsv` Command
 
-In this lesson, we will try to import a CSV file with the `tdbpy importcsv` command. It provide a very simple way to import a CSV with less manual effort. There are a few things that you can control with the `tdbpy importcsv` command, like setting the separator character, how to handle NAs and linking columns using a key columns etc. For more complicated data handling, a Python script will be needed and we will demonstrate that the next lesson: [Importing data form Python script](lesson_3.md)
+In this lesson, we will import a CSV file with the `tdbpy importcsv` command. It provides a very simple way to import a CSV. There are a few things that you can control with the `tdbpy importcsv` command, such as setting the separator character, how to handle NAs, and linking columns using a key columns. For more complicated data handling, a Python script is needed and we will demonstrate that in lesson 5: [Importing data form Python script](lesson_3.md)
 
-To see all the available options in `tdbpy importcsv`:
+The example below enables you to see all the available options in `tdbpy importcsv`:
 
 ```
 $ tdbpy importcsv --help
@@ -16,21 +16,21 @@ Usage: tdbpy importcsv [OPTIONS] CSV_FILE [KEYS]...
   read_csv() options. Options like chunksize, sep etc
 
 Options:
-  --classname TEXT            Customize the class name that the data from the
-                              CSV will be import as
+  --classname TEXT            Customize the class name that data from the
+                              CSV will be imported as
 
-  --chunksize INTEGER         Large files will be load into database in
+  --chunksize INTEGER         Large files will load into the database in
                               chunks, size of the chunks  [default: 1000]
 
-  --schema                    Specify if schema to be updated if existed,
+  --schema                    Specify if the schema is to be updated if it exists,
                               default False
 
   --na [skip|optional|error]  Specify how to handle NAs: 'skip' will skip
                               entries with NAs, 'optional' will make all
                               properties optional in the database, 'error'
-                              will just throw an error if there's NAs
+                              will just throw an error if there are NAs
 
-  --id TEXT                   Specify column to be used as ids instead of
+  --id TEXT                   Specify the column to be used as ids instead of
                               generated ids
 
   -e, --embedded TEXT         Specify embedded columns
@@ -43,7 +43,7 @@ Options:
 
 ## Importing CSV
 
-Continue working with the phonebook example. We can now try to import the [Employees.csv](Employees.csv) file. Which looks like this:
+We will continue working with the phonebook example. We will import the [Employees.csv](Employees.csv) file. Which looks like this:
 
 | Employee id | Name           | Title               | Team        | Manager     |
 | ----------- | -------------- | ------------------- | ----------- | ----------- |
@@ -52,7 +52,7 @@ Continue working with the phonebook example. We can now try to import the [Emplo
 | 003         | Alanah Bloggs  | Frontend Developer  | IT          | 004         |
 | 004         | Fabian Dalby   | Web Service Manager | IT          |             |
 
-As you see there are `Employee id` which are used as a key to link the `Manager` field to the person that is the manager of that employee.
+As you see there is `Employee id` used as a key to link to the `Manager` field showing who the employee's manager is.
 
 To link them, we must first install the `pandas` library.
 ```sh
@@ -68,7 +68,7 @@ Schema object EmployeesFromCSV created with Employees.csv being imported into da
 Records in Employees.csv inserted as type EmployeesFromCSV into database with specified ids.
 ```
 
-We have imported the CSV file with the class as `EmployeesFromCSV` you can see that there is a new class object in `schema.py` that is created as well:
+We have imported the CSV file with the class as `EmployeesFromCSV`. There is a new class object in `schema.py` that was created along with the import:
 
 ```python
 class EmployeesFromCSV(DocumentTemplate):
@@ -86,7 +86,7 @@ $ tdbpy alldocs
 [{'@id': 'EmployeesFromCSV/001', '@type': 'EmployeesFromCSV', 'employee_id': '001', 'name': 'Destiny Norris', 'team': 'Marketing', 'title': 'Marketing Manager'}, {'@id': 'EmployeesFromCSV/002', '@type': 'EmployeesFromCSV', 'employee_id': '002', 'manager': 'EmployeesFromCSV/001', 'name': 'Darci Prosser', 'team': 'Marketing', 'title': 'Creative Writer'}, {'@id': 'EmployeesFromCSV/003', '@type': 'EmployeesFromCSV', 'employee_id': '003', 'manager': 'EmployeesFromCSV/004', 'name': 'Alanah Bloggs', 'team': 'IT', 'title': 'Frontend Developer'}, {'@id': 'EmployeesFromCSV/004', '@type': 'EmployeesFromCSV', 'employee_id': '004', 'name': 'Fabian Dalby', 'team': 'IT', 'title': 'Web Service Manager'}]
 ```
 
-In [later chapters](lesson_5.md) we will also learn how to query this data and/ or export data into CSV ([or using Singer.io to export data into other data products](https://github.com/terminusdb/terminusdb-tutorials/tree/master/google_sheets/README.md)).
+In [chapter 5](lesson_5.md) we will learn how to query this data and/ or export data into CSV.
 
 ---
 
