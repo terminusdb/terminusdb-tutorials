@@ -1,6 +1,6 @@
 # Lesson 4 - Update and import new data that links to old data
 
-> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+> **_NOTE:_** from version 10.1.0 the CLI command is `tdbpy` instead of `terminusdb`
 
 Remember our imaginary Awesome Startup that has their Phonebook stored in TerminusDB? It has been a few months and they have a new recruit:
 
@@ -26,20 +26,20 @@ Let's look at how to update Destiny's Address. We will make our changes in the f
 
 `$ tdbpy sync`
 
-This will update the `schema.py` with the latest schema from TerimnusDB for easy inspection. However, since we want to work with a script we will create a `WOQLSchema` object and sync up that object with the database's schema:
+This will update the `schema.py` with the latest schema from TerimnusDB for easy inspection. However, since we want to work with a script we will create a `WOQLSchema` object and sync that object with the database's schema:
 
 ```python
 data_schema = WOQLSchema()
 data_schema.from_db(client)
 ```
 
-Now we can import the Employee document that represent Destiny. Since we know the id, we will just use get_document to do so:
+Now we can import the Employee document that represents Destiny. Since we know the id, we will just use get_document to do so:
 
 ```python
 destiny_raw = client.get_document("Employee/001")
 ```
 
-`destiny_raw` would be a dictionary, we can update it directly, however, is many cases, converting back to a `Employee` object would make updating it a bit easier:
+`destiny_raw` would be a dictionary, we can update it directly, however, in many cases, converting back to an `Employee` object would make updating it a bit easier:
 
 ```python
 destiny = data_schema.import_objects(destiny_raw)
@@ -58,7 +58,7 @@ destiny.address.street_num = 73
 destiny.address.town = "Newbigging"
 ```
 
-Let's send `destiny` back to the database with `update_document`, the difference between `insert_document` and `update_document` is that, is an object(s) is already exist, `update_docuemnt` with replace the old with the new. It will also insert the document if it does not exist:
+Let's send `destiny` back to the database with `update_document`, the difference between `insert_document` and `update_document` is that if an object already exists `update_docuemnt` with replace the old with the new. It will also insert the document if it does not exist:
 
 ```python
 client.update_document(destiny, commit_msg="Update Destiny")
@@ -66,7 +66,7 @@ client.update_document(destiny, commit_msg="Update Destiny")
 
 ## Linking a new document to an old document
 
-Now let's work on our new recruit. First we need to get the schema objects. Instead of importing it form `schema.py` like we did in [lesson 3](lesson_3.md), since we have them all the the `data_schema`, we will get them out from there:
+Now let's work on our new recruit. First we need to get the schema objects. Instead of importing it from `schema.py` like we did in [lesson 3](lesson_3.md), as the objects are already in the `data_schema`, we will get them out from there:
 
 ```python
 Employee = data_schema.object.get('Employee')
@@ -103,7 +103,7 @@ ethan = Employee(
 )
 ```
 
-All is ready, let's put `ethan` into the database. To prove `update_document` will also work, we will use it to insert `ethan`:
+We're ready, let's put `ethan` into the database. To prove `update_document` works, we will use it to insert `ethan`:
 
 ```python
 client.update_document(ethan, commit_msg="Adding Ethan")
@@ -119,12 +119,12 @@ Run the scripts:
 
 `$ python update_data.py`
 
-To check if the database is up-to-date, you can do in the terminal like we did before:
+Check the database is up-to-date in the terminal like we did before:
 
 `$ tdbpy alldocs`
 
-Or if you are using TerminusCMS, you can also check it in the dashboard.
+Or if you are using TerminusCMS, check it in the dashboard.
 
 ---
 
-[Move on to Lesson 5 - Query on the database and get result back as CSV or DataFrame](lesson_5.md)
+[Lesson 5 - Query the database and get results back as a CSV or DataFrame](lesson_5.md)
