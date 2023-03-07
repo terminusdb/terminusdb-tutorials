@@ -1,4 +1,4 @@
-# [Why TerminusCMS](https://terminusdb.com/)
+# [Why TerminusCMS](https://terminusdb.com/terminuscms/)
 
 I feel some relief and a lot of trepidation that I'm finally seeing
 the launch of the TerminusCMS cloud service. Some very long nights and
