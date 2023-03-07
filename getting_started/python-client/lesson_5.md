@@ -1,16 +1,16 @@
-# Lesson 5 - Query on the database and get result back as CSV or DataFrame
+# Lesson 5 - Query the database and get results back as a CSV or DataFrame
 
-> **_NOTE:_** from version 10.1.0 the cli command is `tdbpy` instead of `terminusdb`
+> **_NOTE:_** from version 10.1.0 the CLI command is `tdbpy` instead of `terminusdb`
 
-In the past lessons, we have learnt how to build schema and import data. Now the database has all the data we wanted, what we will do after is to get information out of the data we have in the database.
+In previous lessons we learnt how to build schema and import data. Now the database has all the data we wanted. Now we want to get information out of the database.
 
-In this lesson, we will learn how to query the database, get the information that we wanted. Then export either to a CSV for later use or to import as Pandas DataFrames for further investigation.
+In this lesson we will learn how to query the database, get the information we need, and export either to a CSV or as a Pandas DataFrames.
 
-## Query data with `tdbpy` Command
+## Query Data with `tdbpy` Command
 
-The most direct way to query on data and export it as CSV is to use the `tdbpy` command.
+The most direct way to query data and export it as CSV is to use the `tdbpy` command.
 
-If you are planning to export all documents in a particular type. You can simply use the `tdbpy exportcsv` command. Let's have a look a the command:
+If you are planning to export all documents of a particular type. You can simply use the `tdbpy exportcsv` command. Let's have a look at the command:
 
 ```
 $ tdbpy exportcsv --help
@@ -36,9 +36,9 @@ Now let's try to export all `Employee` to a file named `exported_employees.csv`
 
 `$ tdbpy exportcsv --filename exported_employees.csv Employee`
 
-Inspect [exported_employees.csv](exported_employees.csv) and it look just as what we expected. All 5 employees information is there.
+We'll quickly inspect [exported_employees.csv](exported_employees.csv) and can see it looks good. Information for all 5 employees is there.
 
-But now, we want to only want the members of the IT team to be export in a CSV, we will have to do a bit of query. Let's try using the `-q` options with `tdbpy alldocs`
+Say we want to export only members of the IT team in a CSV, we have to do a bit of query. Let's try using the `-q` option with `tdbpy alldocs`
 
 ```
 $ tdbpy alldocs --type Employee -q team=it
@@ -51,22 +51,22 @@ It's a bit hard to see so we are going to export it to [a CSV](exported_it_team.
 
 ## Query data in Python script
 
-If we want to do something more complicated, for example, see which team has longer names in average. We may have to export the result to a Pandas Dataframe and do more investigation. Let's have a look at [query_data.py](query_data.py).
+If we want to do something more complicated, for example see which team has longer names in average. We can export the result to a Pandas Dataframe and do more investigation. Let's have a look at [query_data.py](query_data.py).
 
-We can make use of the magic function `result_to_df` to convert a result json to a Pandas DataFrame:
+We can make use of the magic function `result_to_df` to convert the JSON results to a Pandas DataFrame:
 
 ```python
 from terminusdb_client.woqldataframe import result_to_df
 ```
 
-Querying would be done by `query_document`, you will have to provide a template json that has `@type` and the specific requirement(s) (in our case, `"team": "it"` or `"team": "marketing"`).
+Querying can be done by `query_document`, you will have to provide a template JSON that has `@type` and the specific requirement(s) (in our case, `"team": "it"` or `"team": "marketing"`).
 
 ```python
 team_it_raw = client.query_document({"@type": "Employee", "team": "it"})
 team_marketing_raw = client.query_document({"@type": "Employee", "team": "marketing"})
 ```
 
-We can use `reault_to_df` to get DataFrames:
+We can use `reault_to_df` to get the DataFrames:
 
 ```python
 team_it = result_to_df(team_it_raw)
@@ -93,4 +93,4 @@ I won't spoil the results for you, you have to find it out yourself :-)
 
 ---
 
-[Move on to Lesson 6 - Version control: time travel, branching and rebase](lesson_6.md)
+[Lesson 6 - Version control: time travel, branching and rebase](lesson_6.md)
