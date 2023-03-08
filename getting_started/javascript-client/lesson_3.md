@@ -20,7 +20,7 @@ How are we going to update the records?
 
 ## Getting data objects back from TerminusDB/ TerminusCMS
 
-Let us first look at how to update Destiny's Address. We will used a script called [update_data.js](update_data.js). 
+Let us first look at how to update Destiny's Address. We will use a script called [update_data.js](update_data.js). 
 
 Let's examine the parts of the script. We import the Employee document that represents Destiny. Since we know the id, we will use getDocument:
 
