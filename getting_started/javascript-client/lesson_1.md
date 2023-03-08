@@ -1,40 +1,40 @@
-# Lesson 1 - Installing, start project and create an empty database with schema
+# Lesson 1 - Install, start a project, and create an empty database with a schema
 
 ## Installing
 
-You can download the TerminusDB docker image to work locally (recommended to use [Bootstrap here](https://github.com/terminusdb/terminusdb-bootstrap)) or you can connect to TerminusCMS. If you are using docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusCMS, get the information of the endpoint, team, and API token ready (it should be accessible in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.)
+You can download the TerminusDB Docker image to work locally - we recommend to using the [Bootstrap Install](https://github.com/terminusdb/terminusdb-bootstrap)) or connectting with our hosted service, TerminusCMS. If you are using the Docker image, make sure that your TerminusDB container is running at localhost (https://127.0.0.1). If you are using TerminusCMS, get the information of the endpoint, team, and API token ready - you can find these in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/), under profile.)
 
 It is recommended to install the TerminusDB Javascript client (works with [Nodejs >= 10](https://nodejs.org/en/download/)) in a separate new nodejs project.
 
-## Start Project
+## Start a Project
 
-Now go to the project directory (or start a new one):
+Go to the project directory (or start a new one):
 
 ```
 cd ../getting_started
 ```
 
-Then we will create a new NodeJS project using npm:
+Create a new NodeJS project using npm:
 
 ```
 npm init -y
 ```
 
-Then we can install client package using npm:
+Install the TerminusDB JS client package using npm:
 
 ```
 npm i @terminusdb/terminusdb-client
 ```
 
 
-In the project directory create a new file called as schema.js 
+In the project directory, create a new file called as schema.js 
 
 
-## Create an Empty Database with Schema
+## Create an Empty Database with a Schema
 
-Now create a new file called as `schema.js` with `schema.js` you can build a schema for our new database.
+Create a new file called `schema.js`. With the `schema.js` you can build a schema for the new database.
 
-In this tutorial series, we will use a fabricated phone book database of a company as an example. It consists of only 2 tables, the first one is the structure of the company ([Employees.csv](Employees.csv)):
+We'll use a company's phonebook database as an example. It consists of 2 tables, the first is the personnel of the company ([Employees.csv](Employees.csv)):
 
 | Employee id | Name           | Title               | Team        | Manager     |
 | ----------- | -------------- | ------------------- | ----------- | ----------- |
@@ -43,7 +43,7 @@ In this tutorial series, we will use a fabricated phone book database of a compa
 | 003         | Alanah Bloggs  | Frontend Developer  | IT          | 004         |
 | 004         | Fabian Dalby   | Web Service Manager | IT          |             |
 
-And the other is the contact details of the employees ([Contact.csv](Contact.csv)):
+And the other is the contact details for employees ([Contact.csv](Contact.csv)):
 
 | Employee id | Contact number  | Home address                  | Postcode |
 | ----------- | --------------- | ----------------------------- | -------- |
@@ -52,9 +52,9 @@ And the other is the contact details of the employees ([Contact.csv](Contact.csv
 | 003         | (01274) 708080  | 139 Otley Road, Shipley       | BD18 2PT |
 | 004         | (0161) 532 7302 | 2 Ansdell Road, Stockport     | SK5 6SY  |
 
-If you want to learn more about how schemas work you can refer this [documentation](https://terminusdb.com/docs/v10.0/#/reference/reference-schema).
+Learn more about how schemas work by looking at the [Schema Reference Guide](https://terminusdb.com/docs/guides/reference-guides/schema).
 
-The schema that I created for the above tables will be something like this:
+The schema we create for the above tables will look something like this:
 
 ```javascript
 const address_schema = {
@@ -122,7 +122,7 @@ const createDatabaseAndSchema = async () => {
 createDatabaseAndSchema();
 ```
 
-To verify the schema is committed, if you are using TerminusCMS, you can see changes in the dashboard. Since we are using TerminusDB locally (it works with TerminusCMS as well), we can look at the commit history by:
+To verify the schema is committed we can look at the commit history using the example below. If you are using TerminusCMS, you can see changes in the dashboard. 
 
 ```javascript
   // Get commit history
@@ -133,14 +133,14 @@ To verify the schema is committed, if you are using TerminusCMS, you can see cha
   console.log(res.bindings);
 ```
 
-Also, you can look at the objects in the schema graph like this:
+You can also look at the objects in the schema graph like this:
 
 ```javascript
 const result = await client.getDocument({"graph_type":"schema","as_list":true});
 console.log(result);
 ```
 
-The schema.js file will look like this in the end:
+The schema.js file will end up looking like this:
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
@@ -232,4 +232,4 @@ createDatabaseAndSchema();
 
 ---
 
-[Move on to Lesson 2 - Importing data from CSV using Javascript script](lesson_2.md)
+[Lesson 2 - Importing data from CSV using Javascript script](lesson_2.md)
