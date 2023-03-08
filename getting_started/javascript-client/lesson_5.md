@@ -187,7 +187,7 @@ We have a new entry for the log.
 
 ## Rebase, what is it about?
 
-After the `contractors` branch is created and data interted into it. The company managers approve the change. We would now like to incorporate the changes back to the main branch. Those who are familiar with the Git workflow will know that we need to perform a merge from the `contractors` branch to the `main` branch. But we are going to do it differently, using rebase instead of merge.
+After the `contractors` branch is created and data inserted into it. The company managers approve the change. We would now like to incorporate the changes back to the main branch. Those who are familiar with the Git workflow will know that we need to perform a merge from the `contractors` branch to the `main` branch. But we are going to do it differently, using rebase instead of merge.
 
 Rebase means that we take the changes since branching the database and will continue from another branch. For example, if we rebase `main` from `contractors` we will continue from what `contractors` is now, i.e. after adding the contractors. This means we have incorporated the change in `contractors` into `main`. For more information about rebase have a read of the [Git documentation](https://git-scm.com/docs/git-rebase).
 
