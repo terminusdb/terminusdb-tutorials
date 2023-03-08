@@ -1,18 +1,18 @@
-# Lesson 2 - Importing data from CSV using Javascript script
+# Lesson 2 - Importing data from CSV using JavaScript script
 
-## Creating the Javascript script
+## Creating the JavaScript script
 
-Let's start a new `.js` file [insert_data.js](insert_data.js). You can copy and paste the one we have in this repo or build one yourself. We will explain the one we have so you have an idea what it does.
+Let's start a new `.js` file called [insert_data.js](insert_data.js). You can copy and paste the one we have in this repo or build one yourself. We will explain the one we have so you know what it does.
 
-In the first half of the script, we have to manage and import the data form CSV. In Node.JS there is the [`fast-csv` package](https://www.npmjs.com/package/fast-csv) which can aid reading of CSV files. 
+In the first half of the script we have to manage and import the data from the CSV. In Node.JS there is the [`fast-csv` package](https://www.npmjs.com/package/fast-csv) that helps reading of CSV files. 
 
-First we will install the package:
+First, install the package:
 
 ```bash
 npm i fast-csv
 ```
 
-Now we will import it as well as some other packages:
+The script will import this package with some others:
 
 ```javascript
 const fs = require("fs");
@@ -20,13 +20,13 @@ const path = require("path");
 const csv = require("fast-csv");
 ```
 
-Also we need to import `WOQLClient` which is the client that communitcate with the TerminusDB/ TerminusCMS:
+It will also import `WOQLClient` which is the client that communitcates with the TerminusDB/TerminusCMS:
 
 ```javascript
 const TerminusClient = require("@terminusdb/terminusdb-client");
 ```
 
-At the top of the script, we prepare a few empty objects and list to hold the data, we use objects cause the keys can be the `Employees id` for easy mapping:
+At the top of the script, we prepare a few empty objects and list to hold the data, we use objects as the keys can be the `Employees id` for easy mapping:
 
 ```javascript
 const contact_numbers = {};
@@ -34,9 +34,9 @@ const addresses = {};
 const employees = [];
 ```
 
-The goal is to populate the `employees` list with the `Employee` objects. To help, we also need `contact_numbers` to hold the contact numbers while reading the `Contact.csv`. The rest of the information in `Contact.csv` will be used to construct `Address` objects and stored in `addresses`. We store the id at first and make the linking later cause the manager of that employee may have not been "created" yet.
+The goal is to populate the `employees` list with the `Employee` objects. To help, we also need `contact_numbers` to hold the contact numbers while reading the `Contact.csv`. The rest of the information in `Contact.csv` will be used to construct `Address` objects and stored in `addresses`. We store the id at first and make the linking later because the manager of that employee may have not been "created" yet.
 
-Then we go head and read the CSVs and do the corresponding data managing:
+Then we go ahead and read the CSVs and do the corresponding data managing:
 
 ```javascript
 // function to load and parse huge CSV files
@@ -103,11 +103,11 @@ const insertData = async () => {
 };
 ```
 
-Now, the `employees` list should be populated with the `Employee` objects that is ready to be insert into the database.
+The `employees` list should now be populated with the `Employee` objects, ready to be inserted into the database.
 
-## Using the Javascript client
+## Using the TerminusDB JavaScript Client
 
-The next step is the insert all `Employees` into the database. But before, we need to create a client with our cloud endpoint:
+The script inserts all `Employees` into the database using the TerminusDB JavaScript Client. To do this, we need to create a client with our cloud endpoint:
 
 ```javascript
 // TODO: Change teamname and username
@@ -123,9 +123,9 @@ const client = new TerminusClient.WOQLClient(
 client.setApiKey(process.env.TERMINUSDB_ACCESS_TOKEN);
 ```
 
-If you are using TerminusCMS, you can find the information of your endpoint, team, and API token from the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.
+If you are using TerminusCMS, you can find the your endpoint, team, and API token in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/) under profile.
 
-Now we are all ready, the last thing to do is to insert the documents:
+The last thing to do is to insert the documents:
 
 ```javascript
 
@@ -139,21 +139,21 @@ client.addDocument(employees).then((res)=>{
 
 ## Running the script
 
-Do back to our terminal, we can run the script. Make sure you are in the Node.JS environment that has `terminusdb-client` installed.
+Run the script in the terminal. Make sure you are in the Node.JS environment that has `terminusdb-client` installed.
 
 ```
 $ node insert_data.js
 ```
 
-To check if the data is insert correctly, we can use the `getDocument` function:
+To check the data was insert correctly, use the `getDocument` function:
 
 ```javascript
 const result = await client.getDocument({"as_list":true});
 console.log(result);
 ```
 
-Or if the data is on TerminusCMS, you can check it in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/)
+Or if using TerminusCMS, you can check it in the [TerminusCMS dashboard](https://dashboard.terminusdb.com/)
 
 ---
 
-[Move on to Lesson 3 - Update and import new data that links to old data](lesson_3.md)
+[Lesson 3 - Update and import new data that links to old data](lesson_3.md)
