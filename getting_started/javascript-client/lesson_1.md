@@ -155,7 +155,7 @@ const client = new TerminusClient.WOQLClient(
 );
 
 // If you are using TerminusCMS you need to generate you api key
-// https://terminusdb.com/docs/terminusx/get-api-key here the documentation
+// https://terminusdb.com/docs/terminuscms/get-api-key here the documentation
 client.setApiKey(process.env.TERMINUSDB_ACCESS_TOKEN);
 
 const address_schema = {
