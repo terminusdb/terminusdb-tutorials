@@ -1,6 +1,6 @@
 # Lesson 3 - Update and import new data that links to old data
 
-Remember our imaginary Awesome Startup that has their Phonebook stored in TerminusDB? It has been a few months and they have a new recruit:
+Remember the company phonebook stored in TerminusDB? It has been a few months and there is a new recruit:
 
 | Employee id | Name           | Title               | Team        | Manager     |
 | ----------- | -------------- | ------------------- | ----------- | ----------- |
@@ -10,7 +10,7 @@ Remember our imaginary Awesome Startup that has their Phonebook stored in Termin
 | ----------- | --------------- | ----------------------------- | -------- |
 | 005         | 070 7796 8035   | 84 Shore Street, Stoer        | IV27 2TG |
 
-Also, our Marketing Manager Destiny has moved to a new address:
+Also, the Marketing Manager Destiny has moved to a new address:
 
 | Employee id | Contact number  | Home address                  | Postcode |
 | ----------- | --------------- | ----------------------------- | -------- |
@@ -20,9 +20,9 @@ How are we going to update the records?
 
 ## Getting data objects back from TerminusDB/ TerminusCMS
 
-Let's look at how to update Destiny's Address. We did it with the [update_data.js](update_data.js). 
+Let us first look at how to update Destiny's Address. We will use a script called [update_data.js](update_data.js). 
 
-Now we import the Employee document that represent Destiny. Since we know the id, we will just use getDocument to do so:
+Let's examine the parts of the script. We import the Employee document that represents Destiny. Since we know the id, we will use getDocument:
 
 ```javascript
 const destiny = await client.getDocument({"id":"Employee/001"});
@@ -30,10 +30,10 @@ const destiny = await client.getDocument({"id":"Employee/001"});
 
 ## Update a document
 
-Now `destiny` is an `Employee` object we can go ahead and update the details:
+We know `destiny` is an `Employee` object so we can go ahead and update the details:
 
 ```javascript
-  // will have to delete "@id" because database will create a new one
+  // will have to delete "@id" because the database will create a new one
   delete destiny.address['@id'];
 
   destiny.address.postcode = "PH12 3RP";
@@ -43,7 +43,7 @@ Now `destiny` is an `Employee` object we can go ahead and update the details:
   
 ```
 
-Let's send `destiny` back to the database with `updateDocument`, the difference between `addDocument` and `updateDocument` is that, if an object(s) is already exist, `updateDocument` with replace the old with the new.
+The script then sends `destiny` back to the database with `updateDocument`. The difference between `addDocument` and `updateDocument` is that if an object already exists `updateDocument` will replace the old with the new.
 
 ```javascript
 await client.updateDocument(destiny);
@@ -51,7 +51,7 @@ await client.updateDocument(destiny);
 
 ## Linking a new document to an old document
 
-Now let's work on our new recruit. We now create `ethan` and link manager as `Employee/004`:
+Now let's work on our new recruit. We now create `ethan` and link Ethan's manager as `Employee/004`:
 
 ```javascript
 const ethan = {
@@ -72,25 +72,27 @@ const ethan = {
 }
 ```
 
-All is ready, let's put `ethan` into the database. we will use `addDocument` to insert `ethan`:
+All is ready so we'll put `ethan` into the database. Use `addDocument` to insert `ethan`:
 
 ```javascript
 await client.addDocument(ethan);
 ```
 
+Before running the script ensure to set the end point, team and user credentials.
+
 Run the scripts:
 
 `$ node update_data.js`
 
-To check if the database is up-to-date, you can do in the terminal like we did before:
+Use the terminal to check if the database is up-to-date:
 
 ```javascript
 const result = await client.getDocument({"as_list":true});
 console.log(result);
 ```
 
-Or if you are using TerminusCMS, you can also check it in the dashboard.
+If you are using TerminusCMS, you can also check it in the dashboard.
 
 ---
 
-[Move on to Lesson 4 - Query on the database and get result back as json](lesson_4.md)
+[Lesson 4 - Query the database and get result back as JSON](lesson_4.md)
