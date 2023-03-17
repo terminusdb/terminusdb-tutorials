@@ -1,13 +1,13 @@
 import pprint as pp
 
-from terminusdb_client import WOQLClient
+from terminusdb_client import Client
 from terminusdb_client import WOQLQuery as wq
 
 # For Terminus X, use the following
-# client = WOQLClient("https://cloud.terminusdb.com/<Your Team>/")
+# client = Client("https://cloud.terminusdb.com/<Your Team>/")
 # client.connect(db="demo_workshop", team="<Your Team>", use_token=True)
 
-client = WOQLClient("http://127.0.0.1:6363/")
+client = Client("http://127.0.0.1:6363/")
 client.connect(db="getting_started")
 
 ### Uncomment to see all triples ##
