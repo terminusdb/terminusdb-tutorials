@@ -51,11 +51,3 @@ class Employee(DocumentTemplate):
 class Team(EnumTemplate):
     marketing = ()
     it = ()
-
-
-class EmployeesFromCSV(DocumentTemplate):
-    employee_id: str
-    manager: Optional["EmployeesFromCSV"]
-    name: Optional[str]
-    team: Optional[str]
-    title: Optional[str]
