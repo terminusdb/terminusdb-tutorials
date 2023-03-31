@@ -104,7 +104,7 @@ Now, the `employees` dictionary should be populated with the `Employee` objects,
 The next step is the insert all `Employees` into the database. But before that, we need to create a client with our endpoint:
 
 ```python
-client = WOQLClient("http://127.0.0.1:6363/")
+client = Client("http://127.0.0.1:6363/")
 ```
 
 Then we will connect the client to our database. If you are connecting locally and use the default setting, just provide the database you are connecting to:

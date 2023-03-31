@@ -29,7 +29,7 @@ Branch 'contractors' created. Remain on 'main' branch.
 We have created the `contractors` branch. Let's verify:
 
 ```
-$ tdbpy branch            
+$ tdbpy branch
 main
 contractors
 ```
@@ -49,7 +49,7 @@ Now run the script:
 To verify we did things right, let's see if there are any changes in the current `main` branch, you can see all the logs with:
 
 ```
-$ tdbpy log     
+$ tdbpy log
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'main'
@@ -100,7 +100,7 @@ Checked out 'contractors' branch.
 And check the log again:
 
 ```
-$ tdbpy log           
+$ tdbpy log
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'contractors'
@@ -161,7 +161,7 @@ Time flies, now the project is done and the contractors have done their jobs and
 Let's verify our log again:
 
 ```
-$ tdbpy log                 
+$ tdbpy log
 ========
 Connecting to 'getting_started' at 'http://127.0.0.1:6363/'
 on branch 'main'

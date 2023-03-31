@@ -15,7 +15,7 @@ you'll see from the examples, it's fairly straightforward.
 
 ```python
 #!/usr/bin/python3
-from terminusdb_client import WOQLClient
+from terminusdb_client import Client
 import requests
 import re
 import os
@@ -195,7 +195,7 @@ if __name__ == "__main__":
 
     team = os.environ['TERMINUSDB_TEAM']
     team_quoted = urllib.parse.quote(team)
-    client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
+    client = Client(f"https://cloud.terminusdb.com/{team_quoted}/")
     dbid = 'nuclear'
     client.connect(db=dbid,team=team, use_token=True)
 

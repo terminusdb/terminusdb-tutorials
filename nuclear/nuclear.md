@@ -13,7 +13,7 @@ we'll need...
 
 ```python
 #!/usr/bin/env python3
-from terminusdb_client import WOQLClient
+from terminusdb_client import Client
 import re
 import csv
 import json
@@ -34,13 +34,13 @@ team = os.environ['TERMINUSDB_TEAM']
 team_quoted = urllib.parse.quote(team)
 ####
 # To use TerminusCMS
-client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
+client = Client(f"https://cloud.terminusdb.com/{team_quoted}/")
 # make sure you have put the token in environment variable
 # https://terminusdb.com/docs/terminuscms/get-api-key
 client.connect(team=team, use_token=True)
 ####
 # to connect locally, comment the above client and call and try this instead:
-# client = WOQLClient("http://localhost:6363/")
+# client = Client("http://localhost:6363/")
 #client.connect(team=team)
 ```
 

@@ -1,7 +1,7 @@
 import csv
 
 from schema import Address, Employee, Team
-from terminusdb_client import WOQLClient
+from terminusdb_client import Client
 
 # we keep all the information in dictionaries with Employee id as keys
 employees = {}
@@ -42,10 +42,10 @@ for emp_id, man_id in managers.items():
         employees[emp_id].manager = employees[man_id]
 
 # For Terminus X, use the following
-# client = WOQLClient("https://cloud.terminusdb.com/<Your Team>/")
+# client = Client("https://cloud.terminusdb.com/<Your Team>/")
 # client.connect(db="demo_workshop", team="<Your Team>", use_token=True)
 
-client = WOQLClient("http://127.0.0.1:6363/")
+client = Client("http://127.0.0.1:6363/")
 client.connect(db="getting_started")
 
 client.insert_document(list(employees.values()), commit_msg="Adding 4 Employees")

@@ -1,5 +1,5 @@
 from typing import  Set, Optional
-from terminusdb_client import WOQLClient
+from terminusdb_client import Client
 from terminusdb_client.woqlschema.woql_schema import (
     DocumentTemplate,
     EnumTemplate,
@@ -135,18 +135,15 @@ def branches(client):
 
 def time_travel(client):
     # Reset the current branch HEAD to the specified commit path. 
-    # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.reset
     # eg: 
     # client.reset('hvatquoq9531k1u223v4azcdr1bfyde')
 
     # Squash the current branch HEAD into a commit
-    # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.squash
     commit_res = client.squash('This is a squash commit message!',"username")
     # reset to the squash commit 
     client.reset(commit_res, use_path=True)
 
     # Rebase the current branch onto the specified remote branch
-    # more info: https://terminusdb.github.io/terminusdb-client-python/woqlClient.html#terminusdb_client.WOQLClient.rebase
     client.rebase("main")
 
 
@@ -156,7 +153,7 @@ if __name__ == "__main__":
 
     # TODO: change the team name 
     team = "<TEAM_NAME>"
-    client = WOQLClient("https://cloud.terminusdb.com/"+team)
+    client = Client("https://cloud.terminusdb.com/"+team)
     
     try:
         client.connect(team=team, use_token=True)

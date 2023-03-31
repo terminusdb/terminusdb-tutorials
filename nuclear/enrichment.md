@@ -9,14 +9,14 @@ Of course we need the client so we can talk to the server...
 
 ```python
 #!/usr/bin/python3
-from terminusdb_client import WOQLClient
+from terminusdb_client import Client
 import os
 import json
 import urllib.parse
 
 team = os.environ['TERMINUSDB_TEAM']
 team_quoted = urllib.parse.quote(team)
-client = WOQLClient(f"https://cloud.terminusdb.com/{team_quoted}/")
+client = Client(f"https://cloud.terminusdb.com/{team_quoted}/")
 client.connect(db="nuclear", team=team, use_token=True)
 ```
 
