@@ -83,12 +83,19 @@ def import_data(client,schema):
                         if matches:
                             matchdict = matches.groupdict()
                             for key in matchdict:
+                                # print(f"matchdict[{key}] = {matchdict[key]}")
                                 if matchdict[key]:
                                     stubs[value] = key
+                            # print(stubs)
+                            if value not in stubs:
+                                print(matchdict)
+                                print(f"value: {value}")
+                                exit(0)
                             obj[property_type] = { '@ref' : value }
             if value == None:
                 break
             objects.append(obj)
+        print(objects[-1])
     for oid in stubs:
         object_type = stubs[oid]
         objects.append({'@type' : object_type, '@capture' : oid })
