@@ -44,7 +44,7 @@ config.json and schema.py created, please customize them to start your project.
 
 ## Create an Empty Database with Schema
 
-Now with `schema.py` you can build a schema for the new database. If you open the `schema.py` you will see an example. You can commit the example as it is but I want to make changes to it before I commit so it is useful to us in a future lesson.
+Now with `schema.py` you can build a schema for the new database. If you open the `schema.py` you will see an example. You can commit the example as it is.
 
 In this tutorial series, we will use a company phonebook database as an example. It consists of only 2 tables, the first is the structure of the company ([Employees.csv](Employees.csv)):
 
