@@ -1,15 +1,17 @@
 #!/usr/bin/python3
-from terminusdb_client import WOQLClient
-from terminusdb_client import WOQLQuery as WQ
+from terminusdb_client import Client
 import csv
 
 # Place the snippet from TerminusX here:
 # Code: API key environment configuration
 # export TERMINUSDB_ACCESS_TOKEN="my API key here"
 
-# Or for the local endpoint use the following two lines:
-client = WOQLClient("http://localhost:6363")
-client.connect(account="admin",user="admin",key="root")
+# Or for the local endpoint use the following lines:
+team="admin"
+user="admin"
+key="root"
+client = Client("http://localhost:6363")
+client.connect(account=team,user=user,key=key)
 
 db = "stock_index"
 exists = client.has_database(db)
@@ -76,7 +78,7 @@ def load_file(f):
                         'volume' : volume }
                 if len(objects) >= chunk_size:
                     print(f"Running chunk {chunk}")
-                    client.insert_document(objects,commit_msg = f"Inserting stock exchange ticker chunk {chunk}")
+                    client.insert_document(objects,commit_msg = f"Inserting stock exchange ticker chunk {chunk}", compress="never")
                     objects = []
                     chunk+=1
                 else:
@@ -88,18 +90,22 @@ def load_file(f):
 load_file('indexData.csv')
 
 branch = "second"
-client.create_branch(branch)
+#client.create_branch(branch)
 client.branch = branch
 
 load_file('other.csv')
 
 print("About to rebase")
 client.branch = "main"
-client.rebase(f"{team}/{db}/local/branch/second")
+client.rebase(f"second")
 print("About to query")
 
 client.optimize(f"{team}/{db}")
-documents = client.query_document({'@type' : 'IndexRecord',
-                                   'date' : '2021-07-01'})
+documents = list(client.query_document({'@type' : 'IndexRecord'}, count=1))
 
-print(list(documents))
+existing_team_doc = client.get_document(documents[0]['@id'])
+existing_team_doc["adjusted_close"] ="0.0"
+existing_team_doc["close"] ="0.0"
+existing_team_doc["high"] ="0.0"
+existing_team_doc["open"] ="0.0"
+client.update_document(existing_team_doc,commit_msg = "Updating data from Admin team space")
