@@ -102,10 +102,3 @@ print("About to query")
 
 client.optimize(f"{team}/{db}")
 documents = list(client.query_document({'@type' : 'IndexRecord'}, count=1))
-
-existing_team_doc = client.get_document(documents[0]['@id'])
-existing_team_doc["adjusted_close"] ="0.0"
-existing_team_doc["close"] ="0.0"
-existing_team_doc["high"] ="0.0"
-existing_team_doc["open"] ="0.0"
-client.update_document(existing_team_doc,commit_msg = "Updating data from Admin team space")
