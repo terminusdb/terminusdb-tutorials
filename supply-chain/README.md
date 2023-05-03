@@ -22,7 +22,7 @@ Finally, we will need to install the supporting libraries for reading
 Excel files.
 
 ```shell
-$ pip install openpyxl
+$ python3 -m pip install openpyxl
 ```
 
 ## Schema Inference
