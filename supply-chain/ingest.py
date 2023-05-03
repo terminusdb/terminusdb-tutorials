@@ -48,7 +48,7 @@ def import_data(client,schema):
     stubs = {}
     wb_obj = openpyxl.load_workbook(path)
     for sheet_name in wb_obj.sheetnames:
-        print(sheet_name)
+        print(f"Processing objects {sheet_name}")
         object_type = sheet_name
         sheet_obj = wb_obj[sheet_name]
         cls = schema[object_type]
@@ -95,10 +95,10 @@ def import_data(client,schema):
             if value == None:
                 break
             objects.append(obj)
-        print(objects[-1])
+        # print(objects[-1])
     for oid in stubs:
         object_type = stubs[oid]
-        objects.append({'@type' : object_type, '@capture' : oid })
+        objects.append({'@type' : object_type, '@capture' : oid, 'id' : oid })
     with open('objects.json', 'w') as f:
         f.write(json.dumps(objects))
     client.insert_document(objects, compress='never')
