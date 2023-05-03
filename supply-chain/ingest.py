@@ -101,7 +101,7 @@ def import_data(client,schema):
         objects.append({'@type' : object_type, '@capture' : oid, 'id' : oid })
     with open('objects.json', 'w') as f:
         f.write(json.dumps(objects))
-    client.insert_document(objects, compress='never')
+    client.insert_document(objects)
 
 if __name__ == "__main__":
     exists = client.has_database(dbid)
