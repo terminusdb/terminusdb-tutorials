@@ -1,15 +1,17 @@
 #!/usr/bin/python3
-from terminusdb_client import WOQLClient
-from terminusdb_client import WOQLQuery as WQ
+from terminusdb_client import Client
 import csv
 
 # Place the snippet from TerminusX here:
 # Code: API key environment configuration
 # export TERMINUSDB_ACCESS_TOKEN="my API key here"
 
-# Or for the local endpoint use the following two lines:
-client = WOQLClient("http://localhost:6363")
-client.connect(account="admin",user="admin",key="root")
+# Or for the local endpoint use the following lines:
+team="admin"
+user="admin"
+key="root"
+client = Client("http://localhost:6363")
+client.connect(account=team,user=user,key=key)
 
 db = "stock_index"
 exists = client.has_database(db)
@@ -95,11 +97,8 @@ load_file('other.csv')
 
 print("About to rebase")
 client.branch = "main"
-client.rebase(f"{team}/{db}/local/branch/second")
+client.rebase(f"second")
 print("About to query")
 
 client.optimize(f"{team}/{db}")
-documents = client.query_document({'@type' : 'IndexRecord',
-                                   'date' : '2021-07-01'})
-
-print(list(documents))
+documents = list(client.query_document({'@type' : 'IndexRecord'}, count=1))
