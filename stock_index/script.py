@@ -78,7 +78,7 @@ def load_file(f):
                         'volume' : volume }
                 if len(objects) >= chunk_size:
                     print(f"Running chunk {chunk}")
-                    client.insert_document(objects,commit_msg = f"Inserting stock exchange ticker chunk {chunk}", compress="never")
+                    client.insert_document(objects,commit_msg = f"Inserting stock exchange ticker chunk {chunk}")
                     objects = []
                     chunk+=1
                 else:
