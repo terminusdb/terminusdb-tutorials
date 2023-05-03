@@ -90,7 +90,7 @@ def load_file(f):
 load_file('indexData.csv')
 
 branch = "second"
-#client.create_branch(branch)
+client.create_branch(branch)
 client.branch = branch
 
 load_file('other.csv')
