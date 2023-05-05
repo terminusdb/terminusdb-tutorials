@@ -381,7 +381,7 @@ def import_nuclear(client):
                       'country' : { '@ref' : f"Country/{country_long}" },
                       'location' : { '@type' : "Point",
                                      'type' : "Point",
-                                     'coordinates': [latitude, longitude] },
+                                     'coordinates': [longitude, latitude] },
                       'capacity' : { '@type' : 'Quantity',
                                      'unit' : 'Unit/MWe',
                                      'quantity' : capacity_mw },
